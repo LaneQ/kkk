@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+<head>
+    <title>Tenant Onboarding</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/onboarding.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/globals")
+    @Scripts.Render("~/bundles/notification")
+    @Styles.Render("~/notification/css")
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/css/bootstrap-datepicker.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/js/bootstrap-datepicker.min.js"></script>*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link href="~/Content/semantic.min.css" rel="stylesheet" />
+</head>
+<body>
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "msform" }))
+    {
+        @Html.AntiForgeryToken()
+            <!-- This is where you will create the heading, sub heading and the buttons for the tenant onboarding page -->
+
+            @Html.Partial("_TenantDetails")
+
+    }
+    <script src="~/Scripts/jquery.easing.min.js"></script>
+    <script src="~/Scripts/PropertyOwners/Home/Onboarding.js"></script>
+    <script src="~/Scripts/Tenants/TenantDetails.js"></script>
+    <script>
+        $(document).ready(function () {
+        });
+    </script>
+</body>
+
+

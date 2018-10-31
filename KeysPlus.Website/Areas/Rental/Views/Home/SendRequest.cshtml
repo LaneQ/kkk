@@ -1,0 +1,281 @@
+﻿@model POSendRequestModel
+
+@{
+    ViewBag.Title = "Send Request";
+}
+
+
+
+<h3>Send Request</h3>
+<hr />
+@if (Model.ReturnUrl != null)
+            {
+    <h4>
+        <a class="pointer-cursor" data-bind="attr: { href: '@Html.Raw(Model.ReturnUrl)' }"><i class="angle left icon"></i> Back</a>
+    </h4>
+                <br />
+                <br />
+}
+
+
+
+
+<div class="ui raised segment" data-bind="with : Data">
+    <div class="ui one column centered grid">
+
+        @Html.AntiForgeryToken()
+
+        <div class="column">
+
+            <div class="form-group">
+                <label class="control-label">Property <span style="color:red;">*</span></label>
+                @*@Html.DropDownListFor(m => m.PropertyId, new SelectList(Model.AvalableProperties, "Id", "AddressString"), null, new { @class = "form-control", id = "typeDropdown" })*@
+
+                @if (Model.AvalableProperties.Count == 1)
+                {
+                    @*<select class="form-control" data-bind="value : PropertyId">
+                            @foreach (var prop in Model.AvalableProperties)
+                            {
+                                <option value="@prop.Id">@prop.AddressString</option>
+                            }
+                        </select>*@
+                    <select class="ui fluid selection dropdown" data-bind="options : $root.AvalableProperties,
+                                    optionsText: 'AddressString', optionsValue: 'Id', value: PropertyId"></select>
+                }
+                else
+                {
+                    <select class="ui fluid selection dropdown" data-bind="options : $root.AvalableProperties,
+                                    optionsText: 'AddressString', optionsValue: 'Id', value: PropertyId, optionsCaption: 'Select a property'"></select>
+                }
+            </div>
+        </div>
+
+        <!-- Start Tenants dropdown list -->
+        <div class="column">
+
+            <label class="control-label">Tenant <span style="color:red;">*</span></label>
+            <select class="ui fluid selection dropdown" id="tenant-select" data-bind="options : $root.Tenants,
+                                    optionsText: 'TenantName', optionsValue: 'TenantId', value: RecipientId, optionsCaption: 'Select a tenant'"></select>
+
+        </div>
+        <!-- End Tenants dropdown list-->
+
+        <div class="column">
+            <div class="form-group">
+                <label class="control-label">Type <span style="color:red;">*</span></label>
+                <select class="form-control" data-bind="options: $root.RequestTypes,
+                                    optionsText: 'RequestType',
+                                    optionsValue: 'RequestTypeId',
+                                    value : RequestTypeId,
+                                    optionsCaption: 'Select a request type'"></select>
+            </div>
+
+            <div class="form-group" data-bind="visible : RequestTypeId()==3">
+                <label class="control-label">Due date <span style="color:red;">*</span></label>
+                <input class="form-control" type="text" data-bind="datePicker : DueDate,  dateTimePickerOptions : {format: 'DD/MM/YYYY', minDate: new Date()}" />
+            </div>
+        </div>
+
+
+
+        <div class="column">
+            <form class="ui form" style="margin-top:5px;">
+                <label>Description <span style="color:red;">*</span></label>
+                <div class="field">
+                    <textarea class="form-control" rows="5" style="height:123px;" data-bind="textinput : RequestMessage"></textarea>
+                </div>
+            </form>
+        </div>
+
+
+
+
+
+        <div class="column">
+            <form class="ui form">
+                <label class="control-label">Please upload your photos here<span style="color:red;"></span></label>
+                       
+                            @*<div data-bind="foreach: MediaFiles">
+                                <div class="col-md-3 col-sm-4 col-xs-4">
+                                    <div class="thumbnail" style="position : relative">
+                                        <a class="zmdi zmdi-hc-lg zmdi-close-circle img-remove-icon" data-bind="click: $root.RemovePhoto" style="position:absolute; top:0; right:1px"></a>
+                                        <img class="img-responsive" data-bind="attr: {src: Data}" />
+                                    </div>
+                                </div>
+                            </div>*@
+
+                            <div class="ui divided items" data-bind="foreach: MediaFiles">
+                                <div class="item" data-bind="visible: MediaType() == 1">
+                                    <div class="image">
+                                        <div class="ui minix images">
+                                            <a target="_blank" data-bind="attr: { href: Data()}">
+                                                <img class="ui image" data-bind="attr: {src: Data()}" style="height: 80px" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="middle aligned content">
+                                        <div class="header" data-bind="text : OldFileName()"></div>
+                                    </div>
+                                    
+                                        <i class="remove sign icon" style="float:right" data-bind="click: $root.RemovePhoto"></i>
+                                    
+                                </div>
+                            </div>
+                            <ul class="ui list" data-bind="foreach: MediaFiles">
+                                <li class="item" data-bind="visible: MediaType() == 2">
+                                    
+                                    <span class="right aligned data-content" data-bind="text : OldFileName()"></span>
+
+                                    <i class="remove sign icon" style="float:right" data-bind="click : $root.RemovePhoto"></i>
+                                </li>
+                            </ul>
+                        
+                                <div class="ui teal button" style="position : relative">
+                                    <span class="cloud upload icon"></span>
+                                    Choose Files
+                                    <input type="file" id="fileUpload" class="key-upload" data-bind="uploadFiles : MediaFiles, validFileTypes : $root.ValidFileTypes" multiple />
+                                </div>
+            </form>
+        </div>
+
+
+        <div class="column">
+            @*<div class="form-group">
+                <div class="ui green button">
+                    <i class="cloud upload icon"></i>
+                    Choose Files
+                    <input type="file" class="key-upload" data-bind="filesUpload : MediaFiles" accept="application/pdf,application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*" multiple />
+                </div>
+               
+            </div>*@
+            <div class="form-group">
+                <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *pdf, *doc & *.gif</p>
+            </div>
+        </div>
+
+    </div>
+
+        <div class="column text-center">
+            <button type="button" class="ui teal button" data-bind="click : $root.Submit, enable: $root.IsValid()">Save</button>
+            <a class="ui button" data-bind="attr: { href: '@Html.Raw(ViewBag.ReturnUrl)' }">Close</a>
+        </div>
+
+
+
+</div>
+
+
+<script>
+    var token = $("input[name = '__RequestVerificationToken']").val();
+    var returnUrl = '';
+    function RequestModel() {
+        var self = this;
+        self.RequestTypeId = ko.observable().extend({
+            required: {
+                params: true,
+                message: "Please select a request."
+            }
+        });
+        self.PropertyId = ko.observable().extend({
+            required: {
+                params: true,
+                message: "Please select a property."
+            }
+        });
+        self.RequestMessage = ko.observable().extend(Extender.description);
+        self.ToTenant = ko.observable(true);
+        self.ToOwner = ko.observable(false);
+        self.DueDate = ko.observable('');
+        self.FileWarning = ko.observable();
+        self.MediaFiles = ko.observableArray([]);
+        // Store selected tenant id.
+        self.RecipientId = ko.observable().extend({
+            required: {
+                params: true,
+                message: "Please select a tenant."
+            }
+        });
+
+    }
+    // View model to store tenants associated with chosen properties.
+    function TenantPropertyViewModel(data) {
+        var self = this;
+        self.TenantId = ko.observable(data.TenantId);
+        self.TenantName = ko.observable(data.TenantName);
+        self.PropertyId = ko.observable(data.PropertyId);
+    }
+
+    //View model to store request types
+    function RequestTypesViewModel(data) {
+        var self = this;
+        self.RequestTypeId = ko.observable(data.Id);
+        self.RequestType = ko.observable(data.Name);
+    }
+
+    function RequestViewModel(dataModel) {
+        var self = this;
+        self.Data = new RequestModel();
+        self.RemovePhoto = function (photo) {
+            self.Data.MediaFiles.remove(photo)
+        }
+        self.Submit = function (data) {
+            function successCallback(result){
+                if (result.Success) {
+                    KeysUtils.notification.show('<p>Request sent successfully!</p>', 'success', reload);
+                }
+                else{
+                    KeysUtils.notification.showErrorMsg();
+                }
+            }
+            var formData = KeysUtils.toFormData(data, token);
+            KeysUtils.post('/Rental/Home/SubmitPropertyRequest', formData, successCallback);
+
+        }
+        self.Errors = ko.validation.group(self.Data);
+        self.IsValid = ko.computed(function () {
+            return self.Errors().length == 0;
+        });
+
+        function reload() {
+            window.location.href = dataModel.ReturnUrl;
+        }
+
+        // Get data for Tenants dropdown list.
+        self.Tenants = ko.observableArray();
+        ko.computed(function () {
+            if (self.Data.PropertyId() != null) {
+                var tenants = [];
+                $.get("/Rental/Home/GetTenantsByPropertyId", { propId: self.Data.PropertyId() })
+                    .done(function (data) {
+                        // If Tenants are more than one provide option of selecting "All Tenants" so email and request can be sent to all Tenants.
+                        if (Object.keys(data).length > 1) {
+                            // added a new object with hardcoded string to select all Tenants if tenants are more than one
+                            kp = new TenantPropertyViewModel({ "TenantId": "0", "TenantName": "All Tenants" });
+                            tenants.push(kp);
+                        };
+                        $.each(data, function (i, item) {
+                            tp = new TenantPropertyViewModel(item);
+                            tenants.push(tp);
+                        });
+                        self.Tenants(tenants);
+                    });
+            }
+        });
+
+        //Get data for Request types dropdown list
+        self.RequestTypes = ko.observableArray();
+        $.each(dataModel.RequestTypes, function (i, item) {
+            rt = new RequestTypesViewModel(item);
+            self.RequestTypes.push(rt);
+        });
+        self.AvalableProperties = ko.observableArray();
+        $.each(dataModel.AvalableProperties, function (i, item) {
+            self.AvalableProperties.push(item);
+        });
+        if(dataModel.AvalableProperties.length == 1){
+            self.Data.PropertyId(dataModel.AvalableProperties[0].Id);
+        }
+    }
+    var dataModel = @Html.Raw(Json.Encode(Model));
+    ko.applyBindings(new RequestViewModel(dataModel));
+</script>

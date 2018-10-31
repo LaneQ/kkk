@@ -1,0 +1,291 @@
+﻿@************************************* Rental Property Details ************************************@
+
+<div id="propertyDetails" data-bind="visible:showRentalDetails">
+    <h3>Rental Listing Information </h3>
+    <hr />
+    <button class="btn btn-info btn-sx" data-bind="click:$root.goToMainPage"><span class="fa fa-arrow-left"></span> Back</button>
+    <br /><br />
+    <div id="rentalPropertyDetails" data-bind="with:SelectedRentalProperty()">
+        <div class="row">
+            <div class="col-md-12" style="padding-bottom: 100px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="position: relative;">
+                        <span class="h3" data-bind="text: Title"></span><br />
+                        <span class="text-muted">Listed : &nbsp;<span data-bind="text : moment(CreatedDate()).format('ll')" style="margin-top : 10px"></span></span>
+                        <div class="col-md-1 no-padding-side" style="position: absolute; top: 50%; right : 0px; transform: translateY(-50%); float : right">
+                            <!-- Disable apply button if user is not a tenant-->
+                            <div class="disable-tooltip" style="padding-bottom: 20px">
+                                <button class="btn btn-success" style="position: absolute;" data-bind="click:$root.applyRental, enable: EnableButtons"><span class="zmdi zmdi-file-add"></span> Apply</button>
+                                <div style="position: absolute" data-bind="ifnot:  EnableButtons">
+                                    <div class="tooltiptext" style="background-color:wheat; color:black"> You are not a tenant please click this <a href='@Url.Action("AddRoleToLogin", "Account", new {Area = "", roleId =5 })'>link</a> to be a tenant></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-7" style="margin-top:10px;">
+                                <!--details coloum-->
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Location:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text: StreetAddress"></span>
+                                        <span data-bind="text: CitySub"></span>
+                                    </div>
+                                </div>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Rent:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        $<span data-bind="numeric:TargetRent"></span>&nbsp;<span data-bind="text:RentalPaymentType"></span>
+                                    </div>
+                                </div>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Property Type:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text:PropertyType"></span>
+                                    </div>
+                                </div>
+
+                                @*<div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Listed on:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="text: moment(CreatedDate()).format('ll')"></span>
+                                        </div>
+                                    </div>*@
+
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Rooms:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text:Bedrooms"></span>&nbsp;<i class="fa fa-bed"></i>
+                                        &nbsp;&nbsp;<span data-bind="text:Bathrooms"></span>&nbsp;<i class="fa fa-shower"></i>
+                                        &nbsp;&nbsp;<span data-bind="text:ParkingSpaces"></span>&nbsp;<i class="fa fa-car"></i>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Land Area:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="if:LandSqm">
+                                            <span data-bind="text: LandSqm"></span>m<sup>2</sup>
+                                        </span>
+                                        <span data-bind="ifnot:LandSqm"> Not Available </span>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Floor Area:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="if: FloorArea">
+                                            <span data-bind="text: FloorArea"></span>m<sup>2</sup>
+                                        </span>
+                                        <span data-bind="ifnot: FloorArea"> Not Available </span>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>No. of Occupants:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text:OccupantCount"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Moving Cost:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        $<span data-bind="numeric:MovingCost"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Furnishing:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text:Furnishing"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Pets Allowed:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text:PetsAllowed"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Available Date:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text : moment(AvailableDate()).format('ll')"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Description:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text:RentalDescription" style="word-break: break-all;"></span>
+                                    </div>
+                                </div>
+                                <br />
+                            </div> <!--details coloum-->
+
+                            <div class="col-md-5">
+                                <!--photo coloum-->
+                                <div data-bind="visible:RentalFiles().length>0">
+                                    <div class="carousel " data-ride="carousel" data-bind="attr :{id : 'slide'+ Id()}">
+                                        <div class="carousel-inner" style="margin:auto" data-bind="foreach: RentalFiles">
+                                            <div class="item thumbnail" data-bind="css:{active: $index() == 0}">
+                                                <img class="img-responsive" data-bind="attr: {src: Data}"
+                                                     onerror="this.src = '/images/no-prop-img.png'" alt="firstImg" style="width:100%; height: 250px;">
+                                            </div>
+                                        </div>
+
+                                        <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'slide'+ Id()}">
+                                            <span class="fa fa-2x fa-angle-left"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+
+                                        <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'slide'+ Id()}">
+                                            <span class="fa fa-2x fa-angle-right"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div data-bind="visible:RentalFiles().length<=0" class="thumbnail">
+                                    <img src="/images/no-prop-img.png" alt="noPropImg" style="width:100%; height: 250px;" />
+                                </div>
+                                <!-- thumb navigation carousel items -->
+                                @*<div class="carousel-thumbnail-center .carousel-thumb canvas-scrollable">
+                                            <ol>
+                                                <li data-bind="foreach: RentalFiles()" style="display:inline; text-align:center" class="item-inner">
+                                                    <a href="#">
+                                                        <img data-bind="attr: {src: Data}" alt="Thumbnail" style="width:40px; height:50px;">
+                                                    </a>
+                                                </li>
+                                            </ol>
+                                    </div>*@
+                            </div>
+                        </div> <!--row -->
+                    </div> <!--panel-body-->
+                    <div class="panel-body" data-bind="visible : $root.HasMapData()">
+                        <ul class="nav nav-tabs" role="tablist" style="margin-bottom : 10px">
+                            <li role="presentation" class="active" data-bind="clickShowMap : Address"><a href="#map-location" aria-controls="home" role="tab" data-toggle="tab">Location</a></li>
+                            <li role="presentation" data-bind="clickShowSchoolsNearBy : Address"><a aria-controls="profile" role="tab" data-toggle="tab">Schools near by</a></li>
+                            <li role="presentation" data-bind="clickShowTransport : Address"><a aria-controls="profile" role="tab" data-toggle="tab">Transports near by</a></li>
+                        </ul>
+                        @*<ul class="list-group" style="margin-bottom: 10px">
+                                <li class="list-group-item list-group-item-info">Cras sit amet nibh libero</li>
+                            </ul>*@
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="map-location">
+                                <div id="map"></div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div> <!--panel-primary-->
+            </div> <!--coloumn-->
+        </div> <!--row-->
+    </div> <!--rentalPropertyDetails-->
+</div> <!--propertyRentalDetail-->
+@************************************* Rental Application Form ************************************@
+
+<div id="rentalApplicationForm" data-bind="with:SelectedRentalProperty()" class="modal fade" tabindex="-1" role="dialog" style="overflow-y: auto;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Rental Application Form</h4>
+            </div>
+            <div class="modal-body">
+                <form id="rentalApplicationform" data-bind="visible : Cancel() == false">
+
+                    <table class="table table-striped rental-app">
+                        <tr>
+                            <th>Property Name</th>
+                            <td>: &nbsp;<span data-bind="text:PropertyName"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Location</th>
+                            <td>: &nbsp;<span data-bind="text:PropertyAddress"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Tenant Count</th>
+                            <td style="display:inline">
+                                <input type="text" data-bind="value:TenantCount" />
+                                @*<span data-bind="visible: $root.checkPersonCount> MaxNoPersons">Maximum no of Occupents is
+                                    <span data-bind="text:MaxNoPersons"></span></span></td>*@
+                        </tr>
+                        <tr>
+                            <th>Note</th>
+                            <td>
+                                <textarea class="form-control" data-bind="value:TenantNote" id="tenantNote" style="border-radius:0px; padding-left:8px" maxlength="100" rows="6" cols="40"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Upload Documents</th>
+                            <td>
+                                <ul data-bind="foreach: MediaFiles()">
+                                    <li>
+                                        <a data-bind="click: $parent.removePhoto">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </a>
+
+                                        <span data-bind="text: OldFileName"></span><br />
+                                    </li>
+                                </ul>
+                                <span class="btn btn-success" id="file-upload" name="fileName">
+                                    <i class="fa fa-cloud-upload"></i>
+                                    Choose Files
+                                    <input type="file" class="key-upload" @*data-bind="event: {change:fileUpload}"*@ data-bind="filesUpload : MediaFiles@*, fileWarning : FileWarning*@" accept="application/pdf,image/*" multiple />
+                                </span>
+                                <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*</p>   @*<p id="photo_validation">You can upload up to 5 photos</p>*@
+                                @*<p id="file-warning" data-bind="text:FileWarning"></p>*@
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+                <div data-bind="visible : Cancel()">
+                    <h6>Do you want to cancel the application ?</h6>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-bind="visible: Cancel(), click:$root.closeRentalApplicationModal" data-target="#cancel" data-toggle="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-bind="visible : Cancel(), click: Cancel(false)" autofocus>No</button>
+                <button type="button" class="btn btn-secondary" data-bind="visible: Cancel() == false, click: Cancel(true)">Cancel</button>
+                <button type="button" id="submit" class="btn btn-primary" data-dismiss="modal" data-bind="visible : Cancel()==false, click:SubmitApp" autofocus data-target="#submt" data-toggle="modal">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>

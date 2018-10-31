@@ -1,0 +1,2440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KeysModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="KeysEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="KeysModel.C__MigrationHistory" />
+    <EntitySet Name="Company" EntityType="KeysModel.Company" />
+    <EntitySet Name="Country" EntityType="KeysModel.Country" />
+    <EntitySet Name="Job" EntityType="KeysModel.Job" />
+    <EntitySet Name="JobQuote" EntityType="KeysModel.JobQuote" />
+    <EntitySet Name="JobQuoteMedia" EntityType="KeysModel.JobQuoteMedia" />
+    <EntitySet Name="Login" EntityType="KeysModel.Login" />
+    <EntitySet Name="LoginClaim" EntityType="KeysModel.LoginClaim" />
+    <EntitySet Name="LoginRole" EntityType="KeysModel.LoginRole" />
+    <EntitySet Name="LoginSocialMedia" EntityType="KeysModel.LoginSocialMedia" />
+    <EntitySet Name="Manager" EntityType="KeysModel.Manager" />
+    <EntitySet Name="ManagerProperty" EntityType="KeysModel.ManagerProperty" />
+    <EntitySet Name="Media" EntityType="KeysModel.Media" />
+    <EntitySet Name="MediaType" EntityType="KeysModel.MediaType" />
+    <EntitySet Name="OwnerProperty" EntityType="KeysModel.OwnerProperty" />
+    <EntitySet Name="Owners" EntityType="KeysModel.Owners" />
+    <EntitySet Name="OwnershipStatus" EntityType="KeysModel.OwnershipStatus" />
+    <EntitySet Name="Person" EntityType="KeysModel.Person" />
+    <EntitySet Name="Property" EntityType="KeysModel.Property" />
+    <EntitySet Name="PropertyExpense" EntityType="KeysModel.PropertyExpense" />
+    <EntitySet Name="PropertyFinance" EntityType="KeysModel.PropertyFinance" />
+    <EntitySet Name="PropertyHomeValue" EntityType="KeysModel.PropertyHomeValue" />
+    <EntitySet Name="PropertyHomeValueType" EntityType="KeysModel.PropertyHomeValueType" />
+    <EntitySet Name="PropertyMedia" EntityType="KeysModel.PropertyMedia" />
+    <EntitySet Name="PropertyRentalPayment" EntityType="KeysModel.PropertyRentalPayment" />
+    <EntitySet Name="PropertyRepayment" EntityType="KeysModel.PropertyRepayment" />
+    <EntitySet Name="PropertyRequest" EntityType="KeysModel.PropertyRequest" />
+    <EntitySet Name="PropertyRequestMedia" EntityType="KeysModel.PropertyRequestMedia" />
+    <EntitySet Name="PropertyType" EntityType="KeysModel.PropertyType" />
+    <EntitySet Name="RentalApplication" EntityType="KeysModel.RentalApplication" />
+    <EntitySet Name="RentalApplicationMedia" EntityType="KeysModel.RentalApplicationMedia" />
+    <EntitySet Name="RentalApplicationStatus" EntityType="KeysModel.RentalApplicationStatus" />
+    <EntitySet Name="RentalListing" EntityType="KeysModel.RentalListing" />
+    <EntitySet Name="RentalListingMedia" EntityType="KeysModel.RentalListingMedia" />
+    <EntitySet Name="RentalListingStatus" EntityType="KeysModel.RentalListingStatus" />
+    <EntitySet Name="RequestStatus" EntityType="KeysModel.RequestStatus" />
+    <EntitySet Name="RequestType" EntityType="KeysModel.RequestType" />
+    <EntitySet Name="Role" EntityType="KeysModel.Role" />
+    <EntitySet Name="ServiceProvider" EntityType="KeysModel.ServiceProvider" />
+    <EntitySet Name="ServiceProviderJobStatus" EntityType="KeysModel.ServiceProviderJobStatus" />
+    <EntitySet Name="Status" EntityType="KeysModel.Status" />
+    <EntitySet Name="sysdiagrams" EntityType="KeysModel.sysdiagrams" />
+    <EntitySet Name="TargetRentType" EntityType="KeysModel.TargetRentType" />
+    <EntitySet Name="Tenant" EntityType="KeysModel.Tenant" />
+    <EntitySet Name="TenantJobRequest" EntityType="KeysModel.TenantJobRequest" />
+    <EntitySet Name="TenantJobRequestMedia" EntityType="KeysModel.TenantJobRequestMedia" />
+    <EntitySet Name="TenantJobStatus" EntityType="KeysModel.TenantJobStatus" />
+    <EntitySet Name="TenantMedia" EntityType="KeysModel.TenantMedia" />
+    <EntitySet Name="TenantPaymentFrequencies" EntityType="KeysModel.TenantPaymentFrequencies" />
+    <EntitySet Name="TenantProperty" EntityType="KeysModel.TenantProperty" />
+    <EntitySet Name="XeroTokenStore" EntityType="KeysModel.XeroTokenStore" />
+    <EntitySet Name="Login_Deleted" EntityType="KeysModel.Login_Deleted" />
+    <AssociationSet Name="FK_Company_Company" Association="KeysModel.FK_Company_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Company1" EntitySet="Company" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manager_Company" Association="KeysModel.FK_Manager_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Manager" EntitySet="Manager" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Provider_Company" Association="KeysModel.FK_Provider_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="ServiceProvider" EntitySet="ServiceProvider" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Provider_Property_ProviderJobStatus" Association="KeysModel.FK_Provider_Property_ProviderJobStatus">
+      <End Role="ServiceProviderJobStatus" EntitySet="ServiceProviderJobStatus" />
+      <End Role="Job" EntitySet="Job" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceProviderProperty_Property" Association="KeysModel.FK_ServiceProviderProperty_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="Job" EntitySet="Job" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceProviderProperty_ServiceProvider" Association="KeysModel.FK_ServiceProviderProperty_ServiceProvider">
+      <End Role="ServiceProvider" EntitySet="ServiceProvider" />
+      <End Role="Job" EntitySet="Job" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobQuote_JobRequest" Association="KeysModel.FK_JobQuote_JobRequest">
+      <End Role="TenantJobRequest" EntitySet="TenantJobRequest" />
+      <End Role="JobQuote" EntitySet="JobQuote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobQuote_ServiceProvider" Association="KeysModel.FK_JobQuote_ServiceProvider">
+      <End Role="ServiceProvider" EntitySet="ServiceProvider" />
+      <End Role="JobQuote" EntitySet="JobQuote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobQuoteMedia_JobQuote" Association="KeysModel.FK_JobQuoteMedia_JobQuote">
+      <End Role="JobQuote" EntitySet="JobQuote" />
+      <End Role="JobQuoteMedia" EntitySet="JobQuoteMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Login_Person" Association="KeysModel.FK_Login_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Login" EntitySet="Login" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_LoginClaim" Association="KeysModel.FK_Person_LoginClaim">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="LoginClaim" EntitySet="LoginClaim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_LoginRole_dbo_Role_RoleId" Association="KeysModel.FK_dbo_LoginRole_dbo_Role_RoleId">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="LoginRole" EntitySet="LoginRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_LoginRole" Association="KeysModel.FK_Person_LoginRole">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="LoginRole" EntitySet="LoginRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manager_Person" Association="KeysModel.FK_Manager_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Manager" EntitySet="Manager" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manager_Property_Manager" Association="KeysModel.FK_Manager_Property_Manager">
+      <End Role="Manager" EntitySet="Manager" />
+      <End Role="ManagerProperty" EntitySet="ManagerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manager_Property_Property" Association="KeysModel.FK_Manager_Property_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="ManagerProperty" EntitySet="ManagerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Media_MediaType" Association="KeysModel.FK_Media_MediaType">
+      <End Role="MediaType" EntitySet="MediaType" />
+      <End Role="Media" EntitySet="Media" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tenant_Media" Association="KeysModel.FK_Tenant_Media">
+      <End Role="Media" EntitySet="Media" />
+      <End Role="TenantMedia" EntitySet="TenantMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Property_Owner" Association="KeysModel.FK_Owner_Property_Owner">
+      <End Role="Owners" EntitySet="Owners" />
+      <End Role="OwnerProperty" EntitySet="OwnerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Property_OwnershipStatus" Association="KeysModel.FK_Owner_Property_OwnershipStatus">
+      <End Role="OwnershipStatus" EntitySet="OwnershipStatus" />
+      <End Role="OwnerProperty" EntitySet="OwnerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Property_Person" Association="KeysModel.FK_Owner_Property_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="OwnerProperty" EntitySet="OwnerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Property_Property" Association="KeysModel.FK_Owner_Property_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="OwnerProperty" EntitySet="OwnerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Person" Association="KeysModel.FK_Owner_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Owners" EntitySet="Owners" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantJobRequest_Owners" Association="KeysModel.FK_TenantJobRequest_Owners">
+      <End Role="Owners" EntitySet="Owners" />
+      <End Role="TenantJobRequest" EntitySet="TenantJobRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Provider_Person" Association="KeysModel.FK_Provider_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="ServiceProvider" EntitySet="ServiceProvider" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalApplication_Person" Association="KeysModel.FK_RentalApplication_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="RentalApplication" EntitySet="RentalApplication" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tenant_Person" Association="KeysModel.FK_Tenant_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Tenant" EntitySet="Tenant" />
+    </AssociationSet>
+    <AssociationSet Name="FK_XeroTokenStore_Person" Association="KeysModel.FK_XeroTokenStore_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="XeroTokenStore" EntitySet="XeroTokenStore" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Expense_PropertyId" Association="KeysModel.FK_Expense_PropertyId">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="PropertyExpense" EntitySet="PropertyExpense" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Finance_PropertyId" Association="KeysModel.FK_Finance_PropertyId">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="PropertyFinance" EntitySet="PropertyFinance" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_PropertyType" Association="KeysModel.FK_Property_PropertyType">
+      <End Role="PropertyType" EntitySet="PropertyType" />
+      <End Role="Property" EntitySet="Property" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_TargetRentType" Association="KeysModel.FK_Property_TargetRentType">
+      <End Role="TargetRentType" EntitySet="TargetRentType" />
+      <End Role="Property" EntitySet="Property" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyId" Association="KeysModel.FK_PropertyId">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="PropertyHomeValue" EntitySet="PropertyHomeValue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyMedia_Property" Association="KeysModel.FK_PropertyMedia_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="PropertyMedia" EntitySet="PropertyMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyRequest_Property" Association="KeysModel.FK_PropertyRequest_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="PropertyRequest" EntitySet="PropertyRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalListing_Property" Association="KeysModel.FK_RentalListing_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="RentalListing" EntitySet="RentalListing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalPayment_PropertyId" Association="KeysModel.FK_RentalPayment_PropertyId">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="PropertyRentalPayment" EntitySet="PropertyRentalPayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Repayment_PropertyId" Association="KeysModel.FK_Repayment_PropertyId">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="PropertyRepayment" EntitySet="PropertyRepayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tenant_Property_Property" Association="KeysModel.FK_Tenant_Property_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="TenantProperty" EntitySet="TenantProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantJobRequest_Property" Association="KeysModel.FK_TenantJobRequest_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="TenantJobRequest" EntitySet="TenantJobRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HomeValue_HomeValueType" Association="KeysModel.FK_HomeValue_HomeValueType">
+      <End Role="PropertyHomeValueType" EntitySet="PropertyHomeValueType" />
+      <End Role="PropertyHomeValue" EntitySet="PropertyHomeValue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalPayment_FrequencyType" Association="KeysModel.FK_RentalPayment_FrequencyType">
+      <End Role="TargetRentType" EntitySet="TargetRentType" />
+      <End Role="PropertyRentalPayment" EntitySet="PropertyRentalPayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Repayment_FrequencyType" Association="KeysModel.FK_Repayment_FrequencyType">
+      <End Role="TargetRentType" EntitySet="TargetRentType" />
+      <End Role="PropertyRepayment" EntitySet="PropertyRepayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyRequest_RequestStatus" Association="KeysModel.FK_PropertyRequest_RequestStatus">
+      <End Role="RequestStatus" EntitySet="RequestStatus" />
+      <End Role="PropertyRequest" EntitySet="PropertyRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyRequest_RequestType" Association="KeysModel.FK_PropertyRequest_RequestType">
+      <End Role="RequestType" EntitySet="RequestType" />
+      <End Role="PropertyRequest" EntitySet="PropertyRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyRequestMedia_PropertyRequest" Association="KeysModel.FK_PropertyRequestMedia_PropertyRequest">
+      <End Role="PropertyRequest" EntitySet="PropertyRequest" />
+      <End Role="PropertyRequestMedia" EntitySet="PropertyRequestMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyType_PropertyType" Association="KeysModel.FK_PropertyType_PropertyType">
+      <End Role="PropertyType" EntitySet="PropertyType" />
+      <End Role="PropertyType1" EntitySet="PropertyType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalApplication_RentalApplicationStatus" Association="KeysModel.FK_RentalApplication_RentalApplicationStatus">
+      <End Role="RentalApplicationStatus" EntitySet="RentalApplicationStatus" />
+      <End Role="RentalApplication" EntitySet="RentalApplication" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalApplication_RentalListing" Association="KeysModel.FK_RentalApplication_RentalListing">
+      <End Role="RentalListing" EntitySet="RentalListing" />
+      <End Role="RentalApplication" EntitySet="RentalApplication" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalApplicationMedia_RentalApplication" Association="KeysModel.FK_RentalApplicationMedia_RentalApplication">
+      <End Role="RentalApplication" EntitySet="RentalApplication" />
+      <End Role="RentalApplicationMedia" EntitySet="RentalApplicationMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalListing_RentalListingStatus" Association="KeysModel.FK_RentalListing_RentalListingStatus">
+      <End Role="RentalListingStatus" EntitySet="RentalListingStatus" />
+      <End Role="RentalListing" EntitySet="RentalListing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalListingMedia_RentalListing" Association="KeysModel.FK_RentalListingMedia_RentalListing">
+      <End Role="RentalListing" EntitySet="RentalListing" />
+      <End Role="RentalListingMedia" EntitySet="RentalListingMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tenant_Property_Tenant" Association="KeysModel.FK_Tenant_Property_Tenant">
+      <End Role="Tenant" EntitySet="Tenant" />
+      <End Role="TenantProperty" EntitySet="TenantProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tenant_TenantMedia" Association="KeysModel.FK_Tenant_TenantMedia">
+      <End Role="Tenant" EntitySet="Tenant" />
+      <End Role="TenantMedia" EntitySet="TenantMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantJobRequest_TenantJobStatus" Association="KeysModel.FK_TenantJobRequest_TenantJobStatus">
+      <End Role="TenantJobStatus" EntitySet="TenantJobStatus" />
+      <End Role="TenantJobRequest" EntitySet="TenantJobRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantJobRequestMedia_TenantJobrequest" Association="KeysModel.FK_TenantJobRequestMedia_TenantJobrequest">
+      <End Role="TenantJobRequest" EntitySet="TenantJobRequest" />
+      <End Role="TenantJobRequestMedia" EntitySet="TenantJobRequestMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tenant_Property_TenantPaymentFrequency" Association="KeysModel.FK_Tenant_Property_TenantPaymentFrequency">
+      <End Role="TenantPaymentFrequencies" EntitySet="TenantPaymentFrequencies" />
+      <End Role="TenantProperty" EntitySet="TenantProperty" />
+    </AssociationSet>
+    <EntitySet Name="JobMedia" EntityType="KeysModel.JobMedia" />
+    <AssociationSet Name="FK_JobMedia_Job" Association="KeysModel.FK_JobMedia_Job">
+      <End Role="Job" EntitySet="Job" />
+      <End Role="JobMedia" EntitySet="JobMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobMedia_Property" Association="KeysModel.FK_JobMedia_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="JobMedia" EntitySet="JobMedia" />
+    </AssociationSet>
+    <EntitySet Name="RequestReply" EntityType="KeysModel.RequestReply" />
+    <EntitySet Name="RequestReplyMedia" EntityType="KeysModel.RequestReplyMedia" />
+    <AssociationSet Name="FK_RequestReply_PropertyRequest" Association="KeysModel.FK_RequestReply_PropertyRequest">
+      <End Role="PropertyRequest" EntitySet="PropertyRequest" />
+      <End Role="RequestReply" EntitySet="RequestReply" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestReplyMedia_RequestReply" Association="KeysModel.FK_RequestReplyMedia_RequestReply">
+      <End Role="RequestReply" EntitySet="RequestReply" />
+      <End Role="RequestReplyMedia" EntitySet="RequestReplyMedia" />
+    </AssociationSet>
+    <EntitySet Name="TenantPropertyLiability" EntityType="KeysModel.TenantPropertyLiability" />
+    <AssociationSet Name="FK_TenantPropertyLiability_TenantProperty" Association="KeysModel.FK_TenantPropertyLiability_TenantProperty">
+      <End Role="TenantProperty" EntitySet="TenantProperty" />
+      <End Role="TenantPropertyLiability" EntitySet="TenantPropertyLiability" />
+    </AssociationSet>
+    <EntitySet Name="InspectionStatus" EntityType="KeysModel.InspectionStatus" />
+    <EntitySet Name="InspectionMedia" EntityType="KeysModel.InspectionMedia" />
+    <EntitySet Name="PersonMedia" EntityType="KeysModel.PersonMedia" />
+    <AssociationSet Name="FK_PersonMedia_Person" Association="KeysModel.FK_PersonMedia_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="PersonMedia" EntitySet="PersonMedia" />
+    </AssociationSet>
+    <EntitySet Name="Inspection" EntityType="KeysModel.Inspection" />
+    <AssociationSet Name="FK_Inspection_InspectionStatus" Association="KeysModel.FK_Inspection_InspectionStatus">
+      <End Role="InspectionStatus" EntitySet="InspectionStatus" />
+      <End Role="Inspection" EntitySet="Inspection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inspection_Property" Association="KeysModel.FK_Inspection_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="Inspection" EntitySet="Inspection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inspection_PropertyRequest" Association="KeysModel.FK_Inspection_PropertyRequest">
+      <End Role="PropertyRequest" EntitySet="PropertyRequest" />
+      <End Role="Inspection" EntitySet="Inspection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InspectionMedia_InspectionMedia" Association="KeysModel.FK_InspectionMedia_InspectionMedia">
+      <End Role="Inspection" EntitySet="Inspection" />
+      <End Role="InspectionMedia" EntitySet="InspectionMedia" />
+    </AssociationSet>
+    <EntitySet Name="JobWatchList" EntityType="KeysModel.JobWatchList" />
+    <EntitySet Name="RentalWatchList" EntityType="KeysModel.RentalWatchList" />
+    <AssociationSet Name="FK_ServiceProviderWatchList_Person" Association="KeysModel.FK_ServiceProviderWatchList_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="JobWatchList" EntitySet="JobWatchList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceProviderWatchList_TenantJobRequest" Association="KeysModel.FK_ServiceProviderWatchList_TenantJobRequest">
+      <End Role="TenantJobRequest" EntitySet="TenantJobRequest" />
+      <End Role="JobWatchList" EntitySet="JobWatchList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantWatchList_Person" Association="KeysModel.FK_TenantWatchList_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="RentalWatchList" EntitySet="RentalWatchList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantWatchList_RentalListing" Association="KeysModel.FK_TenantWatchList_RentalListing">
+      <End Role="RentalListing" EntitySet="RentalListing" />
+      <End Role="RentalWatchList" EntitySet="RentalWatchList" />
+    </AssociationSet>
+    <EntitySet Name="Address" EntityType="KeysModel.Address" />
+    <AssociationSet Name="FK_Address_Country" Association="KeysModel.FK_Address_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="Address" EntitySet="Address" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Company_BillingAddress" Association="KeysModel.FK_Company_BillingAddress">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="Company" EntitySet="Company" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Company_PhysicalAddress" Association="KeysModel.FK_Company_PhysicalAddress">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="Company" EntitySet="Company" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_Address" Association="KeysModel.FK_Person_Address">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="Person" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_Address1" Association="KeysModel.FK_Person_Address1">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="Person" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_Address" Association="KeysModel.FK_Property_Address">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="Property" EntitySet="Property" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantAddress" Association="KeysModel.FK_TenantAddress">
+      <End Role="Address" EntitySet="Address" />
+      <End Role="Tenant" EntitySet="Tenant" />
+    </AssociationSet>
+    <EntitySet Name="UserRating" EntityType="KeysModel.UserRating" />
+    <AssociationSet Name="FK_UserRating_Person" Association="KeysModel.FK_UserRating_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="UserRating" EntitySet="UserRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRating_Person1" Association="KeysModel.FK_UserRating_Person1">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="UserRating" EntitySet="UserRating" />
+    </AssociationSet>
+    <EntitySet Name="MessageDeliveryType" EntityType="KeysModel.MessageDeliveryType" />
+    <EntitySet Name="MessageType" EntityType="KeysModel.MessageType" />
+    <EntitySet Name="OutGoingMessage" EntityType="KeysModel.OutGoingMessage" />
+    <AssociationSet Name="FK_OutGoingMessage_MessageDeliveryType" Association="KeysModel.FK_OutGoingMessage_MessageDeliveryType">
+      <End Role="MessageDeliveryType" EntitySet="MessageDeliveryType" />
+      <End Role="OutGoingMessage" EntitySet="OutGoingMessage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OutGoingMessage_MessageType" Association="KeysModel.FK_OutGoingMessage_MessageType">
+      <End Role="MessageType" EntitySet="MessageType" />
+      <End Role="OutGoingMessage" EntitySet="OutGoingMessage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OutGoingMessage_Person" Association="KeysModel.FK_OutGoingMessage_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="OutGoingMessage" EntitySet="OutGoingMessage" />
+    </AssociationSet>
+    <EntitySet Name="RentalPaymentTracking" EntityType="KeysModel.RentalPaymentTracking" />
+    <AssociationSet Name="FK_RentalPaymentTracking_TenantProperty" Association="KeysModel.FK_RentalPaymentTracking_TenantProperty">
+      <End Role="TenantProperty" EntitySet="TenantProperty" />
+      <End Role="RentalPaymentTracking" EntitySet="RentalPaymentTracking" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PhysicalAddressId" Type="Int32" Nullable="false" />
+    <Property Name="BillingAddressId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Website" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="ProfilePhoto" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Company1" Relationship="KeysModel.FK_Company_Company" FromRole="Company" ToRole="Company1" />
+    <NavigationProperty Name="Company2" Relationship="KeysModel.FK_Company_Company" FromRole="Company1" ToRole="Company" />
+    <NavigationProperty Name="Manager" Relationship="KeysModel.FK_Manager_Company" FromRole="Company" ToRole="Manager" />
+    <NavigationProperty Name="ServiceProvider" Relationship="KeysModel.FK_Provider_Company" FromRole="Company" ToRole="ServiceProvider" />
+    <NavigationProperty Name="Address" Relationship="KeysModel.FK_Company_BillingAddress" FromRole="Company" ToRole="Address" />
+    <NavigationProperty Name="Address1" Relationship="KeysModel.FK_Company_PhysicalAddress" FromRole="Company" ToRole="Address" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Address" Relationship="KeysModel.FK_Address_Country" FromRole="Country" ToRole="Address" />
+  </EntityType>
+  <EntityType Name="Job">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProviderId" Type="Int32" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="PaymentAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="JobStartDate" Type="DateTime" Precision="3" />
+    <Property Name="JobEndDate" Type="DateTime" Precision="3" />
+    <Property Name="JobDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="JobStatusId" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MaxBudget" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PercentDone" Type="Int32" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AcceptedQuote" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="ServiceProviderJobStatus" Relationship="KeysModel.FK_Provider_Property_ProviderJobStatus" FromRole="Job" ToRole="ServiceProviderJobStatus" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_ServiceProviderProperty_Property" FromRole="Job" ToRole="Property" />
+    <NavigationProperty Name="ServiceProvider" Relationship="KeysModel.FK_ServiceProviderProperty_ServiceProvider" FromRole="Job" ToRole="ServiceProvider" />
+    <NavigationProperty Name="JobMedia" Relationship="KeysModel.FK_JobMedia_Job" FromRole="Job" ToRole="JobMedia" />
+    <Property Name="OwnerUpdate" Type="Boolean" />
+    <Property Name="ServiceUpdate" Type="Boolean" />
+    <Property Name="JobRequestId" Type="Int32" />
+    <Property Name="OwnerId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="JobQuote">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobRequestId" Type="Int32" Nullable="false" />
+    <Property Name="ProviderId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsViewed" Type="Boolean" />
+    <NavigationProperty Name="TenantJobRequest" Relationship="KeysModel.FK_JobQuote_JobRequest" FromRole="JobQuote" ToRole="TenantJobRequest" />
+    <NavigationProperty Name="ServiceProvider" Relationship="KeysModel.FK_JobQuote_ServiceProvider" FromRole="JobQuote" ToRole="ServiceProvider" />
+    <NavigationProperty Name="JobQuoteMedia" Relationship="KeysModel.FK_JobQuoteMedia_JobQuote" FromRole="JobQuote" ToRole="JobQuoteMedia" />
+  </EntityType>
+  <EntityType Name="JobQuoteMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobQuoteId" Type="Int32" Nullable="false" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="JobQuote" Relationship="KeysModel.FK_JobQuoteMedia_JobQuote" FromRole="JobQuoteMedia" ToRole="JobQuote" />
+  </EntityType>
+  <EntityType Name="Login">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="EmailConfirmationToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmationTokenExpiryDate" Type="DateTime" Precision="3" />
+    <Property Name="ResetPasswordToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ResetPasswordTokenExpiryDate" Type="DateTime" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="FirstTimeLogin" Type="Boolean" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_Login_Person" FromRole="Login" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="LoginClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_Person_LoginClaim" FromRole="LoginClaim" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="LoginRole">
+    <Key>
+      <PropertyRef Name="PersonId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="PendingApproval" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Role" Relationship="KeysModel.FK_dbo_LoginRole_dbo_Role_RoleId" FromRole="LoginRole" ToRole="Role" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_Person_LoginRole" FromRole="LoginRole" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="LoginSocialMedia">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="LoginId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="LoginId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Manager">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CompanyId" Type="Int32" />
+    <NavigationProperty Name="Company" Relationship="KeysModel.FK_Manager_Company" FromRole="Manager" ToRole="Company" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_Manager_Person" FromRole="Manager" ToRole="Person" />
+    <NavigationProperty Name="ManagerProperty" Relationship="KeysModel.FK_Manager_Property_Manager" FromRole="Manager" ToRole="ManagerProperty" />
+  </EntityType>
+  <EntityType Name="ManagerProperty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ManagerId" Type="Int32" Nullable="false" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Manager" Relationship="KeysModel.FK_Manager_Property_Manager" FromRole="ManagerProperty" ToRole="Manager" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_Manager_Property_Property" FromRole="ManagerProperty" ToRole="Property" />
+  </EntityType>
+  <EntityType Name="Media">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OldFileName" Type="String" Nullable="false" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="NewFileName" Type="String" Nullable="false" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="MediaTypeId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MediaType" Relationship="KeysModel.FK_Media_MediaType" FromRole="Media" ToRole="MediaType" />
+    <NavigationProperty Name="TenantMedia" Relationship="KeysModel.FK_Tenant_Media" FromRole="Media" ToRole="TenantMedia" />
+  </EntityType>
+  <EntityType Name="MediaType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Media" Relationship="KeysModel.FK_Media_MediaType" FromRole="MediaType" ToRole="Media" />
+  </EntityType>
+  <EntityType Name="OwnerProperty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OwnerId" Type="Int32" Nullable="false" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="OwnershipStatusId" Type="Int32" Nullable="false" />
+    <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SoldDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Owners" Relationship="KeysModel.FK_Owner_Property_Owner" FromRole="OwnerProperty" ToRole="Owners" />
+    <NavigationProperty Name="OwnershipStatus" Relationship="KeysModel.FK_Owner_Property_OwnershipStatus" FromRole="OwnerProperty" ToRole="OwnershipStatus" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_Owner_Property_Person" FromRole="OwnerProperty" ToRole="Person" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_Owner_Property_Property" FromRole="OwnerProperty" ToRole="Property" />
+  </EntityType>
+  <EntityType Name="Owners">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="OwnerProperty" Relationship="KeysModel.FK_Owner_Property_Owner" FromRole="Owners" ToRole="OwnerProperty" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_Owner_Person" FromRole="Owners" ToRole="Person" />
+    <NavigationProperty Name="TenantJobRequest" Relationship="KeysModel.FK_TenantJobRequest_Owners" FromRole="Owners" ToRole="TenantJobRequest" />
+  </EntityType>
+  <EntityType Name="OwnershipStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="OwnerProperty" Relationship="KeysModel.FK_Owner_Property_OwnershipStatus" FromRole="OwnershipStatus" ToRole="OwnerProperty" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Salutation" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="UID" Type="Guid" Nullable="false" />
+    <Property Name="EthnicityId" Type="Int32" />
+    <Property Name="TimeZoneIdentifier" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Culture" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="GenderId" Type="Int32" />
+    <Property Name="Language" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="PlaceOfBirth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PreferenceSetting" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="BillingAddressId" Type="Int32" Nullable="false" />
+    <Property Name="PhysicalAddressId" Type="Int32" Nullable="false" />
+    <Property Name="CVFile" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="LinkedinUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="LoginId" Type="Int32" Nullable="false" />
+    <Property Name="ProfilePhoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Login" Relationship="KeysModel.FK_Login_Person" FromRole="Person" ToRole="Login" />
+    <NavigationProperty Name="LoginClaim" Relationship="KeysModel.FK_Person_LoginClaim" FromRole="Person" ToRole="LoginClaim" />
+    <NavigationProperty Name="LoginRole" Relationship="KeysModel.FK_Person_LoginRole" FromRole="Person" ToRole="LoginRole" />
+    <NavigationProperty Name="Manager" Relationship="KeysModel.FK_Manager_Person" FromRole="Person" ToRole="Manager" />
+    <NavigationProperty Name="OwnerProperty" Relationship="KeysModel.FK_Owner_Property_Person" FromRole="Person" ToRole="OwnerProperty" />
+    <NavigationProperty Name="Owners" Relationship="KeysModel.FK_Owner_Person" FromRole="Person" ToRole="Owners" />
+    <NavigationProperty Name="ServiceProvider" Relationship="KeysModel.FK_Provider_Person" FromRole="Person" ToRole="ServiceProvider" />
+    <NavigationProperty Name="RentalApplication" Relationship="KeysModel.FK_RentalApplication_Person" FromRole="Person" ToRole="RentalApplication" />
+    <NavigationProperty Name="Tenant" Relationship="KeysModel.FK_Tenant_Person" FromRole="Person" ToRole="Tenant" />
+    <NavigationProperty Name="XeroTokenStore" Relationship="KeysModel.FK_XeroTokenStore_Person" FromRole="Person" ToRole="XeroTokenStore" />
+    <NavigationProperty Name="PersonMedia" Relationship="KeysModel.FK_PersonMedia_Person" FromRole="Person" ToRole="PersonMedia" />
+    <NavigationProperty Name="JobWatchList" Relationship="KeysModel.FK_ServiceProviderWatchList_Person" FromRole="Person" ToRole="JobWatchList" />
+    <NavigationProperty Name="RentalWatchList" Relationship="KeysModel.FK_TenantWatchList_Person" FromRole="Person" ToRole="RentalWatchList" />
+    <NavigationProperty Name="Address" Relationship="KeysModel.FK_Person_Address" FromRole="Person" ToRole="Address" />
+    <NavigationProperty Name="Address1" Relationship="KeysModel.FK_Person_Address1" FromRole="Person" ToRole="Address" />
+    <NavigationProperty Name="UserRating" Relationship="KeysModel.FK_UserRating_Person" FromRole="Person" ToRole="UserRating" />
+    <NavigationProperty Name="UserRating1" Relationship="KeysModel.FK_UserRating_Person1" FromRole="Person" ToRole="UserRating" />
+    <NavigationProperty Name="OutGoingMessage" Relationship="KeysModel.FK_OutGoingMessage_Person" FromRole="Person" ToRole="OutGoingMessage" />
+  </EntityType>
+  <EntityType Name="Property">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyTypeId" Type="Int32" Nullable="false" />
+    <Property Name="AddressId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="Bedroom" Type="Int32" />
+    <Property Name="Bathroom" Type="Int32" />
+    <Property Name="LandSqm" Type="Double" />
+    <Property Name="ParkingSpace" Type="Int32" />
+    <Property Name="FloorArea" Type="Double" />
+    <Property Name="TargetRent" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TargetRentTypeId" Type="Int32" Nullable="false" />
+    <Property Name="YearBuilt" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HasCompany" Type="Boolean" />
+    <Property Name="IsOwnerOccupied" Type="Boolean" />
+    <NavigationProperty Name="Job" Relationship="KeysModel.FK_ServiceProviderProperty_Property" FromRole="Property" ToRole="Job" />
+    <NavigationProperty Name="ManagerProperty" Relationship="KeysModel.FK_Manager_Property_Property" FromRole="Property" ToRole="ManagerProperty" />
+    <NavigationProperty Name="OwnerProperty" Relationship="KeysModel.FK_Owner_Property_Property" FromRole="Property" ToRole="OwnerProperty" />
+    <NavigationProperty Name="PropertyExpense" Relationship="KeysModel.FK_Expense_PropertyId" FromRole="Property" ToRole="PropertyExpense" />
+    <NavigationProperty Name="PropertyFinance" Relationship="KeysModel.FK_Finance_PropertyId" FromRole="Property" ToRole="PropertyFinance" />
+    <NavigationProperty Name="PropertyType" Relationship="KeysModel.FK_Property_PropertyType" FromRole="Property" ToRole="PropertyType" />
+    <NavigationProperty Name="TargetRentType" Relationship="KeysModel.FK_Property_TargetRentType" FromRole="Property" ToRole="TargetRentType" />
+    <NavigationProperty Name="PropertyHomeValue" Relationship="KeysModel.FK_PropertyId" FromRole="Property" ToRole="PropertyHomeValue" />
+    <NavigationProperty Name="PropertyMedia" Relationship="KeysModel.FK_PropertyMedia_Property" FromRole="Property" ToRole="PropertyMedia" />
+    <NavigationProperty Name="PropertyRequest" Relationship="KeysModel.FK_PropertyRequest_Property" FromRole="Property" ToRole="PropertyRequest" />
+    <NavigationProperty Name="RentalListing" Relationship="KeysModel.FK_RentalListing_Property" FromRole="Property" ToRole="RentalListing" />
+    <NavigationProperty Name="PropertyRentalPayment" Relationship="KeysModel.FK_RentalPayment_PropertyId" FromRole="Property" ToRole="PropertyRentalPayment" />
+    <NavigationProperty Name="PropertyRepayment" Relationship="KeysModel.FK_Repayment_PropertyId" FromRole="Property" ToRole="PropertyRepayment" />
+    <NavigationProperty Name="TenantProperty" Relationship="KeysModel.FK_Tenant_Property_Property" FromRole="Property" ToRole="TenantProperty" />
+    <NavigationProperty Name="TenantJobRequest" Relationship="KeysModel.FK_TenantJobRequest_Property" FromRole="Property" ToRole="TenantJobRequest" />
+    <NavigationProperty Name="JobMedia" Relationship="KeysModel.FK_JobMedia_Property" FromRole="Property" ToRole="JobMedia" />
+    <NavigationProperty Name="Inspection" Relationship="KeysModel.FK_Inspection_Property" FromRole="Property" ToRole="Inspection" />
+    <NavigationProperty Name="Address" Relationship="KeysModel.FK_Property_Address" FromRole="Property" ToRole="Address" />
+  </EntityType>
+  <EntityType Name="PropertyExpense">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_Expense_PropertyId" FromRole="PropertyExpense" ToRole="Property" />
+  </EntityType>
+  <EntityType Name="PropertyFinance">
+    <Key>
+      <PropertyRef Name="PropertyId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Mortgage" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TotalRepayment" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TotalExpense" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Yield" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CurrentHomeValue" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CapitalGain" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ActualRentalPayments" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_Finance_PropertyId" FromRole="PropertyFinance" ToRole="Property" />
+  </EntityType>
+  <EntityType Name="PropertyHomeValue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="Value" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="HomeValueTypeId" Type="Int32" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_PropertyId" FromRole="PropertyHomeValue" ToRole="Property" />
+    <NavigationProperty Name="PropertyHomeValueType" Relationship="KeysModel.FK_HomeValue_HomeValueType" FromRole="PropertyHomeValue" ToRole="PropertyHomeValueType" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="PropertyHomeValueType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HomeValueType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PropertyHomeValue" Relationship="KeysModel.FK_HomeValue_HomeValueType" FromRole="PropertyHomeValueType" ToRole="PropertyHomeValue" />
+  </EntityType>
+  <EntityType Name="PropertyMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="NewFileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="OldFileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="EntityGuid" Type="Guid" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_PropertyMedia_Property" FromRole="PropertyMedia" ToRole="Property" />
+  </EntityType>
+  <EntityType Name="PropertyRentalPayment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FrequencyType" Type="Int32" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_RentalPayment_PropertyId" FromRole="PropertyRentalPayment" ToRole="Property" />
+    <NavigationProperty Name="TargetRentType" Relationship="KeysModel.FK_RentalPayment_FrequencyType" FromRole="PropertyRentalPayment" ToRole="TargetRentType" />
+  </EntityType>
+  <EntityType Name="PropertyRepayment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FrequencyType" Type="Int32" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_Repayment_PropertyId" FromRole="PropertyRepayment" ToRole="Property" />
+    <NavigationProperty Name="TargetRentType" Relationship="KeysModel.FK_Repayment_FrequencyType" FromRole="PropertyRepayment" ToRole="TargetRentType" />
+  </EntityType>
+  <EntityType Name="PropertyRequest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestTypeId" Type="Int32" Nullable="false" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="ToOwner" Type="Boolean" Nullable="false" />
+    <Property Name="ToTenant" Type="Boolean" Nullable="false" />
+    <Property Name="RequestMessage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RequestStatusId" Type="Int32" Nullable="false" />
+    <Property Name="IsViewed" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsUpdated" Type="Boolean" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_PropertyRequest_Property" FromRole="PropertyRequest" ToRole="Property" />
+    <NavigationProperty Name="RequestStatus" Relationship="KeysModel.FK_PropertyRequest_RequestStatus" FromRole="PropertyRequest" ToRole="RequestStatus" />
+    <NavigationProperty Name="RequestType" Relationship="KeysModel.FK_PropertyRequest_RequestType" FromRole="PropertyRequest" ToRole="RequestType" />
+    <NavigationProperty Name="PropertyRequestMedia" Relationship="KeysModel.FK_PropertyRequestMedia_PropertyRequest" FromRole="PropertyRequest" ToRole="PropertyRequestMedia" />
+    <NavigationProperty Name="RequestReply" Relationship="KeysModel.FK_RequestReply_PropertyRequest" FromRole="PropertyRequest" ToRole="RequestReply" />
+    <Property Name="DueDate" Type="DateTime" Precision="3" />
+    <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Inspection" Relationship="KeysModel.FK_Inspection_PropertyRequest" FromRole="PropertyRequest" ToRole="Inspection" />
+    <Property Name="RecipientId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="PropertyRequestMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyRequestId" Type="Int32" Nullable="false" />
+    <Property Name="OldFileName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="NewFileName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="PropertyRequest" Relationship="KeysModel.FK_PropertyRequestMedia_PropertyRequest" FromRole="PropertyRequestMedia" ToRole="PropertyRequest" />
+  </EntityType>
+  <EntityType Name="PropertyType">
+    <Key>
+      <PropertyRef Name="PropertyTypeId" />
+    </Key>
+    <Property Name="PropertyTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_Property_PropertyType" FromRole="PropertyType" ToRole="Property" />
+    <NavigationProperty Name="PropertyType1" Relationship="KeysModel.FK_PropertyType_PropertyType" FromRole="PropertyType" ToRole="PropertyType1" />
+    <NavigationProperty Name="PropertyType2" Relationship="KeysModel.FK_PropertyType_PropertyType" FromRole="PropertyType1" ToRole="PropertyType" />
+  </EntityType>
+  <EntityType Name="RentalApplication">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RentalListingId" Type="Int32" Nullable="false" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="Note" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="TenantsCount" Type="Int32" />
+    <Property Name="ApplicationStatusId" Type="Int32" Nullable="false" />
+    <Property Name="TenantIdType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="TenantIdNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsViewedByOwner" Type="Boolean" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_RentalApplication_Person" FromRole="RentalApplication" ToRole="Person" />
+    <NavigationProperty Name="RentalApplicationStatus" Relationship="KeysModel.FK_RentalApplication_RentalApplicationStatus" FromRole="RentalApplication" ToRole="RentalApplicationStatus" />
+    <NavigationProperty Name="RentalListing" Relationship="KeysModel.FK_RentalApplication_RentalListing" FromRole="RentalApplication" ToRole="RentalListing" />
+    <NavigationProperty Name="RentalApplicationMedia" Relationship="KeysModel.FK_RentalApplicationMedia_RentalApplication" FromRole="RentalApplication" ToRole="RentalApplicationMedia" />
+  </EntityType>
+  <EntityType Name="RentalApplicationMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RentalApplicationId" Type="Int32" Nullable="false" />
+    <Property Name="NewFileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="OldFileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="EntityGuid" Type="Guid" />
+    <NavigationProperty Name="RentalApplication" Relationship="KeysModel.FK_RentalApplicationMedia_RentalApplication" FromRole="RentalApplicationMedia" ToRole="RentalApplication" />
+  </EntityType>
+  <EntityType Name="RentalApplicationStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RentalApplication" Relationship="KeysModel.FK_RentalApplication_RentalApplicationStatus" FromRole="RentalApplicationStatus" ToRole="RentalApplication" />
+  </EntityType>
+  <EntityType Name="RentalListing">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="MovingCost" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TargetRent" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="AvailableDate" Type="DateTime" Precision="0" />
+    <Property Name="Furnishing" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+    <Property Name="IdealTenant" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OccupantCount" Type="Int32" />
+    <Property Name="PetsAllowed" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="RentalStatusId" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_RentalListing_Property" FromRole="RentalListing" ToRole="Property" />
+    <NavigationProperty Name="RentalApplication" Relationship="KeysModel.FK_RentalApplication_RentalListing" FromRole="RentalListing" ToRole="RentalApplication" />
+    <NavigationProperty Name="RentalListingStatus" Relationship="KeysModel.FK_RentalListing_RentalListingStatus" FromRole="RentalListing" ToRole="RentalListingStatus" />
+    <NavigationProperty Name="RentalListingMedia" Relationship="KeysModel.FK_RentalListingMedia_RentalListing" FromRole="RentalListing" ToRole="RentalListingMedia" />
+    <NavigationProperty Name="RentalWatchList" Relationship="KeysModel.FK_TenantWatchList_RentalListing" FromRole="RentalListing" ToRole="RentalWatchList" />
+  </EntityType>
+  <EntityType Name="RentalListingMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RentalListingId" Type="Int32" Nullable="false" />
+    <Property Name="NewFileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="OldFileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="EntityGuid" Type="Guid" />
+    <NavigationProperty Name="RentalListing" Relationship="KeysModel.FK_RentalListingMedia_RentalListing" FromRole="RentalListingMedia" ToRole="RentalListing" />
+  </EntityType>
+  <EntityType Name="RentalListingStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RentalListing" Relationship="KeysModel.FK_RentalListing_RentalListingStatus" FromRole="RentalListingStatus" ToRole="RentalListing" />
+  </EntityType>
+  <EntityType Name="RequestStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PropertyRequest" Relationship="KeysModel.FK_PropertyRequest_RequestStatus" FromRole="RequestStatus" ToRole="PropertyRequest" />
+  </EntityType>
+  <EntityType Name="RequestType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PropertyRequest" Relationship="KeysModel.FK_PropertyRequest_RequestType" FromRole="RequestType" ToRole="PropertyRequest" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LoginRole" Relationship="KeysModel.FK_dbo_LoginRole_dbo_Role_RoleId" FromRole="Role" ToRole="LoginRole" />
+  </EntityType>
+  <EntityType Name="ServiceProvider">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CompanyId" Type="Int32" />
+    <Property Name="IsProfileComplete" Type="Boolean" />
+    <NavigationProperty Name="Company" Relationship="KeysModel.FK_Provider_Company" FromRole="ServiceProvider" ToRole="Company" />
+    <NavigationProperty Name="Job" Relationship="KeysModel.FK_ServiceProviderProperty_ServiceProvider" FromRole="ServiceProvider" ToRole="Job" />
+    <NavigationProperty Name="JobQuote" Relationship="KeysModel.FK_JobQuote_ServiceProvider" FromRole="ServiceProvider" ToRole="JobQuote" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_Provider_Person" FromRole="ServiceProvider" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="ServiceProviderJobStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Job" Relationship="KeysModel.FK_Provider_Property_ProviderJobStatus" FromRole="ServiceProviderJobStatus" ToRole="Job" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StatusName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TargetRentType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_Property_TargetRentType" FromRole="TargetRentType" ToRole="Property" />
+    <NavigationProperty Name="PropertyRentalPayment" Relationship="KeysModel.FK_RentalPayment_FrequencyType" FromRole="TargetRentType" ToRole="PropertyRentalPayment" />
+    <NavigationProperty Name="PropertyRepayment" Relationship="KeysModel.FK_Repayment_FrequencyType" FromRole="TargetRentType" ToRole="PropertyRepayment" />
+  </EntityType>
+  <EntityType Name="Tenant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+    <Property Name="HomePhoneNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="MobilePhoneNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IsCompletedPersonalProfile" Type="Boolean" Nullable="false" />
+    <Property Name="ResidentialAddress" Type="Int32" Nullable="false" />
+    <Property Name="HasProofOfIdentity" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_Tenant_Person" FromRole="Tenant" ToRole="Person" />
+    <NavigationProperty Name="TenantProperty" Relationship="KeysModel.FK_Tenant_Property_Tenant" FromRole="Tenant" ToRole="TenantProperty" />
+    <NavigationProperty Name="TenantMedia" Relationship="KeysModel.FK_Tenant_TenantMedia" FromRole="Tenant" ToRole="TenantMedia" />
+    <NavigationProperty Name="Address" Relationship="KeysModel.FK_TenantAddress" FromRole="Tenant" ToRole="Address" />
+  </EntityType>
+  <EntityType Name="TenantJobRequest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OwnerId" Type="Int32" Nullable="false" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="JobDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="JobStatusId" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MaxBudget" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="JobQuote" Relationship="KeysModel.FK_JobQuote_JobRequest" FromRole="TenantJobRequest" ToRole="JobQuote" />
+    <NavigationProperty Name="Owners" Relationship="KeysModel.FK_TenantJobRequest_Owners" FromRole="TenantJobRequest" ToRole="Owners" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_TenantJobRequest_Property" FromRole="TenantJobRequest" ToRole="Property" />
+    <NavigationProperty Name="TenantJobStatus" Relationship="KeysModel.FK_TenantJobRequest_TenantJobStatus" FromRole="TenantJobRequest" ToRole="TenantJobStatus" />
+    <NavigationProperty Name="TenantJobRequestMedia" Relationship="KeysModel.FK_TenantJobRequestMedia_TenantJobrequest" FromRole="TenantJobRequest" ToRole="TenantJobRequestMedia" />
+    <NavigationProperty Name="JobWatchList" Relationship="KeysModel.FK_ServiceProviderWatchList_TenantJobRequest" FromRole="TenantJobRequest" ToRole="JobWatchList" />
+  </EntityType>
+  <EntityType Name="TenantJobRequestMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantJobRequestId" Type="Int32" Nullable="false" />
+    <Property Name="NewFileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="OldFileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="EntityGuid" Type="Guid" />
+    <NavigationProperty Name="TenantJobRequest" Relationship="KeysModel.FK_TenantJobRequestMedia_TenantJobrequest" FromRole="TenantJobRequestMedia" ToRole="TenantJobRequest" />
+  </EntityType>
+  <EntityType Name="TenantJobStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TenantJobRequest" Relationship="KeysModel.FK_TenantJobRequest_TenantJobStatus" FromRole="TenantJobStatus" ToRole="TenantJobRequest" />
+  </EntityType>
+  <EntityType Name="TenantMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantId" Type="Int32" Nullable="false" />
+    <Property Name="MediaId" Type="Int32" Nullable="false" />
+    <Property Name="OldFileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="NewFileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Media" Relationship="KeysModel.FK_Tenant_Media" FromRole="TenantMedia" ToRole="Media" />
+    <NavigationProperty Name="Tenant" Relationship="KeysModel.FK_Tenant_TenantMedia" FromRole="TenantMedia" ToRole="Tenant" />
+  </EntityType>
+  <EntityType Name="TenantPaymentFrequencies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TenantProperty" Relationship="KeysModel.FK_Tenant_Property_TenantPaymentFrequency" FromRole="TenantPaymentFrequencies" ToRole="TenantProperty" />
+  </EntityType>
+  <EntityType Name="TenantProperty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantId" Type="Int32" Nullable="false" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PaymentFrequencyId" Type="Int32" />
+    <Property Name="PaymentAmount" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_Tenant_Property_Property" FromRole="TenantProperty" ToRole="Property" />
+    <NavigationProperty Name="Tenant" Relationship="KeysModel.FK_Tenant_Property_Tenant" FromRole="TenantProperty" ToRole="Tenant" />
+    <NavigationProperty Name="TenantPaymentFrequencies" Relationship="KeysModel.FK_Tenant_Property_TenantPaymentFrequency" FromRole="TenantProperty" ToRole="TenantPaymentFrequencies" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="PaymentDueDate" Type="Int32" />
+    <Property Name="PaymentStartDate" Type="DateTime" Precision="3" />
+    <Property Name="IsMainTenant" Type="Boolean" />
+    <NavigationProperty Name="TenantPropertyLiability" Relationship="KeysModel.FK_TenantPropertyLiability_TenantProperty" FromRole="TenantProperty" ToRole="TenantPropertyLiability" />
+    <Property Name="LastQueuedPaymentRemind" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="RentalPaymentTracking" Relationship="KeysModel.FK_RentalPaymentTracking_TenantProperty" FromRole="TenantProperty" ToRole="RentalPaymentTracking" />
+  </EntityType>
+  <EntityType Name="XeroTokenStore">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="OrganisationId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TokenType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TokenKey" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TokenSecret" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ExpiresAt" Type="DateTime" Precision="3" />
+    <Property Name="Session" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SessionExpiresAt" Type="DateTime" Precision="3" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_XeroTokenStore_Person" FromRole="XeroTokenStore" ToRole="Person" />
+  </EntityType>
+  <EntityType Name="Login_Deleted">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="EmailConfirmed" />
+      <PropertyRef Name="PhoneNumberConfirmed" />
+      <PropertyRef Name="TwoFactorEnabled" />
+      <PropertyRef Name="LockoutEnabled" />
+      <PropertyRef Name="AccessFailedCount" />
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="EmailConfirmationToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmationTokenExpiryDate" Type="DateTime" Precision="3" />
+    <Property Name="ResetPasswordToken" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ResetPasswordTokenExpiryDate" Type="DateTime" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_Company_Company">
+    <End Type="KeysModel.Company" Role="Company" Multiplicity="1" />
+    <End Type="KeysModel.Company" Role="Company1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Company1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manager_Company">
+    <End Type="KeysModel.Company" Role="Company" Multiplicity="0..1" />
+    <End Type="KeysModel.Manager" Role="Manager" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Manager">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Provider_Company">
+    <End Type="KeysModel.Company" Role="Company" Multiplicity="0..1" />
+    <End Type="KeysModel.ServiceProvider" Role="ServiceProvider" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceProvider">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Provider_Property_ProviderJobStatus">
+    <End Type="KeysModel.ServiceProviderJobStatus" Role="ServiceProviderJobStatus" Multiplicity="1" />
+    <End Type="KeysModel.Job" Role="Job" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceProviderJobStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Job">
+        <PropertyRef Name="JobStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceProviderProperty_Property">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.Job" Role="Job" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Job">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceProviderProperty_ServiceProvider">
+    <End Type="KeysModel.ServiceProvider" Role="ServiceProvider" Multiplicity="0..1" />
+    <End Type="KeysModel.Job" Role="Job" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceProvider">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Job">
+        <PropertyRef Name="ProviderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobQuote_JobRequest">
+    <End Type="KeysModel.TenantJobRequest" Role="TenantJobRequest" Multiplicity="1" />
+    <End Type="KeysModel.JobQuote" Role="JobQuote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TenantJobRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobQuote">
+        <PropertyRef Name="JobRequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobQuote_ServiceProvider">
+    <End Type="KeysModel.ServiceProvider" Role="ServiceProvider" Multiplicity="1" />
+    <End Type="KeysModel.JobQuote" Role="JobQuote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceProvider">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobQuote">
+        <PropertyRef Name="ProviderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobQuoteMedia_JobQuote">
+    <End Type="KeysModel.JobQuote" Role="JobQuote" Multiplicity="1" />
+    <End Type="KeysModel.JobQuoteMedia" Role="JobQuoteMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobQuote">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobQuoteMedia">
+        <PropertyRef Name="JobQuoteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Login_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.Login" Role="Login" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Login">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_LoginClaim">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.LoginClaim" Role="LoginClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LoginClaim">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_LoginRole_dbo_Role_RoleId">
+    <End Type="KeysModel.Role" Role="Role" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="KeysModel.LoginRole" Role="LoginRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LoginRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_LoginRole">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.LoginRole" Role="LoginRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LoginRole">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manager_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.Manager" Role="Manager" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Manager">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manager_Property_Manager">
+    <End Type="KeysModel.Manager" Role="Manager" Multiplicity="1" />
+    <End Type="KeysModel.ManagerProperty" Role="ManagerProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manager">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ManagerProperty">
+        <PropertyRef Name="ManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manager_Property_Property">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.ManagerProperty" Role="ManagerProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ManagerProperty">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Media_MediaType">
+    <End Type="KeysModel.MediaType" Role="MediaType" Multiplicity="1" />
+    <End Type="KeysModel.Media" Role="Media" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MediaType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Media">
+        <PropertyRef Name="MediaTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tenant_Media">
+    <End Type="KeysModel.Media" Role="Media" Multiplicity="1" />
+    <End Type="KeysModel.TenantMedia" Role="TenantMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantMedia">
+        <PropertyRef Name="MediaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Property_Owner">
+    <End Type="KeysModel.Owners" Role="Owners" Multiplicity="1" />
+    <End Type="KeysModel.OwnerProperty" Role="OwnerProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Owners">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OwnerProperty">
+        <PropertyRef Name="OwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Property_OwnershipStatus">
+    <End Type="KeysModel.OwnershipStatus" Role="OwnershipStatus" Multiplicity="1" />
+    <End Type="KeysModel.OwnerProperty" Role="OwnerProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OwnershipStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OwnerProperty">
+        <PropertyRef Name="OwnershipStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Property_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.OwnerProperty" Role="OwnerProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OwnerProperty">
+        <PropertyRef Name="OwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Property_Property">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.OwnerProperty" Role="OwnerProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OwnerProperty">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.Owners" Role="Owners" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Owners">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantJobRequest_Owners">
+    <End Type="KeysModel.Owners" Role="Owners" Multiplicity="1" />
+    <End Type="KeysModel.TenantJobRequest" Role="TenantJobRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Owners">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantJobRequest">
+        <PropertyRef Name="OwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Provider_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.ServiceProvider" Role="ServiceProvider" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceProvider">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalApplication_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.RentalApplication" Role="RentalApplication" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalApplication">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tenant_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.Tenant" Role="Tenant" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tenant">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_XeroTokenStore_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.XeroTokenStore" Role="XeroTokenStore" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="XeroTokenStore">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Expense_PropertyId">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.PropertyExpense" Role="PropertyExpense" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyExpense">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Finance_PropertyId">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.PropertyFinance" Role="PropertyFinance" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyFinance">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_PropertyType">
+    <End Type="KeysModel.PropertyType" Role="PropertyType" Multiplicity="1" />
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyType">
+        <PropertyRef Name="PropertyTypeId" />
+      </Principal>
+      <Dependent Role="Property">
+        <PropertyRef Name="PropertyTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_TargetRentType">
+    <End Type="KeysModel.TargetRentType" Role="TargetRentType" Multiplicity="1" />
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TargetRentType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Property">
+        <PropertyRef Name="TargetRentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyId">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.PropertyHomeValue" Role="PropertyHomeValue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyHomeValue">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyMedia_Property">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.PropertyMedia" Role="PropertyMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyMedia">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyRequest_Property">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.PropertyRequest" Role="PropertyRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRequest">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalListing_Property">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.RentalListing" Role="RentalListing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalListing">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalPayment_PropertyId">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.PropertyRentalPayment" Role="PropertyRentalPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRentalPayment">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Repayment_PropertyId">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.PropertyRepayment" Role="PropertyRepayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRepayment">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tenant_Property_Property">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.TenantProperty" Role="TenantProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantProperty">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantJobRequest_Property">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.TenantJobRequest" Role="TenantJobRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantJobRequest">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HomeValue_HomeValueType">
+    <End Type="KeysModel.PropertyHomeValueType" Role="PropertyHomeValueType" Multiplicity="1" />
+    <End Type="KeysModel.PropertyHomeValue" Role="PropertyHomeValue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyHomeValueType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyHomeValue">
+        <PropertyRef Name="HomeValueTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalPayment_FrequencyType">
+    <End Type="KeysModel.TargetRentType" Role="TargetRentType" Multiplicity="1" />
+    <End Type="KeysModel.PropertyRentalPayment" Role="PropertyRentalPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TargetRentType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRentalPayment">
+        <PropertyRef Name="FrequencyType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Repayment_FrequencyType">
+    <End Type="KeysModel.TargetRentType" Role="TargetRentType" Multiplicity="1" />
+    <End Type="KeysModel.PropertyRepayment" Role="PropertyRepayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TargetRentType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRepayment">
+        <PropertyRef Name="FrequencyType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyRequest_RequestStatus">
+    <End Type="KeysModel.RequestStatus" Role="RequestStatus" Multiplicity="1" />
+    <End Type="KeysModel.PropertyRequest" Role="PropertyRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRequest">
+        <PropertyRef Name="RequestStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyRequest_RequestType">
+    <End Type="KeysModel.RequestType" Role="RequestType" Multiplicity="1" />
+    <End Type="KeysModel.PropertyRequest" Role="PropertyRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRequest">
+        <PropertyRef Name="RequestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyRequestMedia_PropertyRequest">
+    <End Type="KeysModel.PropertyRequest" Role="PropertyRequest" Multiplicity="1" />
+    <End Type="KeysModel.PropertyRequestMedia" Role="PropertyRequestMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRequestMedia">
+        <PropertyRef Name="PropertyRequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyType_PropertyType">
+    <End Type="KeysModel.PropertyType" Role="PropertyType" Multiplicity="1" />
+    <End Type="KeysModel.PropertyType" Role="PropertyType1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyType">
+        <PropertyRef Name="PropertyTypeId" />
+      </Principal>
+      <Dependent Role="PropertyType1">
+        <PropertyRef Name="PropertyTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalApplication_RentalApplicationStatus">
+    <End Type="KeysModel.RentalApplicationStatus" Role="RentalApplicationStatus" Multiplicity="1" />
+    <End Type="KeysModel.RentalApplication" Role="RentalApplication" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RentalApplicationStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalApplication">
+        <PropertyRef Name="ApplicationStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalApplication_RentalListing">
+    <End Type="KeysModel.RentalListing" Role="RentalListing" Multiplicity="1" />
+    <End Type="KeysModel.RentalApplication" Role="RentalApplication" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RentalListing">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalApplication">
+        <PropertyRef Name="RentalListingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalApplicationMedia_RentalApplication">
+    <End Type="KeysModel.RentalApplication" Role="RentalApplication" Multiplicity="1" />
+    <End Type="KeysModel.RentalApplicationMedia" Role="RentalApplicationMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RentalApplication">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalApplicationMedia">
+        <PropertyRef Name="RentalApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalListing_RentalListingStatus">
+    <End Type="KeysModel.RentalListingStatus" Role="RentalListingStatus" Multiplicity="1" />
+    <End Type="KeysModel.RentalListing" Role="RentalListing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RentalListingStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalListing">
+        <PropertyRef Name="RentalStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalListingMedia_RentalListing">
+    <End Type="KeysModel.RentalListing" Role="RentalListing" Multiplicity="1" />
+    <End Type="KeysModel.RentalListingMedia" Role="RentalListingMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RentalListing">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalListingMedia">
+        <PropertyRef Name="RentalListingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tenant_Property_Tenant">
+    <End Type="KeysModel.Tenant" Role="Tenant" Multiplicity="1" />
+    <End Type="KeysModel.TenantProperty" Role="TenantProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tenant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantProperty">
+        <PropertyRef Name="TenantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tenant_TenantMedia">
+    <End Type="KeysModel.Tenant" Role="Tenant" Multiplicity="1" />
+    <End Type="KeysModel.TenantMedia" Role="TenantMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tenant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantMedia">
+        <PropertyRef Name="TenantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantJobRequest_TenantJobStatus">
+    <End Type="KeysModel.TenantJobStatus" Role="TenantJobStatus" Multiplicity="1" />
+    <End Type="KeysModel.TenantJobRequest" Role="TenantJobRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TenantJobStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantJobRequest">
+        <PropertyRef Name="JobStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantJobRequestMedia_TenantJobrequest">
+    <End Type="KeysModel.TenantJobRequest" Role="TenantJobRequest" Multiplicity="1" />
+    <End Type="KeysModel.TenantJobRequestMedia" Role="TenantJobRequestMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TenantJobRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantJobRequestMedia">
+        <PropertyRef Name="TenantJobRequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tenant_Property_TenantPaymentFrequency">
+    <End Type="KeysModel.TenantPaymentFrequencies" Role="TenantPaymentFrequencies" Multiplicity="0..1" />
+    <End Type="KeysModel.TenantProperty" Role="TenantProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TenantPaymentFrequencies">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantProperty">
+        <PropertyRef Name="PaymentFrequencyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="JobMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobId" Type="Int32" Nullable="false" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="OldFileName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="NewFileName" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Job" Relationship="KeysModel.FK_JobMedia_Job" FromRole="JobMedia" ToRole="Job" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_JobMedia_Property" FromRole="JobMedia" ToRole="Property" />
+  </EntityType>
+  <Association Name="FK_JobMedia_Job">
+    <End Type="KeysModel.Job" Role="Job" Multiplicity="1" />
+    <End Type="KeysModel.JobMedia" Role="JobMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Job">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobMedia">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobMedia_Property">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.JobMedia" Role="JobMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobMedia">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RequestReply">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="RequestId" Type="Int32" Nullable="false" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="ToOwner" Type="Boolean" Nullable="false" />
+    <Property Name="ToTenant" Type="Boolean" Nullable="false" />
+    <Property Name="IsViewed" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="PropertyRequest" Relationship="KeysModel.FK_RequestReply_PropertyRequest" FromRole="RequestReply" ToRole="PropertyRequest" />
+    <NavigationProperty Name="RequestReplyMedia" Relationship="KeysModel.FK_RequestReplyMedia_RequestReply" FromRole="RequestReply" ToRole="RequestReplyMedia" />
+  </EntityType>
+  <EntityType Name="RequestReplyMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="RequestReplyId" Type="Int32" Nullable="false" />
+    <Property Name="NewFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OldFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EntityGuid" Type="Guid" />
+    <NavigationProperty Name="RequestReply" Relationship="KeysModel.FK_RequestReplyMedia_RequestReply" FromRole="RequestReplyMedia" ToRole="RequestReply" />
+  </EntityType>
+  <Association Name="FK_RequestReply_PropertyRequest">
+    <End Type="KeysModel.PropertyRequest" Role="PropertyRequest" Multiplicity="1" />
+    <End Type="KeysModel.RequestReply" Role="RequestReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RequestReply">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestReplyMedia_RequestReply">
+    <End Type="KeysModel.RequestReply" Role="RequestReply" Multiplicity="1" />
+    <End Type="KeysModel.RequestReplyMedia" Role="RequestReplyMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequestReply">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RequestReplyMedia">
+        <PropertyRef Name="RequestReplyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TenantPropertyLiability">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantPropertyId" Type="Int32" Nullable="false" />
+    <Property Name="LiabilityName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <NavigationProperty Name="TenantProperty" Relationship="KeysModel.FK_TenantPropertyLiability_TenantProperty" FromRole="TenantPropertyLiability" ToRole="TenantProperty" />
+  </EntityType>
+  <Association Name="FK_TenantPropertyLiability_TenantProperty">
+    <End Type="KeysModel.TenantProperty" Role="TenantProperty" Multiplicity="1" />
+    <End Type="KeysModel.TenantPropertyLiability" Role="TenantPropertyLiability" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TenantProperty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantPropertyLiability">
+        <PropertyRef Name="TenantPropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="InspectionStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Inspection" Relationship="KeysModel.FK_Inspection_InspectionStatus" FromRole="InspectionStatus" ToRole="Inspection" />
+  </EntityType>
+  <EntityType Name="InspectionMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InspectionId" Type="Int32" Nullable="false" />
+    <Property Name="OldFileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NewFileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Inspection" Relationship="KeysModel.FK_InspectionMedia_InspectionMedia" FromRole="InspectionMedia" ToRole="Inspection" />
+  </EntityType>
+  <EntityType Name="PersonMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="NewFilename" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OldFilename" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_PersonMedia_Person" FromRole="PersonMedia" ToRole="Person" />
+  </EntityType>
+  <Association Name="FK_PersonMedia_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.PersonMedia" Role="PersonMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PersonMedia">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Inspection">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyId" Type="Int32" Nullable="false" />
+    <Property Name="StatusId" Type="Int32" Nullable="false" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsUpdated" Type="Boolean" Nullable="false" />
+    <Property Name="IsViewed" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="RequestId" Type="Int32" Nullable="false" />
+    <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PercentDone" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="InspectionStatus" Relationship="KeysModel.FK_Inspection_InspectionStatus" FromRole="Inspection" ToRole="InspectionStatus" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_Inspection_Property" FromRole="Inspection" ToRole="Property" />
+    <NavigationProperty Name="PropertyRequest" Relationship="KeysModel.FK_Inspection_PropertyRequest" FromRole="Inspection" ToRole="PropertyRequest" />
+    <NavigationProperty Name="InspectionMedia" Relationship="KeysModel.FK_InspectionMedia_InspectionMedia" FromRole="Inspection" ToRole="InspectionMedia" />
+    <Property Name="OwnerUpdate" Type="Boolean" />
+  </EntityType>
+  <Association Name="FK_Inspection_InspectionStatus">
+    <End Type="KeysModel.InspectionStatus" Role="InspectionStatus" Multiplicity="1" />
+    <End Type="KeysModel.Inspection" Role="Inspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InspectionStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Inspection">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inspection_Property">
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="1" />
+    <End Type="KeysModel.Inspection" Role="Inspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Inspection">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inspection_PropertyRequest">
+    <End Type="KeysModel.PropertyRequest" Role="PropertyRequest" Multiplicity="1" />
+    <End Type="KeysModel.Inspection" Role="Inspection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Inspection">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InspectionMedia_InspectionMedia">
+    <End Type="KeysModel.Inspection" Role="Inspection" Multiplicity="1" />
+    <End Type="KeysModel.InspectionMedia" Role="InspectionMedia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inspection">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InspectionMedia">
+        <PropertyRef Name="InspectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="JobWatchList">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MarketJobId" Type="Int32" Nullable="false" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_ServiceProviderWatchList_Person" FromRole="JobWatchList" ToRole="Person" />
+    <NavigationProperty Name="TenantJobRequest" Relationship="KeysModel.FK_ServiceProviderWatchList_TenantJobRequest" FromRole="JobWatchList" ToRole="TenantJobRequest" />
+  </EntityType>
+  <EntityType Name="RentalWatchList">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RentalListingId" Type="Int32" Nullable="false" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_TenantWatchList_Person" FromRole="RentalWatchList" ToRole="Person" />
+    <NavigationProperty Name="RentalListing" Relationship="KeysModel.FK_TenantWatchList_RentalListing" FromRole="RentalWatchList" ToRole="RentalListing" />
+  </EntityType>
+  <Association Name="FK_ServiceProviderWatchList_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.JobWatchList" Role="JobWatchList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobWatchList">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceProviderWatchList_TenantJobRequest">
+    <End Type="KeysModel.TenantJobRequest" Role="TenantJobRequest" Multiplicity="1" />
+    <End Type="KeysModel.JobWatchList" Role="JobWatchList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TenantJobRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobWatchList">
+        <PropertyRef Name="MarketJobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantWatchList_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.RentalWatchList" Role="RentalWatchList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalWatchList">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantWatchList_RentalListing">
+    <End Type="KeysModel.RentalListing" Role="RentalListing" Multiplicity="1" />
+    <End Type="KeysModel.RentalWatchList" Role="RentalWatchList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RentalListing">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalWatchList">
+        <PropertyRef Name="RentalListingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryId" Type="Int32" Nullable="false" />
+    <Property Name="Number" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Street" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Suburb" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Region" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="PostCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Lat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Lng" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Country" Relationship="KeysModel.FK_Address_Country" FromRole="Address" ToRole="Country" />
+    <NavigationProperty Name="Company" Relationship="KeysModel.FK_Company_BillingAddress" FromRole="Address" ToRole="Company" />
+    <NavigationProperty Name="Company1" Relationship="KeysModel.FK_Company_PhysicalAddress" FromRole="Address" ToRole="Company" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_Person_Address" FromRole="Address" ToRole="Person" />
+    <NavigationProperty Name="Person1" Relationship="KeysModel.FK_Person_Address1" FromRole="Address" ToRole="Person" />
+    <NavigationProperty Name="Property" Relationship="KeysModel.FK_Property_Address" FromRole="Address" ToRole="Property" />
+    <NavigationProperty Name="Tenant" Relationship="KeysModel.FK_TenantAddress" FromRole="Address" ToRole="Tenant" />
+  </EntityType>
+  <Association Name="FK_Address_Country">
+    <End Type="KeysModel.Country" Role="Country" Multiplicity="1" />
+    <End Type="KeysModel.Address" Role="Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Company_BillingAddress">
+    <End Type="KeysModel.Address" Role="Address" Multiplicity="1" />
+    <End Type="KeysModel.Company" Role="Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="BillingAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Company_PhysicalAddress">
+    <End Type="KeysModel.Address" Role="Address" Multiplicity="1" />
+    <End Type="KeysModel.Company" Role="Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="PhysicalAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Address">
+    <End Type="KeysModel.Address" Role="Address" Multiplicity="1" />
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="BillingAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Address1">
+    <End Type="KeysModel.Address" Role="Address" Multiplicity="1" />
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="PhysicalAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_Address">
+    <End Type="KeysModel.Address" Role="Address" Multiplicity="1" />
+    <End Type="KeysModel.Property" Role="Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Property">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantAddress">
+    <End Type="KeysModel.Address" Role="Address" Multiplicity="1" />
+    <End Type="KeysModel.Tenant" Role="Tenant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Tenant">
+        <PropertyRef Name="ResidentialAddress" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="UserRating">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="Rating" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="Review" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_UserRating_Person" FromRole="UserRating" ToRole="Person" />
+    <NavigationProperty Name="Person1" Relationship="KeysModel.FK_UserRating_Person1" FromRole="UserRating" ToRole="Person" />
+  </EntityType>
+  <Association Name="FK_UserRating_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.UserRating" Role="UserRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRating">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRating_Person1">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.UserRating" Role="UserRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRating">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="MessageDeliveryType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="OutGoingMessage" Relationship="KeysModel.FK_OutGoingMessage_MessageDeliveryType" FromRole="MessageDeliveryType" ToRole="OutGoingMessage" />
+  </EntityType>
+  <EntityType Name="MessageType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="OutGoingMessage" Relationship="KeysModel.FK_OutGoingMessage_MessageType" FromRole="MessageType" ToRole="OutGoingMessage" />
+  </EntityType>
+  <EntityType Name="OutGoingMessage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonId" Type="Int32" Nullable="false" />
+    <Property Name="MessageTypeId" Type="Int32" Nullable="false" />
+    <Property Name="DeliveryTypeId" Type="Int32" Nullable="false" />
+    <Property Name="TargetAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsProcessed" Type="Boolean" Nullable="false" />
+    <Property Name="ProcessedOn" Type="DateTime" Precision="3" />
+    <Property Name="Error" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="MessageDeliveryType" Relationship="KeysModel.FK_OutGoingMessage_MessageDeliveryType" FromRole="OutGoingMessage" ToRole="MessageDeliveryType" />
+    <NavigationProperty Name="MessageType" Relationship="KeysModel.FK_OutGoingMessage_MessageType" FromRole="OutGoingMessage" ToRole="MessageType" />
+    <NavigationProperty Name="Person" Relationship="KeysModel.FK_OutGoingMessage_Person" FromRole="OutGoingMessage" ToRole="Person" />
+  </EntityType>
+  <Association Name="FK_OutGoingMessage_MessageDeliveryType">
+    <End Type="KeysModel.MessageDeliveryType" Role="MessageDeliveryType" Multiplicity="1" />
+    <End Type="KeysModel.OutGoingMessage" Role="OutGoingMessage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MessageDeliveryType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OutGoingMessage">
+        <PropertyRef Name="DeliveryTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OutGoingMessage_MessageType">
+    <End Type="KeysModel.MessageType" Role="MessageType" Multiplicity="1" />
+    <End Type="KeysModel.OutGoingMessage" Role="OutGoingMessage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MessageType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OutGoingMessage">
+        <PropertyRef Name="MessageTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OutGoingMessage_Person">
+    <End Type="KeysModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="KeysModel.OutGoingMessage" Role="OutGoingMessage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OutGoingMessage">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RentalPaymentTracking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantPropertyId" Type="Int32" Nullable="false" />
+    <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="PaymentComplete" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="TenantProperty" Relationship="KeysModel.FK_RentalPaymentTracking_TenantProperty" FromRole="RentalPaymentTracking" ToRole="TenantProperty" />
+  </EntityType>
+  <Association Name="FK_RentalPaymentTracking_TenantProperty">
+    <End Type="KeysModel.TenantProperty" Role="TenantProperty" Multiplicity="1" />
+    <End Type="KeysModel.RentalPaymentTracking" Role="RentalPaymentTracking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TenantProperty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalPaymentTracking">
+        <PropertyRef Name="TenantPropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

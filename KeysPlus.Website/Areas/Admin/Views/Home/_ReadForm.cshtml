@@ -1,0 +1,153 @@
+﻿<script type="text/html" id="readForm">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="h3"> User Information</span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-7" style="margin-top:10px;">
+                    <!--details coloum-->
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Full Name:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <span data-bind="text:FullEmployeeName"></span>
+                        </div>
+                    </div>
+                    @*<div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Email:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <span data-bind="text: UserName"></span>
+
+                        </div>
+                    </div>*@
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Language:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <span data-bind="text:Language"></span>
+                        </div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Place Of Birth:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="bfh-countries" data-bind="country: PlaceOfBirth"></span>
+                        </div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Occupation:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <span data-bind="if:Occupation">
+                                <span data-bind="text:Occupation"></span>
+                            </span>
+                                <span data-bind="ifnot:Occupation">-</span>
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Linkedin Url:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <span data-bind="if:LinkedinUrl">
+                                <span data-bind="text:LinkedinUrl"></span>
+                            </span>
+                            <span data-bind="ifnot:LinkedinUrl">
+                                -
+                            </span>
+                        </div>
+                        
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Physical Address:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <div>
+                                <span data-bind="text: PhysicalAddress().Number"></span>
+                                <span data-bind="if: PhysicalAddress().Street">
+                                    <span data-bind="text: PhysicalAddress().Street"></span>,
+                                </span>
+                            </div>
+                            <div>
+                                <span data-bind="if: PhysicalAddress().Suburb">
+                                    <span data-bind="text: PhysicalAddress().Suburb"></span>,
+                                </span>
+                            </div>
+                            <div>
+                                <span data-bind="text: PhysicalAddress().City"></span>
+                                <span data-bind="text:PhysicalAddress().PostCode"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Billing Address:</strong>
+                        </div>
+                        <div class="col-md-8">
+                            <div>
+                                <span data-bind="text: BillingAddress().Number"></span>
+                                <span data-bind="if: BillingAddress().Street">
+                                    <span data-bind="text: BillingAddress().Street"></span>,
+                                </span>
+                            </div>
+                            <div>
+                                <span data-bind="if: BillingAddress().Suburb">
+                                    <span data-bind="text: BillingAddress().Suburb"></span>,
+                                </span>
+                            </div>
+                            <div>
+                                <span data-bind="text: BillingAddress().City"></span>
+                                <span data-bind="text:BillingAddress().PostCode"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <!--photo column-->
+                    <img class="img-responsive img-thumbnail" style="height:280px" data-bind="attr: {src: ProfilePhoto}" alt="firstImg" onerror="this.src='/images/icon-user-default.png'"  />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    @*<tr>
+            <th class="col-md-3">First Name</th>
+            <td data-bind="text: FirstName"></td>
+        </tr>
+        <tr>
+            <th class="col-md-3">Middle Name</th>
+            <td data-bind="text: MiddleName"></td>
+        </tr>
+        <tr>
+            <th class="col-md-3">Last Name</th>
+            <td data-bind="text: LastName"></td>
+        </tr>*@
+    @*<tr>
+            <th class="col-md-4">Full Name</th>
+            <td data-bind="text: FullEmployeeName"></td>
+        </tr>
+        <tr>
+            <th class="col-md-4">Language</th>
+            <td data-bind="text: Language"></td>
+        </tr>
+        <tr>
+            <th class="col-md-4">Place Of Birth</th>
+            <td data-bind="text: PlaceOfBirth"></td>
+        </tr>
+
+        </tbody>
+        </table>*@
+</script>

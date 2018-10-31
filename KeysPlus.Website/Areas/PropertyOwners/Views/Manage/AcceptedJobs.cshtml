@@ -1,0 +1,763 @@
+﻿@model POJobSearchModel
+@{
+    ViewBag.Title = "Owner | Accepted Jobs";
+}
+<div data-bind="visible : MainView">
+    <div class="ui grid">
+        <div class="eight wide column">
+            <h2 class="ui header">Maintenance For Your Properties </h2>
+            <span class="text-muted">You can manage jobs for your properties here</span>
+        </div>
+        <div class="middle aligned eight wide column">
+            @{
+                Html.RenderPartial("_SearchBox");
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="highlighted">
+        <div class="ui grid">
+            <div class="eight wide column">
+                @{
+                    Html.RenderPartial("_SortInput");
+                }
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="ui grid">
+        <div class="sixteen wide column">
+
+        </div>
+    </div>
+    <table class="ui very basic table">
+        <thead>
+            <tr>
+                <th class="four wide"><h5 class="ui teal header">Property</h5></th>
+                <th class="three wide"><h5 class="ui teal header">Contractor</h5></th>
+                <th class="two wide"><h5 class="ui teal header">Quote Accepted</h5></th>
+                <th class="four wide"><h5 class="ui teal header">Progress</h5></th>
+                <th class="three wide"><h5 class="ui teal header">Actions</h5></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach : Items">
+            <tr>
+                <td>
+                    <h5 class="ui grey header" data-bind="text : StreetAddress" style="margin-bottom : 1px"></h5>
+                    <h5 class="ui grey header" data-bind="text : CitySub" style="margin-top : 0px; margin-bottom : 5px"></h5>
+                </td>
+                <td>
+                    <span data-bind="if : IsDIY"><span>Myself</span></span>
+                    <span data-bind="ifnot : IsDIY"><span data-bind="text:ProviderCompanyName"></span></span>
+                </td>
+                <td>
+                    $<span data-bind="numeric: Model.AcceptedQuote() ? Model.AcceptedQuote  : 0"></span>
+                </td>
+
+                <td style="vertical-align : middle">
+                    <div class="progress" style="margin : auto">
+                        <div class="progress-bar small-text" role="progressbar" data-bind="text : Model.PercentDone() + '%', style: { width: Model.PercentDone() + '%', color : Model.PercentDone()== 0 ? '#337ab7' : '' }, attr: { 'aria-valuenow': Model.PercentDone }"></div>
+                    </div>
+                </td>
+                <td style="vertical-align : middle">
+                    <button class="ui mini basic teal button" data-bind="click: $parent.ShowDetail"></span> Details</button>
+                    <button class="ui mini basic teal button" data-bind="visible: IsDIY, click:$parent.ShowEdit">Edit</button>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+    <div class="ui divider"></div>
+    @*<div data-bind="foreach: Items">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div title="Delete" class="delete-top-right-corner" data-bind="click : $root.ShowDelete"><i class="fa fa-trash-o"></i></div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div data-bind="visible:ImgFiles().length > 0">
+                                        <div class="carousel" data-ride="carousel" data-bind="attr :{id : 'carousel'+ Model.Id()}">
+                                            <div class="carousel-inner" style="margin:auto" data-bind="foreach: ImgFiles">
+                                                <div class="item" data-bind="css:{active: $index() == 0}">
+                                                    <img class="img-responsive img-thumbnail" data-bind="attr: {src: Data}"
+                                                         onerror="this.src = '/images/no-prop-img.png'" alt="firstImg">
+                                                </div>
+                                            </div>
+
+                                            <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}, if : ImgFiles().length > 1">
+                                                <span class="fa fa-2x fa-angle-left"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}, if : ImgFiles().length > 1">
+                                                <span class="fa fa-2x fa-angle-right"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div data-bind="visible:ImgFiles().length<=0">
+                                        <img class="img-thumbnail" src="/images/no-prop-img.png" alt="noPropImg" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-6"><strong>Location: </strong></div>
+                                        <div class="col-md-6 no-padding-side">
+                                            <div data-bind="text : StreetAddress"></div>
+                                            <div data-bind="text : CitySub"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><strong>Supplier Name: </strong></div>
+                                        <div class="col-md-6 no-padding-side">
+                                            <span data-bind="if : IsDIY"><span>Myself</span></span>
+                                            <span data-bind="ifnot : IsDIY"><span data-bind="text:ProviderCompanyName"></span></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><strong>Accepted Quote: </strong></div>
+                                        <div class="col-md-6 no-padding-side">
+                                            $<span data-bind="numeric: Model.AcceptedQuote() ? Model.AcceptedQuote  : 0"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><strong>Job Status: </strong></div>
+                                        <div class="col-md-6 no-padding-side" data-bind="text : JobStatus"></div>
+                                    </div>
+                                    <div class="row" style="margin-top : 5px">
+                                        <div class="col-md-6"><strong>Progress: </strong></div>
+                                        <div class="col-md-6 no-padding-side">
+                                            <div class="progress" style="margin-bottom : 5px">
+                                                <div class="progress-bar small-text" role="progressbar" data-bind="text : Model.PercentDone() + '%', style: { width: Model.PercentDone() + '%', color : Model.PercentDone()== 0 ? '#337ab7' : '' }, attr: { 'aria-valuenow': Model.PercentDone }"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><strong>Note: </strong></div>
+                                        <div class="col-md-6 no-padding-side">
+                                            <span data-bind="if:Model.Note">
+                                                <span data-bind="text: KeysUtils.getPartialText(Model.Note)" style="word-break: break-all;"></span>
+                                            </span>
+                                            <span data-bind="ifnot:Model.Note">Not Available</span>
+                                        </div>
+                                    </div>
+                                </div><!--column-->
+                                <div class="col-md-5">
+                                    <div class="col-md-3"><strong>Description: </strong></div>
+                                    <div class="col-md-8" data-bind="text: Model.JobDescription" style="word-break: break-all;"></div>
+                                </div>
+                            </div><!--row-->
+                            <div class="prop-actions">
+                                <button class="btn btn-default" data-bind="click: $parent.ShowDetail"><span class="zmdi zmdi-info-outline"></span> Details</button>
+                                <button class="btn btn-success" data-bind="visible: IsDIY, click:$parent.ShowEdit"><span class="zmdi zmdi-edit"></span> Edit</button>
+                            </div>
+                        </div><!--panel body-->
+                    </div><!--panel-->
+                </div><!--column-->
+            </div><!--row-->
+        </div>*@
+
+    @{
+        Html.RenderPartial("_PagedItems");
+    }
+</div>
+
+<div data-bind="visible : DetailView" style="display : none">
+    <div id="viewJobDetails" data-bind="with:SelectedItem">
+        <h5 class="ui header pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+        <h3 class="ui header" style="margin-top : 10px">Job Details</h3>
+        <div class="ui divider"></div>
+        <div class="ui grid">
+            <div class="seven wide column">
+
+                <div class="ui relaxed divided list">
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Property :</h4>
+                            </div>
+                            <div class="eight wide column">
+                                <span data-bind="text:StreetAddress"></span>
+                                <span data-bind="text:CitySub"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Contractor :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <span data-bind="if : IsDIY"><span>Myself</span></span>
+                                <span data-bind="ifnot : IsDIY"><span data-bind="text:ProviderCompanyName"></span></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Accepted Quote :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                $<span data-bind="numeric: Model.AcceptedQuote() ? Model.AcceptedQuote  : 0"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Job Status :</h4>
+                            </div>
+                            <div class="seven wide column" data-bind="text : JobStatus">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Progress :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <div class="progress" style="margin : auto">
+                                    <div class="progress-bar small-text" role="progressbar" data-bind="text : Model.PercentDone() + '%', style: { width: Model.PercentDone() + '%', color : Model.PercentDone()== 0 ? '#337ab7' : ''}, attr: { 'aria-valuenow': Model.PercentDone }"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Description :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <span data-bind="text: Model.JobDescription"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Note :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <span data-bind="text: Model.Note" style="word-break: break-word;"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Description :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <span data-bind="text: Model.JobDescription" style="word-break: break-word;"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="nine wide column">
+
+                <div class="ui segment">
+                    @Html.Partial("_DetailViewImg")
+                </div>
+            </div>
+        </div>
+        @*<div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="h4">Test</span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row" style="line-height :25px">
+                                        <div class="col-md-4" style="padding-right: 0px;">
+                                            <strong>Location:</strong>
+                                        </div>
+
+                                    <div class="col-md-8">
+                                        <span data-bind="text:StreetAddress"></span>
+                                        <span data-bind="text:CitySub"></span>
+                                    </div>
+                                </div>
+                                        <div class="row" style="line-height:25px">
+                                            <div class="col-md-4" style="padding-right:0px;">
+                                                <strong>Supplier Name:</strong>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <span data-bind="if : IsDIY"><span>Myself</span></span>
+                                                <span data-bind="ifnot : IsDIY"><span data-bind="text:ProviderCompanyName"></span></span>
+                                            </div>
+                                        </div>
+
+                                    <div class="row" style="line-height:25px">
+                                        <div class="col-md-4" style="padding-right:0px;">
+                                            <strong>Accepted Quote:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            $<span data-bind="numeric: Model.AcceptedQuote() ? Model.AcceptedQuote  : 0"></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="row" style="line-height:25px">
+                                        <div class="col-md-4" style="padding-right:0px;">
+                                            <strong>Job Status:</strong>
+                                        </div>
+                                        <div class="col-md-8 " data-bind="text : JobStatus"></div>
+
+                                    </div>
+                                    <div class="row" style="line-height:25px">
+                                        <div class="col-md-4" style="padding-right:0px;">
+                                            <strong>Progress:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="progress" style="margin-bottom : 5px">
+                                                <div class="progress-bar small-text" role="progressbar" data-bind="text : Model.PercentDone() + '%', style: { width: Model.PercentDone() + '%', color : Model.PercentDone()== 0 ? '#337ab7' : ''}, attr: { 'aria-valuenow': Model.PercentDone }"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="line-height:25px">
+                                        <div class="col-md-4" style="padding-right:0px;">
+                                            <strong>Note :</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="if:Model.Note">
+                                                <span data-bind="text: KeysUtils.getPartialText(Model.Note)" style="word-break: break-all;"></span>
+                                            </span>
+                                            <span data-bind="ifnot:Model.Note">Not Available</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="row" style="line-height:25px">
+                                        <div class="col-md-4" style="padding-right:0px;">
+                                            <strong>Description :</strong>
+                                        </div>
+                                        <div class="col-md-8" data-bind="text: Model.JobDescription" style="word-break: break-all;">
+
+                                        </div>
+                                    </div>
+                                    <div class="row" style="line-height:25px">
+                                        <div class="col-md-4" style="padding-right:0px;"><strong>Created On:</strong></div>
+                                        <div class="col-md-8" data-bind="text:moment(CreatedOn()).format('ll')"></div>
+                                    </div>
+                                    <div class="row" style="line-height:25px">
+                                        <div class="col-md-4" style="padding-right:0px;">
+                                            <strong>Documents:</strong>
+                                        </div>
+                                        <div class=" col-md-8" data-bind="foreach: Model.MediaFiles()">
+                                            <span data-bind="visible:MediaType() == 2">
+                                                <a data-bind="attr:{href:Data}"><span data-bind="text:OldFileName"></span></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div data-bind="visible:ImgFiles().length > 0">
+                                        <div class="carousel" data-ride="carousel" data-bind="attr :{id : 'carousel'+ Model.Id()}">
+                                            <div class="carousel-inner" style="margin:auto" data-bind="foreach: ImgFiles">
+                                                <div class="item" data-bind="css:{active: $index() == 0}">
+                                                    <img class="img-responsive img-thumbnail" data-bind="attr: {src: Data}"
+                                                         onerror="this.src = '/images/no-prop-img.png'" alt="firstImg">
+                                                </div>
+                                            </div>
+
+                                            <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}, if : ImgFiles().length > 1">
+                                                <span class="fa fa-2x fa-angle-left"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}, if : ImgFiles().length > 1">
+                                                <span class="fa fa-2x fa-angle-right"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div data-bind="visible:ImgFiles().length<=0">
+                                        <img class="img-thumbnail" src="/images/no-prop-img.png" alt="noPropImg" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+
+    @*<div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <!--Job Details-->
+                    <ul class="nav nav-tabs" data-bind="with : SelectedItem">
+                        <!--Tabs-->
+                        <li class="active" data-bind="if : Model.JobRequestId"><a data-toggle="tab" href="#Owner">Advertised Job</a></li><!--Tab for Advertised Job-->
+                        <li><a data-toggle="tab" href="#Progress">Progress</a></li><!--Tab for service supplier Progress -->
+                    </ul>
+                    <div class="tab-content">
+                        <div id="Owner" class="tab-pane active" data-bind="with: SelectedMarketJob">
+                            <!--Advertised Job-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <span class="h4"> <span data-bind="text: Title()"></span></span>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-7">
+                                                    <div class="row" style="line-height : 25px">
+                                                        <div class="col-md-4" style="padding-right : 0px;">
+                                                            <strong>Location:</strong>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <span data-bind="text: StreetAddress"></span>
+                                                            <span data-bind="text: CitySub"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="line-height : 25px">
+                                                        <div class="col-md-4" style="padding-right : 0px;">
+                                                            <strong>Maximum Quote:</strong>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            $<span data-bind="numeric:MaxBudget()"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="line-height : 25px">
+                                                        <div class="col-md-4" style="padding-right : 0px;">
+                                                            <strong>Description:</strong>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <span data-bind="text:JobDescription()" style="word-break: break-all;"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="line-height : 25px">
+                                                        <div class="col-md-4" style="padding-right : 0px;">
+                                                            <strong>Listed on:</strong>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <span data-bind="text:moment(PostedDate()).format('ll')"></span>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                                <div class="col-md-4 pull-right">
+                                                    <!--photo coloumn-->
+                                                    <div data-bind="visible:MediaFiles().length>0">
+                                                        <div class="carousel " data-ride="carousel" data-bind="attr :{id : 'advJobCarousel'+ Id()}">
+                                                            <div class="carousel-inner" style="margin:auto" data-bind="foreach: MediaFiles()">
+                                                                <div class="item" data-bind="css:{active: $index() == 0}">
+                                                                    <img class="img-responsive img-thumbnail" data-bind="attr: {src: Data}"
+                                                                         onerror="this.src = '/images/no-prop-img.png'" alt="firstImg">
+                                                                </div>
+                                                            </div>
+                                                            <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'advJobCarousel'+ Id()}, if : MediaFiles().length > 1">
+                                                                <!-- Controls -->
+                                                                <span class="fa fa-2x fa-angle-left"></span>
+                                                                <span class="sr-only">Previous</span>
+                                                            </a>
+                                                            <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'advJobCarousel'+ Id()}, if : MediaFiles().length > 1">
+                                                                <span class="fa fa-2x fa-angle-right"></span>
+                                                                <span class="sr-only">Next</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <!--Without Images -->
+                                                            <div class="thumbnail" data-bind="visible:MediaFiles().length<=0">
+                                                                <img src="/images/no-prop-img.png" alt="noPropImg" />
+                                                            </div>
+                                                        </div>
+                                                    </div><!--Without Images -->
+                                                </div><!--photo coloum-->
+                                            </div><!-- row-->
+                                        </div><!--panel body + panel heading-->
+                                    </div><!--panel panel-default-->
+                                </div><!--col-md-12-->
+                            </div><!--row-->
+                        </div><!--Advertised Job-->
+                        <div id="Progress" class="tab-pane" data-bind="with : SelectedItem">
+                            <!--Progress-->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span class="h4"> <span data-bind="text: PropertyName"></span></span>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Job Status:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text:JobStatus"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Accepted Quote: </strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    $<span data-bind="numeric:AcceptedQuote"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Start Date:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="if:JobStartDate">
+                                                        <span data-bind="text:moment(JobStartDate()).format('LL')"></span>
+                                                    </span>
+                                                    <span data-bind="ifnot:JobStartDate"> Job has not started </span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>End Date:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="if:JobStartDate">
+                                                        <span data-bind="text:moment(JobEndDate()).format('LL')"></span>
+                                                    </span>
+                                                    <span data-bind="ifnot:JobStartDate"> Job has not been completed </span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4">
+                                                    <strong>Percentage Done:</strong>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="progress" style="margin-bottom : 5px">
+                                                        <div class="progress-bar small-text" role="progressbar" data-bind="text : $data.PercentDone() + '%',style: { width: $data.PercentDone() + '%' }, attr: { 'aria-valuenow': $data.PercentDone }"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Description:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text:JobDescription" style="word-break: break-all;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Note:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="if:Note">
+                                                        <span data-bind="text:Note" style="word-break: break-all;"></span>
+                                                    </span>
+                                                    <span data-bind="ifnot:Note">Not Available</span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Listed on:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text:moment(CreatedOn()).format('LL')"></span>
+                                                </div>
+                                            </div>
+                                        </div><!--details column-->
+                                        <div class="col-md-4 pull-right" style="padding-right: 30px">
+                                            <div class="row">
+                                                <!--photos-->
+                                                <div data-bind="visible:ImgFiles().length>0">
+                                                    <div class="carousel" data-ride="carousel" data-bind="attr :{id : 'detailsCarousel'+ Id()}">
+                                                        <div class="carousel-inner" style="margin:auto" data-bind="foreach: ImgFiles">
+                                                            <div class="item" data-bind="css:{active: $index() == 0}">
+                                                                <img class="img-responsive img-thumbnail" data-bind="attr: {src: Data}"
+                                                                     onerror="this.src = '/images/no-prop-img.png'" alt="firstImg">
+                                                            </div>
+                                                        </div>
+                                                        <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'detailsCarousel'+ Id()}, if:ImgFiles().length>1">
+                                                            <!-- Controls -->
+                                                            <span class="fa fa-2x fa-angle-left" aria-hidden="true"></span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                        <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'detailsCarousel'+ Id()}, if:ImgFiles().length>1">
+                                                            <span class="fa fa-2x fa-angle-right" aria-hidden="true"></span>
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <!--Without Images -->
+                                                    <div class="thumbnail" data-bind="visible : ImgFiles().length==0">
+                                                        <img src="/images/no-prop-img.png" alt="noPropImg" />
+                                                    </div>
+                                                </div>
+                                            </div><!--Without Images -->
+                                        </div><!--photo column-->
+                                    </div>
+                                    <div class="row" style="padding-top:15px;">
+                                        <div class="prop-actions">
+                                            <button class="btn btn-success" data-bind="visible: ( @ViewBag.LoginId == ProviderId() ) || (!ProviderId()), click:$parent.editJob"><span class="zmdi zmdi-edit"></span> Edit</button>
+                                        </div>
+                                    </div>
+                                </div><!--panel body + panel heading + col-md-12-->
+                            </div>
+                        </div><!--Progress + Advertised Job-->
+                    </div><!--tab-content + Tabs-->
+                </div><!--Job Details-->
+            </div><!--panel panel-default-->
+        </div>*@
+</div>
+
+<div data-bind="visible : EditView" style="display : none">
+    <div id="viewJobDetails" style="width : 80%; margin : auto">
+        <h5 class="ui header pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+        <h3 class="header">Edit Job</h3>
+        <div class="ui divider"></div>
+        <div class="ui segment">
+            <form class="ui form" data-bind="with:SelectedItemCopy">
+                <div class="field">
+                    <label>Property : </label>
+                    <span data-bind="text:StreetAddress"></span>
+                    <span data-bind="text:CitySub"></span>
+                </div>
+                <div class="field">
+                    <label>Percentage Done :</label>
+                    <div class="ui input">
+                        <select class="ui selection dropdown" data-bind="value: Model.PercentDone">
+                            <option value="0">0%</option>
+                            <option value="10">10%</option>
+                            <option value="20">20%</option>
+                            <option value="30">30%</option>
+                            <option value="40">40%</option>
+                            <option value="50">50%</option>
+                            <option value="60">60%</option>
+                            <option value="70">70%</option>
+                            <option value="80">80%</option>
+                            <option value="90">90%</option>
+                            <option value="100">100%</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="field">
+                    <label>Description:</label>
+                    <div class="ui input">
+                        <textarea class="form-control" data-bind="value:Model.JobDescription, valueUpdate:'afterkeydown'" id="jobDescription" maxlength="500" rows="6" cols="70"></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="control-label clear">Note:</label>
+                    <div class="ui input">
+                        <textarea class="form-control" data-bind="value:Model.Note, valueUpdate:'afterkeydown'" id="note" maxlength="500" rows="6" cols="70"></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Please upload your documents here:</label>
+                    <div class="ui divider"></div>
+                    @Html.Partial("_MediaInput")
+                    <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Total size is 5 MB and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*</p>
+                </div>
+                <div class="field text-center">
+                    <button id="saveButton" class="ui basic small teal button" data-bind="click: $root.Edit, enable: IsValid">Save</button>
+                    <button class="ui basic small orange button" data-bind="click: $root.ShowMain">Cancel</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+    <br />
+</div>
+
+<div data-bind="visible: DeleteView">
+    <div class="row">
+        <div style="padding-left:11%;">
+            <h3>Delete Job</h3>
+            <hr>
+            <button class="btn btn-info btn-sx" data-bind="click:$root.ShowMain"><span class="fa fa-arrow-left"></span> Back</button>
+            <br><br>
+        </div>
+    </div>
+    <div class="row" data-bind="with : SelectedItem">
+        <div class="col-md-12" style="padding-bottom: 100px; padding-left:11%;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Are you sure you want to delete this job ?
+                </div>
+                <div class="panel-body">
+                    <div class="row" style="padding-left:10px">
+                        <div class="col-md-5">
+                            <div class="row" style="line-height : 25px">
+                                <div class="row">
+                                    <div class="col-md-5"><strong>Location: </strong></div>
+                                    <div class="col-md-7">
+                                        <span data-bind="text : StreetAddress"></span>
+                                        <span data-bind="text:CitySub"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"><strong>Supplier Name: </strong></div>
+                                    <div class="col-md-7">
+                                        <span data-bind="if : IsDIY"><span>Myself</span></span>
+                                        <span data-bind="ifnot : IsDIY">
+                                            <span data-bind="text:ProviderCompanyName"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"><strong>Requested On: </strong></div>
+                                    <div class="col-md-7"><span data-bind="text: moment(CreatedOn()).format('ll')">Nov 15, 2017</span></div>
+                                </div>
+                                @*<div class="row">
+                                        <div class="col-md-5"><strong>Landlord Name: </strong></div>
+                                        <div class="col-md-7"><span data-bind="text : LandlordName">Vincent Nguyen</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><strong>Landlord Phone: </strong></div>
+                                        <div class="col-md-7"><span data-bind="text : LandlordContactNumber">Not Available</span></div>
+                                    </div>*@
+                            </div><!--row-->
+                        </div>
+                        @*<div class="col-md-7">
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Description: </strong></div>
+                                    <div class="col-md-8"><span data-bind="text : Description" style="word-break: break-all;">zsfgsdbsdbsdb</span></div>
+                                </div>
+                            </div>*@
+
+                    </div><!--row-->
+                </div><!--panel body-->
+                <div class="prop-actions">
+                    <button type="button" class="btn btn-success" data-bind="click: $root.Delete">Confirm</button>
+                    <button type="button" class="btn btn-danger" data-bind="click:$root.ShowMain">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/PropertyOwners/Property/POAcceptedJobs.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#NoRecord").modal("show");
+        var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        var vm = new PageViewModel(dataVm);
+        ko.applyBindings(vm);
+    });
+</script>

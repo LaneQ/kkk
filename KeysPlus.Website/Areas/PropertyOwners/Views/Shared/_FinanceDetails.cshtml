@@ -1,0 +1,103 @@
+﻿<div class="row" data-bind="with : SelectedProp().Finance">
+    <div class="col-md-12">
+        <div id="homeValueSection" class="homeValueSection m-l-10" style="margin-top: 20px">
+            <span class="title-header">
+                Home value
+            </span>
+            @* Repayments section with knock out *@
+            <div>
+                <table class="table-financial table-properties property-projections table">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Value Type</th>
+                            <th>Date Added</th>
+                            <th>Is Active</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: HomeValues">
+                        <tr data-bind="template:{name : $parent.HomeValueDisplay($data)}"></tr>
+                    </tbody>
+                </table>
+                <p></p>
+                <a  data-bind="if : $root.PropSelected() == false"><i class="glyphicon glyphicon-plus-sign"></i> Add home value</a>
+                <a class="button-link" style="color: #337ab7" data-bind="if : $root.PropSelected ,click : AddHomeValue"><i class="glyphicon glyphicon-plus-sign"></i> Add home value</a>
+            </div>
+        </div>
+        <div id="repaymentSection" class="repaymentSection m-l-10" style="margin-top: 20px">
+            <span class="title-header">
+                Repayments
+            </span>
+            @* Repayments section with knock out *@
+            <div>
+                <table class="table-financial table-properties property-projections table">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Frequency</th>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach : Repayments">
+                        <tr data-bind="template :{name : $parent.RepaymentDisplay($data)}"></tr>
+                    </tbody>
+
+                </table>
+                <p></p>
+                <a data-bind="if : $root.PropSelected() == false"><i class="glyphicon glyphicon-plus-sign"></i> Add repaymene</a>
+                <a class="button-link" style="color: #337ab7" data-bind="if : $root.PropSelected, click : AddRepayment"><i class="glyphicon glyphicon-plus-sign"></i> Add repayment</a>
+            </div>
+        </div>
+        <div id="expenseSection" class="expenseSection m-l-10" style="margin-top: 20px">
+            <h4>
+                <span class="title-header">
+                    Expenses
+                </span>
+            </h4>
+            <table class="table-financial table-properties property-projections table">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Date Added</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach : Expenses">
+                    <tr data-bind="template : {name : $parent.ExpenseDisplay($data)}"></tr>
+                </tbody>
+
+            </table>
+            <a data-bind="if : $root.PropSelected() == false"><i class="glyphicon glyphicon-plus-sign"></i> Add expense</a>
+            <a class="button-link" style="color: #337ab7" data-bind="if : $root.PropSelected, click : AddExpense"><i class="glyphicon glyphicon-plus-sign"></i> Add expense</a>
+        </div>
+
+        <div id="expenseSection" class="expenseSection m-l-10" style="margin-top: 20px">
+            <h4>
+                <span class="title-header">
+                    Rental Payments
+                </span>
+            </h4>
+            <table class="table-financial table-properties property-projections table">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Frequency</th>
+                        <th>Date Added</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach : RentalPayments">
+                    <tr data-bind="template : {name : $parent.RentalPaymentDisplay($data)}"></tr>
+                </tbody>
+
+            </table>
+            <a data-bind="if : $root.PropSelected() == false"><i class="glyphicon glyphicon-plus-sign"></i> Add rental payment</a>
+            <a class="button-link" style="color: #337ab7" data-bind="if : $root.PropSelected, click : AddRentalPayment"><i class="glyphicon glyphicon-plus-sign"></i> Add rental payment</a>
+        </div>
+    </div>
+</div>
+

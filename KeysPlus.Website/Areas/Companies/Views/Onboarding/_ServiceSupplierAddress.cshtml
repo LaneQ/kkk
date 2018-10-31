@@ -1,0 +1,86 @@
+﻿@*@model KeysPlus.Website.Areas.Companies.Models.ServicesupplierViewModel*@
+<div class="details" id="ssform">
+    <h4 class="lead text-left">Physical Address</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="searchTextField" class="onboard-label clear">Search Address</label>
+            <input type="text" name="searchAddress" id="physicalAutocomplete" placeholder="&nbsp Enter your address" size="54" maxlength="120" data-bind="addressAutocomplete : PhysicalAddress">
+        </div>
+        <div class="col-md-6">
+            <label class="onboard-label clear">Number <span style="color:red;">*</span></label>
+            <input type="text" name="PhysicalAddress.Number" placeholder="Number" data-bind="value : PhysicalAddress.Number ,valueUpdate :'afterkeydown'" />
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <label class="onboard-label clear">Street <span style="color:red;">*</span></label>
+            <input type="text" name="PhysicalAddress.Street" placeholder="Street" data-bind="value : PhysicalAddress.Street , valueUpdate :'afterkeydown'" />
+        </div>
+        <div class="col-md-6">
+            <label class="onboard-label clear">Suburb</label>
+            <input type="text" name="PhysicalAddress.Suburb" placeholder="Suburb" data-bind="value : PhysicalAddress.Suburb ,valueUpdate :'afterkeydown'" />
+        </div>
+    </div>
+    <div class="row">    
+        <div class="col-md-6">
+            <label class="onboard-label clear">City <span style="color:red;">*</span></label>
+            <input type="text" name="PhysicalAddress.City" placeholder="City" data-bind="value : PhysicalAddress.City, valueUpdate :'afterkeydown'" />
+        </div>
+        <div class="col-md-6">
+            <label class="onboard-label clear">PostCode <span style="color:red;">*</span></label>
+            <input type="text" name="PhysicalAddress.PostCode" placeholder="PostCode" data-bind="value : PhysicalAddress.PostCode, valueUpdate :'afterkeydown'" />
+        </div>
+    </div> 
+    <input type="hidden" name="PhysicalAddress.Latitude" data-bind="value : PhysicalAddress.Latitude" />
+    <input type="hidden" name="PhysicalAddress.Longitude" data-bind="value : PhysicalAddress.Longitude" />
+
+    <br />
+    <br />
+    @*<input class="filled-in chk-col-pink" id="shipsame" type="checkbox" name="test" style="float:left ;width: 20px; margin-top:15px" data-bind="checked : IsShipSame"/>*@
+    @*<label class="onboard-label" style="padding-left:10px">Same Billing Address</label>*@
+    <input style="float:left ;width: 20px; margin-top:15px" name="IsShipSame" id="IsShipSame" type="checkbox" data-bind="checked: IsShipSame"/>
+    <label style="float: left; margin-top:12px">Same Billing Address</label>
+
+    <br />
+    <br>
+    <div id="shipinfo" data-bind=@*"visible : !IsShipSame()"*@>
+        <h4 class="lead text-left">Billing Address</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="searchTextField" class="onboard-label clear">Search Address</label>
+                <input type="text" name="searchAddress" id="billingAutocomplete" placeholder="&nbsp Enter your address" size="54" maxlength="120" data-bind="addressAutocomplete : BillingAddress">
+            </div>
+            <div class="col-md-6">
+                <label class="onboard-label clear">Number <span style="color:red;">*</span></label>
+                <input type="text" id="bill_number" name="BillingAddress.Number" placeholder="&nbsp Number" data-bind="value: BillingAddress.Number, valueUpdate :'afterkeydown', disable: IsShipSame"/>
+            </div>
+        </div>
+       
+        <div class="row">
+            <div class="col-md-6">
+                <label class="onboard-label clear">Street <span style="color:red;">*</span></label>
+                <input type="text" name="BillingAddress.Street" placeholder="Street" data-bind="value : BillingAddress.Street, valueUpdate :'afterkeydown', disable: IsShipSame" />
+            </div>
+            <div class="col-md-6">
+                <label class="onboard-label clear">Suburb</label>
+                <input type="text" name="BillingAddress.Suburb" placeholder="Suburb" data-bind="value : BillingAddress.Suburb, valueUpdate :'afterkeydown', disable: IsShipSame" />
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <label class="onboard-label clear">City <span style="color:red;">*</span></label>
+                <input type="text" name="BillingAddress.City" placeholder="City" data-bind="value : BillingAddress.City, valueUpdate :'afterkeydown', disable: IsShipSame" />
+            </div>
+            <div class="col-md-6">
+                <label class="onboard-label clear">PostCode <span style="color:red;">*</span></label>
+                <input type="text" name="BillingAddress.PostCode" placeholder="PostCode" data-bind="value : BillingAddress.PostCode, valueUpdate :'afterkeydown', disable: IsShipSame" />
+            </div>
+        </div>
+        <input type="hidden" name="BillingAddress.Latitude" data-bind="value : BillingAddress.Latitude" />
+        <input type="hidden" name="BillingAddress.Longitude" data-bind="value : BillingAddress.Longitude" />
+    </div>
+    <br />
+    <br />
+</div>

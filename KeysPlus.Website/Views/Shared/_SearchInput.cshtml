@@ -1,0 +1,54 @@
+﻿@model KeysPlus.Service.Models.SearchInputModel
+<div class="row">
+    <div class="col-md-8">
+        <div id="search-wrap" data-step="1" data-intro="Input key words and do search.">
+            @using (Html.BeginForm())
+            {
+                <div class="input-group">
+                    @if (Model.SearchString != null)
+                    {
+                        <input type="text" name="SearchString" id="searchId" class="form-control" style="padding-left:4px"
+                                value="@Model.SearchString" placeholder="What are you searching for?" autofocus />
+                     }
+                    else
+                    {
+                        <input type="text" name="SearchString" id="searchId" class="form-control" style="padding-left:4px"
+                               placeholder="What are you searching for?" autofocus />
+                    }
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-primary" style="height:34px;">
+                            <span class="">
+                                <span class="fa fa-search"></span>
+                                Search
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                foreach (var item in Model.InputValues)
+                {
+                    <input type="hidden" name="@item.Name" value="@item.Value" />
+                }
+            }
+        </div>
+    </div>
+
+    <div class="col-md-4 pull-right" style="height:38px; line-height:38px">
+        <div class="row" data-step="2" data-intro="Choose one and do sort.">
+            <div class="col-md-8 pull-right" data-bind="template :{name: 'fiter-select'}">
+            </div>
+            <span style="float:right">Sort By:</span>
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="fiter-select">
+    <select class="ui dropdown" onChange='location.href = this.value'>
+        <option selected disabled hidden>@Model.SortOrder</option>
+        @foreach (var item in Model.SortOrders)
+        {
+            <option value="@Url.Action(item.ActionName, item.RouteValues)">
+                @item.SortOrder
+            </option>
+        }
+    </select>
+</script>

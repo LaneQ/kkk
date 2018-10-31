@@ -1,0 +1,129 @@
+﻿@model KeysPlus.Service.Models.SideBarViewModel
+<div class="menu">
+    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 800px;">
+        <ul class="list" style="height: 800px; overflow: hidden; width: auto;">
+            <li class="sidebar-item">
+                <a href="@Url.Action("Dashboard", "Home", new {Area = "PropertyOwners"})" class="item-link waves-effect waves-block">
+                    <div class="sidebar-link-inner">
+                        <img class="li-icon" src="~/images/items-512.png" width="20" height="20"/>
+                        <p class="sidebar-linkText">Dashboard</p>
+                    </div>
+                </a>
+            </li><!-- #END Dashboard-->
+            <li class="sidebar-item">
+                <a href="@Url.Action("Index", "Home", new { Area = "Rental" })" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="RetalListing" ? "selected" : "")">
+                    <div class="sidebar-link-inner">
+                        <img class="li-icon" src="~/images/property-rent.png" width="20" height="20" />
+                        <p class="sidebar-linkText">Properties For Rent</p>
+                    </div>
+                </a>
+            </li><!-- #END Rental listed Properties-->
+            <li class="sidebar-item">
+                <a href="@Url.Action("GetMarketJobs", "Home", new { Area = "Jobs" , isOwner = false})" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="MarketJobs" ? "selected" : "")">
+                    <div class="sidebar-link-inner">
+                        <img class="li-icon" src="~/images/target-market.png" width="20" height="20" />
+                        <p class="sidebar-linkText">Market Place</p>
+                    </div>
+                </a>
+            </li>
+            @*<li>
+                    <a href="@Url.Action("Index", "Home", new { Area = "Admin" })" class="waves-effect waves-block"><i class="zmdi zmdi-account-add"></i><span>Admin</span></a>
+                </li>*@<!-- #END Admin-->
+            @if (Model.IsPropertyOwner)
+            {
+                <li class="sidebar-item">
+                    <a href="@Url.Action("Index", "Home", new { Area = "PropertyOwners"})" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="Properties" ? "selected" : "")">
+                        <div class="sidebar-link-inner">
+                            <img class="li-icon" src="~/images/property.png" width="20" height="20" />
+                            <p class="sidebar-linkText">Properties</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="@Url.Action("RentalProperties", "Property", new { Area = "PropertyOwners"})" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="RentalApplications" ? "selected" : "")">
+                        <div class="sidebar-link-inner">
+                            <img class="li-icon" src="~/images/rent-app.png" width="20" height="20" />
+                            <p class="sidebar-linkText">Rental Applications</p>
+                        </div>
+                    </a>
+                    @*@{Html.RenderAction("NewApplicationCount", "Property", new { Area = "PropertyOwners" });}*@
+                </li>
+                <li class="sidebar-item">
+                    <a href="@Url.Action("RequestsByTenants", "Property", new { Area = "PropertyOwners" })" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="TenantRequests" ? "selected" : "")">
+                        <div class="sidebar-link-inner">
+                            <img class="li-icon" src="~/images/ten-request.png" width="20" height="20" />
+                            <p class="sidebar-linkText">Tenant Request</p>
+                        </div>
+                    </a>
+                    @*@{Html.RenderAction("PropertyRequestsCount", "Property", new { Area = "PropertyOwners" });}*@
+                </li>
+                <li class="sidebar-item">
+                    <a href="@Url.Action("GetMarketJobs", "Home", new {Area = "Jobs" , isOwner = true})" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="MarketJobsOwner" ? "selected" : "")">
+                        <div class="sidebar-link-inner">
+                            <img class="li-icon" src="~/images/quote-for-prop.png" width="20" height="20" />
+                            <p class="sidebar-linkText">Job Quotes</p>
+                        </div>
+                    </a>
+                    @*@{Html.RenderAction("NewQuotesCount", "Home", new { Area = "Jobs" });}*@
+                </li>
+                <li class="sidebar-item"> 
+                    <a href="@Url.Action("Index", "Home", new {Area = "Jobs" , userAction = 1 })" class="item-link waves-effect waves-block">
+                        <div class="sidebar-link-inner">
+                            <img class="li-icon" src="~/images/job-for-prop.png" width="20" height="20" />
+                            <p class="sidebar-linkText">Accepted Jobs</p>
+                        </div>
+                    </a>
+                </li><!-- #END Properties-->
+            }
+
+            @if (Model.IsTenant)
+            {
+                <li class="sidebar-item">
+                    <a href="@Url.Action("MyRentals", "Home", new { Area = "Tenants" })" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="MyRentals" ? "selected" : "")">
+                        <div class="sidebar-link-inner">
+                            <img class="li-icon" src="~/images/my-rental.png" width="22" height="22" />
+                            <p class="sidebar-linkText">My Rentals</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="@Url.Action("MyRentalApplications", "Home", new { Area = "Tenants" })" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="MyApplications" ? "selected" : "")">
+                        <div class="sidebar-link-inner">
+                            <img class="li-icon" src="~/images/ten-rent-app-1.png" width="18" height="18" />
+                            <p class="sidebar-linkText">My Applications</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="@Url.Action("MyRequests", "Home", new { Area = "Tenants" })" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="MyRequests" ? "selected" : "")">
+                        <div class="sidebar-link-inner">
+                            <img class="li-icon" src="~/images/request.png" width="20" height="20" />
+                            <p class="sidebar-linkText">My Requests</p>
+                        </div>
+                    </a>
+                </li>
+            }
+            @if (Model.IsServiceSupplier)
+            {
+                <li class="sidebar-item">
+                    <a href="@Url.Action("MyQuotes", "Manage", new { Area = "Companies"})" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="MyQuotes" ? "selected" : "")">
+                        <div class="sidebar-link-inner">
+                            <img class="li-icon" src="~/images/price-icon-20.png" width="20" height="20" />
+                            <p class="sidebar-linkText">My Quotes</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="@Url.Action("Index", "Home", new {Area = "Jobs" , userAction = 2 })" class="item-link waves-effect waves-block">
+                        <div class="sidebar-link-inner">
+                            <img class="li-icon" src="~/images/my-job.png" width="20" height="20" />
+                            <p class="sidebar-linkText">My Jobs</p>
+                        </div>
+                    </a>
+                </li>
+            }
+        </ul>
+        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.498039); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 354.767px;"></div>
+        <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+    </div>
+</div>

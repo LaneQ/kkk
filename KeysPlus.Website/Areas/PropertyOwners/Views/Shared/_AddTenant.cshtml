@@ -1,0 +1,208 @@
+﻿<script type="text/html" id="AddTenant">
+    <div class="row" style="padding-bottom: 100px">
+
+        <div id="propertyDetails">
+            <form class="step-form">
+                <fieldset>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Tenant Email <span style="color:red;">*</span></label>
+                                <input name="Email" class="form-control" type="text" data-bind="value: TenantToPropertyModel.TenantEmail,valueUpdate:'afterkeydown'" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Start Date <span style="color:red;">*</span></label>
+                                <input name="StartDate" class="form-control" type="date" data-bind="value: TenantToPropertyModel.StartDate,valueUpdate:'afterkeydown'" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">End Date <span style="color:red;">*</span></label>
+                                <input name="EndDate" class="form-control" type="date" data-bind="value: TenantToPropertyModel.EndDate,valueUpdate:'afterkeydown'" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Rent Amount <span style="color:red;">*</span></label>
+                                <input name="RentAmount" class="form-control" type="text" data-bind="value: TenantToPropertyModel.PaymentAmount,trimTo2dp, valueUpdate:'afterkeydown'" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Payment Frequency <span style="color:red;">*</span></label>
+                                <select class="form-control" style="padding-left:8px" name="paymentfrequency" data-bind="value: TenantToPropertyModel.PaymentFrequencyId">
+                                    @foreach (var freq in ViewBag.Frequencies)
+                                    {
+                                        <option value="@freq.Id">@freq.Code</option>
+                                    }
+                                </select>
+                            </div>
+                        <br/>
+
+
+                            @*<div class="form-group">
+                                     <label class="keys control-label col-md-6">Tenant Email :<span style="color:red;">*</span></label>
+                                     <div class="col-md-3" style="margin-bottom:15px;">
+                                         <input name="Email" class="form-control" type="text" data-bind="value: TenantToPropertyModel.TenantEmail,valueUpdate:'afterkeydown'" />
+                                     </div>
+                                 </div>
+                                <div class="form-group">
+                                     <label class="keys control-label col-md-6">Start Date :<span style="color:red;">*</span></label>
+                                     <div class="col-md-3" style="margin-bottom:15px;">
+                                         <input name="StartDate" class="form-control" type="date" data-bind="value: TenantToPropertyModel.StartDate,valueUpdate:'afterkeydown'" />
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="keys control-label col-md-6">End Date :<span style="color:red;">*</span></label>
+
+                                     <div class="col-md-3" style="margin-bottom:15px;">
+                                         <input name="EndDate" class="form-control" type="date" data-bind="value: TenantToPropertyModel.EndDate,valueUpdate:'afterkeydown'" />
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="keys control-label col-md-6">Rent Amount:<span style="color:red;">*</span></label>
+                                     <div class="col-md-6" style="margin-bottom:15px;">
+                                         <input name="RentAmount" class="form-control" type="text" data-bind="value: TenantToPropertyModel.PaymentAmount,trimTo2dp, valueUpdate:'afterkeydown'" />
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="keys control-label col-md-6">Payment Frequency :<span style="color:red;">*</span></label>
+                                     <div class="col-md-6" style="margin-bottom:15px;">
+                                         <select class="form-control" style="padding-left:8px" name="paymentfrequency" data-bind="value: TenantToPropertyModel.PaymentFrequencyId">
+                                             @foreach (var freq in ViewBag.Frequencies)
+                                             {
+                                                 <option value="@freq.Id">@freq.Code</option>
+                                             }
+                                         </select>
+                                     </div>
+                                 </div>*@
+
+                            <div class="col-sm-12 text-center" style="padding-bottom: 30px">
+                                <button class="btn btn-success" data-bind="click :  AddTenantToProperty,enable:IsTenantValid">Save</button>
+                                <button class="btn btn-danger" data-bind="click:BackToTenantList">Cancel</button>
+                            </div>
+                        </div><!--column-->
+                    </div><!--row-->
+                </fieldset>
+            </form>
+        </div><!--propertyDetails-->
+    </div>
+</script>
+
+@*<style>
+        .panel-title {
+            padding-bottom: 2px;
+            padding-left: 4px;
+            padding-top: 2px;
+        }
+
+        input[type=text]:focus {
+            border: 2px solid #ADD8E6;
+            /*width: 51%;*/
+        }
+
+        select {
+            border: 1px solid #d0d0d0;
+        }
+
+        textarea {
+            border: 1px solid #d0d0d0;
+        }
+
+        input {
+            border: 1px solid #d0d0d0;
+        }
+
+        textarea[name=jobDescription] {
+            resize: none;
+        }
+    </style>*@
+    @*<div  >
+        <form id="NewTenant"  >
+
+            <div class="input-group">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+
+                            <h4 class="panel-title" id="propertyTitle" style="padding: 10px 15px;" data-toggle="collapse" data-parent="#accordion" href="#propertyDetails" aria-expanded="true" aria-controls="propertyDetails">
+                                Add a Tenant to @ViewBag.PropertyName
+                            </h4>
+
+                        </div>
+
+                        <div id="propertyDetails" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+
+                                <div class="col-sm-16">
+                                     
+
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="keys control-label col-sm-6">Tenant Email :<span style="color:red;">*</span></label>
+                                            <div class="col-sm-6" style="margin-bottom:15px;">
+                                                <input name="Email" class="form-control" type="text" data-bind="value: TenantToPropertyModel.TenantEmail,valueUpdate:'afterkeydown'" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div>
+                                            <label class="keys control-label col-sm-6">Start Date :<span style="color:red;">*</span></label>
+                                            <div class="col-sm-6" style="margin-bottom:15px;">
+                                                <input name="StartDate" class="form-control" type="date" data-bind="value: TenantToPropertyModel.StartDate,valueUpdate:'afterkeydown'"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="keys control-label col-sm-6">End Date :<span style="color:red;">*</span></label>
+                                            
+                                            <div class="col-sm-6" style="margin-bottom:15px;">
+                                                <input name="EndDate" class="form-control" type="date" data-bind="value: TenantToPropertyModel.EndDate,valueUpdate:'afterkeydown'"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="keys control-label col-sm-6">Rent Amount:<span style="color:red;">*</span></label>
+                                            <div class="col-sm-6" style="margin-bottom:15px;">
+                                                <input name="RentAmount" class="form-control" type="text" data-bind="value: TenantToPropertyModel.PaymentAmount,trimTo2dp, valueUpdate:'afterkeydown'" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div>
+                                            <label class="keys control-label col-sm-6">Payment Frequency :<span style="color:red;">*</span></label>
+                                          
+                                            <div class="col-sm-6" style="margin-bottom:15px;">
+                                                <select class="form-control" style="padding-left:8px" name="paymentfrequency" data-bind="value: TenantToPropertyModel.PaymentFrequencyId">
+                                                    @foreach (var freq in ViewBag.Frequencies)
+                                                    {
+                                                        <option value="@freq.Id">@freq.Code</option>
+                                                    }
+                                                </select>
+
+                                                </div>
+                                             
+                                            </div>
+
+                                    </div>
+                                     
+
+                                </div>
+
+                                <div class="col-sm-16 text-center">
+                                    <br />
+                                    <button class="btn btn-success" data-bind="click :  AddTenantToProperty,enable:IsTenantValid">Save</button>
+                                    <button class="btn btn-danger" data-bind="click:BackToTenantList">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>*@
+

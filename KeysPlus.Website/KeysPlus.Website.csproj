@@ -1,0 +1,876 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.2\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.2\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{14AA36B0-C2BA-4BF6-8E18-C5E9527E760E}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KeysPlus.Website</RootNamespace>
+    <AssemblyName>KeysPlus.Website</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.2\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid, Version=9.8.0.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.9.9.0\lib\net452\SendGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="TableDependency">
+      <HintPath>..\packages\SqlTableDependency.6.1.0.0\lib\TableDependency.dll</HintPath>
+    </Reference>
+    <Reference Include="TableDependency.SqlClient">
+      <HintPath>..\packages\SqlTableDependency.6.1.0.0\lib\TableDependency.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\Models\AdminHomeViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\RoleViewModel.cs" />
+    <Compile Include="Areas\Companies\CompaniesAreaRegistration.cs" />
+    <Compile Include="Areas\Companies\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Companies\Controllers\ManageController.cs" />
+    <Compile Include="Areas\Companies\Controllers\OnboardingController.cs" />
+    <Compile Include="Areas\Companies\Models\CompanyViewModel.cs" />
+    <Compile Include="Areas\Jobs\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Jobs\JobsAreaRegistration.cs" />
+    <Compile Include="Areas\Jobs\Models\PropertyViewModels.cs" />
+    <Compile Include="Areas\Personal\Controllers\WatchlistController.cs" />
+    <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
+    <Compile Include="Areas\PropertyOwners\Controllers\HomeController.cs" />
+    <Compile Include="Areas\PropertyOwners\Controllers\ManageController.cs" />
+    <Compile Include="Areas\PropertyOwners\Controllers\OnboardingController.cs" />
+    <Compile Include="Areas\PropertyOwners\Controllers\PropertyController.cs" />
+    <Compile Include="Areas\PropertyOwners\PropertyOwnerAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
+    <Compile Include="Areas\Admin\UsersAreaRegistration.cs" />
+    <Compile Include="Areas\Rental\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Rental\Controllers\RentalController.cs" />
+    <Compile Include="Areas\Rental\RentalAreaRegistration.cs" />
+    <Compile Include="Areas\Tenants\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Tenants\Controllers\RentController.cs" />
+    <Compile Include="Areas\Tenants\TenantsAreaRegistration.cs" />
+    <Compile Include="Areas\Tools\Controllers\CalculatorController.cs" />
+    <Compile Include="Areas\Tools\ToolsAreaRegistration.cs" />
+    <Compile Include="Tools\ImageTool.cs" />
+    <Compile Include="Tools\SearchTool.cs" />
+    <Compile Include="Tools\UploadImageTool.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\SiteUtil.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Areas\Tools\Scripts\InvestmentCalculator.js" />
+    <Content Include="Content\semantic.min.css" />
+    <Content Include="Content\styles\authentication.css" />
+    <Content Include="Content\themes\default\assets\fonts\brand-icons.svg" />
+    <Content Include="Content\themes\default\assets\fonts\icons.svg" />
+    <Content Include="Content\themes\default\assets\fonts\outline-icons.svg" />
+    <Content Include="Content\themes\default\assets\images\flags.png" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\chartjs\ServiceSupplierDashboardChart.js" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\_AddUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\_DeleteUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\_EditForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\_EditUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\_ReadForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\_UserDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_PagedUsers.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Jobs\Views\Home\AdvancedSearchResult.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Home\_PropertyDetails.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Onboarding\_AddNewProperty.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Property\ListRental.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Property\PropertyTenants.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Shared\_RentalListing.cshtml" />
+    <Content Include="Areas\Tenants\Views\Home\MyRequests.cshtml" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fonts\material\Material-Design-Iconic-Font.svg" />
+    <Content Include="Content\introjs\introjs-rtl.css" />
+    <Content Include="Content\introjs\introjs-rtl.min.css" />
+    <Content Include="Content\introjs\introjs.css" />
+    <Content Include="Content\introjs\introjs.min.css" />
+    <Content Include="Content\introjs\themes\introjs-dark.css" />
+    <Content Include="Content\introjs\themes\introjs-flattener.css" />
+    <Content Include="Content\introjs\themes\introjs-modern.css" />
+    <Content Include="Content\introjs\themes\introjs-nassim.css" />
+    <Content Include="Content\introjs\themes\introjs-nazanin.css" />
+    <Content Include="Content\introjs\themes\introjs-royal.css" />
+    <Content Include="Content\Onboard.css" />
+    <Content Include="Content\onboarding.css" />
+    <Content Include="Content\propertyOwner\onboarding.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\stylesheets\bootstrap\_badges.css">
+      <DependentUpon>_badges.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\stylesheets\NoticePoint.css" />
+    <Content Include="Content\stylesheets\theme\_landing-page.scss" />
+    <Content Include="Content\fonts\material\Material-Design-Iconic-Font.eot" />
+    <Content Include="Content\fonts\material\Material-Design-Iconic-Font.ttf" />
+    <Content Include="Content\fonts\material\Material-Design-Iconic-Font.woff" />
+    <Content Include="Content\fonts\material\Material-Design-Iconic-Font.woff2" />
+    <Content Include="Content\stylesheets\_bootstrap-compass.css">
+      <DependentUpon>_bootstrap-compass.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\stylesheets\_bootstrap-mincer.css">
+      <DependentUpon>_bootstrap-mincer.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\stylesheets\_bootstrap-sprockets.css">
+      <DependentUpon>_bootstrap-sprockets.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\stylesheets\_font-awesome.css">
+      <DependentUpon>_font-awesome.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\modules\adminModules.css">
+      <DependentUpon>adminModules.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\modules\adminModules.min.css">
+      <DependentUpon>adminModules.css</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\modules\authentication.css">
+      <DependentUpon>authentication.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\modules\authentication.min.css">
+      <DependentUpon>authentication.css</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\modules\propertyOwnerOnBoardingModule.css">
+      <DependentUpon>propertyOwnerOnBoardingModule.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\modules\propertyOwnerOnBoardingModule.min.css">
+      <DependentUpon>propertyOwnerOnBoardingModule.css</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\onboarding.css">
+      <DependentUpon>onboarding.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\onboarding.min.css">
+      <DependentUpon>onboarding.css</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\theme.css">
+      <DependentUpon>theme.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\theme.min.css">
+      <DependentUpon>theme.css</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\_variables.css">
+      <DependentUpon>_variables.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\_variables.min.css">
+      <DependentUpon>_variables.css</DependentUpon>
+    </Content>
+    <Content Include="documents\1a008e25-4ed2-4525-b01d-8657fad3661apresent.PNG" />
+    <Content Include="documents\46188582-6ac6-43bd-b45b-19f7ac1ce36fOnboarding-database.PNG" />
+    <Content Include="documents\ce312b5d-bc92-4aed-aab6-4fa1e12d42dbpresent.PNG" />
+    <Content Include="documents\f6ac880c-01dc-4615-9c91-1285c236e432Onboarding-database.PNG" />
+    <Content Include="documents\m15f08f5b5-820c-436a-8782-19c6b0672379.jpg" />
+    <Content Include="documents\present91382ff6-f58b-4a3b-aa35-e96fb95c31f1.PNG" />
+    <Content Include="images\bg-1.jpg" />
+    <Content Include="images\icon-user-default.png" />
+    <Content Include="images\keys-logo.PNG" />
+    <Content Include="images\keys-logo2.PNG" />
+    <Content Include="images\keys-logo1.PNG" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\map-marker.png" />
+    <Content Include="images\new-banner-red.png" />
+    <Content Include="images\no-prop-img.png" />
+    <Content Include="images\owner-512.png" />
+    <Content Include="images\profile_avatar.png" />
+    <Content Include="images\The_new_background.jpg" />
+    <Content Include="Scripts\bootbox.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\chartjs\Chart.bundle.js" />
+    <Content Include="Scripts\chartjs\Chart.bundle.min.js" />
+    <Content Include="Scripts\chartjs\Chart.js" />
+    <Content Include="Scripts\chartjs\Chart.min.js" />
+    <Content Include="Scripts\chartjs\chartjs.min.js" />
+    <Content Include="Scripts\chartjs\jquery.sparkline.min.js" />
+    <Content Include="Scripts\chartjs\KeysChart.js" />
+    <Content Include="Scripts\chartjs\PODashboardChart.js" />
+    <Content Include="Scripts\chartjs\sparkline.js" />
+    <Content Include="Scripts\chartjs\sparkline.min.js" />
+    <Content Include="Scripts\chartjs\TenantDashboardChart.js" />
+    <Content Include="Scripts\Companies\CompanyOnboard.js" />
+    <Content Include="Scripts\Companies\Manage\MyQuotes.js" />
+    <Content Include="Scripts\Globals\Commons.js" />
+    <Content Include="Areas\Jobs\Views\Home\AdvancedSearch.cshtml" />
+    <Content Include="Areas\Tenants\Views\Shared\PersonalDetails.cshtml" />
+    <Content Include="Areas\Personal\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Tools\Views\web.config" />
+    <Content Include="Areas\Tools\Views\Calculator\InvesmentCalculator.cshtml" />
+    <Content Include="Areas\Tools\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Shared\_PagedPropertyTenants.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\PropertyOwners\Views\Manage\RentalPaymentTracking.cshtml" />
+    <Content Include="Content\themes\default\assets\fonts\brand-icons.eot" />
+    <Content Include="Content\themes\default\assets\fonts\brand-icons.ttf" />
+    <Content Include="Content\themes\default\assets\fonts\brand-icons.woff" />
+    <Content Include="Content\themes\default\assets\fonts\brand-icons.woff2" />
+    <Content Include="Content\themes\default\assets\fonts\icons.eot" />
+    <Content Include="Content\themes\default\assets\fonts\icons.otf" />
+    <Content Include="Content\themes\default\assets\fonts\icons.ttf" />
+    <Content Include="Content\themes\default\assets\fonts\icons.woff" />
+    <Content Include="Content\themes\default\assets\fonts\icons.woff2" />
+    <Content Include="Content\themes\default\assets\fonts\outline-icons.eot" />
+    <Content Include="Content\themes\default\assets\fonts\outline-icons.ttf" />
+    <Content Include="Content\themes\default\assets\fonts\outline-icons.woff" />
+    <Content Include="Content\themes\default\assets\fonts\outline-icons.woff2" />
+    <Content Include="Areas\PropertyOwners\Views\Property\PropertyTenantsList.cshtml" />
+    <Content Include="Areas\Personal\Views\Watchlist\MarketJobs.cshtml" />
+    <None Include="Scripts\Globals\NZLocalites.json" />
+    <Content Include="Scripts\Globals\Onboarding.js" />
+    <Content Include="Scripts\introjs\intro.js" />
+    <Content Include="Scripts\introjs\intro.min.js" />
+    <Content Include="Scripts\Jobs\MarketJobs.js" />
+    <Content Include="Scripts\jquery.easing.min.js" />
+    <Content Include="Scripts\knockout-3.4.0.debug.js" />
+    <Content Include="Scripts\knockout-3.4.0.js" />
+    <Content Include="Scripts\NotificationStyle\css\demo.css" />
+    <Content Include="Scripts\NotificationStyle\css\normalize.css" />
+    <Content Include="Scripts\NotificationStyle\css\ns-default.css" />
+    <Content Include="Scripts\NotificationStyle\css\ns-style-attached.css" />
+    <Content Include="Scripts\NotificationStyle\css\ns-style-bar.css" />
+    <Content Include="Scripts\NotificationStyle\css\ns-style-growl.css" />
+    <Content Include="Scripts\NotificationStyle\css\ns-style-other.css" />
+    <Content Include="Scripts\NotificationStyle\fonts\codropsicons\codropsicons.svg" />
+    <Content Include="Scripts\NotificationStyle\fonts\linecons\linecons.svg" />
+    <Content Include="Scripts\NotificationStyle\js\classie.js" />
+    <Content Include="Scripts\NotificationStyle\js\modernizr.custom.js" />
+    <Content Include="Scripts\NotificationStyle\js\notificationFx.js" />
+    <Content Include="Scripts\NotificationStyle\js\snap.svg-min.js" />
+    <Content Include="Scripts\Personal\Watchlist2.js" />
+    <Content Include="Scripts\Personal\Watchlist.js" />
+    <Content Include="Scripts\PropertyOwners\Home\AddTenantDashBoard.js" />
+    <Content Include="Scripts\PropertyOwners\Home\FinancialModel.js" />
+    <Content Include="Scripts\PropertyOwners\Home\Onboarding.js" />
+    <Content Include="Scripts\PropertyOwners\Home\tenantIndex.js" />
+    <Content Include="Scripts\PropertyOwners\Home\TenantValidation.js" />
+    <Content Include="Scripts\PropertyOwners\Manage\MyMarketJobs.js" />
+    <Content Include="Scripts\PropertyOwners\MyOnboarding\Index.js" />
+    <Content Include="Scripts\PropertyOwners\Property\POAcceptedJobs.js" />
+    <Content Include="Scripts\PropertyOwners\Property\PORentalListings.js" />
+    <Content Include="Scripts\PropertyOwners\Property\PropertyOwnerNewJob.js" />
+    <Content Include="Scripts\PropertyOwners\Property\PropertyRequestIndex.js" />
+    <Content Include="Scripts\PropertyOwners\Property\PropertyTenants.js" />
+    <Content Include="Scripts\PropertyOwners\Property\PropertyTenantsList.js" />
+    <Content Include="Scripts\PropertyOwners\Property\RentalListingViewModel.js" />
+    <Content Include="Scripts\PropertyOwners\Property\RentalApplications.js" />
+    <Content Include="Scripts\PropertyOwners\Property\TenantRequests.js" />
+    <Content Include="Scripts\Rentals\Home\Index.js" />
+    <Content Include="Scripts\Rentals\RentalIndex.js" />
+    <Content Include="Scripts\semantic.min.js" />
+    <Content Include="Scripts\ServiceProviders\Home\Index.js" />
+    <Content Include="Scripts\ServiceProviders\Home\JobViewModel.js" />
+    <Content Include="Scripts\ServiceProviders\Home\ManageJob.js" />
+    <Content Include="Scripts\Companies\Manage\MyJobs.js" />
+    <Content Include="Scripts\Tenants\LandlordRequests.js" />
+    <Content Include="Scripts\Tenants\MyRentalApplication.js" />
+    <Content Include="Scripts\Tenants\MyRentals.js" />
+    <Content Include="Scripts\Tenants\TenantDetails.js" />
+    <Content Include="Scripts\Tenants\MyRequests.js" />
+    <Content Include="Scripts\Users\AccountOverview.js" />
+    <Content Include="Scripts\Users\Manage\UserProfile.js" />
+    <Content Include="Views\Account\AccountOverview.cshtml" />
+    <Content Include="Views\Shared\_UserInfo.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Home\Dashboard.cshtml" />
+    <Content Include="Areas\Rental\Views\web.config" />
+    <Content Include="Areas\PropertyOwners\Views\Home\_CarouselModal.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Home\_PropertyFinancial.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Onboarding\Index.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Onboarding\_PropertyFinancial.cshtml" />
+    <Content Include="Content\stylesheets\theme\_company-page.scss" />
+    <Content Include="Areas\PropertyOwners\Views\Onboarding\_PropertyTenant.cshtml" />
+    <Content Include="Areas\Tenants\Views\Home\Onboarding.cshtml" />
+    <Content Include="Areas\Tenants\Views\Home\RequestJob.cshtml" />
+    <Content Include="Areas\Tenants\Views\Home\_TenantDetails.cshtml" />
+    <Content Include="Areas\Tenants\Views\web.config" />
+    <Content Include="Areas\Rental\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Rental\Views\Home\_RentalApplication.cshtml" />
+    <Content Include="Areas\Rental\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Rental\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Property\PropertyRequestsCount.cshtml" />
+    <Content Include="Areas\Rental\Views\Shared\RentalError.cshtml" />
+    <Content Include="Areas\Tenants\Views\Home\MyRentals.cshtml" />
+    <Content Include="Areas\Tenants\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Tenants\Views\Home\_RequestForm.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Property\RequestsByTenants.cshtml" />
+    <Content Include="Areas\Companies\Views\Manage\MyQuotes.cshtml" />
+    <Content Include="Areas\Companies\Views\Onboarding\index.cshtml" />
+    <Content Include="Areas\Companies\Views\Onboarding\_ServiceSupplierAddress.cshtml" />
+    <Content Include="Areas\Companies\Views\Onboarding\_ServiceSupplierDetails.cshtml" />
+    <Content Include="Areas\Tenants\Views\Home\MyRentalApplications.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Home\TenantJobRequest.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Property\RentalProperties.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Property\AllRentalApplications.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Shared\_RentalListingModal.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Property\NewApplicationCount.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\web.config" />
+    <Content Include="Areas\PropertyOwners\Views\Property\AddNewProperty.cshtml" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\PropertyOwners\Views\Property\PropertyTenants.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Shared\_AddTenant.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Property\TenantRequests.cshtml" />
+    <Content Include="Areas\Rental\Views\Home\SendRequest.cshtml" />
+    <Content Include="Areas\Tenants\Views\Home\LandlordRequests.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Home\AddTenantDashBoard.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Manage\EditPropFinance.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Shared\_FinanceDetails.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Home\EditTenantInProperty.cshtml" />
+    <Content Include="Areas\Tenants\Views\Home\Dashboard.cshtml" />
+    <Content Include="Areas\Tenants\Views\Home\SendRequest.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Property\MyRequests.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Property\MyRequestReplies.cshtml" />
+    <Content Include="Areas\Jobs\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Jobs\Views\web.config" />
+    <Content Include="Areas\Jobs\Views\Home\_StatusForm.cshtml" />
+    <Content Include="Areas\Jobs\Views\Home\AddNewJob.cshtml" />
+    <Content Include="Areas\Jobs\Views\Home\MarketJobs.cshtml" />
+    <Content Include="Areas\Jobs\Views\Home\NewQuotesCount.cshtml" />
+    <Content Include="Areas\Jobs\Views\Shared\_JobSearchBox.cshtml" />
+    <Content Include="Areas\Jobs\Views\Shared\_TenantJobRequestForm.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Manage\Inspections.cshtml" />
+    <Content Include="Areas\Jobs\Views\Home\AdvanceSearch.cshtml" />
+    <Content Include="Areas\Rental\Views\Home\AdvancedSearch.cshtml" />
+    <Content Include="Areas\Rental\Views\Home\AdvanceSearchResult.cshtml" />
+    <Content Include="Areas\Personal\Views\web.config" />
+    <Content Include="Areas\PropertyOwners\Views\Manage\AcceptedJobs.cshtml" />
+    <Content Include="Areas\Personal\Views\Watchlist\Index.cshtml" />
+    <Content Include="Areas\Tenants\Views\Rent\Inspections.cshtml" />
+    <Content Include="Areas\Companies\Views\Home\MyJobs.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Manage\MyMarketJobs.cshtml" />
+    <Content Include="Areas\Jobs\Views\Home\GetJobQuotes.cshtml" />
+    <Content Include="Areas\Rental\Views\Shared\_RentalModals.cshtml" />
+    <Content Include="Areas\Jobs\Views\Shared\_JobQuoteForm.cshtml" />
+    <None Include="Content\stylesheets\_font-awesome.scss">
+      <Compile>True</Compile>
+      <Minify>True</Minify>
+      <IgnoreWarnings>False</IgnoreWarnings>
+      <IgnoreErrors>False</IgnoreErrors>
+      <CompileStyle>Nested</CompileStyle>
+      <DebugInfo>False</DebugInfo>
+    </None>
+    <Content Include="Content\stylesheets\PagedList.css" />
+    <Content Include="Content\stylesheets\theme.css">
+      <DependentUpon>theme.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\stylesheets\theme.min.css">
+      <DependentUpon>theme.css</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\main.css">
+      <DependentUpon>main.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\styles\main.min.css">
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
+    <Content Include="favicon.ico" />
+    <Content Include="Content\fonts\bootstrap\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Global.asax" />
+    <None Include="Content\stylesheets\theme\_site.scss" />
+    <Content Include="images\AucklandView.jpg" />
+    <Content Include="images\bw-toolbox.jpg" />
+    <Content Include="images\Cloud.png" />
+    <Content Include="images\random-avatar7.jpg" />
+    <Content Include="Scripts\Companies\Index.js" />
+    <Content Include="Scripts\Globals\chartscripts.bundle.js" />
+    <Content Include="Scripts\Globals\datatablescripts.bundle.js" />
+    <Content Include="Scripts\Globals\flotchartsscripts.bundle.js" />
+    <Content Include="Scripts\Globals\flotscripts.bundle.js" />
+    <Content Include="Scripts\Globals\fullcalendarscripts.bundle.js" />
+    <Content Include="Scripts\Globals\keys.js" />
+    <Content Include="Scripts\Globals\keysAddress.js" />
+    <Content Include="Scripts\bootstrap-sprockets.js" />
+    <Content Include="Scripts\bootstrap\affix.js" />
+    <Content Include="Scripts\bootstrap\alert.js" />
+    <Content Include="Scripts\bootstrap\button.js" />
+    <Content Include="Scripts\bootstrap\carousel.js" />
+    <Content Include="Scripts\bootstrap\collapse.js" />
+    <Content Include="Scripts\bootstrap\dropdown.js" />
+    <Content Include="Scripts\bootstrap\modal.js" />
+    <Content Include="Scripts\bootstrap\popover.js" />
+    <Content Include="Scripts\bootstrap\scrollspy.js" />
+    <Content Include="Scripts\bootstrap\tab.js" />
+    <Content Include="Scripts\bootstrap\tooltip.js" />
+    <Content Include="Scripts\bootstrap\transition.js" />
+    <Content Include="Areas\PropertyOwners\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\PropertyOwners\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Companies\Views\web.config" />
+    <Content Include="Areas\Companies\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Companies\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Companies\Views\Home\Index.cshtml" />
+    <Content Include="Content\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\bootstrap\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\bootstrap\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\Companies\Views\Home\AddNewCompany.cshtml" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Content\stylesheets\theme\_variables.scss" />
+    <Content Include="Content\styles\main.scss" />
+    <Content Include="Content\styles\_variables.scss" />
+    <Content Include="Content\styles\modules\authentication.scss" />
+    <Content Include="Content\styles\theme.scss" />
+    <Content Include="Content\styles\modules\adminModules.scss" />
+    <Content Include="Content\styles\coreStyles.scss" />
+    <Content Include="Content\styles\onboarding.scss" />
+    <Content Include="Content\styles\modules\propertyOwnerOnBoardingModule.scss" />
+    <Content Include="images\.keep" />
+    <None Include="Properties\PublishProfiles\justinpham.pubxml" />
+    <None Include="Properties\PublishProfiles\new-keys - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\new-keys - Web Deploy.pubxml" />
+    <Content Include="PublishProfile\new-keys.PublishSettings" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\Globals\libscripts.bundle.js" />
+    <Content Include="Scripts\Globals\mainscripts.bundle.js" />
+    <Content Include="Scripts\Globals\materialkitscripts.bundle.js" />
+    <Content Include="Scripts\Globals\morrisscripts.bundle.js" />
+    <Content Include="Scripts\Globals\vendorscripts.bundle.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-migrate-3.0.0.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
+    <Content Include="Scripts\knockout.mapping-latest.js" />
+    <Content Include="Scripts\knockout.validation.js" />
+    <Content Include="Scripts\knockout.validation.min.js" />
+    <Content Include="Scripts\loginForm.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\PropertyOwners\Home\Index.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Users\Home\Index.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Content\stylesheets\theme.scss" />
+    <Content Include="Content\stylesheets\_bootstrap-sprockets.scss" />
+    <Content Include="Content\stylesheets\_bootstrap-mincer.scss" />
+    <Content Include="Content\stylesheets\_bootstrap-compass.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_wells.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_variables.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_utilities.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_type.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_tooltip.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_thumbnails.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_theme.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_tables.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_scaffolding.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_responsive-utilities.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_responsive-embed.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_progress-bars.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_print.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_popovers.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_panels.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_pagination.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_pager.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_normalize.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_navs.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_navbar.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_modals.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_mixins.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_media.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_list-group.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_labels.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_jumbotron.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_input-groups.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_grid.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_glyphicons.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_forms.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_dropdowns.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_component-animations.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_code.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_close.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_carousel.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_buttons.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_button-groups.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_breadcrumbs.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_badges.scss" />
+    <Content Include="Content\stylesheets\bootstrap\_alerts.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_vendor-prefixes.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_text-overflow.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_table-row.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_tab-focus.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_size.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_responsive-visibility.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_resize.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_reset-filter.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_progress-bar.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_panels.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_pagination.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_opacity.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_nav-vertical-align.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_list-group.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_labels.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_image.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_hide-text.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_grid.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_gradients.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_forms.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_center-block.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_buttons.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="Content\stylesheets\bootstrap\mixins\_alerts.scss" />
+    <Content Include="Scripts\knockout.validation.min.js.map" />
+    <Content Include="Views\Shared\_EditAddress.cshtml" />
+    <Content Include="Views\Shared\_ReadAddress.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
+    <Content Include="Views\Account\Activate.cshtml" />
+    <Content Include="Views\Account\ActivateMessage.cshtml" />
+    <Content Include="Views\Shared\_SearchBox.cshtml" />
+    <Content Include="Views\Shared\_SearchResultModal.cshtml" />
+    <Content Include="Views\Account\AccountError.cshtml" />
+    <Content Include="Views\Account\RegisterToBeTenant.cshtml" />
+    <Content Include="Views\Home\SideNavBar.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxHalf.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Home\TopNavBar.cshtml" />
+    <Content Include="Scripts\NotificationStyle\fonts\codropsicons\codropsicons.eot" />
+    <Content Include="Scripts\NotificationStyle\fonts\codropsicons\codropsicons.ttf" />
+    <Content Include="Scripts\NotificationStyle\fonts\codropsicons\codropsicons.woff" />
+    <Content Include="Scripts\NotificationStyle\fonts\linecons\linecons.eot" />
+    <Content Include="Scripts\NotificationStyle\fonts\linecons\linecons.ttf" />
+    <Content Include="Scripts\NotificationStyle\fonts\linecons\linecons.woff" />
+    <Content Include="Views\Home\_PODashboard.cshtml" />
+    <Content Include="Views\Home\_TenantDashboard.cshtml" />
+    <Content Include="Views\Manage\UserProfile.cshtml" />
+    <Content Include="Views\Shared\_SearchInput.cshtml" />
+    <Content Include="Views\Shared\_PagedItems.cshtml" />
+    <Content Include="Views\Shared\_MediaInput.cshtml" />
+    <Content Include="Views\Shared\_DetailViewPicture.cshtml" />
+    <Content Include="Views\Shared\_PanelImgs.cshtml" />
+    <Content Include="Views\Shared\_DetailViewImg.cshtml" />
+    <Content Include="Views\Home\_ServiceSupplierDashboard.cshtml" />
+    <Content Include="Views\Shared\_SortInput.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Jobs\Scripts\" />
+    <Folder Include="Areas\Personal\Models\" />
+    <Folder Include="Areas\Personal\Views\Shared\" />
+    <Folder Include="Areas\PropertyOwners\Models\" />
+    <Folder Include="Areas\PropertyOwners\Views\Onboarding\Scripts\" />
+    <Folder Include="Areas\Rental\Models\" />
+    <Folder Include="Areas\Rental\Views\Rental\" />
+    <Folder Include="Areas\Tenants\Models\" />
+    <Folder Include="Areas\Tenants\scripts\" />
+    <Folder Include="Areas\Tenants\Views\RentalApplication\" />
+    <Folder Include="Areas\Tools\Models\" />
+    <Folder Include="Areas\Tools\Views\Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KeysPlus.Data\KeysPlus.Data.csproj">
+      <Project>{9e70b52f-3f32-485b-b89b-24635081daf5}</Project>
+      <Name>KeysPlus.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KeysPlus.Service\KeysPlus.Service.csproj">
+      <Project>{7a053c7b-d113-4c7c-bcba-16a775723476}</Project>
+      <Name>KeysPlus.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PaymentRemindMonitor\PaymentRemindMonitor.csproj">
+      <Project>{A059B21C-59F1-4466-8D10-AD308AC7CB58}</Project>
+      <Name>PaymentRemindMonitor</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+          <servers defaultServer="SelfHostServer">
+            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:53667/" workingDir="" />
+          </servers>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.2\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.2\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

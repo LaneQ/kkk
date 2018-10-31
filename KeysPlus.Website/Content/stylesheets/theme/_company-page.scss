@@ -1,0 +1,35 @@
+﻿ #company-grid {
+        margin: 30px 0;
+    }
+
+    .add-company-wrapper {
+        width: 250px;
+        margin: 20px 0;
+    }
+
+    .view-company-details {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .company-details {
+        display: none;
+        background-color: #f7fbbc;
+        height: 0;
+    }
+
+    .company-details-wrapper {
+        padding: 30px;
+    }
+
+    .validationMessage {
+        color: #ac1111;
+        padding: 1px 0;
+        font-weight: 400;
+        font-size: 14px;
+        display: inline-block;
+        /*position: relative;
+        left: 50px;*/
+        top: -5px;
+    }
+

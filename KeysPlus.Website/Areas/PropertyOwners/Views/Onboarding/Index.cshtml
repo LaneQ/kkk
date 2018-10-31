@@ -1,0 +1,126 @@
+﻿@{
+    Layout = null;
+}
+<head>
+    <title>Property Owner | Onboarding</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1Nus-BmJkWyNInNx1Re0sqBa_CKuL_o&libraries=places"></script>
+    <link href="~/Content/onboarding.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/globals")
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
+    <link href="~/Content/semantic.min.css" rel="stylesheet" />
+    <script src="~/Scripts/semantic.min.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+</head>
+
+<body>
+    <br />
+    <br />
+    <div id="withTenant">
+        <div class="ui one column stackable center aligned page grid">
+            <div class="ui column">
+                <div class="ui steps">
+                    <div id="propertyStep" class="active step">
+                        <i class="home icon"></i>
+                        <div class="content">
+                            <div class="title">Property Details</div>
+                            <div class="description">Enter your property details</div>
+                        </div>
+                    </div>
+                    <div id="financeStep" class="step">
+                        <i class="dollar sign icon"></i>
+                        <div class="content">
+                            <div class="title">Finance details</div>
+                            <div class="description">Enter finance details</div>
+                        </div>
+                    </div>
+                    <div id="tenantStep" class="step">
+                        <i class="user icon"></i>
+                        <div class="content">
+                            <div class="title">Tenant Details</div>
+                            <div class="description">Enter tenant details</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="withoutTenant">
+        <div class="ui one column stackable center aligned page grid">
+            <div class="ui column">
+                <div class="ui steps">
+                    <div id="propertyStep" class="active step">
+                        <i class="home icon"></i>
+                        <div class="content">
+                            <div class="title">Property Details</div>
+                            <div class="description">Enter your property details</div>
+                        </div>
+                    </div>
+                    <div id="financeStep" class="step">
+                        <i class="dollar sign icon"></i>
+                        <div class="content">
+                            <div class="title">Finance details</div>
+                            <div class="description">Enter finance details</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <form id="msform" class="ui form">
+        <!-- progressbar -->
+        @*<ul id="progressbar" class="">
+                <li class="active">Property Details</li>
+                <li>Financial Details</li>
+                <li data-bind="visible : IsOwnerOccupied() == false ">Tenant Details</li>
+            </ul>*@
+
+        <!-- fieldsets -->
+
+        <fieldset id="property-details">
+            <h2 class="fs-title">Add new property</h2>
+
+            @{
+                Html.RenderPartial("_AddNewProperty");
+            }
+
+            <input id="addProperty" class="ui teal button" type="button" name="next" value="Next" data-bind="click:GoToFinance" />
+            <input class="ui button" type="button" id="skipOnboarding" name="skip" value="Cancel" onclick="location.href='@Url.Action("Dashboard", "Home")'" />
+
+        </fieldset>
+        <fieldset id="financeFieldset">
+            <h2 class="fs-title">Finance Details</h2>
+            <h3 class="fs-subtitle">Enter the Property Financial Details here</h3>
+            @{ Html.RenderPartial("_PropertyFinancial"); }
+
+            <input id="financePrevious" type="button" name="previous" class="previous ui button" value="Previous" />
+
+            <input id="addTenant-btn" type="button" name="submit" class="ui teal button" value="Submit" data-bind="click: ValidateSaveOwnerOcc, visible: IsOwnerOccupied() == true" />
+
+            <input id="moveToTenant" type="button" name="next" class="ui teal button" value="Next" data-bind="click: GoToTenant, visible: IsOwnerOccupied() == false" />
+
+            <input type="button" id="skipFinance" name="next2" class="ui button" value="Skip" data-bind="visible : IsOwnerOccupied() == false , click: SkipToTenant" />
+            @*<input type="button" id="skipOnboarding2" name="skip" class="next action-button" value="Cancel" onclick="location.href='@Url.Action("Dashboard", "Home")'" />*@
+        </fieldset>
+        <fieldset id="tenant-area">
+            <h2 class="fs-title">Add Tenant to your property</h2>
+            @Html.Partial("_PropertyTenant")
+            <br />
+            <input id="tenantPrevious" type="button" name="previous" class="previous ui button" value="Previous" />
+            <input id="addTenant-btn" type="button" name="submit" class="ui teal button" value="Submit" data-bind="click: ValidateSaveRented" />
+            <input type="button" id="skipOnboarding3" name="skip" class="ui button" value="Cancel" onclick="location.href='@Url.Action("Dashboard", "Home")'" />
+        </fieldset>
+    </form>
+    <script src="~/Scripts/jquery.easing.min.js"></script>
+    <script src="~/Scripts/Globals/Onboarding.js"></script>
+    <script src="~/Scripts/PropertyOwners/MyOnboarding/Index.js"></script>
+</body>
+

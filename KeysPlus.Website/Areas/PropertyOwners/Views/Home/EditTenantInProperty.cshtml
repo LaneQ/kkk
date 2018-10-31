@@ -1,0 +1,354 @@
+﻿@model KeysPlus.Service.Models.AddTenantToPropertyModel
+
+@{
+    ViewBag.Title = "EditTenantInProperty";
+}
+
+<div style="width : 80%; margin : auto">
+    <h3>Edit Tenant  </h3>
+    <hr />
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form id="msform" class="step-form">
+            <ul id="progressbar">
+                <li id="tenantDetails" class="active">Tenant Details</li>
+                <li id="liabilities">Liabilities Details</li>
+                <li id="summary">Summary</li>
+            </ul>
+            <fieldset id="BasicDetail">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p><strong>Location: </strong>@ViewBag.Property.AddressString</p>
+                            @*<label class="control-label">Select property:<span style="color:red;">*</span></label>
+
+                            <select class="form-control" data-bind="value : PropertyId">
+                                @foreach (var type in ViewBag.Properties)
+                                {
+                                    <option value="@type.Id">@type.AddressString</option>
+                                }
+                            </select>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Tenant Email <span style="color:red;">*</span></label>
+                            <input name="Email" class="form-control" type="text" data-bind="value:TenantEmail,valueUpdate:'afterkeydown'" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Is Main Tenant <span style="color:red;">*</span></label>
+                            <select id ="isMainTenantDropdown" class="form-control" data-bind="value : IsMainTenant">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">First Name <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" data-bind="value : FirstName" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Last Name <span style="color:red;">*</span></label>
+                            <input name="EndDate" class="form-control" type="text" data-bind="value : LastName" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Rent Start Date <span style="color:red;">*</span></label>
+                            <input name="StartDate" class="form-control" type="text" data-bind="datePicker : StartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Rent End Date</label>
+                            <input name="EndDate" class="form-control" type="text" data-bind="datePicker : EndDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Rent Amount <span style="color:red;">*</span></label>
+                            <input name="RentAmount" class="form-control" type="text" data-bind="value: RentAmount,trimTo2dp, valueUpdate:'afterkeydown'" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Payment Frequency <span style="color:red;">*</span></label>
+                            <select class="form-control" style="padding-left:8px" name="paymentfrequency" data-bind="value: RentFrequency">
+                                @foreach (var freq in ViewBag.Frequencies)
+                                {
+                                    <option value="@freq.Id">@freq.Code</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Payment Start Date <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" data-bind="datePicker : PaymentStartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Payment Due Date <span style="color:red;">*</span></label>
+                            <select class="form-control" data-bind="options : DueDateOptions, value : PaymentDueDate"></select>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                    <input type="checkbox" data-bind="checked : IsMainTenant" style="margin : 0px; width : 15px; height : 15px; position : relative; bottom : -2px" />
+                    <label class="control-label">&nbsp;Is Main Tenant ?</label>
+                </div>*@
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-sm-12 text-center" style="padding-bottom: 30px">
+                            <input type="button" class="btn btn-success" value="Next" data-bind="click:gotoLiability,enable:basicValid" />
+                            <input type="button" class="btn btn-group btn-danger" value="Cancel" onclick="location.href='@ViewBag.ReturnUrl'" />
+                        </div>
+                    </div><!--column-->
+                </div><!--row-->
+            </fieldset>
+            <fieldset id="LiabilityDetail" style="display:none">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <table class="table-financial table-properties property-projections table">
+                                <thead>
+                                    <tr>
+                                        <th>Liability Name</th>
+                                        <th>Amount</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: LiabilityValues">
+                                    <tr data-bind="template:{name : $parent.LiabilityValueDisplay($data)}"></tr>
+                                </tbody>
+                            </table>
+                            <p></p>
+                            <a class="button-link" style="color: #337ab7" data-bind="click : AddLiabilityValues"><i class="glyphicon glyphicon-plus-sign"></i> Add New Liability</a>
+                        </div>
+                    </div>
+
+
+                    <br />
+                    <div class="col-sm-12 text-center" style="padding-bottom: 30px">
+                        <button class="btn btn-success" data-bind="click:gotoBasic">Previous</button>
+                        <button class="btn btn-success" data-bind="click:gotoSummary">Next</button>
+                        <input type="button" class="btn btn-group btn-danger" value="Cancel" onclick="location.href='@ViewBag.ReturnUrl'" />
+                    </div>
+
+                </div><!--row-->
+            </fieldset>
+            <fieldset id="SummaryDetail" style="display:none">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="title-header">
+                            Tenant Details
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @*<label class="control-label">Select property:</label>
+                            <select class="form-control" data-bind="value : PropertyId" disabled>
+                                @foreach (var type in ViewBag.Properties)
+                                {
+                                    <option value="@type.Id">@type.AddressString</option>
+                                }
+                            </select>*@
+                            <p><strong>Location: </strong>@ViewBag.Property.AddressString</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Tenant Email</label>
+                            <input name="Email" class="form-control" type="text" data-bind="value:TenantEmail,valueUpdate:'afterkeydown'" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Is Main Tenant <span style="color:red;">*</span></label>
+                            <select class="form-control" data-bind="value : IsMainTenant" disabled>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">First Name <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" data-bind="value : FirstName" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Last Name <span style="color:red;">*</span></label>
+                            <input name="EndDate" class="form-control" type="text" data-bind="value : LastName" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Rent Start Date</label>
+                            <input name="StartDate" class="form-control" type="text" data-bind="datePicker : StartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Rent End Date</label>
+                            <input name="EndDate" class="form-control" type="text" data-bind="datePicker : EndDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Rent Amount</label>
+                            <input name="RentAmount" class="form-control" type="text" data-bind="value: RentAmount,trimTo2dp, valueUpdate:'afterkeydown'" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Payment Frequency</label>
+                            <select class="form-control" style="padding-left:8px" name="paymentfrequency" data-bind="value: RentFrequency" disabled>
+                                @foreach (var freq in ViewBag.Frequencies)
+                                {
+                                    <option value="@freq.Id">@freq.Code</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Payment Start Date <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" data-bind="datePicker : PaymentStartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Payment Due Date <span style="color:red;">*</span></label>
+                            <select class="form-control" data-bind="options : DueDateOptions, value : PaymentDueDate" disabled></select>
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                        <input type="checkbox" data-bind="checked : IsMainTenant" style="margin : 0px; width : 15px; height : 15px; position : relative; bottom : -2px" disabled />
+                        <label class="control-label">&nbsp;Is Main Tenant ?</label>
+                    </div>*@
+                    <br />
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="title-header">
+                            Liabilities
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table-financial table-properties property-projections table">
+                            <thead>
+                                <tr>
+                                    <th>Liability Name</th>
+                                    <th>Amount</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: LiabilityValues">
+                                <tr data-bind="template:{name : $parent.showSummaryTable}"></tr>
+                            </tbody>
+                        </table>
+                        <p></p>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 text-center" style="padding-bottom: 30px">
+                        <button class="btn btn-success" data-bind="click:backtoLiability">Previous</button>
+                        <button class="btn btn-success" data-bind="click:EditTenantInProperty">Submit</button>
+                        <input type="button" class="btn btn-group btn-danger" value="Cancel" onclick="location.href='@ViewBag.ReturnUrl'" />
+                    </div>
+                </div><!--row-->
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<script type="text/template" id="displayLiabilityValue">
+    <td class="col-md-3">
+        <span data-bind="text : ValueType"></span>
+    </td>
+    <td class="col-md-3">
+        <span data-bind="text : Value"></span>
+    </td>
+    <td class="col-md-3">
+        <span title="Edit" class="btn-default" data-bind="click : $parent.EditLiabilityValue"><i class="glyphicon glyphicon-edit"></i></span>
+    </td>
+</script>
+<script type="text/template" id="displaySummaryTable">
+    <td class="col-md-6">
+        <span data-bind="text : ValueType"></span>
+    </td>
+    <td class="col-md-6">
+        <span data-bind="text : Value"></span>
+    </td>
+</script>
+<script type="text/template" id="newLiabilityValue">
+    <td class="col-md-3">
+        <select class="form-control" data-bind="value : TypeId">
+            <option value="1">Bond</option>
+            <option value="2">Insurance</option>
+            <option value="3">Letting Fee</option>
+            <option value="4">Body Corp</option>
+        </select>
+    </td>
+    <td class="col-md-3">
+        <input class="form-control" type="text" data-bind="value : Value" />
+    </td>
+
+    <td class="col-md-3">
+        <buton class="btn btn-sm btn-primary" data-bind="click : $parent.AddtoLList">Save</buton>
+        <button class="btn btn-sm btn-info" data-bind="click : $parent.CancelEditLiabilityValue">Cancel</button>
+        <button class="btn btn-sm btn-warning" data-bind="visible : !IsNew(),click : $parent.DeleteLiabilityValue">Delete</button>
+    </td>
+</script>
+<script src="~/Scripts/jquery.easing.min.js"></script>
+<script src="~/Scripts/Globals/Onboarding.js"></script>
+<script src="~/Scripts/PropertyOwners/Home/AddTenantDashBoard.js"></script>
+<script>
+
+    $(document).ready(function () {
+        var tenantData= @Html.Raw(Json.Encode(Model));
+        var viewModel = new PropertyTenants(tenantData, null);
+        ko.applyBindings(viewModel);
+
+    });
+
+</script>

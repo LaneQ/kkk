@@ -1,0 +1,113 @@
+﻿<script type="text/html" id="propertySelect">
+    <select name="PropertyId" class="form-control"
+            data-bind="options: AvailableProperties, optionsText: 'AddressString',optionsValue : 'Id', value : PropertyId"
+            onmousedown="if(this.options.length>10){this.size=10;}" onchange='this.size=0;' onblur="this.size=0;"></select>
+</script>
+<script type="text/html" id="PetsAllowedSelect">
+    <select name="PetsAllowed" class="form-control"
+        data-bind="options: PetsAllowedOption, optionsText: 'Choice',optionsValue : 'Choice', value : PetsAllowed"></select>
+</script>
+<div id="rentalListingModal" data-bind="stopBinding : true" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">List a rental</h4>
+            </div>
+            <form id="rentalListingForm">
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <th>Select property <span style="color:red;">*</span></th>
+                            <td>
+                                <div data-bind="template : {name : 'propertySelect'}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Title <span style="color:red;">*</span></th>
+                            <td><input name="Title" class="form-control" type="text" data-bind="textInput : Title" /></td>
+                        </tr>
+                        <tr>
+                            <th>Description <span style="color:red;">*</span></th>
+                            <td><textarea name="RentalDescription" class="form-control" rows="5" data-bind="textInput : RentalDescription"></textarea></td>
+                        </tr>
+                        <tr>
+                            <th>Moving Cost </th>
+                            <td>
+                                <input name="MovingCost" class="form-control" type="text" data-bind="textInput : MovingCost" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Target Rent <span style="color:red;">*</span></th>
+                            <td>
+                                <input name="TargetRent" class="form-control" type="text" data-bind="textInput : TargetRent" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Available Date <span style="color:red;">*</span></th>
+                            <td>
+                                <input name="AvailableDate" id="ADT" class="form-control" type="date"  data-bind="textInput : AvailableDate" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Furnishing </th>
+                            <td>
+                                <input name="Furnishing" class="form-control" type="text" data-bind="textInput : Furnishing" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Occupants Count </th>
+                            <td>
+                                <input name="OccupantCount" class="form-control" type="text" data-bind="textInput : OccupantCount" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Ideal Tenant </th>
+                            <td>
+                                <input name="IdealTenant" class="form-control" type="text" data-bind="textInput : IdealTenant" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Pets Allowed </th>
+                            <td>
+                                <div data-bind="template : {name : 'PetsAllowedSelect'}"></div>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <th>Upload Documents </th>
+                            <td>
+                                <ul data-bind="foreach: MediaFiles()">
+                                    <li>
+                                        <a data-bind="click: $parent.RemovePhoto">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </a>
+
+                                        <span data-bind="text: Name"></span><br />
+                                    </li>
+                                </ul>
+
+                                <span class="btn btn-success">
+                                    <i class="fa fa-cloud-upload"></i>
+                                    Choose Files
+                                    <input class="key-upload" type="file" data-bind="filesUpload : MediaFiles, fileWarning : FileWarning, validFileTypes : ValidFileTypes" accept="image/*" multiple />
+                                </span>
+                                <p id="file-warning" data-bind="text:FileWarning"></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click : SubmitRentalListing,enable:validInput" autofocus data-target="#submt" data-toggle="modal">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+            
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    //var today = new Date().toISOString().split('T')[0];
+    //document.getElementsByName("AvailableDate")[0].setAttribute('min', today);
+</script>

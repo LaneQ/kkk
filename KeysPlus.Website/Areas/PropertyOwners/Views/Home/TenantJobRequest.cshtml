@@ -1,0 +1,80 @@
+﻿@model IPagedList<TenantViewModel>
+
+<link href="~/Content/stylesheets/PagedList.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<style>
+    label {
+        display: block;
+    }
+
+    .validationMessage {
+        color: Red;
+    }
+
+    .input-validation-error {
+        color: Orange;
+    }
+
+    .input-validation-error-pink {
+        color: Pink;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+</style>
+
+
+<div class="block-header" style="padding:10px; margin-top:20px; margin-bottom:0px;"><h2>Tenant Job Request</h2></div>
+<hr style="margin-top:5px; margin-bottom:15px;" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+@Html.Hidden("deleteUrl", Url.Action("Delete", "Home"))
+@Html.Hidden("createUrl", Url.Action("Create", "Home"))
+@Html.Hidden("editUrl", Url.Action("Edit", "Home"))
+@Html.Hidden("updatePhoto", Url.Action("UpdatePhotos", "Home"))
+@Html.AntiForgeryToken()
+
+<div class="col-xs-12" id="tenantJob-grid">
+    <div data-bind="template : {
+    name: tenantTemplate}"></div>
+  
+</div>
+
+@Html.Partial("_TenantJobRequestIndex")
+@Html.Partial("_TenantJobDetails")
+@Html.Partial("_TenantJobEdit")
+@Html.Partial("_TenantCreateJob")
+@section Modal{
+    @{
+
+        //  Html.RenderPartial("_CarouselModal");
+
+    }
+
+}
+@section scripts{
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/Scripts/propertyOwners/Home/tenantIndex.js")
+        <script>
+            $(document).ready(function () {
+                var tenantModel = @Html.Raw(Json.Encode(Model));
+                var listTenantJobs = new Tenant(tenantModel);
+                ko.applyBindings(listTenantJobs);
+
+            });
+        </script>
+    }
+
+

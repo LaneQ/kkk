@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9E70B52F-3F32-485B-B89B-24635081DAF5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KeysPlus.Data</RootNamespace>
+    <AssemblyName>KeysPlus.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Address.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Company.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="C__MigrationHistory.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Inspection.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InspectionMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InspectionStatus.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Job.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobQuote.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobQuoteMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobWatchList.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KeysEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KeysEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KeysEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KeysEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KeysEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginClaim.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginRole.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoginSocialMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Login_Deleted.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Manager.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ManagerProperty.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Media.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MediaType.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MessageDeliveryType.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MessageType.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OutGoingMessage.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OwnerProperty.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Owners.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OwnershipStatus.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Person.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PersonMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Property.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyExpense.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyFinance.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyHomeValue.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyHomeValueType.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyRentalPayment.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyRepayment.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyRequest.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyRequestMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyType.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentalApplication.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentalApplicationMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentalApplicationStatus.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentalListing.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentalListingMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentalListingStatus.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentalPaymentTracking.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RentalWatchList.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestReply.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestReplyMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestStatus.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RequestType.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceProvider.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceProviderJobStatus.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Status.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TargetRentType.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tenant.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TenantJobRequest.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TenantJobRequestMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TenantJobStatus.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TenantMedia.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TenantPaymentFrequencies.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TenantProperty.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TenantPropertyLiability.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRating.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XeroTokenStore.cs">
+      <DependentUpon>KeysEntities.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="KeysEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>KeysEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="KeysEntities.edmx.diagram">
+      <DependentUpon>KeysEntities.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="KeysEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KeysEntities.edmx</DependentUpon>
+      <LastGenOutput>KeysEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="KeysEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KeysEntities.edmx</DependentUpon>
+      <LastGenOutput>KeysEntities.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

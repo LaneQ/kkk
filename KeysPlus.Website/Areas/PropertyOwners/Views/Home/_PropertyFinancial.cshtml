@@ -1,0 +1,238 @@
+﻿
+<script type="text/html" id="propertyFinancial"> 
+</script>
+<!--Display repayment-->
+<script type="text/template" id="displayRepayment">
+    <td class="small-fin-number">
+        <span>$<span data-bind="numeric : Amount"></span></span>
+    </td>
+    <td>
+        <span data-bind="text : FrequencyName"></span>
+    </td>
+    <td>
+        <span data-bind="text : moment(StartDate()).format('ll')"></span>
+    </td>
+    <td>
+        <span data-bind="text : EndDate() ? moment(EndDate()).format('ll') : null"></span>
+    </td>
+    <td>
+        <span data-bind="click : $parent.EditRepayment"><i class="edit icon pointer"></i></span>
+    </td>
+</script>
+<!--New/Edit repayment-->
+<script type="text/template" id="newRepayment">
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input type="text" data-bind="value : Amount" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: Amount"></p>
+    </td>
+    <td>
+        <select class="ui selection dropdown full width" data-bind="value : FrequencyType">
+            <option value="1">Weekly</option>
+            <option value="2">Fortnightly</option>
+            <option value="3">Monthly</option>
+        </select>
+    </td>
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input class="form-control pointer" type="text" data-bind="datePicker : StartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: StartDate"></p>
+    </td>
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input class="form-control pointer" type="text" data-bind="datePicker : EndDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: EndDate"></p>
+    </td>
+    <td>
+        <button class="circular ui icon button" data-bind="click : $parent.CancelEditRepayment"><i class="times circle icon"></i></button>
+        <button class="teal circular ui icon button" data-bind="click :  $parent.SaveRepayment, enable : IsValid"><i class="save icon"></i></button>
+        <button class="circular ui icon button" data-bind="visible : !IsNew(),click : $parent.DeleteRepayment"><i class="trash icon" data-bind="visible: !IsNew()"></i></button>
+    </td>
+</script>
+<!--Edit home value-->
+<script type="text/template" id="editPropValue">
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input type="text" data-bind="value : Value" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: Value"></p>
+    </td>
+    <td>
+        <select class="ui selection dropdown full width" data-bind="options : Types, optionsText:'Name', optionsValue : 'Value', value: TypeId"></select>
+    </td>
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input class="pointer" type="text" data-bind="datePicker : Date, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: Date"></p>
+    </td>
+   <td>
+        <input class="ui checkbox" type="checkbox" name="active-prop-val" data-bind="checked: IsActive, disable : $parent.SelectedHomeValue().IsActive">
+    </td>
+   <td>
+       <button class="circular ui icon button" data-bind="click : $parent.CancelEditHomeValue"><i class="times circle icon"></i></button>
+       <button class="teal circular ui icon button" data-bind="click : $parent.SaveHomeValue, enable :IsValid"><i class="save icon"></i></button>
+       <button class="circular ui icon button" data-bind="click : $parent.DeleteHomeValue, visible : !IsActive()"><i class="trash icon" data-bind="visible: !IsActive()"></i></button>
+   </td>
+</script>
+<!--Display home value-->
+<script type="text/template" id="displayPropValue">
+    <td class="small-fin-number">
+        <span>$<span data-bind="numeric : Value"></span></span>
+    </td>
+    <td>
+        <span data-bind="text : ValueType"></span><span>&nbsp;Valuation</span>
+    </td>
+    <td>
+        <span data-bind="text : moment(Date()).format('ll')"></span>
+    </td>
+    <td>
+        <input class="ui checkbox" type="checkbox" name="active-prop-val" data-bind="checked: IsActive" disabled />
+    </td>
+    <td>
+        <span title="Edit" data-bind="click : $parent.EditHomeValue"><i class="edit icon pointer"></i></span>
+    </td>
+</script>
+<!--New home value-->
+<script type="text/template" id="newPropValue">
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input type="text" data-bind="value : Value" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: Value"></p>
+    </td>
+    <td>
+        <select class="ui selection dropdown full width" data-bind="value : TypeId">
+            <option value="1">Current</option>
+            <option value="2">Estimated</option>
+            <option value="3">Registered</option>
+        </select>
+    </td>
+    <td>
+        <div class="ui input full width" data-bind="validatioOptions: {insertMessages: false}">
+            <input class="pointer" type="text" data-bind="datePicker : Date, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+        </div>
+        <p data-bind="validationMessage: Date"></p>
+    </td>
+    <td>
+        <input class="ui checkbox" type="checkbox" data-bind="checked: IsActive" />
+    </td>
+    <td>
+        <button class="circular ui icon button" data-bind="click : $parent.CancelEditHomeValue"><i class="times circle icon"></i></button>
+        <button class="teal circular ui icon button" data-bind="click : $parent.SaveHomeValue, enable : IsValid"><i class="save icon"></i></button>
+        <button class="circular ui icon button" data-bind="visible : !IsNew(),click : $parent.DeleteHomeValue"><i class="trash icon" data-bind="visible: !IsNew()"></i></button>
+    </td>
+</script>
+<!--Display Expense-->
+<script type="text/template" id="displayExpense">
+    <td class="small-fin-number">
+        <span>$<span data-bind="numeric : Amount"></span></span>
+    </td>
+    <td>
+        <p data-bind="text : Description"></p>
+    </td>
+    <td>
+        <span data-bind="text : moment(ExpenseDate()).format('ll')"></span>
+    </td>
+    <td>
+        <span title="Edit" data-bind="click : $parent.EditExpense"><i class="edit icon pointer"></i></span>
+    </td>
+</script>
+<!--New or edit expense-->
+<script type="text/template" id="newExpense">
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input type="text" data-bind="value : Amount" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: Amount"></p>
+    </td>
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input data-bind="value : Description" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: Description"></p>
+    </td>
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input class="pointer" type="text" data-bind="datePicker : ExpenseDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: ExpenseDate"></p>
+    </td>
+    <td>
+        <button class="circular ui icon button" data-bind="click : $parent.CancelEditExpense"><i class="times circle icon"></i></button>
+        <button class="teal circular ui icon button" data-bind="click : $parent.SaveExpense, enable : IsValid"><i class="save icon"></i></button>
+        <button class="circular ui icon button" data-bind="visible : !IsNew(),click : $parent.DeleteExpense"><i class="trash icon" data-bind="visible: !IsNew()"></i></button>
+    </td>
+</script>
+<!--Edit rental payment-->
+<script type="text/template" id="editRentalPayment">
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input class="form-control" type="text" data-bind="value : Amount" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: Amount"></p>
+    </td>
+    <td>
+        <select class="ui selection dropdown full width" data-bind="value : FrequencyTypeId">
+            <option value="1">Weekly</option>
+            <option value="2">Fortnightly</option>
+            <option value="3">Monthly</option>
+        </select>
+    </td>
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input class="form-control" type="text" data-bind="datePicker : Date, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: Date"></p>
+    </td>
+    <td>
+        <button class="circular ui icon button" data-bind="click : $parent.CancelEditRentalPayment"><i class="times circle icon"></i></button>
+        <button class="teal circular ui icon button" data-bind="click : $parent.SaveRentalPayment, enable :IsValid"><i class="save icon"></i></button>
+        <button class="circular ui icon button" data-bind="click : $parent.DeleteRentalPayment"><i class="trash icon"></i></button>
+    </td>
+</script>
+<!--Display rental payment-->
+<script type="text/template" id="displayRentalPayment">
+    <td class="small-fin-number">
+        <span>$<span data-bind="numeric : Amount"></span></span>
+    </td>
+    <td>
+        <p data-bind="text : FrequencyType"></p>
+    </td>
+    <td>
+        <span data-bind="text : moment(Date()).format('ll')"></span>
+    </td>
+    <td>
+        <span title="Edit" data-bind="click : $parent.EditRentalPayment"><i class="edit icon pointer"></i></span>
+    </td>
+</script>
+<!--New rental payment-->
+<script type="text/template" id="newRentalPayment">
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input class="form-control" type="text" data-bind="value : Amount" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: Amount"></p>
+    </td>
+    <td>
+        <select class="ui selection dropdown full width" data-bind="value : FrequencyTypeId">
+            <option value="1">Weekly</option>
+            <option value="2">Fortnightly</option>
+            <option value="3">Monthly</option>
+        </select>
+    </td>
+    <td>
+        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+            <input class="form-control" type="text" data-bind="datePicker : Date, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+        </div>
+        <p class="validationMessage" data-bind="validationMessage: Date"></p>
+    </td>
+    <td>
+        <button class="circular ui icon button" data-bind="click : $parent.CancelEditRentalPayment"><i class="times circle icon"></i></button>
+        <button class="teal circular ui icon button" data-bind="click : $parent.SaveRentalPayment, enable :IsValid" ><i class="save icon"></i></button>
+        <button class="circular ui icon button" data-bind="visible : !IsNew(), click : $parent.DeleteRentalPayment"><i class="trash icon"></i></button>
+    </td>
+</script>

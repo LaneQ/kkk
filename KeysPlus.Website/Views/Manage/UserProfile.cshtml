@@ -1,0 +1,166 @@
+﻿@model KeysPlus.Service.Models.UserProfileViewModel
+
+    <div id="ProfileDetail">
+        <h3>Profile Details</h3>
+        <hr/>
+        <div id="detailSection">
+            <div class="row" >
+                <div class="col-md-12" style="padding-bottom: 100px;">
+                    <div class="panel-default">
+                        <div class="panel-heading">
+                            <span class="h3">@Html.DisplayFor(model=>model.FullName)</span>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row" >
+                                                         
+                                <div class="col-md-8" style="margin-top:10px"> <!--detail column-->      
+                                        <div class="row" style="line-height:25px">
+                                            <div class="col-md-4" style="padding-right : 0px;">
+                                                <strong>First Name:</strong>
+                                            </div>
+                                        
+                                            <div class="col-md-8">
+                                                <span>@Html.DisplayFor(model => model.FirstName)</span>
+                                            </div>
+                                    </div>  
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Middle Name:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span>@Html.DisplayFor(model => model.MiddleName)</span>
+                                        </div>                                       
+                                    </div>
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Last Name:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span>@Html.DisplayFor(model => model.LastName)</span>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Place Of Birth:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span>@Html.DisplayFor(model => model.CountyOfBirth)</span>
+                                        </div>
+                                    </div>
+                                
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Language:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span>@Html.DisplayFor(model => model.Language)</span>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Occupation:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span>@Html.DisplayFor(model => model.Occupation)</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Linkedin Url :</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span>@Html.DisplayFor(model => model.LinkedinUrl)</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="line-height :25px">
+                                    <div class="col-md-4" style="padding-right:0px;">
+                                        <strong>Physical Address:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div>
+                                            <span>@Html.DisplayFor(model => model.PhysicalAddress.Number)</span>
+                                            <span>
+                                                @if (Model != null && !string.IsNullOrEmpty(Model.PhysicalAddress.Street))
+                                                {
+                                                    <span>@Html.DisplayFor(model => model.PhysicalAddress.Street)</span>
+                                                }
+                                            </span>
+                                        </div>
+                                        <div>
+                                            @if (Model != null && !string.IsNullOrEmpty(Model.PhysicalAddress.Suburb))
+                                            {
+                                                <span>@Html.DisplayFor(model => model.PhysicalAddress.Suburb)</span>
+                                            }
+                                        </div>
+                                        <div>
+                                            <span>@Html.DisplayFor(model => model.PhysicalAddress.City)</span>
+                                            <span>@Html.DisplayFor(model => model.PhysicalAddress.PostCode)</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Billing Address:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div>
+                                                <span>@Html.DisplayFor(model => model.BillingAddress.Number)</span>
+                                                <span>
+                                                    @if (Model != null && !string.IsNullOrEmpty(Model.BillingAddress.Street))
+                                                    {
+                                                        <span>@Html.DisplayFor(model => model.BillingAddress.Street)</span>
+                                                    }
+                                                </span>
+                                            </div>
+                                            <div>
+                                                @if (Model != null && !string.IsNullOrEmpty(Model.BillingAddress.Suburb))
+                                                {
+                                                    <span>@Html.DisplayFor(model => model.BillingAddress.Suburb)</span>
+                                                }
+                                            </div>
+                                            <div>
+                                                <span>@Html.DisplayFor(model => model.BillingAddress.City)</span>
+                                                <span>@Html.DisplayFor(model => model.BillingAddress.PostCode)</span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="line-height:25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Uploads:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @foreach (var item in Model.MediaFiles)
+                                            {
+                                                <div class="row" style="padding-left : 12px;">
+                                                    <span> <a target="_blank" href="@item.Data"> @item.OldFileName </a></span>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                   
+
+
+                               
+                                
+
+                            </div> <!--detail column-->
+                       
+                                <div class="col-md-4"><!--photo coloum-->
+                                    <div class="row">
+                                        <div class="col-md-12 pull-right" style="width:250px; height:250px; padding-right : 10px;">
+                                            <img class="img-responsive img-thumbnail" src="@Model.ProfilePhoto.Data"   alt="firstImg" onerror="this.src = '/images/icon-user-default.png'" />
+                                        </div>
+                                    </div>
+                                </div> <!--photo coloum-->
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>

@@ -1,0 +1,516 @@
+﻿@model RentalAppSearchModel
+@{
+    ViewBag.Title = "Tenant | Rental Applications";
+}
+<div id="mainPage" data-bind="visible : MainView">
+    <div class="ui grid">
+        <div class="six wide column">
+            <h2 class="ui header">Your Rental Applications</h2>
+            <span class="text-muted">You can manage your rental applications here</span>
+        </div>
+        <div class="middle aligned ten wide column">
+            @{
+                Html.RenderPartial("_SearchBox");
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="highlighted">
+        <div class="ui grid">
+            <div class="eight wide column">
+                @{
+                    Html.RenderPartial("_SortInput");
+                }
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="ui secondary pointing menu">
+        @Html.ActionLink("Current", "MyRentalApplications", new { RentalStatus = RentalApplicationStatus.Applied }, new { @class = Model.RentalStatus.Equals(RentalApplicationStatus.Applied) ? "active item" : "item" })
+        @Html.ActionLink("Accepted", "MyRentalApplications", new { RentalStatus = RentalApplicationStatus.Accepted }, new { @class = Model.RentalStatus.Equals(RentalApplicationStatus.Accepted) ? "active item" : "item" })
+        @Html.ActionLink("Declined", "MyRentalApplications", new { RentalStatus = RentalApplicationStatus.Declined }, new { @class = Model.RentalStatus.Equals(RentalApplicationStatus.Declined) ? "active item" : "item" })
+    </div>
+
+    <div data-bind="if:Items().length <= 0">
+        <p>You do not have any rental listing</p>
+    </div>
+
+    <table class="ui single line table" style="border : none">
+        <thead>
+            <tr>
+                <th style="background : none"><h5 class="ui teal header">Property</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Target Rent</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Available Date</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Actions</h5></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach : Items">
+            <tr>
+                <td>
+                    <h5 class="ui grey header" data-bind="text : StreetAddress" style="margin-bottom : 1px"></h5>
+                    <h5 class="ui grey header" data-bind="text : CitySub" style="margin-top : 0px; margin-bottom : 5px"></h5>
+                </td>
+                <td>
+                    <span>$</span><span data-bind="numeric : RentalListing.TargetRent"></span>
+                </td>
+                <td data-bind="text : moment(RentalListing.AvailableDate()).format('LL')"></td>
+                <td style="vertical-align : middle">
+                    <button class="ui mini basic teal button" data-bind="click : $root.ShowDetail">Details</button>
+                    <button class="ui mini basic teal button" data-bind="visible : Status.Id() == 1, click: $root.ShowEdit">Edit</button>
+                    <button class="ui mini basic orange button" data-bind="click: $root.ShowDelete">Delete</button>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+    @*<div data-bind="foreach : Items">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div title="Delete" class="delete-top-right-corner" data-bind="click: $root.ShowDelete">
+                            <i class="fa fa-trash-o"></i>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Partial("_PanelImgs")
+                            </div>
+                            <div class="col-md-8">
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Location:</strong>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div data-bind="text : StreetAddress"></div>
+                                        <div data-bind="text : CitySub"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Target Rent:</strong>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <span>$</span><span data-bind="numeric : RentalListing.TargetRent"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <span><strong>Available Date:</strong></span>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div data-bind="text : moment(RentalListing.AvailableDate()).format('LL')"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3"><strong>Tenants:</strong></div>
+                                    <div class="col-md-9" data-bind="text : Model.TenantsCount"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3"><strong>Notes:</strong></div>
+                                    <div class="col-md-9" style="word-wrap: break-word;" data-bind="text : Model.Note"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3"><strong>Status:</strong></div>
+                                    <div class="col-md-9" data-bind="text : Status.Status"><span></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3"><strong>Documents:</strong></div>
+                                    <div class="col-md-9">
+                                        <div data-bind="if:DocFiles().length>0">
+                                            <div data-bind="foreach : DocFiles" style="display : inline-block">
+                                                <ul>
+                                                    <li>
+                                                        <a data-bind="attr:{href: Data}"><span data-bind="text:OldFileName"></span></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div data-bind="ifnot:DocFiles().length>0">
+                                            Not Available
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="prop-actions">
+                                <button class="btn btn-default" data-bind="click : $root.ShowDetail"><span class="zmdi zmdi-info-outline"></span> Details</button>
+                                <button class="btn btn-success" data-bind="visible : Status.Id() == 1, click: $root.ShowEdit"><span class="zmdi zmdi-edit"></span> Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    @{
+        Html.RenderPartial("_PagedItems");
+    }
+</div><!--MainPage-->
+
+<div data-bind="visible : DetailView" style="display : none">
+    <h3>Application Details </h3>
+    <hr />
+    <button class="btn btn-info btn-sx" data-bind="click:ShowMain"><span class="fa fa-arrow-left"></span> Back</button>
+    <br /><br />
+    <div class="row" style="padding-bottom:50px;" data-bind="with : SelectedItem">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Rental Listing Detail</span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 data-bind="text : RentalListing.Title"></h4>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Location:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <div data-bind="text: StreetAddress"></div>
+                                    <div data-bind="text: CitySub"></div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Property Type:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="text: PropertyType"></span>
+                                </div>
+                            </div>
+
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Rooms:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="text: Bedrooms"></span>&nbsp;<i class="fa fa-bed"></i>
+                                    &nbsp;&nbsp;<span data-bind="text: Bathrooms"></span>&nbsp;<i class="fa fa-shower"></i>
+                                    &nbsp;&nbsp;<span data-bind="text: ParkingSpaces"></span>&nbsp;<i class="fa fa-car"></i>
+                                </div>
+                            </div>
+
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Land Area:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="if:LandSqm">
+                                        <span data-bind="text: LandSqm"></span>m<sup>2</sup>
+                                    </span>
+                                    <span data-bind="ifnot:LandSqm"> Not Available </span>
+                                </div>
+                            </div>
+
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Floor Area:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="if:FloorArea">
+                                        <span data-bind="text: FloorArea"></span>m<sup>2</sup>
+                                    </span>
+                                    <span data-bind="ifnot:FloorArea"> Not Available </span>
+                                </div>
+                            </div>
+
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Rent:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="if:RentalListing.TargetRent">
+                                        $<span data-bind="numeric:RentalListing.TargetRent"></span>&nbsp;<span data-bind="text:RentalPaymentType"></span>
+                                    </span>
+                                    <span data-bind="ifnot:RentalListing.TargetRent"> Not Available </span>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>No. of Occupants:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="text:RentalListing.OccupantCount"></span>
+                                </div>
+                            </div>
+
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Moving Cost:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    $<span data-bind="numeric:RentalListing.MovingCost"></span>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Furnishing:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="text:RentalListing.Furnishing"></span>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Pets Allowed:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="text:RentalListing.PetsAllowed"></span>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Description:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="text: RentalListing.Description" style="word-break: break-all;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Your application details</span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Number of tenants:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="text: Model.TenantsCount"></span>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Note:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="text: Model.Note" style="word-break: break-all;"></span>
+                                </div>
+                            </div>
+
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Listed on:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span data-bind="text:moment(CreatedOn()).format('ll')"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"><strong>Documents:</strong></div>
+                                <div class="col-md-8">
+                                    <div data-bind="if:DocFiles().length>0">
+                                        <div data-bind="foreach : DocFiles" style="display : inline-block">
+                                            <ul>
+                                                <li>
+                                                    <a data-bind="attr:{href: Data()}"><span data-bind="text:OldFileName"></span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div data-bind="ifnot:DocFiles().length>0">
+                                        Not Available
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div> <!--details coloumn-->
+
+                        <div class="col-md-5">
+                            <!--photo coloumn-->
+
+                            <div id="carousel-property" class="carousel slide" data-ride="carousel" data-bind="visible:ImgFiles().length>0">
+                                <!-- Wrapper for slides -->
+                                <a href="#" class="thumbnail">
+
+                                    <div class="carousel-inner" role="listbox" data-bind="foreach: ImgFiles()">
+                                        <div class="item" data-bind="css: {active: $index() == 0}">
+                                            <img data-bind="attr: {src: Data()}" alt="Thumbnail" data-target="#lightbox" style="height:280px">
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <!-- Controls -->
+                                <a class="left carousel-control" href="#carousel-property" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-property" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+
+
+                            <!-- thumb navigation carousel items -->
+                            <div class="carousel-thumbnail-center .carousel-thumb canvas-scrollable">
+                                <ol>
+                                    <li data-bind="foreach: ImgFiles()" style="display:inline; text-align:center" class="item-inner">
+                                        <a href="#">
+                                            <img data-bind="attr: {src: Data()}" alt="Thumbnail" style="width:40px; height:50px;">
+                                        </a>
+                                    </li>
+                                </ol>
+                            </div>
+
+                            <div class="row">
+                                <!--Without Images -->
+                                <div class="col-md-10">
+                                    <div class="thumbnail" data-bind="visible:ImgFiles().length<=0">
+                                        <img src="/images/no-prop-img.png" alt="noPropImg" />
+                                    </div>
+                                </div>
+                            </div><!--Without Images -->
+                        </div><!--photo coloumn-->
+
+
+                    </div><!-- row-->
+                </div> <!--panel body-->
+            </div><!--panel-->
+        </div><!--coloumn-->
+    </div>
+</div>
+
+<div data-bind="visible: EditView" style="display:none">
+    <h3 class="header">Edit Rental Application</h3>
+    <div class="ui divider"></div>
+    <h5 class="ui teal header pointer-cursor" data-bind="click: $root.ShowMain" style="margin-top: 0px;"><a class="pointer-cursor">Back</a></h5>
+    
+    <div class="ui clearing segment" data-bind="with: SelectedItemCopy">
+       <div class="ui grid">
+           <div class="wide column">
+               <div class=" item">
+                   <div class=" ui grid">
+                       <div class=" two wide column">
+                           <h4 class=" ui grey header">Location:</h4>
+                         
+                       </div>
+                       <div class="eight wide column">
+                           <span data-bind="text : StreetAddress"></span>
+                           <span data-bind="text: CitySub"></span>
+                       </div>
+                   </div>
+               </div>
+               <br/>
+               <div class="ui form">
+                   <div class="field">
+                       <h4 class="ui grey header">Tenant Count:</h4>
+                       <input data-bind="value:Model.TenantsCount" />
+                   </div>
+                   <div class="field">
+                       <h4 class="ui grey header">Note:</h4>
+                       <textarea data-bind="value: Model.Note" id="tenantNote"></textarea>
+                   </div>
+                   @Html.Partial("_MediaInput")
+                   <div class="field">
+                       <p class="text-muted" style="font-size:11px; text-align : left" >You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*</p>
+
+                   </div>
+                   <div class="field text-center">
+                       <button class="ui middle floated teal button" data-bind="click: $root.Edit">Save</button>
+                       <button class=" ui button" data-bind="click: $root.ShowMain">Cancel</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+</div>
+
+@*<div data-bind="visible : EditView" style="display : none">
+    <div class="row">
+        <div style="width : 80%; margin : auto">
+            <h3>Edit Rental Application</h3>
+            <hr />
+            <a class="btn btn-info btn-sx" data-bind="click:$root.ShowMain"><span class="fa fa-arrow-left"></span> Back</a>
+            <br /><br />
+        </div>
+    </div>
+    <div class="row" style="padding-bottom: 100px" data-bind="with : SelectedItemCopy">
+        <form id="rentalApplicationform" class="step-form">
+            <fieldset>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div>
+                                <label class="control-label">Location:</label>
+                                <span data-bind="text : StreetAddress"></span>
+                                <span data-bind="text: CitySub"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Tenant Count:</label>
+                            <input type="text" class="form-control" data-bind="value:Model.TenantsCount" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Note:</label>
+                            <textarea class="form-control" data-bind="value: Model.Note" id="tenantNote" style="padding-left:8px" maxlength="100" rows="6" cols="40"></textarea>
+                        </div>
+                        @Html.Partial("_MediaInput")
+                        <div class="form-group">
+                            <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*</p>
+                        </div>
+
+                        <div class="col-sm-12 text-center" style="padding-bottom: 30px">
+                            <button class="btn btn-primary" data-bind="click: $root.Edit">Save</button>
+                            <button class="btn btn-danger" data-bind="click: $root.ShowMain">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+    </div>
+</div>*@
+<div data-bind="visible : DeleteView" style="display : none">
+    <div class="row" data-bind="with : SelectedItem()">
+        <div style="width : 80%; margin : auto">
+            <h3>Remove Application </h3>
+            <hr />
+            <a class="btn btn-info btn-sx" data-bind="click:$root.ShowMain"><span class="fa fa-arrow-left"></span> Back</a>
+            <br /><br />
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Are you sure you want to delete rental application ?
+                </div>
+                <div class="panel-body">
+                    <button type="button" class="btn btn-success" data-bind="click: $root.Delete">Confirm</button>
+                    <button type="button" class="btn btn-danger" data-bind="click: $root.ShowMain">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Modal{
+    @{
+        Html.RenderPartial("_SearchResultModal");
+    }
+}
+<script src="~/Scripts/Tenants/MyRentalApplication.js"></script>
+@Html.AntiForgeryToken()
+<script>
+    $(document).ready(function () {
+        var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        var vm = new PageViewModel(dataVm);
+        ko.applyBindings(vm);
+    });
+</script>

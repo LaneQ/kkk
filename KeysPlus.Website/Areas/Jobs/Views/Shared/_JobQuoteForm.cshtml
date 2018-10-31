@@ -1,0 +1,78 @@
+﻿<div id="jobQuoteFormModal" data-bind="with: Quote()" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog " id="messageModal">
+        <div class="modal-content" style="width:auto">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Please enter quote details</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="quoteform">
+                    <table class="table table-striped rental-app">
+                        <tr>
+                            <th>Enter Amount :<span style="color:red;">*</span></th>
+                            <td><input class="form-control" type="text" id='quotevalue' autofocus data-bind="trimTo2dp, value: Amount, valueUpdate:'afterkeydown'" /></td>
+                        </tr>
+                        <tr>
+                            <th>Note :<span style="color:red;">*</span></th>
+                            <td>
+                                <textarea class="form-control" id="notevalue" rows="5" data-bind="value: Note, valueUpdate:'afterkeydown'"></textarea>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>Upload Documents</th>
+                            <td>
+                                @*<div data-bind="foreach: MediaFiles">
+                                        <div class="col-xs-3">
+                                            <div class="thumbnail">
+                                                <a data-bind="click: $parent.removePhoto">
+                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                </a>
+                                                <img class="img-responsive" data-bind="attr: {src: Data}" />
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                <ul data-bind="foreach: MediaFiles()">
+                                    <li>
+                                        <a data-bind="click: $parent.RemoveFile">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </a>
+                                        <span data-bind="text: OldFileName"></span><br />
+                                    </li>
+                                </ul>
+
+                                <span class="btn btn-success" id="file-upload" name="fileName">
+                                    <i class="fa fa-cloud-upload"></i>
+                                    Choose Files
+                                    <input type="file" class="key-upload" data-bind="filesUpload : MediaFiles" accept="application/pdf,image/*" multiple />
+                                    @*<input class="key-upload" type="file" data-bind="filesUpload : MediaFiles, fileWarning : FileWarning" accept="application/pdf,image/*" multiple />*@
+                                </span>
+
+                                <p id="file-warning" data-bind="text:FileWarning"></p>
+                            </td>
+                        </tr>
+                    </table>
+
+                    @*<div class="input-group col-sm-12">
+                            <label class="keys  col-sm-3" style="text-align:right" >Enter amount:</label>
+                            <div class="col-sm-9">
+
+                                <input class="form-control" type="text" id='quotevalue' autofocus data-bind="trimTo2dp, value: Amount, valueUpdate:'afterkeydown'"  />
+                            </div>
+                        </div>*@
+                    @*<div class="input-group col-sm-12">
+                            <label class="keys  col-sm-3" style="text-align:right">Note:</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="notevalue" rows="5" data-bind="value: Note, valueUpdate:'afterkeydown'"></textarea>
+                            </div>
+                        </div>*@
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="saveButtonQuote" class="btn btn-success" data-dismiss="modal" data-bind="enable: IsValid, click: $parent.submitQuote">Submit</button>
+                <button data-dismiss="modal" class="btn btn-danger"> Close</button>
+            </div>
+        </div>
+    </div>
+</div>

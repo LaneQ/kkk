@@ -1,0 +1,694 @@
+﻿@model POTenantRequestSearchModel
+@{
+    ViewBag.Title = "Property Owner | Tenant Requests";
+}
+<div id="mainPage" data-bind="visible : MainView">
+    <div class="ui grid">
+        <div class="eight wide column">
+            <h2 class="ui header">Request By Tenants</h2>
+            <span class="text-muted">You can manage tenants' requests here</span>
+        </div>
+        <div class="middle aligned eight wide column">
+            @{
+                Html.RenderPartial("_SearchBox");
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="highlighted">
+        <div class="ui grid">
+            <div class="eight wide column">
+                @{
+                    Html.RenderPartial("_SortInput");
+                }
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div data-bind="if:Items().length <= 0">
+        <div class="row">
+            <div class="col-md-12">
+                <p> You do not have any tenants' requests</p>
+            </div>
+        </div>
+    </div>
+    <div class="ui secondary pointing menu">
+        <div class="item @(Model.RequestStatus.Equals(PropertyRequestStatus.Submitted) ? "active" : "")">
+            @Html.ActionLink("Current", "TenantRequests", new { RequestStatus = PropertyRequestStatus.Submitted })@*</a>*@
+        </div>
+        <div class="item @(Model.RequestStatus.Equals(PropertyRequestStatus.Accepted) ? "active" : "")">
+            @Html.ActionLink("Accepted", "TenantRequests", new { RequestStatus = PropertyRequestStatus.Accepted })@*</a>*@
+        </div>
+        <div class="item @(Model.RequestStatus.Equals(PropertyRequestStatus.Declined) ? "active item" : "")">
+            @Html.ActionLink("Declined", "TenantRequests", new { RequestStatus = PropertyRequestStatus.Declined })@*</a>*@
+
+        </div>
+    </div>
+
+    <br />
+    <div class="ui two cards" data-bind="foreach: Items, visible : Items().length > 0" >
+        <div class="card">
+            <div class="content">
+                <img class=" mini circular right floated mini ui image" data-bind="attr: {src: TenantProfileFoto}" alt="firstImg" onerror="this.src = '/images/icon-user-default.png'" />
+                <div class="header" data-bind="text: TenantName">
+                </div>
+                <div class="meta">
+                    <div data-bind="text : StreetAddress"></div>
+                    <div data-bind="text : CitySub"></div>
+                </div>
+                <div class="description">
+                    <span data-bind="text : RequestType" style="line-height:20px"></span>:  <span data-bind="text : Model.RequestMessage" style="line-height:20px" @*style="word-break : break-all"*@></span>
+                </div>
+                <div class="description">
+                    <a class="pointer-cursor" data-bind="click: $root.ShowDetail">Click here for more</a>
+                </div>
+            </div>
+            <div class="extra content">
+                <div class="ui two buttons">
+                    @if (Model.RequestStatus.Equals(PropertyRequestStatus.Submitted))
+                    {
+                        <div class="ui basic green button" data-bind="click :  $root.ShowAccept">Accept</div>
+                        <div class="ui basic red button" data-bind="click: $root.ShowDecline">Decline</div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @{
+        Html.RenderPartial("_PagedItems");
+    }
+</div>
+<div data-bind="visible:AcceptView">
+    <h3>Accept Tenant Request</h3>
+    <hr />
+    <a class="btn btn-info btn-sx" data-bind="click : $root.ShowMain"><span class="fa fa-arrow-left"></span> Back</a>
+    <br /><br />
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row" data-bind="with:  SelectedItem">
+
+                <div class="col-md-7">
+                    <!--details-->
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Location:</strong>
+                        </div>
+                        <div class="col-md-8" style="padding-right : 0px;">
+                            <div data-bind="text : StreetAddress"></div>
+                            <div data-bind="text : CitySub"></div>
+                        </div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong><span data-bind="text : RequestType" style="line-height:20px"></span>:</strong>
+                        </div>
+                        <div class="col-md-8" style="padding-right : 0px;">
+                            <span data-bind="text : Model.RequestMessage" style="word-break : break-all"></span>
+                        </div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Documents:</strong>
+                        </div>
+                        <div class="col-md-8" data-bind="if: DocFiles().length>0">
+                            <div data-bind="foreach: DocFiles()">
+                                <ul>
+                                    <li>
+                                        <a target="_blank" data-bind="attr:{href: Data}, text:OldFileName"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-8" data-bind="ifnot : DocFiles().length>0">
+                            Not Available
+                        </div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4" style="padding-right : 0px;">
+                            <strong>Requested On:</strong>
+                        </div>
+                        <div class="col-md-8" style="padding-right : 0px;">
+                            <div data-bind="text:moment(moment.utc(moment(CreatedOn()).format('YYYY-MM-DD HH:mm:ss')).toDate()).format('ll')"></div>
+                        </div>
+                    </div>
+                </div><!--details-->
+                <div class="col-md-4">
+                    <!--photos-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="carousel-property" class="carousel slide" data-ride="carousel" margin : auto" data-bind="visible : ImgFiles().length>0">
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner" role="listbox" data-bind="foreach: ImgFiles()">
+                                    <div class="item" data-bind="css: {active: $index() == 0}">
+                                        <img data-bind="attr: {src: Data}" alt="Thumbnail" data-target="#lightbox" style="height:200px">
+                                    </div>
+                                </div>
+
+                                <!-- Controls -->
+                                <a class="left carousel-control" href="#carousel-property" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-property" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--Without Images -->
+                        <div class="col-md-12">
+                            <div class="thumbnail" data-bind="visible : ImgFiles().length<=0">
+                                <img src="/images/no-prop-img.png" alt="noPropImg" />
+                            </div>
+                        </div>
+                    </div><!--Without Images -->
+                </div><!--photos-->
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div>
+                            <button type="button" id="declineRequestbutton" class="btn btn-primary" data-bind="click: $root.Accept" autofocus>Accept</button>
+                            <button type="button" id="declineRequestCancelButton" class="btn btn-danger"
+                                    data-bind="click :  $root.ShowMain " autofocus>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--panel body-->
+    </div><!--panel-->
+
+</div>
+<div data-bind="visible:AcceptJobView">
+    <h3 class="header">Accept Job Request</h3>
+    <div class="ui divider"></div>
+    <h5 class="ui teal header pointer-cursor" data-bind="click: $root.ShowMain" style="margin-top: 0px;"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+
+    <div class="ui segment" data-bind="with: SelectedItem()">
+        <div class="ui form">
+            <div class="grouped fields">
+                <label>Do you want to post in Market Place?</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="selectedRadioButton" id="Market" value="true" class="filled-in chk-col-pink" data-bind="checked: $root.SelectedRadioButton">
+                        <label for="Market">Market Place</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="selectedRadioButton" id='IWillDo' value="false" class="filled-in chk-col-pink" data-bind="checked: $root.SelectedRadioButton">
+                        <label for="IWillDo">No, I Do It My Self</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<strong> Do you want to post in Market Place?</strong>
+            <div class="ui form">
+                <div class="ui divider"></div>
+                <div class="ui form">
+
+                    <input type="radio" name="selectedRadioButton" value="true" class="filled-in chk-col-pink" data-bind="checked: $root.SelectedRadioButton">
+                    <label for="Market">Market Place</label>
+                    &nbsp;
+                    &nbsp;
+                    <input type="radio" name="selectedRadioButton" value="false" id='IWillDo' class="filled-in chk-col-pink" data-bind="checked: $root.SelectedRadioButton">
+                    <label for="IWillDo">No, I Do It My Self</label>
+                </div>
+            </div>*@
+
+        <div class="ui divider"></div>
+        <div data-bind="visible : $root.ShowInputForm(), with : $root.MarketJob">
+            <div class="ui form">
+                <div class="field">
+                    <label>Title </label>
+                    <input type="text" class="form-control" data-bind="value: Model.Title, valueUpdate:'afterkeydown'">
+
+                </div>
+                <div class=" field">
+                    <label>Job Description</label>
+                    <textarea rows="5" style="height:123px;" data-bind="value: Model.JobDescription, valueUpdate:'afterkeydown'"></textarea>
+
+                </div>
+                <div class="field">
+                    <label>Maximum Budget</label>
+                    <input type="text" data-bind="value: Model.MaxBudget, valueUpdate:'afterkeydown'">
+
+                </div>
+            </div>
+            @Html.Partial("_MediaInput")
+
+            <div class="field">
+                <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*.</p>
+
+            </div>
+            &nbsp;
+            <div class="field text-center">
+                <button class="ui teal button" id="addJobToMarketPlace" data-bind="click:$root.AddMarketJob , enable : IsValid" autofocus> Post</button>
+                <button class="ui button" id="back-to-tenantRequests" data-bind="click : $root.ShowMain">Cancel</button>
+            </div>
+        </div>
+        <div data-bind="visible : !$root.ShowInputForm(), with : $root.Job">
+            <div class="ui form">
+                <div class="field">
+                    <label>Job Description</label>
+                    <textarea rows="5" style="height:123px;" data-bind="value: Model.JobDescription, valueUpdate:'afterkeydown'"></textarea>
+
+                </div>
+                @Html.Partial("_MediaInput")
+                <div class="field">
+                    <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*.</p>
+
+                </div>
+                &nbsp;
+                <div class="field text-center">
+                    <button id="addJobDIY" class="ui teal button" data-bind="click:$root.AddJob , enable :IsValid" autofocus>Submit</button>
+                    <button class="ui red button" id="back-to-tenantRequests" data-bind="click : $root.ShowMain" autofocus>Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        @*<div data-bind="visible:AcceptJobView">
+            <div class="step-form-header" style="width:80%; margin:auto">
+                <h3>Accept Job Request</h3>
+                <hr />
+                <a class="btn btn-info btn-sx" data-bind="click : $root.ShowMain"><span class="fa fa-arrow-left"></span> Back</a>
+            </div>
+            <br />
+            <div class="row" style="padding-bottom: 100px" data-bind="with:  SelectedItem()">
+                <div class="col-md-12">
+                    <form class="step-form" style="margin-bottom:20px">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div>
+                                            <h4 class="modal-title">Do you want to post in Market Place?</h4>
+                                            <hr />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="radio" name="selectedRadioButton" value="true" class="filled-in chk-col-pink" data-bind="checked: $root.SelectedRadioButton">
+                                                    <label for="Market">Market Place</label>
+                                                    &nbsp;&nbsp;
+                                                    <input type="radio" name="selectedRadioButton" value="false" id='IWillDo' class="filled-in chk-col-pink" data-bind="checked: $root.SelectedRadioButton">
+                                                    <label for="IWillDo">No, I Do It My Self</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-bind="visible : $root.ShowInputForm(), with : $root.MarketJob">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Title </label>
+                                            <input type="text" class="form-control" data-bind="value: Model.Title, valueUpdate:'afterkeydown'">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Job Description </label>
+                                            <textarea class="form-control" rows="5" style="height:123px;" data-bind="value: Model.JobDescription, valueUpdate:'afterkeydown'"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Maximum Budget </label>
+
+                                            <input type="text" class="form-control" data-bind="value: Model.MaxBudget, valueUpdate:'afterkeydown'">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Uploaded documents</label>
+                                            <div class="panel panel-default">
+                                                <div class="panel-body" style="min-height:150px">
+                                                    <div data-bind="foreach: Model.MediaFiles">
+                                                        <div class="col-md-3 col-sm-4 col-xs-4 no-padding-left" data-bind="visible : MediaType() == 1">
+                                                            <div class="thumbnail">
+                                                                <a data-bind="click: $root.RemoveFile">
+                                                                    <i class="zmdi zmdi-close-circle" style="float:right"></i>
+                                                                </a>
+                                                                <a target="_blank" data-bind="attr: { href: Data()}">
+                                                                    <img class="img-responsive" data-bind="attr: {src: Data()}" style="height: 80px" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ul class="list-group" data-bind="foreach: Model.MediaFiles">
+                                                <li class="list-group-item" data-bind="visible : MediaType() == 2">
+                                                    <span class="zmdi zmdi-close-circle pull-right" data-bind="click : $root.RemoveFile"></span>
+                                                    <span data-bind="text : OldFileName()"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="btn btn-success">
+                                                <span class="fa fa-cloud-upload"></span>
+                                                Choose Files
+                                                <input type="file" id="fileUpload" class="key-upload" data-bind="uploadFiles : Model.MediaFiles, validFileTypes : $root.ValidImgFiles" accept="image/*" multiple />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <div>
+                                            <button type="button" id="addJobToMarketPlace" class="btn btn-primary" data-bind="click:$root.AddMarketJob , enable : IsValid" autofocus>Post</button>
+                                            <button class="btn btn-group btn-info" id="back-to-tenantRequests" data-bind="click : $root.ShowMain">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-bind="visible : !$root.ShowInputForm(), with : $root.Job">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Job Description </label>
+                                            <textarea class="form-control" rows="5" style="height:123px;" data-bind="value: Model.JobDescription, valueUpdate:'afterkeydown'"></textarea>
+                                        </div>
+                                        @Html.Partial("_MediaInput")
+                                        <div class="form-group">
+                                            <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <div>
+                                            <button type="button" id="addJobDIY" class="btn btn-primary" data-bind="click:$root.AddJob , enable :IsValid" autofocus>Submit</button>
+                                            <button class="btn btn-group btn-info" id="back-to-tenantRequests" data-bind="click : $root.ShowMain" autofocus>Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>*@
+
+        <div data-bind="visible: DetailView, with : SelectedItem" style="display : none">
+            <h2 class="ui header">Tenant Request Details</h2>
+            <div class="ui divider"></div>
+            <h5 class="ui header pointer-cursor" data-bind="click: $root.ShowMain" style="margin-top: 0px;"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+            <div class="highlighted-1">
+                @*<div class="ui grid no-margin">
+                        <div class="ui ten wide column">
+                            <h3 class="ui grey header" data-bind="text: Model.Title" style="margin-bottom : 10px"></h3>
+                        </div>
+                        <div class="middle aligned six wide column">
+                            <div class="ui tiny green button" data-bind="visible :!(!$root.IsUserServiceSupply()|| IsOwnedByUser() || IsApplyByUser())" style="float:right">
+                                <i class="pencil alternate icon"></i>&nbsp;&nbsp;Apply&nbsp;&nbsp;
+                            </div>
+                            <button class="ui tiny teal button" data-bind="click : $root.AddOrRemoveWatchList" style="float:right">
+                                <span data-bind="visible : !IsInWatchlist()" style="display : none"><i class="plus circle icon"></i> Watchlist</span>
+                                <span data-bind="visible : IsInWatchlist" style="display : none"><i class="minus circle icon"></i> Unwatch</span>
+                            </button>
+                        </div>
+                    </div>*@
+            </div>
+            <br />
+            <div class="ui grid">
+                <div class="eight wide column">
+                    <div class="ui relaxed divided list">
+                        <div class="item">
+                            <div class="ui grid">
+                                <div class="six wide column">
+                                    <h4 class="ui grey header">Location:</h4>
+                                </div>
+                                <div class="eight wide column">
+                                    <span data-bind="text: StreetAddress"></span>
+                                    <span data-bind="text: CitySub"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="ui grid">
+                                <div class="six wide column">
+                                    <h4 class="ui grey header"><span data-bind="text : RequestType" style="line-height:20px"></span>:</h4>
+                                </div>
+                                <div class="eight wide column">
+                                    <span data-bind="text : Model.RequestMessage" style="word-break : break-all"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="ui grid">
+                                <div class="six wide column">
+                                    <h4 class="ui grey header">Documents:</h4>
+                                </div>
+
+
+                                <div class="eight wide column" data-bind="ifnot : DocFiles().length>0">
+                                    Not Available
+                                </div>
+                                <span data-bind="if: DocFiles().length>0">
+                                    <div class="eight wide column">
+                                        <div data-bind="foreach: DocFiles()">
+                                            <ul>
+                                                <li>
+                                                    <a target="_blank" data-bind="attr:{href: Data}, text:OldFileName"></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="item">
+                            <div class="ui grid">
+                                <div class="six wide column">
+                                    <h4 class="ui grey header">Requested On:</h4>
+                                </div>
+                                <div class="eight wide column">
+                                    <div data-bind="text:moment(moment.utc(moment(CreatedOn()).format('YYYY-MM-DD HH:mm:ss')).toDate()).format('ll')"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="eight wide column">
+                    <div class="ui segment">
+                        @Html.Partial("_DetailViewImg")
+                    </div>
+                </div>
+            </div>
+            <br />
+
+
+        </div>
+        <div data-bind="visible:DeclineView" style="display : none">
+            <h3 class="header">Decline Request</h3>
+            <div class="ui divider"></div>
+            <h4 class="pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Properties</a></h4>
+            <div class="ui clearing segment" data-bind="with: SelectedItem">
+                <div class="ui grid ">
+                    <div class="eight wide column">
+                        <div class="ui relaxed divided list">
+                            <div class="item">
+                                <div class=" ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Location:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <span data-bind="text: StreetAddress"></span>
+                                        <span data-bind="text: CitySub"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header"><span data-bind="text : RequestType" style="line-height:20px"></span>:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <span data-bind="text : Model.RequestMessage" style="word-break : break-all"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Documents:</h4>
+                                    </div>
+
+
+                                    <div class="eight wide column" data-bind="ifnot : DocFiles().length>0">
+                                        Not Available
+                                    </div>
+                                    <span data-bind="if: DocFiles().length>0">
+                                        <div class="eight wide column">
+                                            <div data-bind="foreach: DocFiles()">
+                                                <ul>
+                                                    <li>
+                                                        <a target="_blank" data-bind="attr:{href: Data}, text:OldFileName"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Requested On:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <div data-bind="text:moment(moment.utc(moment(CreatedOn()).format('YYYY-MM-DD HH:mm:ss')).toDate()).format('ll')"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <form class="ui form">
+                                    <div class=" field">
+                                        <h4 class="ui grey header">Reason for declining the Request:</h4>
+                                        &nbsp;
+                                        <textarea class="form-control" rows="5" style="height:123px; width:200%" data-bind="value: Model.Reason, valueUpdate:'afterkeydown'"></textarea>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                            &nbsp;
+                            &nbsp;
+
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <form class="ui form">
+                    <div class="field text-center">
+                        <button id="declineRequestbutton" class="ui middle floated teal button" data-bind="click: $root.Decline, enable :IsValid" autofocus>Decline</button>
+                        <button class="ui middle floated button" id="declineRequestCancelButton" data-bind="click : $root.ShowMain" autofocus>Cancel</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+
+
+            @*<div data-bind="visible : DeclineView" style="display : none">
+                <div class="step-form-header" style="width:80%; margin:auto">
+                    <h3>Decline Request</h3>
+                    <hr />
+                    <a class="btn btn-info btn-sx" data-bind="click :  $root.ShowMain "><span class="fa fa-arrow-left"></span> Back</a>
+                </div>
+                <br />
+                <div class="row" style="padding-bottom: 100px" data-bind="with:  SelectedItem">
+                    <div class="col-md-12">
+                        <form class="step-form" style="margin-bottom:20px">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!--details-->
+                                        <div class="row" style="line-height : 25px">
+                                            <div class="col-md-4" style="padding-right : 0px;">
+                                                <strong>Location:</strong>
+                                            </div>
+                                            <div class="col-md-8" style="padding-right : 0px;">
+                                                <div data-bind="text : StreetAddress"></div>
+                                                <div data-bind="text : CitySub"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="line-height : 25px">
+                                            <div class="col-md-4" style="padding-right : 0px;">
+                                                <strong><span data-bind="text : RequestType" style="line-height:20px"></span>:</strong>
+                                            </div>
+                                            <div class="col-md-8" style="padding-right : 0px;">
+                                                <span data-bind="text : Model.RequestMessage" style="word-break : break-all"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="line-height : 25px">
+                                            <div class="col-md-4" style="padding-right : 0px;">
+                                                <strong>Documents:</strong>
+                                            </div>
+                                            <div class="col-md-8" data-bind="if: DocFiles().length>0">
+                                                <div data-bind="foreach: DocFiles()">
+                                                    <ul>
+                                                        <li>
+                                                            <a target="_blank" data-bind="attr:{href: Data}, text:OldFileName"></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8" data-bind="ifnot : DocFiles().length>0">
+                                                Not Available
+                                            </div>
+                                        </div>
+                                        <div class="row" style="line-height : 25px">
+                                            <div class="col-md-4" style="padding-right : 0px;">
+                                                <strong>Requested On:</strong>
+                                            </div>
+                                            <div class="col-md-8" style="padding-right : 0px;">
+                                                <div data-bind="text:moment(moment.utc(moment(CreatedOn()).format('YYYY-MM-DD HH:mm:ss')).toDate()).format('ll')"></div>
+                                            </div>
+                                        </div>
+                                    </div><!--details-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Reason for declining the Request :</label>
+                                            <textarea class="form-control" rows="5" style="height:123px;" data-bind="value: Model.Reason, valueUpdate:'afterkeydown'"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <div>
+                                            <button type="button" id="declineRequestbutton" class="btn btn-primary" data-bind="click: $root.Decline" autofocus>Decline</button>
+                                            <button type="button" id="declineRequestCancelButton" class="btn btn-danger"
+                                                    data-bind="click :  $root.ShowMain " autofocus>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>*@
+            @Html.AntiForgeryToken()
+            <script src="~/Scripts/PropertyOwners/Property/TenantRequests.js"></script>
+            <script>
+
+            $(document).ready(function () {
+                $('.ui.radio.checkbox').checkbox('check');
+       $("#NoRecord").modal("show");
+        var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        var vm = new PageViewModel(dataVm);
+        ko.applyBindings(vm);
+    });
+            </script>

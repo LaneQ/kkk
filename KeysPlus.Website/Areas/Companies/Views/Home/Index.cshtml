@@ -1,0 +1,50 @@
+﻿@model IPagedList<CompanyViewModel>
+
+<link href="~/Content/stylesheets/PagedList.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+@{
+    ViewBag.Title = "Company";
+}
+<div class="block-header">
+<h2>Service Suppliers</h2></div>
+<hr />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+@Html.Hidden("addUrl", Url.Action("AddNewCompany", "Home"))
+@Html.Hidden("editUrl", Url.Action("EditCompany", "Home"))
+@Html.Hidden("deleteUrl", Url.Action("DeleteCompany", "Home"))
+@Html.Hidden("ImageUrl", Url.Action("ImageUpload", "Home"))
+@Html.AntiForgeryToken()
+
+<div class="col-xs-12" id="company-grid">
+    <div data-bind="template : {
+    name: companyTemplate}"></div>
+</div>
+
+@Html.Partial("_CompanyIndex")
+@Html.Partial("_CompanyDetails")
+@Html.Partial("_EditAddress")
+@Html.Partial("_AddCompany")
+@section Modal{
+    @{
+        Html.RenderPartial("_CompanyForm");
+        Html.RenderPartial("_DeleteCompany");
+        Html.RenderPartial("_SearchResultModal");
+        Html.RenderPartial("_CompanyFormModal");
+       
+    }
+}
+@section scripts{
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/Scripts/Companies/Index.js")
+    <script>
+        $(function () {
+            $("#NoRecord").modal("show");
+            var companyModel = @Html.Raw(Json.Encode(Model));
+            var companyList = new Company(companyModel);
+            ko.applyBindings(companyList);
+        });
+    </script>
+}

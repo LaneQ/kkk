@@ -1,0 +1,276 @@
+﻿@model KeysPlus.Service.Models.SideBarViewModel
+<div class="ui fixed top text menu">
+    <div class="container">
+        <div class="ui left floated" style="line-height : 50px">
+            <img src="~/images/logo.png" />
+        </div>
+        <div class="right menu">
+            @if (Model.IsTenant)
+            {
+                <a href="@Url.Action("TenantLogin", "Home", new {Area = ""})" class="item-link item @(TempData["CurrentLink"] as String == "Dashboard" ? "selected" : "")">
+                    Dashboard
+                </a>
+            }
+            else
+            {
+                <a href="@Url.Action("Dashboard", "Home", new {Area = ""})" class="item-link item @(TempData["CurrentLink"] as String == "Dashboard" ? "selected" : "")">
+                    Dashboard
+                </a>
+            }
+            @if (Model.IsPropertyOwner)
+            {
+                <div class="ui dropdown item">
+                    Owners
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="@Url.Action("Index", "Home", new {Area = "PropertyOwners"})" class="item item-link @(TempData["CurrentLink"] as String == "Properties" ? "selected" : "")">
+                            Properties
+                        </a>
+                        <a href="@Url.Action("RentalProperties", "Property", new {Area = "PropertyOwners"})" class="item item-link @(TempData["CurrentLink"] as String == "RentalApplications" ? "selected" : "")">
+                            Rental Listings & Applications
+                        </a>
+                        <a href="@Url.Action("TenantRequests", "Property", new {Area = "PropertyOwners"})" class="item item-link @(TempData["CurrentLink"] as String == "TenantRequests" ? "selected" : "")">
+                            Tenant Request
+                        </a>
+                        <a href="@Url.Action("MyMarketJobs", "Manage", new {Area = "PropertyOwners"})" class="item item-link @(TempData["CurrentLink"] as String == "MarketJobsOwner" ? "selected" : "")">
+                            Advertised Jobs & Quotes
+                        </a>
+                        <a href="@Url.Action("AcceptedJobs", "Manage", new {Area = "PropertyOwners"})" class="item item-link @(TempData["AcceptedJobs"] as String == "MarketJobsOwner" ? "selected" : "")">
+                            Maintenance
+                        </a>
+                        <a href="@Url.Action("MyRequests", "Property", new {Area = "PropertyOwners"})" class="item item-link">
+                            My Requests
+                        </a>
+                        <a href="@Url.Action("Inspections", "Manage", new {Area = "PropertyOwners"})" class="item item-link">
+                            Inspections
+                        </a>
+                        <a href="@Url.Action("RentalPaymentTracking", "Manage", new {Area = "PropertyOwners"})" class="item item-link">
+                            Rental Payment Tracking
+                        </a>
+                        <a href="@Url.Action("InvesmentCalculator", "Calculator", new {Area = "Tools"})" class="item item-link">
+                            Invesment Calculator
+                        </a>
+                    </div>
+                </div>
+
+            }
+
+            @if (Model.IsTenant)
+            {
+                <div class="ui dropdown item">
+                    Tenants
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="@Url.Action("MyRentals", "Home", new {Area = "Tenants"})" class="item item-link @(TempData["CurrentLink"] as String == "MyRentals" ? "selected" : "")">
+                            My Rentals
+                        </a>
+                        <a href="@Url.Action("MyRentalApplications", "Home", new {Area = "Tenants"})" class="item item-link waves-effect waves-block @(TempData["CurrentLink"] as String == "MyApplications" ? "selected" : "")">
+                            My Applications
+                        </a>
+                        <a href="@Url.Action("MyRequests", "Home", new {Area = "Tenants"})" class="item item-link @(TempData["CurrentLink"] as String == "MyRequests" ? "selected" : "")">
+                            My Requests
+                        </a>
+                        <a href="@Url.Action("LandlordRequests", "Home", new {Area = "Tenants"})" class="item item-link @(TempData["CurrentLink"] as String == "LandLordRequest" ? "selected" : "")">
+                            Landlord's Requests
+                        </a>
+                        <a href="@Url.Action("Inspections", "Rent", new {Area = "Tenants"})" class="item item-link @(TempData["CurrentLink"] as String == "Inspections" ? "selected" : "")">
+                            Inspections
+                        </a>
+                    </div>
+                </div>
+            }
+            @if (Model.IsServiceSupplier)
+            {
+                <div class="ui dropdown item">
+                    Service Suppliers
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="@Url.Action("MyQuotes", "Manage", new {Area = "Companies"})" class="item item-link @(TempData["CurrentLink"] as String == "MyQuotes" ? "selected" : "")">
+                            My Quotes
+                        </a>
+                        <a href="@Url.Action("MyJobs", "Home", new {Area = "Companies"})" class="item item-link @(TempData["CurrentLink"] as String == "MyJobs" ? "selected" : "")">
+                            My Jobs
+                        </a>
+                    </div>
+                </div>
+            }
+            <a href="@Url.Action("Index", "Home", new {Area = "Rental"})" class="item @(TempData["CurrentLink"] as String == "RentallListing" ? "selected" : "")">Properties For Rent</a>
+            <a href="@Url.Action("MarketJobs", "Home", new {Area = "Jobs"})" class="item item-link @(TempData["CurrentLink"] as String == "MarketJobs" ? "selected" : "")">
+                Market Place
+            </a>
+            <div class="ui dropdown item">
+                <i class="zmdi zmdi-pin-account zmdi-hc-lg"></i>
+                <div class="menu">
+                    <a title="Go to Profile" class="item" href="@Url.Action("AccountOverview", "Account", new {area = ""})"><i class="user outline icon"></i> Profile</a>
+                    @if (Model.IsServiceSupplier || Model.IsTenant)
+                    {
+                        <a class="item" title="Watchlist" href="@Url.Action("Watchlist", "Personal", new {area = ""})"><i class="bookmark outline icon"></i> Watchlist</a>
+                    }
+                    <a class="item" title="Change password" href="@Url.Action("ChangePassword", "Account", new {area = "", htmlAttributes = new {id = "ChangePasswordLink"}})"><i class="lock open icon"></i> Change Password</a>
+                    <a class="item" title="Log Out" href="@Url.Action("LogOff", "Account", new {Area = String.Empty})"><i class="sign out icon"></i> Sign Out</a>
+                </div>
+            </div>
+        </div>       
+    </div>
+</div>
+@*<nav class="navbar navbar-default navbar-fixed-top">
+
+    <div class="container">
+        
+        <div class="pull-left" style="line-height : 45px">
+            <img src="~/images/logo.png"/>
+        </div>
+                      
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="@Url.Action("Dashboard", "Home", new {Area = ""})" class="item-link @(TempData["CurrentLink"] as String =="Dashboard" ? "selected" : "")">
+                    Dashboard
+                </a>
+            </li>
+            @if (Model.IsPropertyOwner)
+            {
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Owners <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="@Url.Action("Index", "Home", new { Area = "PropertyOwners"})" class="item-link @(TempData["CurrentLink"] as String =="Properties" ? "selected" : "")">
+                                Properties
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("RentalProperties", "Property", new { Area = "PropertyOwners"})" class="item-link @(TempData["CurrentLink"] as String =="RentalApplications" ? "selected" : "")">
+                                Rental Listings & Applications
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("TenantRequests", "Property", new { Area = "PropertyOwners" })" class="item-link @(TempData["CurrentLink"] as String =="TenantRequests" ? "selected" : "")">
+                                Tenant Request
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("MyMarketJobs", "Manage", new {Area = "PropertyOwners"})" class="item-link @(TempData["CurrentLink"] as String =="MarketJobsOwner" ? "selected" : "")">
+                                Advertised Jobs & Quotes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AcceptedJobs", "Manage", new {Area = "PropertyOwners"})" class="item-link @(TempData["AcceptedJobs"] as String =="MarketJobsOwner" ? "selected" : "")">
+                                Maintenance
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("MyRequests", "Property", new {Area = "PropertyOwners" })" class="item-link">
+                                My Requests
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Inspections", "Manage", new {Area = "PropertyOwners" })" class="item-link">
+                                Inspections
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("RentalPaymentTracking", "Manage", new {Area = "PropertyOwners" })" class="item-link">
+                                Rental Payment Tracking
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("InvesmentCalculator", "Calculator", new {Area = "Tools" })" class="item-link">
+                                Invesment Calculator
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if (Model.IsTenant)
+            {
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tenants <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="@Url.Action("MyRentals", "Home", new { Area = "Tenants" })" class="item-link @(TempData["CurrentLink"] as String =="MyRentals" ? "selected" : "")">
+                                My Rentals
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("MyRentalApplications", "Home", new { Area = "Tenants" })" class="item-link waves-effect waves-block @(TempData["CurrentLink"] as String =="MyApplications" ? "selected" : "")">
+                                My Applications
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("MyRequests", "Home", new { Area = "Tenants" })" class="item-link @(TempData["CurrentLink"] as String =="MyRequests" ? "selected" : "")">
+                                My Requests
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("LandlordRequests", "Home", new { Area = "Tenants" })" class="item-link @(TempData["CurrentLink"] as String =="LandLordRequest" ? "selected" : "")">
+                                Landlord's Requests
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Inspections", "Rent", new { Area = "Tenants" })" class="item-link @(TempData["CurrentLink"] as String =="Inspections" ? "selected" : "")">
+                                Inspections
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if (Model.IsServiceSupplier)
+            {
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Service Suppliers <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="@Url.Action("MyQuotes", "Manage", new { Area = "Companies"})" class="item-link @(TempData["CurrentLink"] as String =="MyQuotes" ? "selected" : "")">
+                                My Quotes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("MyJobs", "Home", new {Area = "Companies"})" class="item-link @(TempData["CurrentLink"] as String =="MyJobs" ? "selected" : "")">
+                                My Jobs
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            <li>
+                <a href="@Url.Action("Index", "Home", new { Area = "Rental" })" class="@(TempData["CurrentLink"] as String =="RentallListing" ? "selected" : "")">Properties For Rent</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MarketJobs", "Home", new { Area = "Jobs"})" class="item-link @(TempData["CurrentLink"] as String =="MarketJobs" ? "selected" : "")">
+                    Market Place
+                </a>
+            </li>
+           @if (Model.IsAdmin)
+           {
+            <li>
+                <a href="@Url.Action("Index", "Home", new {Area = "Admin"})" class="item-link  @(TempData["CurrentLink"] as String =="Admin" ? "selected" : "") ">
+                    Admin
+                </a>
+            </li>
+
+           }
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size:20px"><i class="zmdi zmdi-pin-account"></i></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a title="Go to Profile" href="@Url.Action("AccountOverview", "Account", new {area = "" })"><i class="zmdi zmdi-account text-primary"></i> Profile</a>
+                       
+                    </li>
+                    @if (Model.IsServiceSupplier || Model.IsTenant)
+                    {
+                        <li>
+                            <a title="Watchlist" href="@Url.Action("Watchlist", "Personal", new {area = "" })"><i class="zmdi zmdi-eye text-primary"></i> Watchlist</a>
+
+                        </li>
+                    }
+                    <li>
+                        <a title="Change password" href="@Url.Action("ChangePassword", "Account", new { area = "" , htmlAttributes= new { id = "ChangePasswordLink" }})"><i class="zmdi zmdi-lock-open text-primary"></i> Change Password</a>
+                    </li>
+                    
+                    <li>
+                        <a title="Log Out" href="@Url.Action("LogOff","Account",new {Area = String.Empty})"><i class="fa fa-sign-out text-primary"></i> Sign Out</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>*@

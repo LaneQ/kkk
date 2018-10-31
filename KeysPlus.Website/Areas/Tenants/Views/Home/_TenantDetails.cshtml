@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link href="/Content/stylesheets/_font-awesome.css" rel="stylesheet" />
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/Site.css" rel="stylesheet" />
+    <link href="/Content/introjs/introjs.css" rel="stylesheet" />
+
+    <link href="/Content/stylesheets/PagedList.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/Scripts/modernizr-2.8.3.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="/Scripts/knockout-3.4.0.js"></script>
+    <script type="text/javascript" src="/Scripts/knockout-3.4.0.debug.js"></script>
+    <script type="text/javascript" src="/Scripts/knockout.mapping-latest.debug.js"></script>
+    <script type="text/javascript" src="/Scripts/knockout.validation.js"></script>
+
+    <script type="text/javascript" src="/Scripts/NotificationStyle/js/classie.js"></script>
+    <script type="text/javascript" src="/Scripts/NotificationStyle/js/modernizr.custom.js"></script>
+    <script type="text/javascript" src="/Scripts/NotificationStyle/js/notificationFx.js"></script>
+    <script type="text/javascript" src="/Scripts/NotificationStyle/js/snap.svg-min.js"></script>
+
+    <link href="/Scripts/NotificationStyle/css/normalize.css" rel="stylesheet" />
+    <link href="/Scripts/NotificationStyle/css/ns-default.css" rel="stylesheet" />
+    <link href="/Scripts/NotificationStyle/css/ns-style-attached.css" rel="stylesheet" />
+    <link href="/Scripts/NotificationStyle/css/ns-style-bar.css" rel="stylesheet" />
+    <link href="/Scripts/NotificationStyle/css/ns-style-growl.css" rel="stylesheet" />
+    <link href="/Scripts/NotificationStyle/css/ns-style-other.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/Scripts/moment-with-locales.js"></script>
+
+    <script type="text/javascript" src="/Scripts/Globals/keys.js"></script>
+    <script type="text/javascript" src="/Scripts/Globals/keysAddress.js"></script>
+    <script type="text/javascript" src="/Scripts/Globals/Commons.js"></script>
+    <script type="text/javascript" src="/Scripts/introjs/intro.min.js"></script>
+
+    <script type="text/javascript" src="/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="/Scripts/respond.js"></script>
+
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
+    <link href="/Content/semantic.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Scripts/semantic.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="/Scripts/PropertyOwners/Home/Onboarding.js"></script>
+    <script type="text/javascript" src="/Scripts/Tenants/TenantDetails.js"></script>
+    <title>Tenant Onboarding</title>
+</head>
+<body>
+    <div class="ui fixed top text menu">
+        <div class="container">
+            <div class="ui left floated" style="line-height : 50px">
+                <img height="50" width="150" src="/images/keys-logo.png" />
+            </div>
+            <div class="right menu">
+                <a href="/Tenants/Home/Dashboard" class="item-link item ">
+                    Dashboard
+                </a>
+
+                <div class="ui dropdown item">
+                    Tenants
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="/Tenants/Home/MyRentals" class="item item-link ">
+                            My Rentals
+                        </a>
+                        <a href="/Tenants/Home/MyRentalApplications" class="item item-link waves-effect waves-block ">
+                            My Applications
+                        </a>
+                        <a href="/Tenants/Home/MyRequests" class="item item-link ">
+                            My Requests
+                        </a>
+                        <a href="/Tenants/Home/LandlordRequests" class="item item-link ">
+                            Landlord's Requests
+                        </a>
+                        <a href="/Tenants/Rent/Inspections" class="item item-link ">
+                            Inspections
+                        </a>
+                    </div>
+                </div>
+                <a href="/Rental" class="item ">Properties For Rent</a>
+                <a href="/Jobs/Home/MarketJobs" class="item item-link ">
+                    Market Place
+                </a>
+                <div class="ui dropdown item">
+                    <i class="large black address card outline icon"></i>
+                    <div class="menu">
+                        <a title="Go to Profile" class="item" href="/Account/AccountOverview"><i class="user outline icon"></i> Profile</a>
+                        <a class="item" title="Watchlist" href="/Personal/Watchlist"><i class="bookmark outline icon"></i> Watchlist</a>
+                        <a class="item" title="Change password" href="/Account/ChangePassword?htmlAttributes=%7B%20id%20%3D%20ChangePasswordLink%20%7D"><i class="lock open icon"></i> Change Password</a>
+                        <a class="item" title="Log Out" href="/Account/LogOff"><i class="sign out icon"></i> Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main-content">
+        <div class="container segment">
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="ui small modal">
+                        <h4 class="header">Confirmation</h4>
+                        <p class="content">Are you sure you want to leave this page?</p>
+                        <div class="actions">
+
+                            <button type="button" class="ui button teal" onclick="location.href = '/Home/TenantLogin'">Yes</button>
+                            <button type="button" class="ui button" data-bind="click: closeConfirmation">No</button>
+                        </div>
+                    </div>
+
+                </div><!-- /.modal -->
+
+                <br /><br />
+                <form id="msform" class="step-form ui form" style="font-weight: 900;">
+                    <input name="__RequestVerificationToken" type="hidden" value="8bnh4A1WnFGdt98wzxN7zhfEn5Pm1jIrYu8TD5fsL61ary4kl4K4GTqHLmhXaOZP9H1hBXpomFLN6_QcyU4ziRpzB_k9asqHz7-cooxa1txZq4BwuN48bQZ3-E0nCSlP0" />
+
+                    <fieldset class="keys-fieldset" id="tenant-details">
+                        <div class="keys-heading">Tenant Details </div>
+
+
+                        <div class="ui form">
+                            <div class="two fields">
+                                <div class="fourteen wide field">
+
+                                    <label>Date of Birth <span class="red-asterisk">*</span></label>
+                                    <input type="text" id="DOB" name="DateOfBirth" placeholder="&nbsp; dd/mm/yyyy" data-bind="datePicker : Model.DateOfBirth, dateTimePickerOptions : {format: 'DD/MM/YYYY', useCurrent : false}">                                    @*<span class="validationMessage" data-bind='visible: Model.DateOfBirth.hasError, text: TooYoungMessage'></span>
+                                    <span class="validationMessage" data-bind='visible: Model.DateOfBirth.tooOld, text: TooOldMessage'></span>*@
+                                    <label class="ss-vertical-space">Home Phone Number <span class="red-asterisk">*</span></label>
+                                    <input type="tel" name="HomePhoneNumber" placeholder="eg:097001234" data-bind="value: Model.HomePhoneNumber, valueUpdate:'afterkeydown'" />
+                                    <label class="ss-vertical-space">Mobile Phone Number <span class="red-asterisk">*</span></label>
+                                    <input type="tel" name="MobilePhoneNumber" placeholder="eg:0212345678" data-bind="value : Model.MobilePhoneNumber, valueUpdate:'afterkeydown'" />
+                                    <label for="searchTextField" class="ss-vertical-space">Current Address <span class="red-asterisk">*</span></label>
+                                    <input type="text" name="searchAddress" id="autocomplete" placeholder="&nbsp Enter your address" size="54" maxlength="120" data-bind="value: AddressField, valueUpdate:'afterkeydown'">
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="field">
+                                        <label>Please upload your photos here</label>
+                                        <div class="ui fluid segment upload-box te-logo">
+                                            <div class="center aligned four column row">
+                                                <div class="column">
+                                                    <div>
+                                                        <div data-bind="foreach: MediaFiles">
+                                                            <div class="ui fluid segment image-box">
+                                                                <div class="column">
+                                                                    <div class="image">
+                                                                        <div class="ui minix images" style="position : relative">
+                                                                            <img class="ui image" data-bind="attr: {src: Data}" style="height: 80px" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <i class="remove sign icon" style="float:right" data-bind="click: $root.RemoveFile"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field" style="margin-bottom: 50px">
+                                        <p class="text-muted hint-style" data-bind="text: fileInstructions"></p>
+                                        <div class="ui teal button upload-button">
+                                            <i class="cloud upload icon" style="padding-right: 5px"></i>
+                                            Choose Files
+                                            <input type="file" id="file-upload" class="key-upload" data-bind="filesUpload : MediaFiles, fileWarning : FileWarning, validFileTypes : ValidFiles, maxFiles: MaxFiles, totalMaxSize : MaxSize, sizeError : fileSizeError" multiple />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="ui grid">
+                            <div class="center aligned column">
+                                <br /><br />
+
+                                <input id="Save" value="Save" type="button" class="ui teal button" data-bind="click: SaveInfo" />
+
+                                <a class="ui button" data-bind="click: $root.confirmationModal">Skip</a>
+                            </div>
+                        </div>
+                        <br />
+                    </fieldset>
+
+                </form>
+
+                <script type="text/javascript" src="/Scripts/jquery.easing.min.js"></script>
+                <script type="text/javascript" src="/Scripts/PropertyOwners/Home/Onboarding.js"></script>
+                <script type="text/javascript" src="/Scripts/Tenants/TenantDetails.js"></script>
+                <script>
+        function disableSaveButton() {
+            document.getElementById("Save").disabled = true;
+            document.getElementById("Save").innerHTML = "Saving...";
+        }
+        $(document).ready(function () {
+
+            ko.applyBindings(new TenantInfoVm());
+
+        });
+
+                </script>
+            <style>
+                a.action-button {
+                    text-decoration: none;
+                    font-size: 13px;
+                    box-sizing: border-box;
+                }
+            </style>
+
+
+        </div>
+    </div>
+
+
+
+    <script>
+            $(document).ready(function () {
+                $('.ui.dropdown').dropdown();
+                $('#search-wrap:first').children().first().attr('method', 'get');
+                $('#icon-submitt').click(function (e) {
+                    e.preventDefault();
+                    $('#search-wrap:first').children().first().submit();
+                });
+                jQuery.fn.putCursorAtEnd = function () {
+
+                    return this.each(function () {
+
+                        // Cache references
+                        var $el = $(this),
+                            el = this;
+
+                        // Only focus if input isn't already
+                        if (!$el.is(":focus")) {
+                            $el.focus();
+                        }
+
+                        // If this function exists... (IE 9+)
+                        if (el.setSelectionRange) {
+
+                            // Double the length because Opera is inconsistent about whether a carriage return is one character or two.
+                            var len = $el.val().length * 2;
+
+                            // Timeout seems to be required for Blink
+                            setTimeout(function () {
+                                el.setSelectionRange(len, len);
+                            }, 1);
+
+                        } else {
+
+                            // As a fallback, replace the contents with itself
+                            // Doesn't work in Chrome, but Chrome supports setSelectionRange
+                            $el.val($el.val());
+                        }
+
+                    });
+
+                };
+                (function () {
+                    var searchInput = $("#searchId");
+                    searchInput
+                        .putCursorAtEnd() // should be chainable
+                        .on("focus", function () { // could be on any event
+                            searchInput.putCursorAtEnd()
+                        });
+                })();
+            });
+    </script>
+</body>
+
+</html>
+<style>
+    body {
+        position: relative;
+        padding-top: 65px;
+        padding-left: 400px;
+        padding-right: 400px;
+        background: #fcfcfc;
+        overflow: inherit;
+    }
+
+    #tenant-details{
+    margin: auto;
+    }
+
+    .keys-heading {
+        font-size: 200%;
+    }
+
+    #from-top {
+        margin-top: 50px;
+    }
+
+.ui.small.modal{
+    margin: auto;
+    width:720px;
+    height:200px;
+}
+</style>

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<PaymentTracking>
+@{
+    ViewBag.Title = "Rent Payment Tracking | Property Community";
+}
+<div>
+    <h3>Payment Tracking</h3>
+    <hr />
+
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Tenant Name</th>
+                <th>Property Address</th>
+                <th>Due Date</th>
+                <th>Payment Complete</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach : AllTrackings">
+
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        var dataVm = @Html.Raw(Json.Encode(Model));
+        function PageViewModel(dataVm) {
+            var self = this;
+            self.AllTrackings = ko.observableArray(dataVm);
+            debugger;
+        }
+        var vm = new PageViewModel(dataVm);
+    });
+</script>

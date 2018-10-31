@@ -1,0 +1,588 @@
+﻿@model POInspectionsSearchModel
+
+@{
+    ViewBag.Title = "Properties | Inspections";
+}
+@section Modal{
+    @{
+        Html.RenderPartial("_SearchResultModal");
+    }
+}
+<div id="mainPage" data-bind="visible : MainView">
+    <div class="ui grid">
+        <div class="eight wide column">
+            <h2 class="ui header">Property Inspections</h2>
+            <span class="text-muted">You can manage your property inspection requests here</span>
+        </div>
+        <div class="middle aligned eight wide column">
+            @{
+                Html.RenderPartial("_SearchBox");
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="highlighted">
+        <div class="ui grid">
+            <div class="eight wide column">
+                @{
+                    Html.RenderPartial("_SortInput");
+                }
+            </div>
+            <div class="middle aligned eight wide column">
+                <a class="ui teal button right floated" href="@Url.Action("SendRequest", "Home", new { area = "Rental", returnUrl = HttpContext.Current.Request.RawUrl, type = 3})" style="margin-right : 10px"><i class="plus circle icon"></i> Add New Inspection Request</a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <table class="ui single line table" style="border : none">
+        <thead>
+            <tr>
+                <th class="three wide" style="background : none"><h5 class="ui teal header">Property</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Status</h5></th>
+                <th class="five wide" style="background : none"><h5 class="ui teal header">Progress</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Due Date</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Actions</h5></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach : Items">
+            <tr>
+                <td>
+                    <h5 class="ui grey header" data-bind="text : StreetAddress" style="margin : 1px"></h5>
+                    <h5 class="ui grey header" data-bind="text : CitySub" style="margin-top : 0px"></h5>
+                </td>
+                <td data-bind="text : Status"></td>
+                <td style="vertical-align : middle">
+                    <div class="progress" style="margin : auto">
+                        <div class="progress-bar small-text" role="progressbar" data-bind="text : Model.PercentDone() + '%', style: { width: Model.PercentDone() + '%', color : Model.PercentDone()== 0 ? '#337ab7' : '' }, attr: { 'aria-valuenow': Model.PercentDone }"></div>
+                    </div>
+                </td>
+                <td data-bind="text: moment(DueDate()).format('ll')"></td>
+                <td>
+                    <button class="ui teal mini basic button" data-bind="click:$root.ViewInspection">Details</button>
+                    <button class="ui teal mini basic button" data-bind="visible: ( (Model.StatusId() == 1 || Model.StatusId() == 5) && (Model.PercentDone() == 100) ), click:$root.ViewEval"> Evaluate</button>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <div class="ui divider"></div>
+    @*<div class="row" data-bind="foreach : Items">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="ribbon-wrapper" data-bind="visible : (Model.IsViewed() == false && Model.IsUpdated() == false)"><div class="ribbon-red">NEW</div></div>
+                <div class="ribbon-wrapper" data-bind="visible : (Model.IsViewed() == false && Model.IsUpdated() == true)"><div class="ribbon-red">UPDATED</div></div>
+                <div class="panel-body">
+                    <div title="Delete" class="delete-top-right-corner" data-bind="click: $root.ShowDelete"><i class="fa fa-trash-o"></i></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div data-bind="visible:ImgFiles().length>0">
+                                <div class="carousel " data-ride="carousel" data-bind="attr :{id : 'carousel'+ Model.Id()}">
+                                    <div class="carousel-inner" style="margin:auto" data-bind="foreach: ImgFiles">
+                                        <div class="item" data-bind="css:{active: $index() == 0}">
+                                            <img class="img-responsive img-thumbnail" data-bind="attr: {src: Data}"
+                                                 onerror="this.src = '/images/no-prop-img.png'" alt="firstImg">
+                                        </div>
+                                    </div>
+                                    <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}, if : ImgFiles().length > 1">
+                                        <span class="fa fa-2x fa-angle-left"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}, if : ImgFiles().length > 1">
+                                        <span class="fa fa-2x fa-angle-right"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div data-bind="visible:ImgFiles().length<=0">
+                                <img class="img-thumbnail" src="/images/no-prop-img.png" alt="noPropImg" />
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-3"><strong>Property: </strong></div>
+                                <div class="col-md-6">
+                                    <div data-bind="text : StreetAddress"></div>
+                                    <div data-bind="text : CitySub"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"><strong>Inspection Status: </strong></div>
+                                <div class="col-md-6"><span data-bind="text : Status"></span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"><strong>Percentage Done: </strong></div>
+                                <div class="col-md-4">
+                                    <div class="progress" style="margin-bottom : 5px">
+                                        <div class="progress-bar small-text" role="progressbar" data-bind="text : Model.PercentDone() + '%', style: { width: Model.PercentDone() + '%', color : Model.PercentDone()== 0 ? '#337ab7' : '' }, attr: { 'aria-valuenow': Model.PercentDone }"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"><strong>Inspection Message: </strong></div>
+                                <div class="col-md-4" style="height:20px; text-overflow: ellipsis; white-space: nowrap; overflow:hidden;">
+                                    <span data-bind="text : Model.Message"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"><strong>Due Date: </strong></div>
+                                <div data-bind="if:DueDate">
+                                    <div class="col-md-6"><span data-bind="text: moment(DueDate()).format('ll')"></span></div>
+                                </div>
+                                <div data-bind="ifnot:DueDate">
+                                    <div class="col-md-6">Not Available</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"><strong>Created On: </strong></div>
+                                <div class="col-md-6"><span data-bind="text : moment(CreatedOn()).format('ll')"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="prop-actions">
+                    <button class="btn btn-default" data-bind="click:$root.ViewInspection"><span class="zmdi zmdi-info-outline"></span> Details</button>
+                    <button class="btn btn-success" data-bind="visible: ( (Model.StatusId() == 1 || Model.StatusId() == 5) && (Model.PercentDone() == 100) ), click:$root.ViewEval"> Evaluate</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    @{
+        Html.RenderPartial("_PagedItems");
+    }
+</div>
+
+@* ********************************** Inspection Detail Form ****************************************** *@
+<div data-bind="visible : DetailView" style="display : none">
+    <h5 class="ui header pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+    <h3 class="header" style="margin-top : 0px">Inspection Details</h3>
+    <div class="ui divider"></div>
+    <div data-bind="with : SelectedItem">
+        <div class="ui grid">
+            <div class="eight wide column">
+                <div class="ui relaxed divided list">
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Property :</h4>
+                            </div>
+                            <div class="eight wide column">
+                                <div data-bind="text : StreetAddress"></div>
+                                <div data-bind="text : CitySub"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Status:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text: Status"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Progress:</h4>
+                            </div>
+                            <div class="eight wide column">
+                                <div class="progress" style="margin : auto">
+                                    <div class="progress-bar small-text" role="progressbar" data-bind="text : Model.PercentDone() + '%', style: { width: Model.PercentDone() + '%', color : Model.PercentDone()== 0 ? '#337ab7' : '' }, attr: { 'aria-valuenow': Model.PercentDone }"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Date Date:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text: moment(DueDate()).format('ll')"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Documents:</h4>
+                            </div>
+                            <div class="eight wide column">
+                                <div data-bind="if:DocFiles().length>0">
+                                    <div data-bind="foreach : DocFiles" style="display : inline-block">
+                                        <ul>
+                                            <li>
+                                                <a data-bind="attr:{href: Data()}"><span data-bind="text:OldFileName"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div data-bind="ifnot:DocFiles().length>0">
+                                    Not Available
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Message:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text: Model.Message"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="eight wide column">
+                <div class="ui segment">
+                    @Html.Partial("_DetailViewImg")
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="text-center">
+            <button class="ui teal basic small button" data-bind="visible: ( (Model.StatusId() == 1 || Model.StatusId() == 5) && (Model.PercentDone() == 100) ),click:$root.ViewEval"> Evaluate</button>
+        </div>
+    </div>
+    
+    @*<div id="jobDetailModal" data-bind="with: SelectedItem">
+        <div class="row">
+            <div class="panel panel-default">
+                <button style="float:right; margin-top:4px" class="btn btn-info btn-sx" data-bind="click: $root.LandlordPhotos">Owner Photos</button>
+                <div class="panel-heading">
+                    Details
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4"><strong>Property: </strong></div>
+                                <div class="col-md-8">
+                                    <div data-bind="text : StreetAddress"></div>
+                                    <div data-bind="text : CitySub"></div>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4"><strong>Inspection Status: </strong></div>
+                                <div class="col-md-8"><span data-bind="text : Status"></span></div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4"><strong>Percentage Done: </strong></div>
+                                <div class="col-md-8">
+                                    <div class="progress" style="margin-bottom : 5px">
+                                        <div class="progress-bar small-text" role="progressbar" data-bind="text : Model.PercentDone() + '%', style: { width: Model.PercentDone() + '%', color : Model.PercentDone()== 0 ? '#337ab7' : '' }, attr: { 'aria-valuenow': Model.PercentDone }"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4"><strong>Inspection Message: </strong></div>
+                                <div class="col-md-8" style="word-break: break-all;">
+                                    <span data-bind="text : Model.Message" style="line-height:20px"></span>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div data-bind="if:Model.Reason">
+                                    <div class="col-md-4"><strong>Reason: </strong></div>
+                                    <div class="col-md-8" style="word-break: break-all;">
+                                        <span data-bind="text : Model.Reason" style="line-height:20px"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4"><strong>Due Date: </strong></div>
+                                <div data-bind="if:DueDate">
+                                    <div class="col-md-8"><span data-bind="text: moment(DueDate()).format('ll')"></span></div>
+                                </div>
+                                <div data-bind="ifnot:DueDate">
+                                    <div class="col-md-8">Not Available</div>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4"><strong>Created On: </strong></div>
+                                <div class="col-md-8"><span data-bind="text: moment(CreatedOn()).format('ll')"></span></div>
+                            </div>
+                        </div><!--details column-->
+                        <div class="col-md-5"> <!--photos-->
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div id="carousel-property" class="carousel slide" data-ride="carousel" margin : auto" data-bind="visible : ImgFiles().length>0">
+                                        <!-- Wrapper for slides -->
+                                        <div class="carousel-inner" role="listbox" data-bind="foreach: ImgFiles()">
+                                            <div class="item" data-bind="css: {active: $index() == 0}">
+                                                <img data-bind="attr: {src: Data}" alt="Thumbnail" data-target="#lightbox" style="height:220px">
+                                                <a data-bind="attr: {href: Data}" class="glyphicon glyphicon-save" style="position:relative ; float:right" download>Click to download image</a>
+                                            </div>
+                                        </div>
+                                        <!-- Controls -->
+                                        <a class="left carousel-control" href="#carousel-property" role="button" data-slide="prev">
+                                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="right carousel-control" href="#carousel-property" role="button" data-slide="next">
+                                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!--Without Images -->
+                                <div class="col-md-10">
+                                    <div class="thumbnail" data-bind="visible : ImgFiles().length<=0">
+                                        <img src="/images/no-prop-img.png" alt="noPropImg" />
+                                    </div>
+                                </div>
+                            </div><!--Without Images -->
+                        </div><!--photo column-->
+                       
+                        <!-- Modal to open landlord photos on Inspection details page -->
+                        <!-- Modal -->
+                        <div class="modal" id="myModal" role="dialog">
+                            <div class="modal-dialog modal-md">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Owner Photos</h4>
+                                    </div>
+                                    <div id="LandlordPhotos" class="modal-body">
+                                        <!--photos-->
+                                        <div class="row">
+                                            <div id="carousel-property1" class="carousel slide" data-ride="carousel" margin : auto" data-bind="visible : ImgFiles1().length>0">
+                                                <!-- Wrapper for slides -->
+                                                <div class="col-md-12">
+                                                    <div class="carousel-inner" role="listbox" data-bind="foreach: ImgFiles1()">
+                                                        <div class="item" data-bind="css: {active: $index() == 0}">
+                                                            <img data-bind="attr: {src: Data}" alt="Thumbnail" data-target="#lightbox" style="height:220px">
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Controls -->
+                                                    <a class="left carousel-control" href="#carousel-property1" role="button" data-slide="prev">
+                                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="right carousel-control" href="#carousel-property1" role="button" data-slide="next">
+                                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </div>
+                                            </div><!--photo column-->
+                                        </div>
+                                        <div class="row">
+                                            <!--Without Images -->
+                                            <div class="col-md-10">
+                                                <div class="thumbnail" data-bind="visible : ImgFiles1().length<=0">
+                                                    <img src="/images/no-prop-img.png" alt="noPropImg" />
+                                                </div>
+                                            </div>
+                                        </div><!--Without Images -->
+                                    </div>
+                                    <div class="modal-footer">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:15px;">
+                        <div class="prop-actions">
+                            <button class="btn btn-success" data-bind="visible: ( (Model.StatusId() == 1 || Model.StatusId() == 5) && (Model.PercentDone() == 100) ),click:$root.ViewEval"> Evaluate</button>
+                        </div>
+                    </div>
+                </div><!--panel body-->
+            </div><!--panel-->
+        </div><!--row-->
+    </div>*@
+</div>
+
+@* ********************************** Inspection Submit Form ****************************************** *@
+<div data-bind="visible : EditView" style="display:none" >
+    <div style="width : 80%; margin : auto">
+        <h5 class="ui header pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+        <h3>Evaluate Inspection</h3>
+        <div class="ui divider"></div>
+        
+        <div class="ui segment">
+            <form class="ui form" data-bind="with: SelectedItemCopy">
+                <div class="grouped fields">
+                    <label>Please select one of these :</label>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="SelectedRadioButton" value="3"  data-bind="checked: Model.StatusId">
+                            <label for="Passed">Passed</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="SelectedRadioButton" value="2" data-bind="checked: Model.StatusId">
+                            <label for="Failed">Failed</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="SelectedRadioButton" value="5" data-bind="checked: Model.StatusId">
+                            <label for="More Info">Request more information</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Reason<span style="color:red;">*</span></label>
+                    <textarea rows="5" style="min-height:150px;" maxlength="500" data-bind="value: Model.Reason, valueUpdate:'afterkeydown'"></textarea>
+                </div>
+                <div class="field text-center">
+                    <button class="ui basic small teal button" data-bind="enable: IsValid, click: $root.Edit">Submit</button>
+                    <button class="ui basic small orange button" data-bind="click:$root.ShowMain">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <br />
+    </div>
+    @*<div class="row" data-bind="with: SelectedItemCopy">
+        <form class="step-form" style="margin-bottom:20px">
+            <fieldset>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Inspection Information
+                    </div>
+                    <div class="panel-body">
+                        <div class="row" style="line-height : 25px">
+                            <div class="col-md-3"><strong>Property: </strong></div>
+                            <div class="col-md-6">
+                                <div data-bind="text : StreetAddress"></div>
+                                <div data-bind="text : CitySub"></div>
+                            </div>
+                        </div>
+                        <div class="row" style="line-height : 25px">
+                            <div class="col-md-3"><strong>Inspection Status: </strong></div>
+                            <div class="col-md-6"><span data-bind="text : Status"></span></div>
+                        </div>
+                        <div class="row" style="line-height : 25px">
+                            <div class="col-md-3"><strong>Percentage Done: </strong></div>
+                            <div class="col-md-6"><span data-bind="text :  Model.PercentDone"></span>%</div>
+                        </div>
+                        <div class="row" style="line-height : 25px">
+                            <div class="col-md-3"><strong>Message: </strong></div>
+                            <div class="col-md-6" style="word-break: break-all;"><span data-bind="text : Model.Message"></span></div>
+                        </div>
+                    </div><!--panel body-->
+                </div><!--panel-->
+                
+                
+            </fieldset>
+        </form>
+    </div>*@
+</div>
+
+@* ********************************** Inspection Delete Confirmation Form ****************************************** *@
+<div data-bind="visible : DeleteView" style="display:none">
+    <div class="container">
+        <h3>Delete Inspection</h3>
+        <hr />
+        <a class="btn btn-info btn-sx" data-bind="click: $root.ShowMain"><span class="fa fa-arrow-left"></span> Back</a>
+        <br /><br />
+        <div class="panel panel-default" data-bind="with : SelectedItem">
+            <div class="panel-heading">
+                Are you sure you want to delete this inspection?
+            </div>
+            <div class="panel-body">
+                <div class="row" style="line-height : 25px">
+                    <div class="col-md-2">
+                        <strong>Property:</strong>
+                    </div>
+                    <div class="col-md-8">
+                        <span data-bind="text : StreetAddress"></span>
+                        <span data-bind="text : CitySub"></span>
+                    </div>
+                </div>
+                <div class="row" style="line-height : 25px">
+                    <div class="col-md-2"><strong>Inspection Status:</strong></div>
+                    <div class="col-md-8" data-bind="text : Status"></div>
+                </div>
+                <div class="row" style="line-height : 25px">
+                    <div class="col-md-2"><strong>Percentage Done:</strong></div>
+                    <div class="col-md-8" style="word-wrap: break-word;">
+                        <span data-bind="text : Model.PercentDone"></span>%
+                    </div>
+                </div>
+                <div class="row" style="line-height : 25px">
+                    <div class="col-md-2"><strong>Message:</strong></div>
+                    <div class="col-md-8" style="word-break: break-all;"><span data-bind="text : Model.Message"></span></div>
+                </div>
+                <div class="row" style="line-height : 25px">
+                    <div data-bind="if:Model.Reason">
+                        <div class="col-md-2"><strong>Reason: </strong></div>
+                        <div class="col-md-8" style="word-break: break-all;">
+                            <span data-bind="text : Model.Reason" style="line-height:20px"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="prop-actions">
+                    <button type="button" class="btn btn-success" data-bind="click: $root.Delete">Confirm</button>
+                    <button type="button" class="btn btn-danger" data-bind="click: $root.ShowMain">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.AntiForgeryToken()
+<script>
+    
+    function PageViewModel(dataVm) {
+        var token = $("input[name = '__RequestVerificationToken']").val();
+        var self = this;
+        self.ExtendDic = KeysExtendsDic.Eval;
+          for (var key in dataVm) {
+            self[key] = dataVm[key]
+        }
+        self.Items().forEach(function (item) {
+            KeysUtils.injectExtends(item.Model, KeysExtendsDic.Eval);
+            KeysUtils.injectViewProps(item);
+        });
+        KeysUtils.injectOpProps(self);
+        self.ViewEval = function (data) {
+            self.ShowEdit(data);
+            $('.ui.checkbox').checkbox();
+            $.ajax({
+                url: "/PropertyOwners/Manage/InspectionViewed",
+                data: { __RequestVerificationToken: token, inspectionId: data.Model.Id() },
+                method: "POST",
+                success: function (result) {
+                    if (result.Success) {
+                        self.SelectedItem().Model.IsViewed(true);
+                    } else {
+
+                    }
+                }
+            });
+        }
+        self.LandlordPhotos = function (data) {
+           $('#LandlordPhotos').html(data.LandlordPhotos);
+           $('#myModal').modal('show');
+        }
+
+        self.ViewInspection = function (data) {
+            self.ShowDetail(data);
+            $.ajax({
+                url: "/PropertyOwners/Manage/InspectionViewed",
+                data: { __RequestVerificationToken: token, inspectionId: data.Model.Id() },
+                method: "POST",
+                success: function (result) {
+                    if (result.Success) {
+                        self.SelectedItem().Model.IsViewed(true);
+                    } else {
+
+                    }
+                }
+            });
+        }
+    }
+    $(document).ready(function () {
+        $("#NoRecord").modal("show");
+        var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        var vm = new PageViewModel(dataVm);
+        ko.applyBindings(vm);
+        console.log(@Html.Raw(Json.Encode(Model)));
+    });
+</script>

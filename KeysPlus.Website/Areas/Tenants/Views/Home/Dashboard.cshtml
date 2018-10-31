@@ -1,0 +1,354 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link href="/Content/stylesheets/_font-awesome.css" rel="stylesheet" />
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/Site.css" rel="stylesheet" />
+    <link href="/Content/introjs/introjs.css" rel="stylesheet" />
+
+    <link href="/Content/stylesheets/PagedList.css" rel="stylesheet" />
+
+    <script src="/Scripts/modernizr-2.8.3.js"></script>
+
+
+    <script src="/Scripts/knockout-3.4.0.debug.js"></script>
+    <script src="/Scripts/knockout.mapping-latest.debug.js"></script>
+    <script src="/Scripts/knockout.validation.js"></script>
+
+    <script src="/Scripts/jquery-3.1.1.min.js"></script>
+
+    <script src="/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <script src="/Scripts/NotificationStyle/js/classie.js"></script>
+    <script src="/Scripts/NotificationStyle/js/modernizr.custom.js"></script>
+    <script src="/Scripts/NotificationStyle/js/notificationFx.js"></script>
+    <script src="/Scripts/NotificationStyle/js/snap.svg-min.js"></script>
+
+    <link href="/Scripts/NotificationStyle/css/normalize.css" rel="stylesheet" />
+    <link href="/Scripts/NotificationStyle/css/ns-default.css" rel="stylesheet" />
+    <link href="/Scripts/NotificationStyle/css/ns-style-attached.css" rel="stylesheet" />
+    <link href="/Scripts/NotificationStyle/css/ns-style-bar.css" rel="stylesheet" />
+    <link href="/Scripts/NotificationStyle/css/ns-style-growl.css" rel="stylesheet" />
+    <link href="/Scripts/NotificationStyle/css/ns-style-other.css" rel="stylesheet" />
+
+    <script src="/Scripts/moment-with-locales.js"></script>
+
+    <script src="/Scripts/Globals/keys.js"></script>
+    <script src="/Scripts/Globals/keysAddress.js"></script>
+    <script src="/Scripts/Globals/Commons.js"></script>
+    <script src="/Scripts/introjs/intro.min.js"></script>
+
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/respond.js"></script>
+
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
+    <link href="/Content/semantic.min.css" rel="stylesheet" />
+    <script src="/Scripts/semantic.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+</head>
+<body>
+    <div class="ui fixed top text menu">
+        <div class="container">
+            <div class="ui left floated" style="line-height : 50px">
+                <img src="/images/logo.png" />
+            </div>
+            <div class="right menu">
+                <a href="/Tenants/Home/Dashboard" class="item-link item selected">
+                    Dashboard
+                </a>
+
+                <div class="ui dropdown item">
+                    Tenants
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="/Tenants/Home/MyRentals" class="item item-link ">
+                            My Rentals
+                        </a>
+                        <a href="/Tenants/Home/MyRentalApplications" class="item item-link waves-effect waves-block ">
+                            My Applications
+                        </a>
+                        <a href="/Tenants/Home/MyRequests" class="item item-link ">
+                            My Requests
+                        </a>
+                        <a href="/Tenants/Home/LandlordRequests" class="item item-link ">
+                            Landlord's Requests
+                        </a>
+                        <a href="/Tenants/Rent/Inspections" class="item item-link ">
+                            Inspections
+                        </a>
+                    </div>
+                </div>
+                <a href="/Rental" class="item ">Properties For Rent</a>
+                <a href="/Jobs/Home/MarketJobs" class="item item-link ">
+                    Market Place
+                </a>
+                <div class="ui dropdown item">
+                    <i class="zmdi zmdi-pin-account zmdi-hc-lg"></i>
+                    <div class="menu">
+                        <a title="Go to Profile" class="item" href="/Account/AccountOverview"><i class="user outline icon"></i> Profile</a>
+                        <a class="item" title="Watchlist" href="/Personal/Watchlist"><i class="bookmark outline icon"></i> Watchlist</a>
+                        <a class="item" title="Change password" href="/Account/ChangePassword?htmlAttributes=%7B%20id%20%3D%20ChangePasswordLink%20%7D"><i class="lock open icon"></i> Change Password</a>
+                        <a class="item" title="Log Out" href="/Account/LogOff"><i class="sign out icon"></i> Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main-content">
+        <section class="container">
+
+
+
+
+            <div class="block-header">
+                <h2 class="ui header">Dashboard</h2>
+            </div>
+
+
+            <br />
+            <h3 class="ui header">Tenant Dashboard</h3>
+            <div class="ui divider"></div>
+            <div class="ui grid">
+                <div class="three column row" style="margin : 0px !important">
+                    <div class="column">
+                        <div class="ui segments" data-step="1" data-intro="These handy buttons are for quick access to majors functionalities.">
+                            <div class="ui green segment"><h4 class="ui header">Quick Buttons</h4></div>
+                            <div class="ui segment" style="height : 190px">
+                                <div class="ui secondary vertical menu" style="margin-top: 0px;width: 100%;">
+                                    <a class="item" style="height : 33%" href='/Tenants/Home/MyRentals'>
+                                        <i class="ui grey key icon" style="float : left !important"></i>
+                                        <h5 class="ui header" style="display : inline"> &nbsp; &nbsp;My Rentals</h5>
+                                    </a>
+                                    <a class="item" style="height : 33%" href='/Personal/Watchlist'>
+                                        <i class="ui grey bookmark icon" style="float : left !important"></i>
+                                        <h5 class="ui header" style="display : inline"> &nbsp; &nbsp;My Watchlist</h5>
+                                    </a>
+                                    <a class="item" style="height : 33%" href='/Tenants/Home/MyRentalApplications'>
+                                        <i class="ui grey file alternate icon" style="float : left !important"></i>
+                                        <h5 class="ui header" style="display : inline"> &nbsp; &nbsp;My Applications</h5>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="column" style="width : 66.6% !important">
+                        <div class="ui segments" data-step="2" data-intro="This is an overview of your retal and expected payment due.">
+                            <div class="ui green segment"><h4 class="ui header">Rental Payments Due</h4></div>
+                            <div class="ui segment" style="height : 190px">
+                                <div data-bind="foreach : TenantRentals" style="overflow-y: scroll;overflow-x:hidden; height: 160px;">
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div data-bind="ifnot: NextPaymenDate">
+                                                <div id="calendar" padding="top:10px;">
+                                                    <p id="calendar-day">Due Date</p>
+                                                    <p id="calendar-month-year">  Information not provided</p>
+                                                    <p id="calendar-month-year">  </p>
+                                                </div>
+                                            </div>
+                                            <div data-bind="if: NextPaymenDate">
+                                                <div id="calendar" padding="top:10px;">
+                                                    <p id="calendar-day" data-bind="text:moment(NextPaymenDate()).format('dddd')"></p>
+                                                    <p id="calendar-date" data-bind="text:moment(NextPaymenDate()).format('D')"></p>
+                                                    <p id="calendar-month-year" data-bind="text:CalendarMonthYear"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="row" style="line-height : 25px">
+                                                <div><strong>Property: </strong><span data-bind="text : Address"></span></div>
+                                                <div><strong>Landlord Name: </strong><span data-bind="text : Landlordname"></span></div>
+                                                <div>
+                                                    <strong>Rent:</strong>
+                                                    <span data-bind="if:TargetRent">
+                                                        $<span data-bind="text : TargetRent"></span>
+                                                        <span data-bind="text : RentalPaymentType"></span>
+                                                    </span>
+                                                    <span data-bind="ifnot:TargetRent">
+                                                        Not Available
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="three column row" style="margin : 0px !important">
+                    <div class="column">
+                        <div class="ui segments" data-step="3" data-intro="Summary of your rental application that you have submitted.">
+                            <div class="ui green segment"><h4 class="ui header">Rental Applications</h4></div>
+                            <div class="panel-body" style="height : 190px">
+                                <div class="row" style="height : 100%; display: flex;align-items: center;">
+                                    <div class="col-md-7 no-padding-side">
+                                        <canvas id="rent-chart" height="200"></canvas>
+                                    </div>
+                                    <div class="col-md-5 no-padding-side">
+                                        <div class="chart-legends" id="rent-chart-legend"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui segments" data-step="4" data-intro="Summary of your requests to landlord.">
+                            <div class="ui green segment">My Requests</div>
+                            <div class="ui segment" style="height : 190px">
+                                <div class="row" style="height : 100%; display: flex;align-items: center;">
+                                    <div class="col-md-7 no-padding-side">
+                                        <canvas id="tenant-request-chart" height="200"></canvas>
+                                    </div>
+                                    <div class="col-md-5 no-padding-side">
+                                        <div class="chart-legends" id="tenant-request-chart-legend"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="column">
+                        <div class="ui segments" data-step="5" data-intro="Summary of requests from your landlord.">
+                            <div class="ui green segment"><h4 class="ui header">Landlord Requests</h4></div>
+                            <div class="ui segment" style="height : 190px">
+                                <div class="row" style="height : 100%; display: flex;align-items: center;">
+                                    <div class="col-md-7 no-padding-side">
+                                        <canvas id="landlord-request-chart" height="200"></canvas>
+                                    </div>
+                                    <div class="col-md-5 no-padding-side">
+                                        <div class="chart-legends" id="landlord-request-legend"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row dashboard">
+
+
+
+
+            </div>
+            <script src="/Scripts/chartjs/TenantDashboardChart.js"></script>
+            <script>
+    $(document).ready(function () {
+        var tenantDashBoardData = {"TenantRentalDashboardData":[],"RentAppsDashboardData":{"NewItems":0,"Accepted":0,"Pending":0,"Rejected":0},"TenantRequestDashboardData":{"Current":0,"Accepted":0,"Rejected":0},"LandLordRequestDashboardData":{"NewItems":0,"Accepted":0,"Rejected":0},"IntroSteps":5};
+        var dashBoard = new TenantDashBoard(tenantDashBoardData);
+        var rental = new Rentals(tenantDashBoardData);
+        ko.applyBindings(rental);
+
+    });
+            </script>
+
+
+            <script>
+    $(document).ready(function () {
+        var dashboardFirsttime = localStorage.getItem("dashboard_Firsttime");
+        if (!dashboardFirsttime) {
+            localStorage.setItem("dashboard_Firsttime", "1");
+            introJs().start();
+        }
+    });
+            </script>
+            <style>
+                .ui.vertical.menu .item > i.icon {
+                    padding-top: 2px;
+                }
+            </style>
+        </section>
+    </div>
+
+
+    <script src="/Scripts/chartjs/Chart.bundle.min.js"></script>
+    <script src="/Scripts/chartjs/jquery.sparkline.min.js"></script>
+    <script src="/Scripts/chartjs/KeysChart.js"></script>
+
+
+
+    <script>
+            $(document).ready(function () {
+                $('.ui.dropdown').dropdown();
+                $('#search-wrap:first').children().first().attr('method', 'get');
+                $('#icon-submitt').click(function (e) {
+                    e.preventDefault();
+                    $('#search-wrap:first').children().first().submit();
+                });
+                jQuery.fn.putCursorAtEnd = function () {
+
+                    return this.each(function () {
+
+                        // Cache references
+                        var $el = $(this),
+                            el = this;
+
+                        // Only focus if input isn't already
+                        if (!$el.is(":focus")) {
+                            $el.focus();
+                        }
+
+                        // If this function exists... (IE 9+)
+                        if (el.setSelectionRange) {
+
+                            // Double the length because Opera is inconsistent about whether a carriage return is one character or two.
+                            var len = $el.val().length * 2;
+
+                            // Timeout seems to be required for Blink
+                            setTimeout(function () {
+                                el.setSelectionRange(len, len);
+                            }, 1);
+
+                        } else {
+
+                            // As a fallback, replace the contents with itself
+                            // Doesn't work in Chrome, but Chrome supports setSelectionRange
+                            $el.val($el.val());
+                        }
+
+                    });
+
+                };
+                (function () {
+                    var searchInput = $("#searchId");
+                    searchInput
+                        .putCursorAtEnd() // should be chainable
+                        .on("focus", function () { // could be on any event
+                            searchInput.putCursorAtEnd()
+                        });
+                })();
+            });
+    </script>
+
+
+</body>
+
+</html>
+
+<style>
+    body {
+        position: relative;
+        padding-top: 65px;
+        padding-right: 0 !important;
+        /*background : #edf1f7;*/
+        /*background: #f9fafc;*/
+        /*background : #f7f9fc;*/
+        /*background : #efefef;*/
+        /*background : #f4f5f7;*/
+        /*background : #f7f7f7;*/
+        /*background : #f2f2f2;*/
+        //background : #fcfcfc;
+        overflow: inherit;
+    }
+</style>

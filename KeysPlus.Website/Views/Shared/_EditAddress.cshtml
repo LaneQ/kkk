@@ -1,0 +1,44 @@
+﻿<script type="text/html" id="editAddress">
+    <form>
+        <div class="input-group">
+            <div class="form-group">
+                <label style="text-align:left" class="keys control-label col-sm-3" data-bind="attr: {'for': 'autocomplete' + AddressId()}">Search Address</label>
+                <div class="keys col-sm-9" style="margin-bottom:15px;">
+                    <input type="text" class="form-control"  style="padding-left:9px" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: $data"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label style="text-align:left" class="keys control-label col-sm-3" for="street_number">Number <span style="color:red;">*</span></label>
+                <div class="keys col-sm-9" style="margin-bottom:15px;">
+                    <input type="text" class="form-control" style="padding-left:9px" id="street_number" placeholder="&nbsp Number" data-bind="textInput: $data.Number" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label style="text-align:left" class="keys control-label col-sm-3" for="route">Street <span style="color:red;">*</span></label>
+                <div class="keys col-sm-9" style="margin-bottom:15px;">
+                    <input type="text" class="form-control" style="padding-left:9px" id="route" placeholder="&nbsp Street" data-bind="textInput: $data.Street" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label style="text-align:left" class="keys control-label col-sm-3" for="postal_code">Postcode <span style="color:red;">*</span></label>
+                <div class="keys col-sm-9" style="margin-bottom:15px;">
+                    <input type="text" class="form-control" style="padding-left:9px" id="postal_code" placeholder="&nbsp Post Code" data-bind="textInput: $data.PostCode" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label style="text-align:left" class="keys control-label col-sm-3" for="locality">City <span style="color:red;">*</span></label>
+                <div class="keys col-sm-9" style="margin-bottom:15px;">
+                    <input type="text" class="form-control" style="padding-left:9px" id="locality" placeholder="&nbsp City" data-bind="textInput: $data.City" />
+                </div>
+            </div>
+
+        <div class="form-group">
+            <label style="text-align:left" class="keys control-label col-sm-3" for="sublocality_level_1">Suburb</label>
+            <div class="keys col-sm-9" style="margin-bottom:15px;">
+                <input type="text" class="form-control" style="padding-left:9px" id="sublocality_level_1" placeholder="&nbsp Suburb" data-bind="textInput: Suburb" />
+            </div>
+        </div>
+
+        </div>
+    </form>
+</script>

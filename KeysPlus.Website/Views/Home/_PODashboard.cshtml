@@ -1,0 +1,115 @@
+﻿@model KeysPlus.Service.Models.PODashBoardModel
+<h3 class="ui header">Property Owner Dashboard</h3>
+<div class="ui divider"></div>
+<!-- task two -->
+
+<div class="ui grid">
+    <div class="three column row" style="margin : 0px !important">
+        <div class="column">
+            <div class="ui segments">
+                <div class="ui red segment"><h4>Quick Links</h4></div>
+                <div class="ui segment" style="height: 190px">
+                    <div class="ui btn-secondary vertical menu" style="margin-top:0px; width: 100%;">
+                        <a class="item" style="height:33%" href="@Url.Action("Index", "Home", new { Area = "PropertyOwners"})">
+                            <i class="ui grey home icon" style="float : left !important"></i>
+                            <h5 class="ui header" style="display:inline"> &nbsp; &nbsp;My Properties</h5>
+                        </a>
+                        <a class="item" style="height:33%" href="/PropertyOwners?returnUrl=%2FHome%2FDashboard&IsFinanceDetailPage=True">
+                            <i class="ui grey dollar sign icon" style="float : left !important"></i>
+                            <h5 class="ui header" style="display:inline"> &nbsp; &nbsp;Financial Detail</h5>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="ui  segments">
+                <div class="ui orange segment"><h4>Properties Detail</h4></div>
+                <div class="ui segment" style="height: 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="property-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="property-chart-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="ui  segments">
+                <div class="ui yellow segment"><h4>Rental Applications</h4></div>
+                <div class="ui segment" style="height : 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="rental-application-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="rental-application-chart-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="three column row" style="margin : 0px !important">
+        <div class="column">
+            <div class="ui  segments">
+                <div class="ui green segment"><h4>Maintenances</h4></div>
+                <div class="ui segment" style="height: 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="maintenance-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="maintenance-chart-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="ui  segments">
+                <div class="ui blue segment"><h4>Tenant Request</h4></div>
+                <div class="ui segment" style="height: 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="rental-request-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="rental-request-chart-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="ui  segments">
+                <div class="ui purple segment"><h4>Job Quotes</h4></div>
+                <div class="ui segment" style="height: 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="job-quote-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="job-quote-chart-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/chartjs/PODashboardChart.js"></script>
+<script>
+    $(document).ready(function () {
+        var ownerPropertyDashBoardData = @Html.Raw(Json.Encode(Model));
+        var dashBoard = new OwnerPropertyDashBoard(ownerPropertyDashBoardData);
+
+        console.log(ownerPropertyDashBoardData);
+                
+    });
+</script>

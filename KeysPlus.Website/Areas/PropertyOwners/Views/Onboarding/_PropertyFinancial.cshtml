@@ -1,0 +1,94 @@
+﻿<div id="propertyFinancialSection">
+    <div class="ui grid">
+        <div class="row">
+            <div class="eight wide column">
+                <label class="keys onboard-label">Purchase Price <span style="color:red;">*</span></label>
+                <input class="ui input" type="text" placeholder="Purchase Price" data-bind="value: PurchasePrice,trimTo2dp,valueUpdate:'afterkeydown'" />
+            </div>
+            <div class="eight wide column">
+                <label class="keys onboard-label">Mortgage <span style="color:red;">*</span></label>
+                <input class="ui input" type="text" placeholder="Mortgage" data-bind="value: Mortgage,trimTo2dp,valueUpdate:'afterkeydown' " />
+            </div>
+        </div>
+        <div class="row">
+            <div class="eight wide column">
+                <label class="onboard-label">Home Value <span style="color:red;">*</span></label>
+                <input class="ui input" type="text" placeholder="Home Value" data-bind="value: CurrentHomeValue,trimTo2dp,valueUpdate:'afterkeydown' " />
+            </div>
+            <div class="eight wide column">
+                <label class="keys onboard-label">Home Value Type </label>
+                <select class="ui dropdown" data-bind="value :HomeValueType ">
+                    @foreach (var type in ViewBag.PropertyHomeValueTypes)
+                {
+                    <option value="@type.Id">@type.HomeValueType</option>
+            }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div id="repaymentSection" class="repaymentSection" style="margin-top:20px">
+        <label class="keys control-label" style="float:left">Repayments</label>
+        @* Repayments section with knock out *@
+        <div>
+            <div class="ui grid" data-bind='foreach: Repayments'>
+                    <div class="four wide column">
+                            <label class="keys onboard-label">Amount <span style="color:red;">*</span></label>
+                            <input type="text" placeholder="Repayments" data-bind="value: Amount,trimTo2dp,valueUpdate:'afterkeydown'" />
+                   
+                    </div>
+                    <div class="four wide column"> 
+                        <p style="position:absolute"></p>
+                            <label class="onboard-label">Frequency </label>
+                            <select class="onboard-dropdown" data-bind="value: FrequencyType">
+
+                                @foreach (var freq in ViewBag.Frequencies)
+                                {
+                                    <option value="@freq.Id">@freq.Code</option>
+                                }
+                            </select>
+                    </div>
+                    <div class="four wide column">
+                        <label class="keys onboard-label">Start Date <span style="color:red;">*</span></label>
+                          @*<input type="date" class="payment-start-date" id="payment-start-date" name="startdate" placeholder="mm/dd/yyyy" data-bind="value: startDate,valueUpdate:'afterkeydown'" />*@
+                        <input name="startdate" id="payment-start-date" class="payment-start-date" type="text" data-bind="datePicker : startDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}"    />
+                    </div>
+
+                    <div class="four wide column">
+                        <label class="keys onboard-label">End Date </label>
+                        @*<input type="date" class="payment-end-date" id="payment-end-date" name="enddate" placeholder="mm/dd/yyyy" data-bind='value: endDate,valueUpdate:'afterkeydown'" />*@
+                        <input name="enddate" id="payment-end-date" class="payment-start-date" type="text" data-bind="datePicker : endDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+                    </div>
+                    <div>
+                        <span data-bind="click: $root.removeRepayment"><i class="glyphicon glyphicon-minus-sign"></i></span>
+                    </div>
+                </div>
+              <br />
+              <br />
+            <a href="javascript : void();" style="float:left; color:#337ab7" class="" data-bind="click: addRepayment"><i class="glyphicon glyphicon-plus-sign"></i> Add repayment</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    @*<div id="expenseSection" class="expenseSection" style="margin-top:20px">
+        <label class="keys control-label" style="float:left">Expenses</label>
+        <table style="width:100%;" data-bind='foreach: expenses'>
+            <tr>
+                <td class="col-md-4">
+                    <label class="keys onboard-label">Amount</label>
+                    <input id="Text1" type="text" placeholder="Expenses" data-bind="value: Amount,trimTo2dp ,valueUpdate:'afterkeydown'" />
+                </td>
+                <td class="col-md-4">
+                <label class="keys onboard-label">Description</label>
+                <input id="Text1" type="text" placeholder="Description" data-bind="value: Description,valueUpdate:'afterkeydown'"/>
+                </td>
+                <td class="col-md-4">
+                    <label class="keys onboard-label"> Date </label>
+                    <input type="date" class="expense-date" id="expense-date" name="date" placeholder="mm/dd/yyyy" data-bind="value: ExpenseDate,valueUpdate:'afterkeydown'" />
+                </td>
+                <td>
+                    <span data-bind="click: $root.removeExpense"><i class="glyphicon glyphicon-minus-sign"></i></span>
+                </td>
+            </tr>
+        </table>
+        <a href="javascript : void();" style="float:left; color:#337ab7" class="" data-bind="click: addExpense"><i class="glyphicon glyphicon-plus-sign"></i> Add repayment</a>
+    </div>*@
+</div>

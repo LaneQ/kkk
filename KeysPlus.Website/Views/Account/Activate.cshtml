@@ -1,0 +1,37 @@
+﻿<title>Email Activate</title>
+<div class="login-page authentication">
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/content/css")
+
+    @using (Html.BeginForm())
+    {
+        <input name="HdToken" type="hidden" value="@(Html.Raw(ViewBag.token))" />
+        <input name="HdUserId" type="hidden" value="@(Html.Raw(ViewBag.userId))" />
+
+        <div style="text-align:center;padding-top:80px;">
+
+            <h4> @TempData["Status"] </h4> 
+            <br />
+            <input type="submit" value="Reset Your Account" class="btn btn-success" id="ResetAccount" name="ResetAccount" />
+        </div>
+    }
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        if ('@ViewBag.Flag' == 'Expired') {
+            $('#ResetAccount').show();
+        }
+        else {
+            $('#ResetAccount').hide();
+        }
+    });
+
+
+</script>
+
+
+
+

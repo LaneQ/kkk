@@ -1,0 +1,38 @@
+﻿[
+  {
+    "outputFile": "Content/stylesheets/theme.css",
+    "inputFile": "Content/stylesheets/theme.scss"
+  },
+  {
+    "outputFile": "Content/styles/main.css",
+    "inputFile": "Content/styles/main.scss"
+  },
+  {
+    "outputFile": "Content/styles/modules/authentication.css",
+    "inputFile": "Content/styles/modules/authentication.scss"
+  },
+  {
+    "outputFile": "Content/styles/modules/adminModules.css",
+    "inputFile": "Content/styles/modules/adminModules.scss"
+  },
+  {
+    "outputFile": "Content/styles/theme.css",
+    "inputFile": "Content/styles/theme.scss"
+  },
+  {
+    "outputFile": "Content/styles/coreStyles.css",
+    "inputFile": "Content/styles/coreStyles.scss"
+  },
+  {
+    "outputFile": "Content/styles/_variables.css",
+    "inputFile": "Content/styles/_variables.scss"
+  },
+  {
+    "outputFile": "Content/styles/modules/propertyOwnerOnBoardingModule.css",
+    "inputFile": "Content/styles/modules/propertyOwnerOnBoardingModule.scss"
+  },
+  {
+    "outputFile": "Content/styles/onboarding.css",
+    "inputFile": "Content/styles/onboarding.scss"
+  }
+]

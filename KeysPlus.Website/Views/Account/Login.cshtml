@@ -1,0 +1,72 @@
+﻿<link href="~/Content/styles/authentication.css" rel="stylesheet" />
+@model KeysPlus.Service.Models.LoginViewModel
+@{
+    ViewBag.Title = "Log In";
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/login")
+}
+@*@section ModuleStyle{
+    @Styles.Render("~/content/loginModuleStyle")
+}*@
+<div class="login-page authentication">
+    <div class="container form-container">
+        <div class="card" style="padding-bottom : 0px !important">
+            <h1 class="title">Keys Login <span class="msg">Sign in to start using</span></h1>
+            @*<p class="text-danger">@ViewBag.Status</p>*@
+            <div class="column" style="margin: 1rem 0;padding: 1em 1em;">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "sign_in", @class = "ui large form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="ui stack">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                @Html.TextBoxFor(m => m.UserName, new { @placeholder = "Username" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "ui red text" })
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                @Html.PasswordFor(m => m.Password, new {  @placeholder = "Password" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "ui red text" })
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="RememberMe" id="rememberme" value="true">
+                                <label for="rememberme">Remember Me</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <button class="ui fluid large teal submit button" type="submit">Login</button>
+                        </div>
+                        <div class="field" style="text-align : center">
+                            @Html.ActionLink("Forgot Password?", "ForgotPassword", "Account")
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="ui divider"></div>
+                    <div class="field" style="text-align : center">
+                        Don't have an account ? 
+                        @Html.ActionLink("Sign Up", "Register", "Account", new { @class = "" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<script type="text/javascript">
+    var myUrl = '@Url.Action("ValidateUser", "Account")';
+</script>*@
+
+
+
+
+
+
+

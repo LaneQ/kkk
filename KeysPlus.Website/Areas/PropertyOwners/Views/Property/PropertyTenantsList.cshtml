@@ -1,0 +1,203 @@
+﻿@model KeysPlus.Service.Models.POMyTenantSearchModel
+@{
+    ViewBag.Title = "Property Tenants";
+
+}
+<div id="mainPage">
+    <div class="ui grid">
+        <div class="six wide column" data-bind="ifnot:showAddTenant">
+            <h2>Tenants in your properties</h2>
+        </div>
+        <div class="middle aligned ten wide column">
+            @{
+                Html.RenderPartial("_SearchBox");
+            }
+        </div>
+    </div>
+    <br/>
+    <div class="ui grid">
+        <div class="six wide column" data-bind="ifnot:showAddTenant">
+            @if (ViewBag.ReturnUrl != null)
+            {
+                <a style="float : left;" data-bind="attr: { href: '@Html.Raw(ViewBag.ReturnUrl)' }"><i class="chevron left icon"></i> Back to Dashboard</a>
+            }
+        </div>
+
+    </div>
+    <div class="highlighted">
+        <div class="ui grid">
+            <div class="eight wide column">
+                @{
+                    Html.RenderPartial("_SortInput");
+                }
+            </div>
+            <div class="middle aligned eight wide column">
+                <span data-bind="visible:showTenantList">
+                    <a class="ui teal button" style="float : right;" data-bind="attr: { href: '@Url.Action("AddTenantDashboard", "Home", new { area = "PropertyOwners", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + newpropertyId }"><i class="plus circle icon"></i> Add Tenant</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div data-bind="if:showAddTenant">
+
+        <div class="row">
+            <div style="width : 80%; margin : auto">
+                <a class="btn btn-info btn-sx" data-bind="attr: { href: '@Html.Raw(ViewBag.ReturnUrl)' }"><span class="fa fa-arrow-left"></span> Back</a>
+                <br /><br />
+            </div>
+        </div>
+    </div>
+
+    <div id="property-grid" data-bind="ifnot:showAddTenant">
+        <div class="listings tenant-listing" data-bind="foreach :Items">
+            <div class="ui blue raised segment">
+                <div class="ui grid">
+                    <div class="three wide column">
+                        <div class="ui small circular image">
+                            <img data-bind="attr: {src: ProfilePicture()}" alt="firstImg" onerror="this.src='/images/profile_avatar.png'">
+                        </div>
+                    </div>
+                    <div class="thirteen wide column">
+                        <div class="ui divided items">
+                            <div class="item">
+                                <div class="content">
+
+                                    <strong>Name:</strong>&nbsp;<span data-bind="text: TenantName"></span>
+
+
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="content">
+
+                                    <strong>Phone: </strong>&nbsp;<span data-bind="text: TenantPhone"></span>
+
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="content">
+
+                                    <strong>Email: </strong>&nbsp;<span data-bind="text: TenantEmail"></span>
+
+                                </div>
+                            </div>
+                            <div id="idOfDiv" class="item">
+                                <div class="content">
+                                    <strong>Address: </strong>&nbsp;<span data-bind="text: PropertyAddress"></span>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="content">
+
+                                    <strong>Rent Amount:  </strong>&nbsp;$<span data-bind="numeric: RentAmount"></span>&nbsp; <span class="normal-text" data-bind="text : RentFrequency"></span>
+
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="content">
+
+                                    <strong>Start Date:  </strong>&nbsp;<span data-bind="text: moment(StartDate()).format('ll')"></span>
+
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="content">
+
+                                    <strong>End Date:  </strong>&nbsp;
+                                    <span data-bind="if:EndDate()">
+                                        <span data-bind="text: moment(EndDate()).format('ll')"></span>
+                                    </span>
+                                    <span data-bind="ifnot:EndDate()">
+                                        <span>Not Available</span>
+                                    </span>
+
+                                    <div class="extra">
+                                        <a class="ui right floated green button" data-bind="attr: { 'href': '@Url.Action("EditTenantInProperty", "Home", new { Area = "PropertyOwners", returnUrl = HttpContext.Current.Request.RawUrl})' + '&tenantId=' + TenantId() + '&propId='+ PropertyId() }"><i class="edit icon"></i><span>Edit</span></a>
+                                        <button type="button" class="ui right floated red button" data-bind="click: $parent.removeTenantModal "><i class="trash icon"></i> Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        @{
+            Html.RenderPartial("_PagedItems");
+        }
+        <div data-bind="visible:Items().length==0">
+            <!--No Tenants-->
+            <p style="text-align:center"> No Tenants for this Property</p>
+        </div><!--No Tenants-->
+
+    </div><!--showTenantList-->
+</div><!--mainPage-->
+
+<div id="property-grid" data-bind="visible:showAddTenant">
+    <div id="addTenantBinding">
+        <div data-bind="template : {name:'AddTenant'}"></div>
+    </div>
+</div>
+
+<div id="removeTenantModal" data-bind="with : SelectedTenant()" style="display:none">
+    <div><h3>Remove Tenant</h3></div>
+    <hr />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Are you sure you want to remove this tenant?
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-8 basic-info">
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-3" style="padding-right : 0px;"><strong>Name :</strong></div>
+                        <div class="col-md-8"><span data-bind="text: TenantName"></span></div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-3" style="padding-right : 0px;"><strong>Phone Number :</strong></div>
+                        <div class="col-md-8">
+                            <span data-bind="if:TenantPhone"><span data-bind="text: TenantPhone"></span></span>
+                            <span data-bind="ifnot:TenantPhone">Not Available</span>
+                        </div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-3" style="padding-right : 0px;"><strong>Email :</strong></div>
+                        <div class="col-md-8"><span data-bind="text: TenantEmail"></span></div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-3" style="padding-right : 0px;"><strong>Rent Amount :</strong></div>
+                        <div class="col-md-8">$<span data-bind="text: RentAmount"></span>&nbsp; <span class="normal-text" data-bind="text : RentFrequency"></span> </div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-3" style="padding-right : 0px;"><strong>Start Date :</strong></div>
+                        <div class="col-md-8"><span data-bind="text: moment(StartDate()).format('ll')"></span></div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-3" style="padding-right : 0px;"><strong>End Date :</strong></div>
+                        <div class="col-md-8"><span data-bind="text: moment(EndDate()).format('ll')"></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="prop-actions">
+                <button type="button" class="btn btn-success" data-bind="click: $root.removeTenant">Confirm</button>
+                <button type="button" class="btn btn-danger" data-bind="click: $root.toMain">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@Html.Partial("_AddTenant")
+<script src="~/Scripts/PropertyOwners/Property/PropertyTenantsList.js"></script>
+<script>
+
+    $(document).ready(function () {
+        var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        var viewModel = new PropertyTenantModel(dataVm);
+        ko.applyBindings(viewModel);
+
+    });
+</script>

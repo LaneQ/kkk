@@ -1,0 +1,209 @@
+﻿
+@model RentalAdvancedSearchViewModel
+
+@{
+    ViewBag.Title = "AdvancedSearch";
+}
+
+<h2>Advanced Property Search</h2>
+
+@using (Html.BeginForm())
+{
+
+    <fieldset id="advanced-search" class="fieldset-full-width">
+        <h3>Location</h3>
+        <div class="col-md-4">
+            <div class="row dashboard">
+                <div class="panel panel-default dashboard-panel" style="height : 230px">
+                    <div class="panel-heading">Regions</div>
+                    <div class="panel-body" style="height : 190px">
+                        <div class="row" style="height : 50%">
+                            @Html.DropDownListFor(model => model.Address.Region, new SelectList(new string[] { }), new { data_bind = "options: firstValues, value: selectedFirstOption", size = 10, style = "height:173px;width:330px" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="row dashboard">
+                <div class="panel panel-default dashboard-panel" style="height : 230px">
+                    <div class="panel-heading">Districts</div>
+                    <div class="panel-body" style="height : 190px">
+                        <div class="row" style="height : 50%">
+                            @Html.DropDownListFor(model => model.Address.District, new SelectList(new string[] { }), new { data_bind = "options: secondValues, value: selectedSecondOption", size = 10, style = "height:173px;width:330px" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row dashboard">
+                <div class="panel panel-default dashboard-panel" style="height : 230px">
+                    <div class="panel-heading">Suburbs</div>
+                    <div class="panel-body" style="height : 190px">
+                        <div class="row" style="height : 173px;overflow : auto;border-width: 1px; border-style: inset;">
+                            @*@Html.DropDownListFor(model => model.Address.SuburbList, new SelectList(new string[] { }), new { data_bind = "options: thirdValues, value: selectedThirdOption", size = 10, multiple = "true", @class = "suburblist", style = "height:173px;width:330px" })*@
+                            <div data-bind="if: shouldSelectAllAppear"><input type="checkbox" id="selectAll"><span>Select All</span></div>
+                            <div data-bind="foreach: thirdValues">
+                                <div>
+                                    <input name="Address.SuburbList" type="checkbox" data-bind="value: $data" /><span data-bind="text: $data"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <fieldset>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h3>Bedrooms</h3>
+                        @Html.DropDownListFor(model => model.BedroomMin, new SelectList(new string[] { "1", "2", "3", "4", "5", "6" }), "Any")
+                        <span class="to">to</span>
+                        @Html.DropDownListFor(model => model.BedroomMax, new SelectList(new string[] { "1", "2", "3", "4", "5", "6" }), "Any")
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h3>Bathrooms</h3>
+                        @Html.DropDownListFor(model => model.BathroomMin, new SelectList(new string[] { "1", "2", "3", "4", "5", "6" }), "Any")
+                        <span class="to">to</span>
+                        @Html.DropDownListFor(model => model.BathroomMax, new SelectList(new string[] { "1", "2", "3", "4", "5", "6" }), "Any")
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="Rent">
+            <h3>Rent per week</h3>
+            <div>
+                @Html.TextBoxFor(model => model.RentMin)
+                <span class="to">to</span>
+                @Html.TextBoxFor(model => model.RentMax)
+            </div>
+        </fieldset>
+
+        <fieldset class="Property-keywords">
+            <h3>Property Title or Keywords</h3>
+            <div>
+                @Html.TextBoxFor(model => model.Title)
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div>
+                <h3>Property Type</h3>
+                @*@Html.DropDownListFor(model => model.PropertyType, new SelectList(new string[] { "Affordable Housing", "Section & property", "Senior Housing",
+                    "Vacation Property", "Hotel/Leisure", "Office" }), new { @multiple = "multiple", @class = "listbox" })*@
+                @Html.DropDownListFor(model => model.PropertyType, new SelectList(ViewBag.TypeOfProperty, "Name", "Name"), new { @multiple = "multiple", @class = "listbox", id = "propertyTypeDropdown" })
+            </div>
+
+        </fieldset>
+
+        <fieldset class="Rental-LandArea">
+            <h3 class="legend">
+                Land Area
+            </h3>
+            <div class="inner">
+                @Html.DropDownListFor(model => model.LandSqmMin, new SelectList(new string[] { "400", "600", "1200", "1600", "2000", "2400" }), "Any")
+                <span class="to">to</span>
+                @Html.DropDownListFor(model => model.LandSqmMax, new SelectList(new string[] { "400", "600", "1200", "1600", "2000", "2400" }), "Any")
+            </div>
+        </fieldset>
+        <div>
+            <button type="submit" class="btn btn-success" id="btnSearch">Search</button>
+            <button type="button" class="btn btn-link" value="Cancel" onclick="location.href='@Url.Action("AdvancedSearch")'">Reset Search</button>
+        </div>
+    </fieldset>
+}
+<link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+<script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    ////the following code do a little hack trick to achieve the effect of avoid the need for ctrl-click in a multi-select box
+    //$('.suburblist').on('mousedown', 'option', function (e) { //select dynamically generated option
+    //    e.preventDefault(); // stop the default action, then when a new option is selected, the old one will also remain as it was
+    //    $(this).prop('selected', $(this).prop('selected') ? false : true); //manually toggle the selected attribute
+    //    $(this).parent().focus();//keep the selected option in highlight
+    //    return false;// stop event from propogation
+    //});
+
+
+    //script for 'check all' function
+    $('body').on('click','#selectAll',function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+
+    $(function () {
+        $('.listbox').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: 'All Property Types',
+            selectAllText: 'All Property'
+        });
+    });
+</script>
+<script>
+  
+    var locationsViewModel = {
+        valueArray: [], //contains all the location data
+        firstValues: ko.observableArray([]),
+        secondValues: ko.observableArray([]),
+        thirdValues: ko.observableArray([]),
+        selectedFirstOption: ko.observable(),
+        selectedSecondOption: ko.observable(),
+        selectedThirdOption: ko.observable(),
+        shouldSelectAllAppear: ko.observable(false) // if binding for the 'select all' box
+    };
+
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        contentType: "text/json",
+        url: "https://api.trademe.co.nz/v1/Localities.json",
+        data:
+        {
+            region_id: 1,
+            with_counts: true,
+            listing_type: "houses_to_buy"
+        },
+        success: function (response) {
+
+            locationsViewModel.valueArray = response;
+
+            for (let i in locationsViewModel.valueArray) {
+                locationsViewModel.firstValues.push(locationsViewModel.valueArray[i].Name)
+            };
+        },
+        error: function () {
+            console.log("There has been an error retrieving the values from the database.");
+        }
+    });
+
+    locationsViewModel.selectedFirstOption.subscribe(function (value) {
+        if (locationsViewModel.thirdValues().length > 0) locationsViewModel.thirdValues.removeAll();//empty the thridVal array when use change the regions
+        locationsViewModel.secondValues([]);
+        var obj = locationsViewModel.valueArray.find(o => o.Name === value);
+        for (let i in obj.Districts) {
+            locationsViewModel.secondValues.push(obj.Districts[i].Name);
+        };
+    });
+
+    locationsViewModel.selectedSecondOption.subscribe(function (value) {
+        if (value != null) {
+            locationsViewModel.shouldSelectAllAppear(true);
+            locationsViewModel.thirdValues([]);
+            var region = locationsViewModel.valueArray.find(o => o.Name === ko.utils.unwrapObservable(locationsViewModel.selectedFirstOption));
+            var obj = region.Districts.find(o => o.Name === value);
+            for (let i in obj.Suburbs) {
+                locationsViewModel.thirdValues.push(obj.Suburbs[i].Name);
+            };
+        } else locationsViewModel.shouldSelectAllAppear(false);//make 'select all' checkbox disappear
+    });
+
+    ko.applyBindings(locationsViewModel);
+
+
+</script>

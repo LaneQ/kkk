@@ -1,0 +1,22 @@
+﻿
+@{
+    if (ViewBag.SearchCount != null && ViewBag.SearchCount <= 0)
+    {
+
+        <div class="modal fade" id="NoRecord" role="dialog" data-backdrop="static" style="display: none">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                        <p class="modal-title" style="color:red; font-size:180%">No records found for: </p> <p style="color:black; font-size:150%; display:inline"> @TempData["search"] </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-info" @*onclick="history.go(-1);"*@> Ok </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

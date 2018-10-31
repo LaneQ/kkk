@@ -1,0 +1,1015 @@
+﻿@model AccountOverView
+@{
+    ViewBag.Title = "Property Community | Account Overview";
+}
+<div id="userPersonalDetails">
+    <h2 class="ui header">User Information </h2>
+    <hr />
+    <div data-bind="visible:MainView">
+        <div class="ui pointing menu">
+            <a id="test1" class="active item " data-toggle="tab" href="#yourInformation">
+                Your Information
+            </a>
+            <a id="test2" class="item " data-bind=" if : IsServiceSupplier && Company" data-toggle="tab" href="#yourCompany" >
+                Your Company
+            </a>
+            </div>
+
+            @*<ul class="nav nav-tabs">
+                <!--Tabs-->
+                <li class="active"><a data-toggle="tab" href="#yourInformation">Your Information</a></li><!--Tab for Your Information (person)-->
+                <li data-bind="if : IsServiceSupplier"><a data-toggle="tab" href="#yourCompany" data-bind="if: Company">Your Company</a></li><!--Tab for Your Company -->
+            </ul>*@
+            <br />
+            <div id="yourInformation" class="ui segment " data-bind="with: Profile">
+                <h3 class="ui header" data-bind="text: FullUserName"></h3>
+                <div class="ui grid">
+                    <div class="eight wide column">
+                        <div class="ui relaxed divided list">
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">First Name:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <span data-bind="text: FirstName"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Middle Name:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <span data-bind="if: MiddleName">
+                                            <span data-bind="text: MiddleName"></span>
+                                        </span>
+                                        <span data-bind="ifnot: MiddleName">
+                                            Not specified
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Last Name:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <span data-bind="text: LastName"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Place Of Birth:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <span data-bind="country: PlaceOfBirth"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Language:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <span data-bind="text: Language"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Phone Number:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <span data-bind="if: PhoneNumber">
+                                            <span data-bind="text: PhoneNumber"></span>
+                                        </span>
+                                        <span data-bind="ifnot: PhoneNumber">
+                                            Not specified
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Occupation:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <span data-bind="if: Occupation">
+                                            <span data-bind="text: Occupation"></span>
+                                        </span>
+                                        <span data-bind="ifnot: Occupation">
+                                            Not specified
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Linkedin Url:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <span data-bind="if: LinkedinUrl">
+                                            <span data-bind="text: LinkedinUrl"></span>
+                                        </span>
+                                        <span data-bind="ifnot: LinkedinUrl">
+                                            Not specified
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Physical Address:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <div>
+                                            <span data-bind="text: PhysicalAddress.Number()"></span>
+                                            <span data-bind="if: PhysicalAddress.Street()">
+                                                <span data-bind="text: PhysicalAddress.Street()"></span>,
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span data-bind="if: PhysicalAddress.Suburb()">
+                                                <span data-bind="text: PhysicalAddress.Suburb()"></span>,
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span data-bind="text: PhysicalAddress.City()"></span>
+                                            <span data-bind="text:PhysicalAddress.PostCode()"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Billing Address:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <div>
+                                            <span data-bind="text: BillingAddress.Number()"></span>
+                                            <span data-bind="if: BillingAddress.Street()">
+                                                <span data-bind="text: BillingAddress.Street()"></span>,
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span data-bind="if: BillingAddress.Suburb()">
+                                                <span data-bind="text: BillingAddress.Suburb" ()></span>,
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span data-bind="text: BillingAddress.City()"></span>
+                                            <span data-bind="text:BillingAddress.PostCode()"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="ui grid">
+                                    <div class="six wide column">
+                                        <h4 class="ui grey header">Uploads:</h4>
+                                    </div>
+                                    <div class="eight wide column">
+                                        <div data-bind="foreach:$root.MediaFiles">
+                                            <div class="row" style="padding-left : 12px;">
+                                                <span> <a target="_blank" data-bind="text:OldFileName,attr:{href:Data}"></a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="ui divider"></div>
+                        </div>
+                    </div>
+                    <div class="eight wide column">
+                        <div class="item">
+                            <img style="height:150px; width:150px;" class="ui image img-thumbnail pull-right" data-bind="attr: {src: ProfilePhotoModel().Data}" alt="firstImg" onerror="this.src = '/images/icon-user-default.png'" />
+
+                        </div>
+                        
+
+                    </div>
+                    <div>
+                        <button name="edit" type="button" class="ui teal button pull-right" style="margin-bottom:15px; bottom:0; right:0; position:absolute; text-align:center" value="Create" data-bind="click: $root.editPerson">Edit</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        <div id="yourCompany"  class="ui segment hidden" data-bind="with:Company" >
+            <h3 class="ui header" data-bind="text:Name"></h3>
+            <div class="ui grid">
+                <div class="eight wide column">
+                    <div class="ui relaxed divided list">
+                        <div class="item">
+                            <div class="ui grid">
+                                <div class="six wide column">
+                                    <h4 class=" ui grey header">Phone Number:</h4>
+                                </div>
+                                <div class="eight wide column">
+                                    <span data-bind="text: Phone"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="ui grid">
+                                <div class="six wide column">
+                                    <h4 class=" ui grey header">Website:</h4>
+                                </div>
+                                <div class="eight wide column">
+                                    <span data-bind="text: Website"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="ui grid">
+                                <div class="six wide column">
+                                    <h4 class=" ui grey header"> Physical Address:</h4>
+                                </div>
+                                <div class="eight wide column">
+                                    <div>
+                                        <span data-bind="text: PhysicalAddress.Number"></span>
+                                        <span data-bind="if: PhysicalAddress.Street">
+                                            <span data-bind="text: PhysicalAddress.Street"></span>,
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span data-bind="if: PhysicalAddress.Suburb">
+                                            <span data-bind="text: PhysicalAddress.Suburb"></span>,
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span data-bind="text: PhysicalAddress.City"></span>
+                                        <span data-bind="text: PhysicalAddress.PostCode"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="ui grid">
+                                <div class="six wide column">
+                                    <h4 class=" ui grey header">Billing Address:</h4>
+                                </div>
+                                <div class="eight wide column">
+                                    <div>
+                                        <span data-bind="text: BillingAddress.Number"></span>
+                                        <span data-bind="if: BillingAddress.Street">
+                                            <span data-bind="text: BillingAddress.Street"></span>,
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span data-bind="if: BillingAddress.Suburb">
+                                            <span data-bind="text: BillingAddress.Suburb"></span>,
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span data-bind="text: BillingAddress.City"></span>
+                                        <span data-bind="text: BillingAddress.PostCode"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui divider"></div>
+                    </div>
+                </div>
+                <div class="eight wide column">
+                    <div class="item">
+                        <img style="height:150px; width:150px;" class="img-responsive img-thumbnail pull-right" data-bind="attr: {src: ProfilePhoto().Data}" alt="firstImg" onerror="this.src = '/images/icon-user-default.png'" />
+
+                    </div>
+
+
+                </div>
+                <div>
+                    <button name="edit" type="button" class="ui teal button pull-right" style="margin-bottom:15px; bottom:0; right:0; position:absolute; text-align:center" value="Create" data-bind="click: $root.editCompany">Edit</button>
+
+                </div>
+            </div>
+        </div>
+            
+            @*<div class="tab-content">
+                <div id="yourInformation" class="tab-pane active" data-bind="with: Profile">
+                    <div class="row">
+                        <div class="col-md-12" style="padding-bottom: 100px;">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span class="h3" data-bind="text: FullUserName"></span>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-8" style="margin-top:10px;">
+                                            <!--details coloum-->
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>First Name:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text: FirstName"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Middle Name:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="if: MiddleName">
+                                                        <span data-bind="text: MiddleName"></span>
+                                                    </span>
+                                                    <span data-bind="ifnot: MiddleName">
+                                                        Not specified
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Last Name:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text: LastName"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Place Of Birth:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span class="bfh-countries" data-bind="country: PlaceOfBirth"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Language:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text: Language"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Phone Number:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text: PhoneNumber"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Occupation:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="if: Occupation">
+                                                        <span data-bind="text: Occupation"></span>
+                                                    </span>
+                                                    <span data-bind="ifnot: Occupation">
+                                                        Not specified
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Linkedin Url :</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="if: LinkedinUrl">
+                                                        <span data-bind="text: LinkedinUrl"></span>
+                                                    </span>
+                                                    <span data-bind="ifnot: LinkedinUrl">
+                                                        Not specified
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Physical Address:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div>
+                                                        <span data-bind="text: PhysicalAddress.Number()"></span>
+                                                        <span data-bind="if: PhysicalAddress.Street()">
+                                                            <span data-bind="text: PhysicalAddress.Street()"></span>,
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span data-bind="if: PhysicalAddress.Suburb()">
+                                                            <span data-bind="text: PhysicalAddress.Suburb()"></span>,
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span data-bind="text: PhysicalAddress.City()"></span>
+                                                        <span data-bind="text:PhysicalAddress.PostCode()"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Billing Address:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div>
+                                                        <span data-bind="text: BillingAddress.Number()"></span>
+                                                        <span data-bind="if: BillingAddress.Street()">
+                                                            <span data-bind="text: BillingAddress.Street()"></span>,
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span data-bind="if: BillingAddress.Suburb()">
+                                                            <span data-bind="text: BillingAddress.Suburb" ()></span>,
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span data-bind="text: BillingAddress.City()"></span>
+                                                        <span data-bind="text:BillingAddress.PostCode()"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height:25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Uploads:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div data-bind="foreach:$root.MediaFiles">
+                                                        <div class="row" style="padding-left : 12px;">
+                                                            <span> <a target="_blank" data-bind="text:OldFileName,attr:{href:Data}"></a></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!--details column-->
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-md-12 pull-right" style="width:250px; height:250px; padding-right : 10px;">
+                                                    <img class="img-responsive img-thumbnail" data-bind="attr: {src: ProfilePhotoModel().Data}" alt="firstImg" onerror="this.src = '/images/icon-user-default.png'" />
+                                                </div>
+                                            </div>
+                                        </div> <!--photo column-->
+                                    </div> <!--row -->
+                                    <div class="row">
+                                        <div class="col-md-1 pull-right">
+                                            <button name="edit" type="button" class="btn btn-success" style="margin-bottom:15px; text-align:center" value="Create" data-bind="click: $root.editPerson">Edit</button>
+                                        </div>
+                                    </div>
+                                </div> <!--panel-body-->
+                            </div> <!--panel-primary-->
+                        </div> <!--coloumn-->
+                    </div> <!--row-->
+                </div> <!--userDetails-->
+                <div id="yourCompany" class="tab-pane" data-bind="with : Company">
+                    <!--Your Company tab-->
+                    <div class="row" id="companyDetails">
+                        <div class="col-md-12" style="padding-bottom: 100px;">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span class="h3" data-bind="text: Name"></span>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-8" style="margin-top:10px;">
+                                            <!--details column-->
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Phone Number:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text: Phone"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Website:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text: Website"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Physical Address:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div>
+                                                        <span data-bind="text: PhysicalAddress.Number"></span>
+                                                        <span data-bind="if: PhysicalAddress.Street">
+                                                            <span data-bind="text: PhysicalAddress.Street"></span>,
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span data-bind="if: PhysicalAddress.Suburb">
+                                                            <span data-bind="text: PhysicalAddress.Suburb"></span>,
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span data-bind="text: PhysicalAddress.City"></span>
+                                                        <span data-bind="text: PhysicalAddress.PostCode"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Billing Address:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div>
+                                                        <span data-bind="text: BillingAddress.Number"></span>
+                                                        <span data-bind="if: BillingAddress.Street">
+                                                            <span data-bind="text: BillingAddress.Street"></span>,
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span data-bind="if: BillingAddress.Suburb">
+                                                            <span data-bind="text: BillingAddress.Suburb"></span>,
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span data-bind="text: BillingAddress.City"></span>
+                                                        <span data-bind="text: BillingAddress.PostCode"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!--details column-->
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-md-12 pull-right" style="width:250px; height:250px; padding-right : 10px;">
+                                                    <img class="img-responsive img-thumbnail" data-bind="attr: {src: ProfilePhoto().Data}" alt="firstImg" onerror="this.src = '/images/icon-user-default.png'" />
+                                                </div>
+                                            </div>
+                                        </div> <!--photo coloum-->
+                                    </div> <!--row -->
+                                    <div class="row">
+                                        <div class="col-md-1 pull-right">
+                                            <button name="edit" type="button" class="btn btn-success" style="margin-bottom:15px; text-align:center" value="Create" data-bind="click: $root.editCompany">Edit</button>
+                                        </div>
+                                    </div>
+                                </div> <!--panel-body-->
+                            </div> <!--panel-primary-->
+                        </div> <!--coloumn-->
+                    </div> <!--row-->
+                </div> <!--userDetails-->
+            </div>*@
+
+        </div>
+        <div class="row" data-bind="visible: EditUser">
+            <form class="step-form" data-bind="with: Profile">
+                <br /><br /><br /><br />
+                <fieldset id="user-details">
+                    <h4 class="title"><strong>Edit User Information</strong></h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img class="img-responsive img-thumbnail" id="edituserimage" style="width: 250px; height: 250px" data-bind="attr: {src: $root.ImgData}" alt="firstImg" onerror="this.src = '/images/icon-user-default.png'" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <div class="btn btn-success">
+                                    <span class="fa fa-cloud-upload"></span>
+                                    Choose photo
+                                    <input type="file" id="file-upload" class="key-upload" data-bind="uploadFile : NewPhoto, display : $root.ImgData, validFileTypes : $root.validFileTypes" accept="image/*" multiple />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button class="btn btn-danger" data-bind="click: $root.RemoveUserPhoto">Remove photo</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-muted" style="font-size:11px; text-align : left">Upload your profile photo. Supported file types are *.jpg, *.jpeg, *.png, *.gif.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>First Name <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" name="firstName" placeholder="&nbsp First Name" data-bind="limitInput: FirstName,valueUpdate:'afterkeydown'">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Middle Name</label>
+                            <input class="form-control" type="text" name="MiddleName" placeholder="&nbsp Middle Name" data-bind="value: MiddleName,valueUpdate:'afterkeydown'">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Last Name <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" name="LastName" placeholder="&nbsp Last Name" data-bind="limitInput: LastName,valueUpdate:'afterkeydown'">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Phone Number <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" name="Number" placeholder="&nbsp Phone Number" data-bind="numericInput: PhoneNumber,valueUpdate:'afterkeydown'">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Country Of Birth </label>
+                            <select data-bind="value:PlaceOfBirth" class="form-control bfh-countries" data-country="NZ" data-flags="true"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Language <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" name="Language" placeholder="&nbsp Language" data-bind="value: Language">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Occupation</label>
+                            <input class="form-control" type="text" name="Occupation" placeholder="&nbsp Occupation" data-bind="value: Occupation">
+                        </div>
+                        <div class="col-md-6">
+                            <label>LinkedIn profile Url</label>
+                            <input class="form-control" type="text" name="LinkedinUrl" placeholder="&nbsp Linkedin Url" data-bind="value: LinkedinUrl">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4><label> Physical Address</label></h4>
+                        </div>
+                        <div class="col-md-6">
+                            <h4> <label> Billing Address</label></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Search Address</label>
+                                        <input class="form-control" type="text" name="searchAddressPhysical" id="PhysicalAutocomplete" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: PhysicalAddress, valueUpdate:'afterkeydown'">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="Number">Number <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="Phy_number" placeholder="&nbsp Number" data-bind="numericInput: PhysicalAddress.Number,valueUpdate:'afterkeydown'" />
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="control-label" for="Street">Street <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="Phy_street" placeholder="&nbsp Street" data-bind="value: PhysicalAddress.Street,valueUpdate:'afterkeydown'" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="Suburb">Suburb</label>
+                                        <input type="text" class="form-control" id="Phy_suburb" placeholder="&nbsp Suburb" data-bind="value: PhysicalAddress.Suburb,valueUpdate:'afterkeydown'" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="City">City <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="Phy_city" placeholder="&nbsp City" data-bind="value: PhysicalAddress.City,valueUpdate:'afterkeydown'" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="PostCode">PostCode <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="Phy_postCode" placeholder="&nbsp PostCode" data-bind="Input: PhysicalAddress.PostCode,valueUpdate:'afterkeydown'" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input name="isShipSame" id="isShipSame" type="checkbox" data-bind="checked: IsShipSame, event: {'change' : $root.checkShipSame}">
+                                        <label>Same Billing Address</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Search Address</label>
+                                        <input class="form-control" type="text" name="searchAddressBilling" id="BillingAutocomplete" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: BillingAddress, valueUpdate:'afterkeydown', disable : IsShipSame">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="street_number">Number <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="bill_number" placeholder="&nbsp Number" data-bind="numericInput: BillingAddress.Number,valueUpdate:'afterkeydown',disable : IsShipSame" />
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="control-label" for="route">Street <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="bill_street" placeholder="&nbsp Street" data-bind="value: BillingAddress.Street,valueUpdate:'afterkeydown', disable : IsShipSame" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Suburb</label>
+                                        <input type="text" class="form-control" id="bill_suburb" placeholder="&nbsp Suburb" data-bind="value: BillingAddress.Suburb,valueUpdate:'afterkeydown', disable : IsShipSame" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">City <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="bill_city" placeholder="&nbsp City" data-bind="value: BillingAddress.City,valueUpdate:'afterkeydown', disable : IsShipSame" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">PostCode <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="bill_postCode" placeholder="&nbsp PostCode" data-bind="Input: BillingAddress.PostCode,valueUpdate:'afterkeydown', disable : IsShipSame" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="raw">
+                        <div class="form-group">
+                            <label class="control-label">Upload your documents here</label>
+                            <div class="panel panel-default">
+                                <div class="panel-body" style="min-height:150px">
+                                    <div data-bind="foreach: MediaFiles()">
+                                        <div class="col-md-3 col-sm-4 col-xs-4" data-bind="visible : MediaType() == 1">
+                                            <div class="thumbnail">
+                                                <a data-bind="removeMediaFile : $root.Profile.MediaFiles, filesRemoved : $root.Profile.FilesRemoved">
+                                                    <i class="zmdi zmdi-close-circle" style="float:right"></i>
+                                                </a>
+                                                <img class="img-responsive" data-bind="attr: {src: Data}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-group" data-bind="foreach: MediaFiles()">
+                                <li class="list-group-item" data-bind="visible : MediaType() == 2" style="display: none;">
+                                    <span data-bind="text : OldFileName"></span>
+                                    <span class="zmdi zmdi-close-circle pull-right" data-bind="removeMediaFile : $root.Profile.MediaFiles, filesRemoved : $root.Profile.FilesRemoved"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="form-group">
+                            <div class="btn btn-success">
+                                <span class="fa fa-cloud-upload"></span>
+                                Choose Files
+                                <input type="file" id="ImageFile" class="key-upload" data-bind="uploadFiles : MediaFiles" accept="application/pdf,application/msword,image/*" multiple="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="text-muted" style="font-size:11px; text-align : left" data-bind="text: $root.FileWarning" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-primary" id="btnSave" name="next" data-bind="click: $root.savePerson, enable: $root.IsProfileValid">Save</button>
+                            <button class="btn btn-danger" data-bind="click : $root.backToMain">Cancel</button>
+                        </div>
+                    </div>
+                </fieldset>
+                <br /><br /><br /><br />
+            </form>
+        </div>
+        <div id="SaveModal" class="modal fade" role="dialog">
+            <!--Modal-->
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Changes saved successfully!</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" data-bind="visible: EditCompanyProfile">
+            <form class="step-form" data-bind="with : Company">
+                <br /><br /><br /><br />
+                <fieldset id="user-details">
+                    <h4 class="title"><strong>Edit Company Information</strong></h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img class="img-responsive img-thumbnail" style="width: 250px; height: 250px" id="editcompanyimage" data-bind="attr: {src: $root.CompImgData}" alt="firstImg" onerror="this.src = '/images/icon-user-default.png'" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <div class="btn btn-success">
+                                    <span class="fa fa-cloud-upload"></span>
+                                    Choose photo
+                                    <input type="file" id="file-upload" class="key-upload" data-bind="uploadFile : NewCompPhoto, display : $root.CompImgData, validFileTypes : $root.validFileTypes" accept="image/*" multiple />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button class="btn btn-danger" data-bind="click: $root.RemoveCompanyLogo">Remove photo</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-muted" style="font-size:11px; text-align : left">Upload your company logo. Supported file types are *.jpg, *.jpeg, *.png, *.gif.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Company Name <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" name="companyName" placeholder="&nbsp Company Name" data-bind="value: Name">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Company Phone Number <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" name="companyPhone" placeholder="&nbsp Company Phone Number" data-bind="value: Phone">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Company Website</label>
+                            <input class="form-control" type="text" name="companyWebsite" placeholder="&nbsp Company Website" data-bind="value: Website, valueUpdate :'afterkeydown'">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4><label> Physical Address</label></h4>
+                        </div>
+                        <div class="col-md-6">
+                            <h4> <label> Billing Address</label></h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Search Address@*<span style="color:red;">*</span>*@</label>
+                                        <input class="form-control" type="text" name="searchAddressPhysical" id="PhysicalAutocomplete" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: PhysicalAddress, valueUpdate:'afterkeydown'">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="Number">Number <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="Phy_number" placeholder="&nbsp Number" data-bind="value: PhysicalAddress.Number" />
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="control-label" for="Street">Street <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="Phy_street" placeholder="&nbsp Street" data-bind="value: PhysicalAddress.Street" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="Suburb">Suburb <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="Phy_suburb" placeholder="&nbsp Suburb" data-bind="value: PhysicalAddress.Suburb" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="City">City <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="Phy_city" placeholder="&nbsp City" data-bind="value: PhysicalAddress.City,valueUpdate:'afterkeydown'" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="PostCode">PostCode <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="Phy_postCode" placeholder="&nbsp PostCode" data-bind="Input: PhysicalAddress.PostCode,valueUpdate:'afterkeydown'" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input name="isCompShipSame" id="isCompShipSame" type="checkbox" data-bind="checked: IsCompShipSame, event : {'change' : $root.checkCompShipSame}">
+                                        <label>Same Billing Address</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Search Address@*<span style="color:red;">*</span>*@</label>
+                                        <input class="form-control" type="text" name="searchAddressBilling" id="BillingAutocomplete" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: BillingAddress, valueUpdate:'afterkeydown', disable : IsCompShipSame">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="street_number">Number <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="bill_number" placeholder="&nbsp Number" data-bind="value: BillingAddress.Number, disable : IsCompShipSame" />
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="control-label" for="route">Street <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="bill_street" placeholder="&nbsp Street" data-bind="value: BillingAddress.Street, disable : IsCompShipSame" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Suburb <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="bill_suburb" placeholder="&nbsp Suburb" data-bind="value: BillingAddress.Suburb, disable : IsCompShipSame" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">City <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="bill_city" placeholder="&nbsp City" data-bind="value: BillingAddress.City,valueUpdate:'afterkeydown', disable : IsCompShipSame" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">PostCode <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="bill_postCode" placeholder="&nbsp PostCode" data-bind="Input: BillingAddress.PostCode,valueUpdate:'afterkeydown' ,disable : IsCompShipSame" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-primary" id="btnSave" name="next" data-bind="click: $root.saveCompany, enable: $root.IsCompanyValid">Save</button>
+                            <button class="btn btn-danger" data-bind="click : $root.backToMain">Cancel</button>
+                        </div>
+                    </div>
+                </fieldset>
+                <br /><br /><br /><br />
+            </form>
+        </div>
+        <div id="SaveModal" class="modal fade" role="dialog">
+            <!--Modal-->
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Changes saved successfully!</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="http://bootstrapformhelpers.com/assets/js/bootstrap-formhelpers.min.js"></script>
+<script src="~/Scripts/load-image.all.min.js"></script>
+<script src="~/Scripts/exif-js.js"></script>
+<script src="~/Scripts/binaryajax.js"></script>
+<script src="~/Scripts/Users/AccountOverview.js"></script>
+<script>    
+    $(document).ready(function () {
+        $("#test2").click(function () {
+            $('.item').removeClass('active');
+            $('#yourCompany').removeClass('hidden')
+            $('#yourInformation').addClass('hidden')
+
+            $(this).addClass('active');
+        })
+        $("#test1").click(function () {
+            $('.item').removeClass('active');
+            $('#yourInformation').removeClass('hidden')
+            $('#yourCompany').addClass('hidden')
+            $(this).addClass('active');
+        })
+
+        $(".bfh-countries option:eq(0)").text('--Please select a Country--');
+        $(".bfh-countries option:eq(0)").attr("disabled","disabed");
+        var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        ko.applyBindings(new PageViewModel(dataVm));
+    });
+</script>

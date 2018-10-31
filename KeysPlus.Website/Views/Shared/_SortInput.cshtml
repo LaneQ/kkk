@@ -1,0 +1,16 @@
+﻿@model KeysPlus.Service.Models.SearchInputModel
+<div data-bind="template :{name: 'fiter-select'}" style="margin-left : 10px">
+    
+</div>
+<script type="text/template" id="fiter-select">
+    <label>Sort by :</label>
+    <select class="ui dropdown" onChange='location.href = this.value'>
+        <option value="">@Model.SortOrder</option>
+        @foreach (var item in Model.SortOrders)
+        {
+            <option value="@Url.Action(item.ActionName, item.RouteValues)" @*class="@(Model.SortOrder == item.SortOrder ? "active selected" : "")"*@>
+                @item.SortOrder
+            </option>
+        }
+    </select>
+</script>

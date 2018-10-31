@@ -1,0 +1,151 @@
+﻿<link href="~/Content/styles/authentication.css" rel="stylesheet" />
+@model KeysPlus.Service.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/login")
+
+}
+@section ModuleStyle{
+    @Styles.Render("~/content/loginModuleStyle")
+}*@
+<div class="login-page authentication">
+    <div class="container form-container" style="margin-bottom : 20px">
+        <div class="card" style="padding-bottom : 0px !important" data-bind="validationOptions: { insertMessages: false}">
+            <h1 class="title">Keys Sign up <span class="msg">Create account</span></h1>
+            <div class="column" style="margin: 1rem 0;padding: 1em 1em;">
+                @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "sign_in", @class = "ui large form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="ui stack">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                @Html.TextBoxFor(m => m.FirstName, new { @placeholder = "First Name", data_bind = "value:FirstName, valueUpdate: 'afterkeydown'" })
+                            </div>
+                            <p class="validationMessage" data-bind="validationMessage: FirstName"></p>
+                            
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                @Html.TextBoxFor(m => m.LastName, new { @placeholder = "Last Name", data_bind = "value:LastName, valueUpdate: 'afterkeydown'" })
+                            </div>
+                            <p class="validationMessage" data-bind="validationMessage: LastName"></p>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="envelope icon"></i>
+                                @Html.TextBoxFor(m => m.UserName, new { @placeholder = "Email Address", data_bind = "value:UserName, valueUpdate: 'afterkeydown'" })
+                            </div>
+                            
+                            <p class="validationMessage" data-bind="validationMessage: UserName"></p>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                @Html.PasswordFor(m => m.Password, new {@placeholder = "Choose your password (min 6 characters)", data_bind = "value:Password,, valueUpdate: 'afterkeydown'" })
+                            </div>
+                            <p class="validationMessage" data-bind="validationMessage: Password"></p>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input" id="dropdown-input">
+                                @Html.DropDownListFor(m => m.RoleId, new SelectList(ViewBag.Roles, "Id", "Name"), "Choose account type", new {id = "roleDropdown", @class="ui dropdown"})
+                            </div>
+                            @Html.ValidationMessageFor(m => m.RoleId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input name="tac" type="checkbox" id="checkAgreement" data-bind="checked : CheckAgree" />
+                                <label for="checkAgreement">I read and agree to the <a href="http://localhost:61309/Account/Register/#termModal" data-target="#termModal" data-toggle="modal">terms and conditions</a></label>
+                            </div>
+                        </div>
+                        <div class="field">
+                        <button class="ui fluid large teal submit button" id="SignupButton" type="submit"data-bind="enable:IsRegisValid">Sign Up</button>
+                    </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        Had an account ? 
+                        @Html.ActionLink("Login", "Login", "Account", new {  })
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="termModal">
+    <div class="modal-dialog ">
+        <div class="container form-container">
+            <div class="row card">
+                <div class="modal-header">
+                    <h1 class="title"><span>Keys</span>Terms <span class="msg"></span></h1>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        Terms and conditions
+                        <br />
+                        Read this before Sign Up
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btnAccept" class="btn btn-primary" data-dismiss="modal" data-bind="click : Agree">I Accept</button>
+                        <button type="submit" id="btnOk" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var isValid = @Html.Raw(Json.Encode(ViewData.ModelState.IsValid));
+    function RegisViewModel() {
+        var self = this;
+        self.FirstName = ko.observable().extend({
+            required: Rules.require('Please enter the first name.'),
+            pattern: {
+                params: KeysPattern.FirstName,
+                message: "Please enter the valid first name."
+            },
+            maxLength: { params: 20, message: "First name should not exceed 30 characters." }
+        });
+        self.LastName = ko.observable().extend({
+            required: Rules.require('Please enter the last name.'),
+            pattern: {
+                params: KeysPattern.LastName,
+                message: "Please enter the valid last name."
+            },
+            maxLength: { params: 20, message: "Last name should not exceed 30 characters." }
+        });
+
+        self.UserName = ko.observable().extend({
+            required: Rules.require('Please enter the email.'),
+            pattern: {
+                params: KeysPattern.UserName,
+                message: "Please enter a valid email."
+            },
+            maxLength: { params: 50, message: "Email address should not exceed 50 characters." }
+        });
+        self.Password = ko.observable().extend({
+            required: Rules.require('Please enter the password.'),
+            pattern: {
+                params: KeysPattern.Password,
+                message: "Minimum six characters, please enter valid password."
+            },
+            maxLength: { params: 30, message: "Password should not exceed 30 characters." }
+        });
+        self.CheckAgree = ko.observable(false);
+        self.Agree = function(){
+            self.CheckAgree(true);
+        }
+        self.IsRegisValid = ko.computed(function () {
+            return self.CheckAgree();
+        });
+    };
+    $(document).ready(function () {
+        ko.applyBindings(new RegisViewModel());
+    });
+</script>

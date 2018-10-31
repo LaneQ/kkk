@@ -1,0 +1,570 @@
+﻿@model KeysPlus.Service.Models.PropertyOnboardModel
+@{
+    ViewBag.Title = "Properties | Add New Property";
+}
+<div class="row">
+    <div style="margin : auto">
+        <h3>Add New Property</h3>
+        <hr />
+        @if (ViewBag.ReturnUrl != null)
+         {
+            <button class="btn btn-info btn-sx" onclick="location.href='@ViewBag.ReturnUrl'"><span class="fa fa-arrow-left"></span> Back</button>
+         }
+        <br /><br />
+    </div>
+</div>
+<!--Add property-->
+<form id="add-new-property" class="step-form new-prop">
+    <!--Progress bar with tenant-->
+    <div id="withTenant">
+        <div class="ui one column stackable center aligned page-calendar grid">
+            <div class="column twelve wide">
+                <div class="ui steps">
+                    <div id="propertyStep" class="active step">
+                        <i class="home icon"></i>
+                        <div class="content">
+                            <div class="title">Property Details</div>
+                            <div class="description">Enter your property details</div>
+                        </div>
+                    </div>
+                    <div id="financeStep" class="step">
+                        <i class="dollar sign icon"></i>
+                        <div class="content">
+                            <div class="title">Finance details</div>
+                            <div class="description">Enter finance details</div>
+                        </div>
+                    </div>
+                    <div id="tenantStep" class="step">
+                        <i class="user icon"></i>
+                        <div class="content">
+                            <div class="title">Tenant Details</div>
+                            <div class="description">Enter tenant details</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Progress bar without tenant-->
+    <div id="withoutTenant">
+        <div class="ui one column stackable center aligned page grid">
+            <div class="ui column">
+                <div class="ui steps">
+                    <div id="propertyStepNT" class="active step">
+                        <i class="home icon"></i>
+                        <div class="content">
+                            <div class="title">Property Details</div>
+                            <div class="description">Enter your property details</div>
+                        </div>
+                    </div>
+                    <div id="financeStepNT" class="step">
+                        <i class="dollar sign icon"></i>
+                        <div class="content">
+                            <div class="title">Finance details</div>
+                            <div class="description">Enter finance details</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br /><br /><br />
+    <!--Property Details Section-->
+    <fieldset id="property-details" class="fieldset-full-width">
+        <h2 class="text-center">Property Details</h2>
+        <br />
+        <div class="ui grid">
+            <div class="ui eight wide column">
+                <label>Property Name <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input type="text" name="propertyName" placeholder="&nbsp Enter property name" data-bind="value : PropertyName,valueUpdate:'afterkeydown'">
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: PropertyName"></div>
+            </div>
+            <div class="ui eight wide column">
+                <label>Property Type</label>
+                    <select class="ui selection dropdown full width">
+                        @foreach (var type in ViewBag.PropertyTypes)
+                        {
+                            <option value="@type.PropertyTypeId">@type.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="ui two column grid">
+                <div class="column">
+                    <div class="sixteen wide column">
+                        <label>Search Address </label>
+                        <div class="ui input full width">
+                            <input type="text" name="searchAddress" id="autocomplete" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: Address, valueUpdate:'afterkeydown'">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="ui grid">
+                        <div class="six wide column">
+                            <label for="street_number">Number <span class="red-asterisk">*</span></label>
+                            <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                                <input type="text" id="street_number" placeholder="&nbsp Number" data-bind="value: Address.Number, valueUpdate:'afterkeydown'" />
+                            </div>
+                            <div class="validationMessage" data-bind="validationMessage: Address.Number"></div>
+                        </div>
+                        <div class="ten wide column">
+                            <label for="route">Street <span class="red-asterisk">*</span></label>
+                            <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                                <input type="text" id="route" placeholder="&nbsp Street" data-bind="value: Address.Street, valueUpdate:'afterkeydown'" />
+                            </div>
+                            <div class="validationMessage" data-bind="validationMessage: Address.Street"></div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui three column grid">
+                            <div class="column">
+                                <label for="route">Suburb</label>
+                                <div class="ui input full width">
+                                    <input type="text" id="route" placeholder="&nbsp Suburb" data-bind="value: Address.Suburb, valueUpdate:'afterkeydown'" />
+                                </div>
+                            </div>
+                            <div class="column">
+                                <label for="street_number">City <span class="red-asterisk">*</span></label>
+                                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                                    <input type="text" id="street_number" placeholder="&nbsp City" data-bind="value: Address.City, valueUpdate:'afterkeydown'" />                              
+                                </div>
+                                <div class="validationMessage" data-bind="validationMessage: Address.City"></div>
+                            </div>
+                            <div class="column">
+                                <label for="street_number">PostCode <span class="red-asterisk">*</span></label>
+                                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                                    <input type="text" id="street_number" placeholder="PostCode" data-bind="value: Address.PostCode, valueUpdate:'afterkeydown'" />
+                                </div>
+                                <div class="validationMessage" data-bind="validationMessage: Address.PostCode"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui grid">
+                        <div class="sixteen wide column">
+                            <label>Region <span class="red-asterisk">*</span></label>
+                            <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                                <input type="text" id="region" placeholder="&nbsp Region" data-bind="value: Address.Region, valueUpdate:'afterkeydown'" />
+                            </div>
+                            <div class="validationMessage" data-bind="validationMessage: Address.Region"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="ui grid">
+                        <div class="sixteen wide column">
+                            <label>Description <span class="red-asterisk">*</span></label>
+                            <div class="ui form" data-bind="validationOptions: {insertMessages: false}">
+                                <textarea data-bind="value:Description,valueUpdate:'afterkeydown'" class="add-prop-desc" rows="14" cols="70" required></textarea>
+                            </div>
+                            <div class="validationMessage" data-bind="validationMessage: Description"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="ui two column grid">
+            <div class="column">
+                <label>Year Built <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input type="text" data-bind="value: YearBuilt,valueUpdate:'afterkeydown'" placeholder="Year Built" />
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: YearBuilt"></div>
+            </div>
+            <div class="column">
+                <div class="ui two column grid">
+                    <div class="column">
+                        <label>Target Rent <span class="red-asterisk">*</span></label>
+                        <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                            <input type="text" data-bind="value: TargetRent,valueUpdate:'afterkeydown'" placeholder="Rent Amount" />
+                        </div>
+                        <div class="validationMessage" data-bind="validationMessage: TargetRent"></div>
+                    </div>
+                    <div class="column">
+                        <label>Rent Type</label>
+                        <select class="ui selection dropdown full width" data-bind="value: TargetRentType">
+                            @foreach (var freq in ViewBag.Frequencies)
+                                {
+                                <option value="@freq.Id">@freq.Code</option>
+                                }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui grid">
+            <div class="eight wide column">
+                <label>Land Area</label>
+                <div class="ui input full width">
+                    <input type="text" data-bind="value: LandArea,valueUpdate:'afterkeydown'" placeholder="Land Area" />
+                </div>
+            </div>
+            <div class="eight wide column">
+                <label>Floor Area</label>
+                <div class="ui input full width">
+                    <input type="text" data-bind="value: FloorArea,valueUpdate:'afterkeydown'" placeholder="Floor Area" />
+                </div>
+            </div>
+            <div class="eight wide column">
+                <label>Bedrooms <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input type="text" data-bind="value: Bedroom,valueUpdate:'afterkeydown'" placeholder="Number of Bedrooms" />
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: Bedroom"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Bathrooms <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input type="text" data-bind="value: Bathroom,valueUpdate:'afterkeydown'" placeholder="Number of Bathrooms" />
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: Bathroom"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Carparks <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input type="text" data-bind="value: ParkingSpace, valueUpdate : 'afterkeydown'" placeholder="Number of car parks" />
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: ParkingSpace"></div>
+            </div>
+            <div class="middle aligned eight wide column">
+                <br/>
+                <input class="ui checkbox" type="checkbox" name="test" data-bind="checked : IsOwnerOccupied" />
+                <label>Owner Occupied</label>
+                <a href="#" data-toggle="tooltip" data-placement="right" title="Tick if owner is occupying the property or if there are no current tenants."><i class="question circle icon black"></i></a>
+            </div>
+        </div>
+        <br/>
+        <div class="sixteen wide column">
+            <label>Please upload your photos here</label>
+            <div class="panel panel-default im-upload-panel" style="min-height : 150px">
+                <div class="panel-body">
+                    <div class="row">
+                        <div data-bind="foreach: MediaFiles">
+                            <div class="col-xs-3">
+                                <div class="thumbnail" style="position : relative">
+                                    <a class="zmdi zmdi-hc-lg zmdi-close-circle img-remove-icon" data-bind="click: $root.RemoveFile" style="position:absolute; top:0; right:1px"></a>
+                                    <img class="img-responsive" data-bind="attr: {src: Data}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sixteen wide column">
+            <div class="ui teal button upload-button">
+                <span class="fa fa-cloud-upload"></span>
+                Choose Files
+                <input type="file" id="file-upload" class="key-upload" data-bind="filesUpload : MediaFiles, fileWarning : FileWarning, validFileTypes : ValidFiles " accept="image/*" multiple />
+            </div>
+            <br /><br />
+            <p class="text-muted" style="font-size:11px; text-align : left"> You may upload up to 5 files. Total maximum size is 5 MB and supported file types are *.jpg, *.jpeg, *.png, *.gif & *.pdf </p>
+            <br />
+        </div>
+        <div class="sixteen wide text-center">
+            <button class="ui teal button" name="next" data-bind="click:goF,enable:basicValid">Next</button>
+            <button class="ui button" data-toggle="modal" data-target="#myModal">Cancel</button>
+        </div>
+    </fieldset>
+    <!--Finance Details Section-->
+    <fieldset id="financeSection" style="display:none;" class="fieldset-full-width">
+        <h2 class="text-center">Finance Details</h2>
+        <br />
+        <div class="ui grid">
+            <div class="eight wide column">
+                <label>Purchase Price <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input type="text" name="purchasePrice" placeholder="&nbsp Enter Purchase Price" data-bind="value: PurchasePrice, valueUpdate:'afterkeydown'"/>               
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: PurchasePrice"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Mortgage <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input type="text" name="mortgagePrice" placeholder="&nbsp Enter Mortgage Price" data-bind="value: Mortgage, valueUpdate:'afterkeydown'" />
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: Mortgage"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Home Value <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input type="text" name="propertyName" placeholder="&nbsp Enter Home Value" data-bind="value: CurrentHomeValue, valueUpdate:'afterkeydown'">
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: CurrentHomeValue"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Home Value Type </label>
+                <select class="ui selection dropdown full width" data-bind="value : HomeValueType">
+                    @foreach (var type in @ViewBag.PropertyHomeValueTypes)
+                    {
+                        <option value="@type.Id">@type.HomeValueType</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="four wide column">
+            <h3>Repayments <span class="red-asterisk"></span></h3>
+        </div>
+        <br />
+        <div data-bind='foreach: Repayments'>
+            <div class="ui grid">
+                <div class="four wide column">
+                    <label>Amount <span class="red-asterisk">*</span></label>
+                    <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                        <input type="text" style="padding-left:8px" placeholder="Repayments" data-bind="value: Amount, valueUpdate:'afterkeydown'" />
+                    </div>
+                    <div class="validationMessage" data-bind="validationMessage: Amount"></div>
+                </div>
+                <div class="four wide column">
+                    <label>Frequency </label>
+                    <select class="ui selection dropdown full width" data-bind="value: FrequencyType">
+                        @foreach (var freq in ViewBag.Frequencies)
+                         {
+                            <option value="@freq.Id">@freq.Code</option>
+                         }
+                    </select>
+                </div>
+                <div class="three wide column">
+                    <label>Start Date <span class="red-asterisk">*</span></label>
+                    <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                        <input type="text" id="payment-start-date" name="startdate" placeholder="mm/dd/yyyy" data-bind="datePicker : startDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+                    </div>
+                    <div class="validationMessage" data-bind="validationMessage: startDate"></div>
+                </div>
+                <div class="three wide column">
+                    <label>End Date </label>
+                    <div class="ui input full width">
+                        <input type="text" id="payment-end-date" name="enddate" placeholder="mm/dd/yyyy" data-bind="datePicker: endDate,dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+                    </div>
+                </div>
+                <div class="middle aligned two wide column">
+                    <br />
+                    <span data-bind="click:$root.removeRepayment"><i class="minus circle icon large"></i>Remove</span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row no-margin">
+            <div class="eight wide column">
+                <a href="javascript : void();" style="float:left; color: #008080" data-bind="click: addRepayment"><i class="plus circle icon large"></i>Add repayment</a>
+            </div>
+        </div>
+        <br />
+        <div class="row no-margin">
+            <div class="sixteen wide column">
+                <h3>Expenses</h3>
+            </div>
+        </div>
+        <br />
+        <div data-bind='foreach: expenses'>
+            <div class="ui grid">
+                <div class="four wide column">
+                    <label>Amount <span class="red-asterisk">*</span></label>
+                    <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                        <input id="Text1" type="text" placeholder="Expenses" data-bind="value: Amount, valueUpdate:'afterkeydown'" />
+                    </div>
+                    <div class="validationMessage" data-bind="validationMessage: Amount"></div>
+                </div>
+                <div class="seven wide column">
+                    <label>Description <span class="red-asterisk">*</span></label>
+                    <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                        <input id="Text1" style="padding-left:8px" type="text" placeholder="Description" data-bind="value: Description,valueUpdate:'afterkeydown'" />
+                    </div>
+                    <div class="validationMessage" data-bind="validationMessage: Description"></div>
+                </div>
+                <div class="three wide column">
+                    <label>Date <span class="red-asterisk">*</span></label>
+                    <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                        <input type="text" id="expense-date" name="date" placeholder="mm/dd/yyyy" data-bind="datePicker: ExpenseDate,dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+                    </div>
+                    <div class="validationMessage" data-bind="validationMessage: ExpenseDate"></div>
+                </div>
+                <br />
+                <div class="middle aligned two wide column">
+                    <br />
+                    <span data-bind="click:$root.removeExpense"><i class="minus circle icon large"></i>Remove</span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row no-margin">
+            <div class="sixteen wide column">
+                <a href="javascript : void();" style="float:left; color: #008080" data-bind="click: addExpense"><i class="plus circle icon large"></i>Add expense</a>
+            </div>
+        </div>
+        <br />
+        <div class="sixteen wide column text-center">
+            <button class="ui button" name="next" data-bind="click:goP">Previous</button>
+            <button class="ui teal button" data-bind="click: SaveNewProperty,visible:IsOwnerOccupied(),enable:IsFinancialValid">Save</button>
+            <button class="ui teal button" name="next" data-bind="click:goT,visible:!IsOwnerOccupied(),enable:IsFinancialValid">Next</button>
+            <input type="button" class="ui button" value="Cancel" onclick="location.href='@Url.Action("Index", "Home")'" />
+        </div>
+    </fieldset>
+    <!--Tenant Details Section-->
+    <fieldset id="tenantSection" style="display:none" class="fieldset-full-width">
+        <h2 class="text-center">Tenant Details</h2>
+        <br />
+        <div class="ui grid">
+            <div class="eight wide column">
+                <label>Tenant Email <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input id="email" type="text" placeholder="&nbsp Enter Tenant Email" data-bind="value : TenantToPropertyModel.TenantEmail,valueUpdate:'afterkeydown'">
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: TenantToPropertyModel.TenantEmail"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Is Main Tenant </label>
+                <select class="ui selection dropdown full width" data-bind="value : TenantToPropertyModel.IsMainTenant">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="eight wide column">
+                <label>First Name <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input id="fname" type="text" data-bind="value : TenantToPropertyModel.FirstName, valueUpdate:'afterkeydown'" />
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: TenantToPropertyModel.FirstName"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Last Name <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input id="lname" type="text" data-bind="value : TenantToPropertyModel.LastName, valueUpdate:'afterkeydown'" />
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: TenantToPropertyModel.LastName"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Start Date <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input name="StartDate" id="sdate" type="text" data-bind="datePicker : TenantToPropertyModel.StartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: TenantToPropertyModel.StartDate"></div>
+            </div>
+            <div class="eight wide column">
+                <label>End Date <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input name="EndDate" id="edate" type="text" data-bind="datePicker : TenantToPropertyModel.EndDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: TenantToPropertyModel.EndDate"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Rent Amount <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input id="ramount" type="text" placeholder="&nbsp Enter Rent Amount" data-bind="value :TenantToPropertyModel.PaymentAmount, valueUpdate:'afterkeydown'">
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: TenantToPropertyModel.PaymentAmount"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Payment frequency </label>
+                <select class="ui selection dropdown full width" id="pfrequency" data-bind="value : TenantToPropertyModel.RentFrequency">
+                    @foreach (var freq in ViewBag.Frequencies)
+                    {
+                        <option value="@freq.Id">@freq.Code</option>
+                    }
+                </select>
+            </div>
+            <div class="eight wide column">
+                <label>Payment Start Date <span class="red-asterisk">*</span></label>
+                <div class="ui input full width" data-bind="validationOptions: {insertMessages: false}">
+                    <input id="psdate" type="text" data-bind="datePicker : TenantToPropertyModel.PaymentStartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+                </div>
+                <div class="validationMessage" data-bind="validationMessage: TenantToPropertyModel.PaymentStartDate"></div>
+            </div>
+            <div class="eight wide column">
+                <label>Payment Due Day</label>
+                <select class="ui selection dropdown full width" id="pddate" data-bind="options : TenantToPropertyModel.DueDateOptions, value : TenantToPropertyModel.PaymentDueDate"></select>
+            </div>
+        </div>
+        <br />
+        <div>
+            <h3>Liabilities</h3>
+        </div>
+        <br />
+        <div id="LiabilityDetail">
+            <div data-bind="foreach:LiabilityValues">
+                <div class="ui grid">
+                    <div class="seven wide column">
+                        <label>Liability Name</label>
+                        <select class="ui selection dropdown full width" data-bind="value : TypeId">
+                            <option value="1">Bond</option>
+                            <option value="2">Insurance</option>
+                            <option value="3">Letting Fee</option>
+                            <option value="4">Body Corp</option>
+                        </select>
+                    </div>
+                    <div class="seven wide column">
+                        <label>Amount</label>
+                        <div class="ui input full width">
+                            <input type="text" data-bind="value : Value, valueUpdate : 'afterkeydown'" />
+                        </div>
+                    </div>
+                    <div class="middle aligned two wide column">
+                        <br />
+                        <span data-bind="click : $parent.RemoveLiability"><i class="minus circle icon large"></i>Remove</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="sixteen wide column">
+            <a style="color: #008080" data-bind="click : AddLiabilityValues"><i class="plus circle icon large"></i> Add New Liability</a>
+        </div>
+        <br />
+        <div class="sixteen wide text-center">
+            <button class="ui button" id="addProperty" name="next" data-bind="click:TtoF">Previous</button>
+            <button class="ui teal button" id="saveProperty" data-bind="click:SaveNewProperty,enable:IsTenantValid">Save</button>
+            <input type="button" class="ui button" value="Cancel" onclick="location.href='@Url.Action("Index", "Home")'" />
+        </div>
+    </fieldset>
+</form>
+<script src="~/Scripts/PropertyOwners/MyOnboarding/Index.js"></script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    $(".btnSession").click(function (event) {
+        event.preventDefault();
+    });
+
+    function validateForm(e) {
+        if (e.keyCode == 13) {
+            if (check()) {
+                debugger;
+                $("#saveProperty").click();
+                return false;
+            }
+            else {
+                return false;
+            }
+        }
+        function check() {
+            var isValid = true;
+            $('.required-field').each(function () {
+                if ($(this).val() === '')
+                    isValid = false;
+            });
+            return isValid;
+        }
+    }
+</script>
+<!--Modal-->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to leave this page without saving?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Home")'">Yes</button>
+                @*<button type="button" class="btn btn-danger" onclick="postConfirm()">Yes</button>*@
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

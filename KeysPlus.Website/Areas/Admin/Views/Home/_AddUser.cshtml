@@ -1,0 +1,38 @@
+﻿<div id="addUser" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" data-bind="click: ResetAll" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="lead modal-title text-center">Add User</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div data-bind="template: {name: 'editForm'}"></div>
+                    <p class="lead text-center">Physical Address</p>
+
+                    <div data-bind="with: PhysicalAddress">
+                        <div data-bind="template:{name:'editAddress'}"></div>
+                    </div>
+                    <div>
+
+                        <input type="checkbox" name="BillingAddress" id="BillingAddressCheckbox" value="1" class="filled-in chk-col-pink" data-bind="checked: IsShipSame, click: $root.ResetAddress" />
+                        <label for="BillingAddressCheckbox">Same Billing Address</label>
+
+                    </div>
+                    <div data-bind="ifnot: IsShipSame,AddCss: $data">
+                        <p class="lead text-center">Billing Address</p>
+                        <div data-bind="with: BillingAddress">
+                            <div data-bind="template:{name:'editAddress'}"></div>
+                        </div>
+                    </div>
+                  
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: ResetAll">Close</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" data-bind="click: $parent.SaveUser,disable: ToggleDisable">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+

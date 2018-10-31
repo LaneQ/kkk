@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Property Owner | Add New Job";
+}
+
+<div id="NewJobForm">
+    <div class="row">
+        <div style="padding-left:11%">
+            <h3>Add New Job</h3>
+        </div>
+    </div>
+    <hr align="center" width="80%">
+    <div class="row" style="padding-left:11%">
+        @if (ViewBag.ReturnUrl != null)
+        {
+            <a class="btn btn-info" data-bind="attr: { href: '@Html.Raw(ViewBag.ReturnUrl)' }"><span class="fa fa-arrow-left"></span> Back</a>
+            <br />
+        }
+        <br />
+    </div>
+    <div class="row" style="padding-bottom: 100px">
+        <form class="step-form" style="margin-bottom:20px">
+            <fieldset>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="keys control-label ">Select property <span style="color:red;">*</span></label>
+                            <select class="form-control" data-bind="value : PropertyId">
+                                @foreach (var type in ViewBag.Properties)
+                                {
+                                    <option value="@type.Id">@type.AddressString</option>
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Title <span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" data-bind="value: Title, valueUpdate:'afterkeydown'">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Job Description <span style="color:red;">*</span></label>
+                            <textarea class="form-control" rows="5" style="height:123px;" data-bind="value: JobDescription, valueUpdate:'afterkeydown'"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Maximum Budget <span style="color:red;">*</span></label>
+
+                            <input type="text" class="form-control" data-bind="value: MaxBudget, trimTo2dp, valueUpdate:'afterkeydown'">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Please upload your documents here<span style="color:red;"></span></label>
+                            <div class="panel panel-default">
+                                <div class="panel-body" style="min-height:120px">
+                                    <div data-bind="foreach: MediaFiles()">
+                                        <div class="col-md-3 col-sm-4 col-sx-4" data-bind="visible : MediaType == 1">
+                                            <div class="thumbnail">
+                                                <a data-bind="click: $parent.removePhoto">
+                                                    <i class="zmdi zmdi-close-circle" style="float:right"></i>
+                                                </a>
+                                                <a target="_blank" data-bind="attr: { href: Data }">
+                                                    <img class="img-responsive" data-bind="attr: {src: Data}" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="photo_validation"></div>
+
+                            <ul class="list-group" data-bind="foreach: MediaFiles()">
+                                <li class="list-group-item" data-bind="visible : MediaType == 2">
+                                    <span data-bind="text : Name"></span>
+                                    <span class="zmdi zmdi-close-circle pull-right" data-bind="click : $parent.removePhoto"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="btn btn-success">
+                                <span class="fa fa-cloud-upload"></span>
+                                Choose Files
+                                <input type="file" id="file-upload" class="key-upload" data-bind="event: {change: fileUpload}" accept=".doc,.docx,.pdf,image/*" multiple />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Total size is 5 MB and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-success" data-bind=" click:SubmitMarketJob,enable:IsJobValid">Submit</button>
+                        <a class="btn btn-danger" data-bind="attr: { href: '@Html.Raw(ViewBag.ReturnUrl)' }">Close</a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script src="~/Scripts/PropertyOwners/Property/PropertyOwnerNewJob.js"></script>
+<script>
+
+          $(document).ready(function () {
+              var viewModel = new PropertyOwnerNewJob(@Html.Raw(Json.Encode(Model)));
+              ko.applyBindings(viewModel);
+
+        });
+
+</script>

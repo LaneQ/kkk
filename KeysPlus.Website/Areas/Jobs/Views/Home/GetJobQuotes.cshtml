@@ -1,0 +1,287 @@
+﻿@model QuotesSearchViewModel
+<div id="viewQuotesArea" data-bind="visible : MainView">
+    <div class="block-header">
+        <h3>Quotes For My Advertised Jobs</h3>
+    </div>
+    <br />
+    @Html.Partial("_SearchInput")
+    <div>
+        @if (Model.ReturnUrl != null)
+        {
+            <br />
+            <a class="btn btn-info btn-sx" data-bind="attr: { href: '@Html.Raw(Model.ReturnUrl)' }"><span class="fa fa-arrow-left"></span> Back</a>
+            <br />
+        }
+    </div>
+
+    <div style="padding-top : 20px">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span> Your Advertised Job Details</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Title: </strong></div>
+                                    <div class="col-md-8"><span>@Model.MarketJob.Title</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Budget: </strong></div>
+                                    <div class="col-md-8"><span>@Model.MarketJob.MaxBudget</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Property: </strong></div>
+                                    <div class="col-md-8">
+                                        @Model.Address
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--panel body-->
+            </div><!--panel-->
+        </div><!--column-->
+    </div><!--row-->
+    <br />
+    <div class="row" data-bind="foreach : Items">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <img class="banner-top-left-corner" src='/images/new-banner-red.png' height="70" data-bind="visible : Model.IsViewed() == false" />
+                <div class="panel-body">
+                    @*<div title="Delete" class="delete-top-right-corner" data-bind="click: $root.showJobDeleteModal"><i class="fa fa-trash-o"></i></div>*@
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div data-bind="visible:ImgFiles().length>0">
+                                <div class="carousel" data-ride="carousel" data-bind="attr :{id : 'carousel'+ Model.Id()}">
+                                    <div class="carousel-inner" style="margin:auto" data-bind="foreach: ImgFiles">
+                                        <div class="item" data-bind="css:{active: $index() == 0}">
+                                            <img class="img-responsive img-thumbnail" data-bind="attr: {src: Data}"
+                                                 onerror="this.src = '/images/no-prop-img.png'" alt="firstImg">
+                                        </div>
+                                    </div>
+
+                                    <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}, if : ImgFiles().length > 1">
+                                        <span class="fa fa-2x fa-angle-left"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}, if : ImgFiles().length > 1">
+                                        <span class="fa fa-2x fa-angle-right"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div data-bind="visible:ImgFiles().length<=0">
+                                <img class="img-thumbnail" src="/images/no-prop-img.png" alt="noPropImg" />
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <!--details-->
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4"><strong>Provider Name: </strong></div>
+                                <div class="col-md-8"><span data-bind="text : ProviderName"></span></div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4"><strong>CompanyName: </strong></div>
+                                <div class="col-md-8"><span data-bind="text : CompanyName"></span></div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4"><strong>Amount: </strong></div>
+                                <div class="col-md-8">$<span data-bind="text : Model.Amount"></span></div>
+                            </div>
+                        </div>
+
+
+                    </div><!--row-->
+                </div><!--panel body-->
+                <div class="row">
+                    <div class="prop-actions">
+                        <button class="btn btn-default" data-bind="click: $root.ShowDetail"><i class="zmdi zmdi-info-outline"></i> Details</button>
+                        <button class="btn btn-success" data-bind="click : $parent.ShowAccept"><i class="zmdi zmdi-edit"></i> Accept</button>
+                    </div>
+                </div>
+            </div><!--panel-->
+        </div><!--column-->
+    </div><!--row-->
+</div>
+</div>
+
+<div style="display:none" data-bind="visible : DetailView">
+    <div><h3>Quote Details</h3></div>
+    <div class="row" data-bind="with : SelectedItem">
+        <div class="col-md-12">
+            <a class="btn btn-info btn-sx" data-bind="click:$root.ShowMain"><span class="fa fa-arrow-left"></span> Back</a>
+            <br /><br />
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Quote Details
+                </div>
+                <div class="panel-body">
+                    <form class="form">
+                        <div class="row" data-bind="">
+                            <div class="col-md-7">
+                                <!--details column-->
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Company Name: </strong></div>
+                                    <div class="col-md-8"><span data-bind="text : CompanyName"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Provider Name: </strong></div>
+                                    <div class="col-md-8"><span data-bind="text : ProviderName"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Description: </strong></div>
+                                    <div class="col-md-8"><span data-bind="text : Model.JobDescription" style="word-break: break-all;"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Note: </strong></div>
+                                    <div class="col-md-8"><span data-bind="text : Model.Note" style="word-break: break-all;"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Amount: </strong></div>
+                                    <div class="col-md-8">$<span data-bind="numeric : Model.Amount"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Documents: </strong></div>
+                                    <div class="col-md-8">
+                                        <ul data-bind="foreach: DocFiles()">
+                                            <li>
+                                                <a data-bind="attr:{ href: Data }"><span data-bind="text: OldFileName"></span><br /></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div><!--details column-->
+
+                            <div class="col-md-4">
+                                @Html.Partial("_DetailViewImg")
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" style="padding-top:50px;">
+                        <div class="prop-actions" style="padding-bottom:20px;">
+                            <button type="button" class="btn btn-success" data-bind="click : $parent.ShowAccept" autofocus>Accept</button>
+                            <button class="btn btn-danger" data-bind="click:$root.ShowMain"> Cancel</button>
+                        </div>
+                    </div>
+                </div><!--panel body-->
+            </div><!--panel-->
+        </div><!--column-->
+    </div><!--row-->
+</div>
+
+<div  style="display:none" data-bind="visible : AcceptView">
+    <h3>Accept Quote </h3>
+    <hr />
+    <button class="btn btn-info btn-sx" data-bind="click:$root.ShowMain"><span class="fa fa-arrow-left"></span> Back</button>
+    <br /><br />
+    <div class="row" data-bind="with : Job">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span> Quote Details</span>
+                </div>
+                <div class="panel-body">
+                    <div class="row" style="line-height : 25px; margin-bottom: 10px;">
+                        <div class="col-md-12">Please enter job description for accepted quote:</div>
+                    </div>
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-4"><strong>Description: </strong></div>
+                        <div class="col-md-7">
+                            <textarea class="col-sm-12" id="notevalue" rows="5" data-bind="value: Model.JobDescription, valueUpdate:'afterkeydown'"></textarea>
+                        </div>
+                    </div>
+                    <div class="row" style="line-height : 25px; margin-top: 70px;">
+                        <div class="col-md-12">
+                            <div class="prop-actions">
+                                <button type="button" class="btn btn-success" data-bind="click : $root.CreateJob, enable : IsValid" autofocus>Submit</button>
+                                <button type="button" class="btn btn-danger" data-bind="click:$parent.ShowMain">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--panel body-->
+            </div><!--panel-->
+        </div><!--column-->
+    </div><!--row-->
+</div>
+@Html.AntiForgeryToken()
+<script>
+    function PageViewModel(dataVm) {
+        var token = $("input[name = '__RequestVerificationToken']").val();
+        var self = this;
+        for (var key in dataVm) {
+            self[key] = dataVm[key]
+        };
+        self.Items().forEach(function (item) {
+            KeysUtils.injectViewProps(item);
+        });
+        self.Job = ko.observable();
+        self.SelectedItem = ko.observable();
+        self.MainView = ko.observable(true);
+        self.DetailView = ko.observable(false);
+        self.AcceptView = ko.observable(false);
+        self.ShowMain = function () {
+            self.MainView(true);
+            self.DetailView(false);
+            self.AcceptView(false);
+        }
+        self.ShowDetail = function (data) {
+            self.SelectedItem(data);
+            self.MainView(false);
+            self.DetailView(true);
+            self.AcceptView(false);
+            quoteViewed(data.Model.Id());
+        }
+        self.ShowAccept = function (data) {
+            self.SelectedItem(data);
+            self.MainView(false);
+            self.DetailView(false);
+            self.AcceptView(true);
+            quoteViewed(data.Model.Id());
+            var job = new EntityViewModel(KeysExtendsDic.NewJob);
+            job.Model.QuoteId = ko.observable(data.Model.Id());
+            job.Model.JobRequestId = ko.observable(data.Model.JobRequestId());
+            self.Job(job);
+        }
+        self.CreateJob = function (data) {
+            data.Model.QuoteId = self.SelectedItem().Model.Id();
+            var formData = KeysUtils.toFormData(data.Model, token);
+            $.ajax({
+                url: "/PropertyOwners/Property/AccceptQuote",
+                data: formData,
+                method: "POST",
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.Success) {
+                        KeysUtils.notification.show('<p>Job created successfully!</p>', 'success', KeysUtils.reload);
+                    } else {
+                        KeysUtils.notification.showErrorMsg();
+                    }
+                }
+            });
+        }
+        function quoteViewed(id) {
+            $.ajax({
+                url: "/PropertyOwners/Property/QuoteViewed",
+                data: { __RequestVerificationToken: token, quoteId: id },
+                method: "POST",
+                success: function (result) {
+                    if (result.Success) {
+                        self.SelectedItem().Model.IsViewed(true);
+                    } else {
+
+                    }
+                }
+            });
+        }
+    }
+    $(document).ready(function () {
+        $("#NoRecord").modal("show");
+        var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        var vm = new PageViewModel(dataVm);
+        ko.applyBindings(vm);
+    });
+</script>

@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "AdvancedSearch";
+}
+
+<h2>AdvancedSearch</h2>
+<head>
+    <script type="text/javascript">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    </script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+</head>
+@using (Html.BeginForm())
+{
+    <fieldset id="advanced-search" class="fieldset-full-width">
+        <h3>Location</h3>
+        <div class="col-md-4">
+            <div class="row dashboard">
+                <div class="panel panel-default dashboard-panel" style="height : 230px">
+                    <div class="panel-heading">Regions</div>
+                    <div class="panel-body" style="height : 190px">
+                        <div class="row" style="height : 50%">
+                            <select data-bind="options: firstValues, value: selectedFirstOption" size="10" style="height:173px;width:330px"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="row dashboard">
+                <div class="panel panel-default dashboard-panel" style="height : 230px">
+                    <div class="panel-heading">Districts</div>
+                    <div class="panel-body" style="height : 190px">
+                        <div class="row" style="height : 50%">
+                            <select data-bind="options: secondValues, value: selectedSecondOption" size="10" style="height:173px;width:330px"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row dashboard">
+                <div class="panel panel-default dashboard-panel" style="height : 230px">
+                    <div class="panel-heading">Suburbs</div>
+                    <div class="panel-body" style="height : 190px">
+                        <div class="row" style="height : 50%">
+                            @Html.DropDownListFor(model => model.Address.Suburb, new SelectList(new string[] { }), new { data_bind = "options: thirdValues, value: selectedThirdOption", size = 10, style = "height:173px;width:330px" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+
+        <strong>Budget Range</strong>
+        <select id="selectedOption" name="selectedOption">
+            <option value="0">0-200</option>
+            <option value="1">200-400</option>
+            <option value="2">400-600</option>
+            <option value="3">600-800</option>
+            <option value="4">800-1000</option>
+            <option value="5">1000+</option>
+        </select><br />
+        <strong>Keywords</strong><br />
+        <input type="text" id="searchString" name="searchString" style="height:32px;width:300px;" />
+        <button class="btn btn-primary" onclick="searchMe()">Search</button>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/knockout-3.4.2.js"></script>
+        <script>
+    var locationsViewModel = {
+        valueArray: [], //contains all the location data
+        firstValues: ko.observableArray([]),
+        secondValues: ko.observableArray([]),
+        thirdValues: ko.observableArray([]),
+        selectedFirstOption: ko.observable(),
+        selectedSecondOption: ko.observable(),
+        selectedThirdOption: ko.observable(),
+};
+
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        contentType: "text/json",
+        url: "https://api.trademe.co.nz/v1/Localities.json",
+        data:
+            {
+                region_id: 1,
+                with_counts: true,
+                listing_type: "houses_to_buy"
+            },
+        success: function (response) {
+            debugger;
+            locationsViewModel.valueArray = response;
+            for (let i in locationsViewModel.valueArray) {
+                locationsViewModel.firstValues.push(locationsViewModel.valueArray[i].Name)
+            };
+            //alert(self.valueArray());
+        },
+        error: function () {
+            console.log("There has been an error retrieving the values from the database.");
+        }
+    });
+    locationsViewModel.selectedFirstOption.subscribe(function (value) {
+        debugger;
+        locationsViewModel.secondValues([]);
+        var obj = locationsViewModel.valueArray.find(o => o.Name === value);
+        for (let i in obj.Districts) {
+            //alert(obj.Districts[i].Name);
+            locationsViewModel.secondValues.push(obj.Districts[i].Name);
+        };
+    });
+    locationsViewModel.selectedSecondOption.subscribe(function (value) {
+        debugger;
+        if (value != null) {
+            locationsViewModel.thirdValues([]);
+            var region = locationsViewModel.valueArray.find(o => o.Name === ko.utils.unwrapObservable(locationsViewModel.selectedFirstOption));
+            var obj = region.Districts.find(o => o.Name === value);
+            for (let i in obj.Suburbs) {
+                //alert(obj.Districts[i].Name);
+                locationsViewModel.thirdValues.push(obj.Suburbs[i].Name);
+            };
+        }
+    });
+ko.applyBindings(locationsViewModel);
+
+        </script>

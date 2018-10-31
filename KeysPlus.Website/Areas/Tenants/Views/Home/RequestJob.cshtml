@@ -1,0 +1,21 @@
+﻿@model KeysPlus.Service.Models.JobRequestModel
+
+@{
+    ViewBag.Title = "RequestJob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="block-header"><h2>Job Request</h2></div>
+<hr/>
+@using (Html.BeginForm())
+{
+    <div class=""></div>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <h4 class="panel-title">Please enter following details</h4>
+            <div class="col-md-12">
+                @Html.TextAreaFor(m => m.JobDescription, new { @class = "from-control" })
+            </div>
+
+        </div>
+    </div>
+}

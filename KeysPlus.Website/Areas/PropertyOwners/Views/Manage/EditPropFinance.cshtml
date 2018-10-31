@@ -1,0 +1,303 @@
+﻿@model KeysPlus.Service.Models.PropDataModel
+@{ 
+    ViewBag.Title = "Edit Finance";
+}
+<div class="block-header">
+    <h3>Edit Property Finance</h3>
+</div>
+<a class="btn btn-info btn-sx" data-bind="attr: { href: '@Url.Action("Dashboard", "Home")' }"><span class="fa fa-arrow-left"></span> Back</a>
+<hr />
+<div class="form-group">
+    <label class="control-label">Select Property:</label>
+    <select class="form-control" data-bind="options :Properties, optionsText : 'AddressString', value : SelectedProp, event : {change : PropChange}">
+        @foreach (var prop in Model.Properties)
+        {
+            <option value="@prop.Id">@prop.AddressString</option>
+        }
+    </select>
+
+</div>
+@Html.Partial("~/Areas/PropertyOwners/Views/Shared/_FinanceDetails.cshtml")
+<script src="~/Scripts/PropertyOwners/Home/FinancialModel.js"></script>
+<script>
+    var propData = @Html.Raw(Json.Encode(Model.Properties));
+    var dumpProp = {Id : 0, AddressString : 'Select Property', PurchasePrice : ko.observable(), CurrentHomeValue : ko.observable(), Mortgage : ko.observable()};
+    dumpProp.Model = {};
+    dumpProp.Model.YearBuilt = ko.observable();
+    function Property (data){
+        var self = this;
+        self.Id =  data.Id;
+        self.AddressString =data.AddressString;
+        self.YearBuilt = data.YearBuilt;
+        self.Finance = new PropertyFinancialModel(data);
+    }
+    function ViewModel(data){
+        var self = this;
+        self.SelectedProp = ko.observable();
+        self.Properties = ko.observableArray();
+        self.Properties.push(new Property(dumpProp));
+        data.forEach(function(item){
+            item.Model = {};
+            item.Model.YearBuilt = ko.observable(item.YearBuilt);
+            self.Properties.push(new Property(item));
+        });
+        self.SelectedProp(self.Properties()[0]);
+        self.PropSelected = ko.computed(function(){
+            return self.SelectedProp().Id != 0;
+        });
+        
+        self.PropChange = function(){
+            var selected = self.SelectedProp();
+            var id = selected.Id;
+            if(id != 0 ){
+                $.ajax({
+                    type: "GET",
+                    url: "/PropertyOwners/Property/GetPropertyFinanceDetails/",
+                    data: { propId: id },
+                    success: function (data) {
+                        debugger;
+                        self.SelectedProp().Finance.UpdateDetails(data);
+                    },
+
+                    error: function (error) {
+                        //alert(error.status + " <--and--> " + error.statusText);
+                    }
+
+                });
+            }
+            debugger;
+        }
+    }
+    ko.applyBindings(new ViewModel(propData));
+</script>
+
+<script type="text/template" id="editRepayment">
+    <td class="col-md-2">
+        <input class="form-control" type="text" data-bind="value : Amount" @*data-bind="value : $parent.SelectedRepayment().Amount"*@ />
+    </td>
+    <td class="col-md-2">
+        <select class="form-control" data-bind="value : FrequencyType" @*data-bind="value : $parent.SelectedRepayment().FrequencyType"*@>
+            <option value="1">Weekly</option>
+            <option value="2">Fortnightly</option>
+            <option value="3">Monthly</option>
+        </select>
+    </td>
+    <td class="col-md-2">
+        <input class="form-control" type="text" data-bind="datePicker : StartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" @*data-bind="datePicker : $parent.SelectedRepayment().StartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}"*@ />
+    </td>
+    <td class="col-md-2">
+        <input class="form-control" type="text" data-bind="datePicker : $parent.SelectedRepayment().EndDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" @*data-bind="datePicker : $parent.SelectedRepayment().EndDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}"*@ />
+    </td>
+    <td class="col-md-3">
+        <buton class="btn btn-primary" data-bind="click :  $parent.SaveRepayment">Save</buton>
+        <button class="btn btn-info" data-bind="click : $parent.CancelEditRepayment">Cancel</button>
+        <button class="btn btn-warning" data-bind="click : $parent.DeleteRepayment">Delete</button>
+    </td>
+</script>
+<script type="text/template" id="displayRepayment">
+    <td class="col-md-2 ">
+        <span data-bind="text : Amount"></span>
+    </td>
+    <td class="col-md-2">
+        <span data-bind="text : FrequencyName"></span>
+    </td>
+    <td class="col-md-2">
+        <span data-bind="text : moment(StartDate()).format('ll')"></span>
+    </td>
+
+    <td class="col-md-2">
+        <span data-bind="text : EndDate() ? moment(EndDate()).format('ll') : null"></span>
+    </td>
+    <td td class="col-md-3">
+        <span data-bind="click : $parent.EditRepayment"><i class="glyphicon glyphicon-edit"></i></span>
+    </td>
+</script>
+<script type="text/template" id="newRepayment">
+    <td class="col-md-2">
+        <input class="form-control" type="text" data-bind="value : Amount" />
+    </td>
+    <td class="col-md-2">
+        <select class="form-control" data-bind="value : FrequencyType">
+            <option value="1">Weekly</option>
+            <option value="2">Fortnightly</option>
+            <option value="3">Monthly</option>
+        </select>
+    </td>
+    <td class="col-md-2">
+        <input class="form-control" type="text" data-bind="datePicker : StartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+    </td>
+    <td class="col-md-2">
+        <input class="form-control" type="text" data-bind="datePicker : EndDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+    </td>
+    <td class="col-md-3">
+        <buton class="btn btn-primary" data-bind="click :  $parent.SaveRepayment">Save</buton>
+        <button class="btn btn-info" data-bind="click : $parent.CancelEditRepayment">Cancel</button>
+        <button class="btn btn-warning" data-bind="visible : !IsNew(),click : $parent.DeleteRepayment">Delete</button>
+    </td>
+</script>
+
+<script type="text/template" id="editPropValue">
+    <td class="col-md-2">
+        <input class="form-control" type="text" data-bind="value : Value"/>
+    </td>
+    <td class="col-md-2">
+        <select class="form-control" data-bind="value : TypeId">
+            <option value="1">Current</option>
+            <option value="2">Estimated</option>
+            <option value="3">Registered</option>
+        </select>
+    </td>
+    <td class="col-md-2">
+        <input class="form-control" type="text" data-bind="datePicker : Date, dateTimePickerOptions : {format: 'DD/MM/YYYY'}"/>
+    </td>
+    <td class="col-md-2">
+        <input type="checkbox" name="active-prop-val" data-bind="checked: IsActive, disable : $parent.SelectedHomeValue().IsActive" />
+    </td>
+    <td class="col-md-3">
+        <buton class="btn btn-sm btn-primary" data-bind="click : $parent.SaveHomeValue">Save</buton>
+        <button class="btn btn-sm btn-info" data-bind="click : $parent.CancelEditHomeValue">Cancel</button>
+        <button class="btn btn-sm btn-warning" data-bind="click : $parent.DeleteHomeValue">Delete</button>
+    </td>
+</script>
+<script type="text/template" id="displayPropValue">
+    <td class="col-md-2">
+        <span data-bind="text : Value"></span>
+    </td>
+    <td class="col-md-3">
+        <span data-bind="text : ValueType"></span><span>&nbsp;Valuation</span>
+    </td>
+    <td class="col-md-2">
+        <span data-bind="text : moment(Date()).format('ll')"></span>
+    </td>
+    <td class="col-md-2">
+        <input type="checkbox" name="active-prop-val" data-bind="checked: IsActive" disabled />
+    </td>
+    <td class="col-md-3">
+        <span title="Edit" class="btn-default" data-bind="click : $parent.EditHomeValue"><i class="glyphicon glyphicon-edit"></i></span>
+    </td>
+</script>
+<script type="text/template" id="newPropValue">
+    <td class="col-md-2">
+        <input class="form-control" type="text" data-bind="value : Value" />
+    </td>
+    <td class="col-md-2">
+        <select class="form-control" data-bind="value : TypeId">
+            <option value="1">Current</option>
+            <option value="2">Estimated</option>
+            <option value="3">Registered</option>
+        </select>
+    </td>
+    <td class="col-md-2">
+        <input class="form-control" type="text" data-bind="datePicker : Date, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+    </td>
+    <td class="col-md-2">
+        <input type="checkbox" data-bind="checked: IsActive" />
+    </td>
+    <td class="col-md-3">
+        <buton class="btn btn-sm btn-primary" data-bind="click : $parent.SaveHomeValue">Save</buton>
+        <button class="btn btn-sm btn-info" data-bind="click : $parent.CancelEditHomeValue">Cancel</button>
+        <button class="btn btn-sm btn-warning" data-bind="visible : !IsNew(),click : $parent.DeleteHomeValue">Delete</button>
+    </td>
+</script>
+
+<script type="text/template" id="editExpense">
+    <td class="col-md-3">
+        <input class="form-control" type="text" data-bind="value : Amount" @*data-bind="value : $parent.SelectedExpense().Amount"*@ />
+    </td>
+    <td class="col-md-3">
+        <textarea class="form-control" data-bind="textInput : $parent.SelectedExpense().Description" @*data-bind="textInput : $parent.SelectedExpense().Description"*@></textarea>
+    </td>
+    <td class="col-md-3">
+        <input class="form-control" type="text" data-bind="datePicker : ExpenseDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" @*data-bind="datePicker : $parent.SelectedExpense().ExpenseDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}"*@ />
+    </td>
+    <td class="col-md-3">
+        <buton class="btn btn-sm btn-primary" data-bind="">Save</buton>
+        <button class="btn btn-sm btn-info" data-bind="click : $parent.CancelEditExpense">Cancel</button>
+        <button class="btn btn-sm btn-warning" data-bind="click : $parent.DeleteExpense">Delete</button>
+    </td>
+</script>
+<script type="text/template" id="displayExpense">
+    <td class="col-md-3">
+        <span data-bind="text : Amount"></span>
+    </td>
+    <td class="col-md-3">
+        <p data-bind="text : Description"></p>
+    </td>
+    <td class="col-md-3">
+        <span data-bind="text : moment(ExpenseDate()).format('ll')"></span>
+    </td>
+    <td class="col-md-3">
+        <span title="Edit" class="btn-default" data-bind="click : $parent.EditExpense"><i class="glyphicon glyphicon-edit"></i></span>
+    </td>
+</script>
+<script type="text/template" id="newExpense">
+    <td class="col-md-3">
+        <input class="form-control" type="text" data-bind="value : Amount" />
+    </td>
+    <td class="col-md-3">
+        <textarea class="form-control" data-bind="textInput : Description"></textarea>
+    </td>
+    <td class="col-md-3">
+        <input class="form-control" type="text" data-bind="datePicker : ExpenseDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+    </td>
+    <td class="col-md-3">
+        <buton class="btn btn-sm btn-primary" data-bind="click : $parent.SaveExpense">Save</buton>
+        <button class="btn btn-sm btn-info" data-bind="click : $parent.CancelEditExpense">Cancel</button>
+        <button class="btn btn-sm btn-warning" data-bind="visible : !IsNew(),click : $parent.DeleteExpense">Delete</button>
+    </td>
+</script>
+
+<script type="text/template" id="editRentalPayment">
+    <td class="col-md-3">
+        <input class="form-control" type="text" data-bind="value : $parent.SelectedRentalPayment().Amount" @*data-bind="value : $parent.SelectedRentalPayment().Amount"*@ />
+    </td>
+    <td class="col-md-3">
+        <select class="form-control" data-bind="value :  $parent.SelectedRentalPayment().FrequencyTypeId" @*data-bind="value :  $parent.SelectedRentalPayment().FrequencyTypeId"*@>
+            <option value="1">Weekly</option>
+            <option value="2">Fortnightly</option>
+            <option value="3">Monthly</option>
+        </select>
+    </td>
+    <td class="col-md-3">
+        <input class="form-control" type="text" data-bind="datePicker :  $parent.SelectedRentalPayment().Date, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" @*data-bind="datePicker :  $parent.SelectedRentalPayment().Date, dateTimePickerOptions : {format: 'DD/MM/YYYY'}"*@ />
+    </td>
+    <td class="col-md-3">
+        <buton class="btn btn-sm btn-primary" data-bind="click : $parent.SaveRentalPayment">Save</buton>
+        <button class="btn btn-sm btn-info" data-bind="click : $parent.CancelEditRentalPayment">Cancel</button>
+        <button class="btn btn-sm btn-warning" data-bind="click : $parent.DeleteRentalPayment">Delete</button>
+    </td>
+</script>
+<script type="text/template" id="displayRentalPayment">
+    <td class="col-md-3">
+        <span data-bind="text : Amount"></span>
+    </td>
+    <td class="col-md-3">
+        <p data-bind="text : FrequencyType"></p>
+    </td>
+    <td class="col-md-3">
+        <span data-bind="text : moment(Date()).format('ll')"></span>
+    </td>
+    <td class="col-md-3">
+        <span title="Edit" class="btn-default" data-bind="click : $parent.EditRentalPayment"><i class="glyphicon glyphicon-edit"></i></span>
+    </td>
+</script>
+<script type="text/template" id="newRentalPayment">
+    <td class="col-md-3">
+        <input class="form-control" type="text" data-bind="value : Amount" />
+    </td>
+    <td class="col-md-3">
+        <select class="form-control" data-bind="value : FrequencyTypeId">
+            <option value="1">Weekly</option>
+            <option value="2">Fortnightly</option>
+            <option value="3">Monthly</option>
+        </select>
+    </td>
+    <td class="col-md-3">
+        <input class="form-control" type="text" data-bind="datePicker : Date, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+    </td>
+    <td class="col-md-3">
+        <buton class="btn btn-sm btn-primary" data-bind="click : $parent.SaveRentalPayment">Save</buton>
+        <button class="btn btn-sm btn-info" data-bind="click : $parent.CancelEditRentalPayment">Cancel</button>
+        <button class="btn btn-sm btn-warning" data-bind="visible : !IsNew(), click : $parent.DeleteRentalPayment">Delete</button>
+    </td>
+</script>

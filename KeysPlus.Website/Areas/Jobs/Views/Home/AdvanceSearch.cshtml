@@ -1,0 +1,133 @@
+﻿@model AdvancedMarketJobSearchModel
+@{
+    ViewBag.Title = "AdvanceSearch";
+}
+
+<h2>Advanced Job Search</h2>
+
+@using (Html.BeginForm())
+{
+    <fieldset id="advanced-search" class="fieldset-full-width">
+        <h3>Location</h3>
+        <div class="col-md-4">
+            <div class="row dashboard">
+                <div class="panel panel-default dashboard-panel" style="height : 230px">
+                    <div class="panel-heading">Regions</div>
+                    <div class="panel-body" style="height : 190px">
+                        <div class="row" style="height : 50%">
+                            <select data-bind="options: firstValues, value: selectedFirstOption" size="10" style="height:173px;width:330px"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="row dashboard">
+                <div class="panel panel-default dashboard-panel" style="height : 230px">
+                    <div class="panel-heading">Districts</div>
+                    <div class="panel-body" style="height : 190px">
+                        <div class="row" style="height : 50%">
+                            <select data-bind="options: secondValues, value: selectedSecondOption" size="10" style="height:173px;width:330px"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row dashboard">
+                <div class="panel panel-default dashboard-panel" style="height : 230px">
+                    <div class="panel-heading">Suburbs</div>
+                    <div class="panel-body" style="height : 190px">
+                        <div class="row" style="height : 50%">
+                            @*<div class="row" data-bind="foreach : thirdValues" style="overflow-y: scroll;overflow-x:hidden; height: 160px;">
+                 <div class="checkbox">
+                <label>
+                    <input type="checkbox"
+                           name="Suburbs"
+                           data-bind="attr : {value : $data}" /><span data-bind="text : $data"></span>
+                </label>
+            </div>*@
+                            @Html.DropDownListFor(model => model.SuburbList, new SelectList(new string[] { }), new { data_bind = "options: thirdValues, value: selectedThirdOption", size = 10, multiple = "true", style = "height:173px;width:330px" })
+                            @*<select data-bind="options: thirdValues, value: selectedThirdOption" size="10" multiple style="height:173px;width:330px"></select>*@
+                            @*</div>*@
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <fieldset class="Budget">
+            <div class="column Budget">
+                <h3 class="legend">
+                    Budget
+                </h3>
+                <div class="inner">
+                    @Html.DropDownListFor(model => model.MinBudget, new SelectList(new string[] { "100", "200", "400", "800", "1000"}), "Any")
+                    <span class="to">to</span>
+                    @Html.DropDownListFor(model => model.MaxBudget, new SelectList(new string[] { "100", "200", "400", "800", "1000" }), "Any")
+                </div>
+            </div>
+        </fieldset>
+        <div>
+            <button type="submit" class="btn btn-success" id="btnSearch">Search</button>
+        </div>
+        </fieldset>
+
+        }
+<script>
+    var locationsViewModel = {
+        valueArray: [], //contains all the location data
+        firstValues: ko.observableArray([]),
+        secondValues: ko.observableArray([]),
+        thirdValues: ko.observableArray([]),
+        selectedFirstOption: ko.observable(),
+        selectedSecondOption: ko.observable(),
+        selectedThirdOption: ko.observable(),
+    };
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        contentType: "text/json",
+        url: "https://api.trademe.co.nz/v1/Localities.json",
+        data:
+            {
+                region_id: 1,
+                with_counts: true,
+                listing_type: "houses_to_buy"
+            },
+        success: function (response) {
+            debugger;
+            locationsViewModel.valueArray = response;
+
+            for (let i in locationsViewModel.valueArray) {
+                locationsViewModel.firstValues.push(locationsViewModel.valueArray[i].Name)
+            };
+            //alert(self.valueArray());
+        },
+        error: function () {
+            console.log("There has been an error retrieving the values from the database.");
+        }
+    });
+
+    locationsViewModel.selectedFirstOption.subscribe(function (value) {
+        locationsViewModel.secondValues([]);
+        var obj = locationsViewModel.valueArray.find(o => o.Name === value);
+        for (let i in obj.Districts) {
+            locationsViewModel.secondValues.push(obj.Districts[i].Name);
+        };
+    });
+
+    locationsViewModel.selectedSecondOption.subscribe(function (value) {
+        if (value != null) {
+            locationsViewModel.thirdValues([]);
+            var region = locationsViewModel.valueArray.find(o => o.Name === ko.utils.unwrapObservable(locationsViewModel.selectedFirstOption));
+            var obj = region.Districts.find(o => o.Name === value);
+            for (let i in obj.Suburbs) {
+                locationsViewModel.thirdValues.push(obj.Suburbs[i].Name);
+            };
+            debugger;
+        }
+    });
+        ko.applyBindings(locationsViewModel);
+</script>

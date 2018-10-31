@@ -1,0 +1,22 @@
+﻿@model KeysPlus.Service.Models.SearchInputModel
+@using KeysPlus.Service.Services
+<div class="pagedList text-center">
+    @if (Model.PageCount == 1)
+    {
+        <div class="pagination-container">
+            <ul class="pagination">
+                <li class="disabled PagedList-pageCountAndLocation">
+                    <a>Page 1 of 1.</a>
+                </li>
+            </ul>
+        </div>
+    }
+    @Html.PagedListPager(Model.Items, page => Url.Action(Model.PagedInput.ActionName, Model.PagedInput.ControllerName, Model.PagedInput.PagedLinkValues.AddPageValue(page)),
+     new PagedListRenderOptions()
+     {
+         Display = PagedListDisplayMode.IfNeeded,
+         DisplayPageCountAndCurrentLocation = true,
+         MaximumPageNumbersToDisplay = 5
+     })
+
+</div>

@@ -1,0 +1,399 @@
+﻿@{
+    ViewBag.Title = "Property Investment Calculator";
+}
+
+<body>
+    <div id="mainPage">
+        <div class="block-header">
+            <h3>Property Investment Calculator</h3>
+        </div>
+        <hr />
+        <div class="panel-group" role="tablist">
+            <form>
+                <div class="panel panel-default" data-bind="with: PropertyValue"> 
+                    <div class="panel-heading" data-toggle="collapse" href="#propertValue" role="tab">
+                        <h3 style="display:inline-block" class="panel-title">Property Value</h3>
+                        <div style="float:right" data-bind="if: EstimatedValue"><span>$<span data-bind="numeric: EstimatedValue"></span></span></div>
+                        <div style="float:right" data-bind="ifnot: EstimatedValue"></div>
+                        <br />
+                    </div>
+                    <div class="panel-collapse collapse in" role="tabpanel" id="propertValue" aria-labelledby="propertValue" aria-expanded="true">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Estimated Value</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">$</div>
+                                                <input type="text" class="form-control" data-bind="value: EstimatedValue" placeholder="Amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Estimated Capital Gain</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">%</div>
+                                                <input type="text" class="form-control" data-bind="value: CapitalGain" placeholder="Amount">
+                                                <div class="input-group-addon">% of property value</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default" data-bind="with: RentalIncome">
+                    <div class="panel-heading" data-toggle="collapse" href="#rentalIncome" role="tab">
+                        <h3 style="display:inline-block" class="panel-title">Rental Income</h3>
+                        <div style="float:right" data-bind="if: AnnualRentalIncome"><span>$<span data-bind="numeric: AnnualRentalIncome"></span> Annually</span></div>
+                        <div style="float:right" data-bind="ifnot: AnnualRentalIncome"></div>
+                    </div>
+                    <div class="panel-collapse collapse in" role="tabpanel" id="rentalIncome">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Rent</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">$</div>
+                                                <input type="text" class="form-control" data-bind="value: WeeklyRentalIncome" placeholder="Amount">
+                                                <div class="input-group-addon"> Weekly</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Estimated Rental Vacancy</label>
+                                            <a class="glyphicon glyphicon-question-sign" onclick="showVacancyMessage()" data-toggle="tooltip" data-placement="bottom" title="Weeks per year rental is vacant"></a>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" data-bind="value: VacancyRate" placeholder="Weeks">
+                                                <div class="input-group-addon">Per Year</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="vacancy" style="display: none">
+                                        <br />
+                                        <strong class="alert alert-info">Weeks per year rental is vacant</strong>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default" data-bind="with: Expenses">
+                    <div class="panel-heading" data-toggle="collapse" href="#expense" role="tab">
+                        <h3 style="display:inline-block" class="panel-title">Expenses</h3>
+                        <div style="float:right" data-bind="if: AnnualExp"><span>$<span data-bind="numeric: AnnualExp"></span> Annually</span></div>
+                        <div style="float:right" data-bind="ifnot: AnnualExp"></div>
+                    </div>
+                    <div class="panel-collapse collapse in" role="tabpanel" id="expense">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Council Rates</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="input-group" data-bind="validationOptions: { insertMessages: false}">
+                                                <div class="input-group-addon">$</div>
+                                                <input type="text" class="form-control" placeholder="Amount" style="width : 50%" data-bind="value: CouncilRateExp">
+                                                <select class="form-control" style="width : 50%" data-bind="options: Frequencies, optionsText: 'Name', value: CouncilRateFreq"></select>
+                                            </div>
+                                            <div class="validationMessage" data-bind="validationMessage: CouncilRateExp"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Maintenance</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="input-group" data-bind="validationOptions: { insertMessages: false}">
+                                                <div class="input-group-addon">$</div>
+                                                <input type="text" class="form-control" placeholder="Amount" style="width : 50%" data-bind="value: MaintenanceExp">
+                                                <select class="form-control" style="width : 50%" data-bind="options: Frequencies, optionsText: 'Name', value: MaintenanceFreq"></select>
+                                            </div>
+                                            <div class="validationMessage" data-bind="validationMessage: MaintenanceExp"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Insurance</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="input-group" data-bind="validationOptions: { insertMessages: false}">
+                                                <div class="input-group-addon">$</div>
+                                                <input type="text" class="form-control" placeholder="Amount" style="width : 50%" data-bind="value: InsuranceExp">
+                                                <select class="form-control" style="width : 50%" data-bind="options: Frequencies, optionsText: 'Name', value: InsuranceFreq"></select>
+                                            </div>
+                                            <div class="validationMessage" data-bind="validationMessage: InsuranceExp"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Other</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="input-group" data-bind="validationOptions: { insertMessages: false}">
+                                                <div class="input-group-addon">$</div>
+                                                <input type="text" class="form-control" placeholder="Amount" style="width : 50%" data-bind="value: OtherExp">
+                                                <select class="form-control" style="width : 50%" data-bind="options: Frequencies, optionsText: 'Name', value: OtherFreq"></select>
+                                            </div>
+                                            <div class="validationMessage" data-bind="validationMessage: OtherExp"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default" data-bind="with: LoanRepayments">
+                    <div class="panel-heading" data-toggle="collapse" href="#loanRepayment" role="tab">
+                            <h3 style="display:inline-block" class="panel-title">Loan Repayments</h3>
+                            <div style="float:right" data-bind="if: AnnualLoanRepayment"><span>$<span data-bind="numeric: AnnualLoanRepayment"></span> Annually</span></div>
+                            <div class="row" data-bind="ifnot: AnnualLoanRepayment"></div>
+                            <div class="row" data-bind="if: InterestYearOne">
+                                <br />
+                                <p class="small panel-heading" style="display:inline-block" data-bind="if: InterestYearOne">Interest Paid in Year 1</p>
+                                <p class="small panel-heading" style="float:right" data-bind="if: InterestYearOne"><span>$<span data-bind="numeric: InterestYearOne"></span></span></p>
+                            </div>
+                        <div class="row" data-bind="ifnot: InterestYearOne"></div>
+                        <div class="row" data-bind="if: PrincipalYearOne">
+                            <p class="small panel-heading" style="display:inline-block" data-bind="if: PrincipalYearOne">Principal Paid in Year 1</p>
+                            <p class="small panel-heading" style="float:right" data-bind="if: PrincipalYearOne"><span>$<span data-bind="numeric: PrincipalYearOne"></span></span></p>
+                        </div>
+                        <div class="row" data-bind="ifnot: PrincipalYearOne"></div>
+                    </div>
+                        <div class="panel-collapse collapse in" role="tabpanel" id="loanRepayment">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-control-label">Loan Amount</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">$</div>
+                                                    <input type="text" class="form-control" placeholder="Amount" data-bind="value: LoanAmount">
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-control-label">Interest Rate</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="input-group">
+
+                                                    <input type="text" class="form-control" placeholder="Amount" data-bind="value: InterestRate">
+                                                    <div class="input-group-addon">% p / a</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-control-label">Loan Type</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <select class="form-control" data-bind="options: LoanType, optionsText: 'Name', value: LoanTypeSelected"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-control-label">Loan Term</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Years" data-bind="value: LoanTermYears">
+                                                    <div class="input-group-addon">Years</div>
+                                                </div>
+                                                <br>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Months" data-bind="value: LoanTermMonths">
+                                                    <div class="input-group-addon">Months</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <li class="list-group-item">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label class="form-control-label">Loan Repayments</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">$</div>
+                                                    <input type="text" class="form-control" placeholder="Amount" style="width : 50%" data-bind="value: RepaymentAmount, disable: IsInterestOnly">
+                                                    <select class="form-control" style="width: 50%" data-bind="options: RepaymentFrequencies, optionsText: 'Name', value: RepaymentFreqSelected"></select>
+                                                </div>
+                                                <div class="validationMessage" id="repaymentMessage">Repayment must be greater than interest only amount</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" href="#loanIncomeTax" role="tab">
+                        <h3 style="display:inline-block" class="panel-title">Income Tax</h3>
+                        <div style="float:right" data-bind="if: AnnualTax"><span>$<span data-bind="numeric: AnnualTax"></span> Annually</span></div>
+                        <div style="float:right" data-bind="ifnot: AnnualTax"></div>
+                    </div>
+                    <div class="panel-collapse collapse in" role="tabpanel" id="loanIncomeTax">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Income Tax</label>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <select class="form-control" data-bind="options: TaxRates, optionsText: 'Name', value: SelectedTaxRate"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" href="#returnYearOne" role="tab">
+                        <h3 class="panel-title">Estimated Return Year One</h3>
+                    </div>
+                    <div class="panel-collapse collapse in" role="tabpanel" id="returnYearOne">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Gross Rental Yield</label>
+                                            <a class="glyphicon glyphicon-question-sign" onclick="showGrossRentalYield()" data-toggle="tooltip" data-placement="bottom" title="Gross rental yield is rental income divided by property value"></a>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div style="float: right"><span><span data-bind="text: GrossRentalYield"></span>%</span></div>
+                                        </div>
+                                    </div>
+                                    <div id="grossRentalYield" style="display: none">
+                                        <br />
+                                        <strong class="alert alert-info">Gross rental yield is rental income divided by property value.</strong>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Net Rental Yield</label>
+                                            <a class="glyphicon glyphicon-question-sign" onclick="showNetRentalYield()" data-toggle="tooltip" data-placement="bottom" title="Net rental yield is rental income, less expenses, divided by property value"></a>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div style="float: right"><span><span data-bind="text: NetRentalYield"></span>%</span></div>
+                                        </div>
+                                    </div>
+                                    <div id="netRentalYield" style="display: none">
+                                        <br />
+                                        <strong class="alert alert-info">Net rental yield is rental income, less expenses, divided by property value.</strong>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Capital Gain</label>
+                                            <a class="glyphicon glyphicon-question-sign" onclick="showCapitalGain()" data-toggle="tooltip" data-placement="bottom" title="Capital gain is how much value your property has gained over the year"></a>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div style="float: right"><span>$<span data-bind="numeric: CapitalGainYearOne"></span></span></div>
+                                        </div>
+                                    </div>
+                                    <div id="capitalGain" style="display: none">
+                                        <br />
+                                        <strong class="alert alert-info">Capital gain is how much value your property has gained over the year.</strong>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Annual Equity</label>
+                                            <a class="glyphicon glyphicon-question-sign" onclick="showAnnualEquity()" data-toggle="tooltip" data-placement="bottom" title="Annual equity is the sum of capital gain and principal paid in year one"></a>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div style="float: right"><span>$<span data-bind="numeric: AnnualEquity"></span></span></div>
+                                        </div>
+                                    </div>
+                                    <div id="annualEquity" style="display: none">
+                                        <br />
+                                        <strong class="alert alert-info">Annual equity is the sum of capital gain and principal paid in year one.</strong>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-control-label">Annual Cash Flow</label>
+                                            <a class="glyphicon glyphicon-question-sign" onclick="showAnnualCashFlow()" data-toggle="tooltip" data-placement="bottom" title="Annual cash flow is rental income, +/- income tax, less expenses and loan repayments"></a>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div style="float: right"><span>$<span data-bind="numeric: AnnualCashFlow"></span></span></div>
+                                        </div>
+                                    </div>
+                                    <div id="annualCashFlow" style="display: none">
+                                        <br />
+                                        <strong class="alert alert-info">Annual cash flow is rental income, +/- income tax, less expenses and loan repayments.</strong>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="~/Areas/Tools/Scripts/InvestmentCalculator.js"></script>
+

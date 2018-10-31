@@ -1,0 +1,158 @@
+﻿@using (Html.BeginForm())
+{
+
+    string currentSort = ViewBag.CurrentSort;
+    switch (currentSort)
+    {
+        //case "PropName_asc":
+        //    currentSort = "Name(Asc)";
+        //    break;
+        //case "PropName_desc":
+        //    currentSort = "Name(Desc)";
+        //    break;
+        case "JobStatus_asc":
+            currentSort = "Job Status(Asc)";
+            break;
+        case "JobStatus_desc":
+            currentSort = "Job Status(Desc)";
+            break;
+        case "JobPercentage_asc":
+            currentSort = "Progress(Asc)";
+            break;
+        case "JobPercentage_desc":
+            currentSort = "Progress(Desc)";
+            break;
+        case "AcceptedQuote_asc":
+            currentSort = "Accepted Quote(Asc)";
+            break;
+        case "AcceptedQuote_desc":
+            currentSort = "Accepted Quote(Desc)";
+            break;
+
+        default:
+            ViewBag.CurrentSort = "JobStatus_asc";
+            currentSort = "Job Status(Asc)";
+            break;
+    }
+    <div data-bind="visible: action.managerManageJob">
+        <div class="row">
+            <div class="col-md-8">
+                <form>
+                    <div class="input-group">
+                        <input type="text" name="SearchString" id="searchId" class="form-control"
+                                placeholder="What are you searching for?" autofocus />
+                        <span class="input-group-btn">
+
+                            <select name="jobs" class="form-control" style="height: 34px; width:100px">
+                                <option value="AllJobs">All Jobs</option>
+                                <option value="MyJobs">My Jobs</option>
+                                <option value="ContractJobs">Contract Jobs</option>
+                            </select>
+                        </span>
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary" style="height: 34px;">
+                                <span class="">
+                                    <span class="fa fa-search"></span>
+                                    Search
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 pull-right" style="height:38px; line-height:38px">
+                <div class="row">
+                    <div class="col-md-8 pull-right">
+                        <select class="form-control" onChange='location.href = this.value'>
+                            <option selected disabled hidden>@currentSort</option>
+                           
+                            @*<option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = 1,sortOrder = "PropName_asc", currentFilter = ViewBag.CurrentFilter })">
+                                Name(Asc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = 1, sortOrder = "PropName_desc", currentFilter = ViewBag.CurrentFilter })">
+                                Name(Desc)
+                            </option>*@
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "JobStatus_asc", currentFilter = ViewBag.CurrentFilter })">
+                                Job Status(Asc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "JobStatus_desc", currentFilter = ViewBag.CurrentFilter })">
+                                Job Status(Desc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "JobPercentage_asc", currentFilter = ViewBag.CurrentFilter })">
+                                Progress(Asc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "JobPercentage_desc", currentFilter = ViewBag.CurrentFilter })">
+                                Progress(Desc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "AcceptedQuote_asc", currentFilter = ViewBag.CurrentFilter })">
+                                Accepted Quote(Asc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "AcceptedQuote_desc", currentFilter = ViewBag.CurrentFilter })">
+                                Accepted Quote(Desc)
+                            </option>
+                        </select>
+                      
+                    </div>
+                    <span style="float:right">Sort By:</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-bind="visible: $parent.action.providerManageJob() || $parent.action.providerApplyJob">
+        <div class="row">
+            <div class="col-md-8">
+                <form>
+                    <div class="input-group">
+                        <input type="text" name="SearchString" id="searchId" class="form-control" style="padding-left:4px"
+                               placeholder="What are you searching for?" autofocus />
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="">
+                                    <span class="fa fa-search"></span>
+                                    Search
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 pull-right" style="height:38px; line-height:38px">
+                <div class="row">
+                    <div class="col-md-8 pull-right">
+                        <select class="form-control" onChange='location.href = this.value'>
+                            <option selected disabled hidden>@currentSort</option>
+                            @*<option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = 1,sortOrder = "PropName_asc", currentFilter = ViewBag.CurrentFilter })">
+                                Name(Asc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = 1, sortOrder = "PropName_desc", currentFilter = ViewBag.CurrentFilter })">
+                                Name(Desc)
+                            </option>*@
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "JobStatus_asc", currentFilter = ViewBag.CurrentFilter })">
+                                Job Status(Asc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "JobStatus_desc", currentFilter = ViewBag.CurrentFilter })">
+                                Job Status(Desc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "JobPercentage_asc", currentFilter = ViewBag.CurrentFilter })">
+                                Progress(Asc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "JobPercentage_desc", currentFilter = ViewBag.CurrentFilter })">
+                                Progress(Desc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "AcceptedQuote_asc", currentFilter = ViewBag.CurrentFilter })">
+                                Accepted Quote(Asc)
+                            </option>
+                            <option value="@Url.Action("Index", "Home", new { Area = "Jobs" , userAction = ViewBag.UserAction, sortOrder = "AcceptedQuote_desc", currentFilter = ViewBag.CurrentFilter })">
+                                Accepted Quote(Desc)
+                            </option>
+                        </select>
+                    </div>
+                    <span style="float:right">Sort By:</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+}
+<br />
+<br />

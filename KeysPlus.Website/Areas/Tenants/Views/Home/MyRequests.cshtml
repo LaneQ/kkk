@@ -1,0 +1,493 @@
+﻿ @model MyRequestSearchModel
+@{
+    ViewBag.Title = "Tenant | My Requests";
+}
+<div id="mainPage" data-bind="visible : MainView">
+    <div class="ui grid">
+        <div class="eight wide column">
+            <h2 class="ui header">Your Requests</h2>
+            <span class="text-muted">You can manage your requests here</span>
+        </div>
+        <div class="middle aligned eight wide column">
+            @{
+                Html.RenderPartial("_SearchBox");
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="highlighted">
+        <div class="ui grid">
+            <div class="eight wide column">
+                @{
+                    Html.RenderPartial("_SortInput");
+                }
+            </div>
+            <div class="middle aligned eight wide column">
+                <a class="ui teal button right floated" data-bind="attr: { 'href': '@Url.Action("SendRequest", "Home", new { area = "Tenants", returnUrl = HttpContext.Current.Request.RawUrl})' }" style="margin-right : 10px"><i class="plus circle icon"></i> Add New Request</a>
+            </div>
+        </div>
+    </div> 
+    <br />
+    <div class="ui secondary pointing menu">
+        @Html.ActionLink("Current", "MyRequests", new { RequestStatus = 1 }, new { @class= Model.RequestStatus.Equals(PropertyRequestStatus.Submitted) ? "active item" : "item" })
+        @Html.ActionLink("Accepted", "MyRequests", new { RequestStatus = 2 }, new { @class= Model.RequestStatus.Equals(PropertyRequestStatus.Accepted) ? "active item" : "item" })
+        @Html.ActionLink("Declined", "MyRequests", new { RequestStatus = 5 }, new { @class= Model.RequestStatus.Equals(PropertyRequestStatus.Declined) ? "active item" : "item" })
+    </div>
+    <br />
+    <table class="ui very basic single line table">
+        <thead>
+            <tr>
+                <th><h5 class="ui teal header">Landlord</h5></th>
+                <th><h5 class="ui teal header">Property</h5></th>
+                
+                <th><h5 class="ui teal header">Request Type</h5></th>
+                <th><h5 class="ui teal header">Message</h5></th>
+                <th><h5 class="ui teal header">Actions</h5></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach : Items">
+            <tr>
+                <td>
+                    <h5 class="ui grey header" data-bind="text : LandlordName" style="margin-top : 0px; margin-bottom : 5px"></h5>
+                    <div class="text-muted" data-bind="text: moment(CreatedOn()).format('ll')"></div>
+                </td>
+                <td>
+                    <h5 class="ui grey header" data-bind="text : PropertyAddress" style="margin-top : 0px; margin-bottom : 5px"></h5>
+                    
+                </td>
+                <td data-bind="text : RequestType"></td>
+                <td data-bind="partialText : Model.RequestMessage" style="word-break : break-word; white-space: initial"></td>
+                <td style="vertical-align : middle">
+                    <button class="ui teal mini basic button" data-bind="click:$root.ShowDetail">Detail</button>
+                    <button class="ui teal mini basic button" data-bind="click:$root.ShowEdit, visible : Model.RequestStatusId() == 1 || Model.RequestStatusId() == 3">Edit</button>
+                    <button class="ui basic mini orange button" data-bind="click : $root.ShowDelete">Delete</button>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+    <div class="ui divider"></div>
+    @*<div data-bind="foreach : Items">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div title="Delete" class="delete-top-right-corner" data-bind="click: $root.ShowDelete"><i class="fa fa-trash-o"></i></div>
+                        <div class="row">                                       
+                            <div class="col-md-3">
+                                @Html.Partial("_PanelImgs")
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row" style="line-height : 25px">
+                                    <div class="row">
+                                        <div class="col-md-5"><strong>Request Status: </strong></div>
+                                        <div class="col-md-7"><span data-bind="text : RequestStatus"></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><strong>Request Type: </strong></div>
+                                        <div class="col-md-7"><span data-bind="text : RequestType"></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><strong>Requested On: </strong></div>
+                                        <div class="col-md-7"><span data-bind="text: moment(moment.utc(moment(CreatedOn()).format('YYYY-MM-DD HH:mm:ss')).toDate()).format('ll') "></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><strong>Landlord Name: </strong></div>
+                                        <div class="col-md-7"><span data-bind="text : LandlordName"></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5"><strong>Landlord Phone: </strong></div>
+                                        <div class="col-md-7"><span data-bind="text : LandlordContactNumber"></span></div>
+                                    </div>
+                                </div><!--row-->
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Description: </strong></div>
+                                    <div class="col-md-8"><span data-bind="text : Model.RequestMessage" style="word-break: break-all;"></span></div>
+                                </div>
+                            </div>
+                            <div class="prop-actions">
+                                <button class="btn btn-default" data-bind="click:$root.ShowDetail"><span class="zmdi zmdi-info-outline"></span> Detail</button>
+                                <button class="btn btn-success" data-bind="click:$root.ShowEdit, visible : Model.RequestStatusId() == 1 || Model.RequestStatusId() == 3" ><span class="zmdi zmdi-edit"></span> Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div data-bind="if:Items().length <= 0">
+        <p> You do not have any requests</p>
+    </div>
+    @{
+        Html.RenderPartial("_PagedItems");
+    }
+</div>
+<div id="requestDetail" data-bind="visible : DetailView" style="display:none">
+    <h5 class="ui header pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+    <h3 class="header" style="margin-top : 0px">Request Details</h3>
+    <div class="ui divider"></div>
+    <div class="ui grid" data-bind="with : SelectedItem">
+        <div class="eight wide column">
+            <div class="ui relaxed divided list">
+                <div class="item">
+                    <div class="ui grid">
+                        <div class="six wide column">
+                            <h4 class="ui grey header">Property :</h4>
+                        </div>
+                        <div class="eight wide column">
+                            <span data-bind="text : PropertyAddress"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="ui grid">
+                        <div class="six wide column">
+                            <h4 class="ui grey header">Landlord :</h4>
+                        </div>
+                        <div class="eight wide column">
+                            <span data-bind="text : LandlordName"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="ui grid">
+                        <div class="six wide column">
+                            <h4 class="ui grey header">Request Type:</h4>
+                        </div>
+                        <div class="eight wide column" data-bind="text: RequestType"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="ui grid">
+                        <div class="six wide column">
+                            <h4 class="ui grey header">Request Status:</h4>
+                        </div>
+                        <div class="eight wide column" data-bind="text: RequestStatus"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="ui grid">
+                        <div class="six wide column">
+                            <h4 class="ui grey header">Date Sent:</h4>
+                        </div>
+                        <div class="eight wide column" data-bind="text: moment(CreatedOn()).format('ll')"></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="ui grid">
+                        <div class="six wide column">
+                            <h4 class="ui grey header">Documents:</h4>
+                        </div>
+                        <div class="eight wide column">
+                            <div data-bind="if:DocFiles().length>0">
+                                <div data-bind="foreach : DocFiles" style="display : inline-block">
+                                    <ul>
+                                        <li>
+                                            <a data-bind="attr:{href: Data()}"><span data-bind="text:OldFileName"></span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div data-bind="ifnot:DocFiles().length>0">
+                                Not Available
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="ui grid">
+                        <div class="six wide column">
+                            <h4 class="ui grey header">Message:</h4>
+                        </div>
+                        <div class="eight wide column" data-bind="text: Model.RequestMessage"></div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="eight wide column">
+            <div class="ui segment">
+                @Html.Partial("_DetailViewImg")
+            </div>
+        </div>
+    </div>
+    @*<div class="row" data-bind="with : SelectedItem">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="h4"> Details</span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-5" style="padding-right : 0px;">
+                                    <strong>Request Type:</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <span data-bind="text: RequestType"></span>
+                                </div>
+
+                                <div class="col-md-5" style="padding-right : 0px;">
+                                    <strong>Requested On:</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <span data-bind="text:moment(moment.utc(moment(CreatedOn()).format('YYYY-MM-DD HH:mm:ss')).toDate()).format('ll')"></span>
+                                </div>
+
+                                <div class="col-md-5" style="padding-right : 0px;">
+                                    <strong>Job Request Status:</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <span data-bind="text: RequestStatus"></span>
+                                </div>
+                                <div class="col-md-5" style="padding-right : 0px;">
+                                    <strong>Landlord Name:</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <span data-bind="text: LandlordName"></span>
+                                </div>
+                                <div class="col-md-5" style="padding-right : 0px;">
+                                    <strong>Landlord Phone:</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <span data-bind="text: LandlordContactNumber"></span>
+                                </div>
+
+                                <div class="col-md-5" style="padding-right : 0px;">
+                                    <strong>Job Description:</strong>
+                                </div>
+                                <div class="col-md-7">
+                                    <span data-bind="text: Model.RequestMessage"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5"><strong>Documents:</strong></div>
+                                <div class="col-md-7">
+                                    <div data-bind="if:DocFiles().length>0">
+                                        <div data-bind="foreach : DocFiles" style="display : inline-block">
+                                            <ul>
+                                                <li>
+                                                    <a data-bind="attr:{href: Data()}"><span data-bind="text:OldFileName"></span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7" data-bind="ifnot:DocFiles().length>0">
+                                        Not Available
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            @Html.Partial("_DetailViewImg")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+<div id="updateRequest" data-bind="visible : EditView" style="display:none">
+    
+    <div style="width : 80%; margin : auto" data-bind="validationOptions: { insertMessages: false}">
+        <h5 class="ui header pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+        <h3 class="header">Edit Request</h3>
+        <div class="ui divider"></div>
+        <div class="ui segment">
+            <form class="ui form" data-bind="with : SelectedItemCopy">
+                <div class="field">
+                    <label>Request Message <span style="color : red">*</span></label>
+                    <div class="ui input">
+                        <textarea data-bind="value : Model.RequestMessage, valueUpdate:'afterkeydown'" maxlength="500" rows="6" cols="70" required></textarea>
+                    </div>
+                    <p class="text-muted" style="font-size:11px; text-align : left">Maximum of 500 characters</p>
+                    <p class="validationMessage" data-bind="validationMessage: Model.RequestMessage"></p>
+                </div>
+                <div class="field">
+                    <label>Please upload your documents here:</label>
+                    <div class="ui divider"></div>
+                    @Html.Partial("_MediaInput")
+                    <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Total size is 5 MB and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*</p>
+                </div>
+                <div class="field text-center">
+                    <button type="button" class="ui basic teal button" data-bind="click:$root.Edit, enable : IsValid">Save</button>
+                    <button type="button" class="ui basic orange button" data-bind="click: $root.ShowMain">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <br />
+    </div>
+    
+</div>
+
+<div id="deleteRequest" data-bind="visible : DeleteView" style="display:none">
+
+    <h5 class="ui header pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+    <h3 class="ui header">Delete Request</h3>
+    <div class="ui divider"></div>
+    <h4 class="ui header">You are deleting the following request :</h4>
+    <br />
+    <div data-bind="with : SelectedItem">
+        <div class="ui grid">
+            <div class="eight wide column">
+                <div class="ui relaxed divided list">
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Property :</h4>
+                            </div>
+                            <div class="eight wide column">
+                                <span data-bind="text : PropertyAddress"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Landlord :</h4>
+                            </div>
+                            <div class="eight wide column">
+                                <span data-bind="text : LandlordName"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Request Type:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text: RequestType"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Request Status:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text: RequestStatus"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Date Sent:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text: moment(CreatedOn()).format('ll')"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Documents:</h4>
+                            </div>
+                            <div class="eight wide column">
+                                <div data-bind="if:DocFiles().length>0">
+                                    <div data-bind="foreach : DocFiles" style="display : inline-block">
+                                        <ul>
+                                            <li>
+                                                <a data-bind="attr:{href: Data()}"><span data-bind="text:OldFileName"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div data-bind="ifnot:DocFiles().length>0">
+                                    Not Available
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Message:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text: Model.RequestMessage"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="eight wide column">
+                <div class="ui segment">
+                    @Html.Partial("_DetailViewImg")
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="text-center">
+            <button type="button" class="ui basic teal button" data-bind="click:$root.Delete" autofocus>Confirm</button>
+            <button type="button" class="ui basic orange button" data-bind="click:$root.ShowMain">Cancel</button>
+        </div>
+        <br />
+    </div>
+    @*<div class="row">
+        <div class="col-md-12" style="padding-bottom: 100px;">
+            <div class="panel panel-default" data-bind="with : SelectedItem">
+                <div class="panel-heading">
+                    Are you sure you want to delete this job request?
+                </div>
+                <div class="panel-body">
+                    <div class="row" style="padding-left:10px">
+                        <div class="col-md-5">
+                            <div class="row" style="line-height : 25px">
+                                <div class="row">
+                                    <div class="col-md-5"><strong>Request Status: </strong></div>
+                                    <div class="col-md-7"><span data-bind="text : RequestStatus"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"><strong>Request Type: </strong></div>
+                                    <div class="col-md-7"><span data-bind="text : RequestType"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"><strong>Requested On: </strong></div>
+                                    <div class="col-md-7"><span data-bind="text: moment(CreatedOn()).format('ll')"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"><strong>Landlord Name: </strong></div>
+                                    <div class="col-md-7"><span data-bind="text : LandlordName"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"><strong>Landlord Phone: </strong></div>
+                                    <div class="col-md-7"><span data-bind="text : LandlordContactNumber"></span></div>
+                                </div>
+                            </div><!--row-->
+                        </div>
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-4"><strong>Description: </strong></div>
+                                <div class="col-md-8"><span data-bind="text : Model.RequestMessage" style="word-break: break-all;"></span></div>
+                            </div>
+                        </div>
+
+                    </div><!--row-->
+                </div><!--panel body-->
+                <div class="prop-actions">
+                    <button type="button" class="btn btn-success" data-bind="click:$root.Delete" autofocus>Confirm</button>
+                    <button type="button" class="btn btn-danger" data-bind="click:$root.ShowMain">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>*@
+</div>
+@section Modal{
+    @{
+        Html.RenderPartial("_SearchResultModal");
+    }
+}
+<script src="~/Scripts/Tenants/MyRequests.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#NoRecord").modal("show");
+        var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        var vm = new PageViewModel(dataVm);
+        ko.applyBindings(vm);
+    });
+</script>

@@ -1,0 +1,17 @@
+﻿@model KeysPlus.Service.Models.SearchInputModel
+
+<div class="ui search half-width" id="search-wrap" data-step="1" data-intro="Input key words and do search." style="float : right !important">
+    @using (Html.BeginForm())
+    {
+        <div class="ui icon input full-width">
+            <input class="prompt" type="text" name="SearchString" value="@(Model.SearchString != null ? Model.SearchString : "")" placeholder="What are you looking for ?">
+            <i id="icon-submitt" class="inverted circular search link icon"></i>
+        </div>
+
+        foreach (var item in Model.InputValues)
+        {
+            <input type="hidden" name="@item.Name" value="@item.Value" />
+        }
+    }
+
+</div>

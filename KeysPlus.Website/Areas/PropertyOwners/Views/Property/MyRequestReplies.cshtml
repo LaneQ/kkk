@@ -1,0 +1,153 @@
+﻿@model IPagedList<KeysPlus.Service.Models.ViewRequestReplyModel>
+@{
+    ViewBag.Title = "Landlord's Request Replies";
+}
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block-header"><h3 class="modal-title">Replies To Request</h3></div>
+            <span class="text-muted" style="font-size:12px;">You can view the replies to your requests here</span>
+        </div>
+    </div>
+    <hr />
+    <a class="btn btn-info btn-sx" data-bind="attr: { href: '@Html.Raw(ViewBag.ReturnUrl)' }"><span class="fa fa-arrow-left"></span> Back</a>
+    <br /><br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span> Your Request Details</span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-4"><strong>Request: </strong></div>
+                                <div class="col-md-8"><span>@ViewBag.Request</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"><strong>Requested On: </strong></div>
+                                <div class="col-md-8"><span>    @ViewBag.RequestedOn</span></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!--panel body-->
+            </div><!--panel-->
+        </div><!--column-->
+    </div><!--row-->
+
+
+
+
+    <div class="row" data-bind="foreach : Replies">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="carousel-property" class="carousel slide" data-ride="carousel" margin : auto" data-bind="visible : ImgFiles().length>0">
+                                <!-- Wrapper for slides -->
+                                <div class="carousel-inner" role="listbox" data-bind="foreach: ImgFiles()">
+                                    <div class="item" data-bind="css: {active: $index() == 0}">
+                                        <img data-bind="attr: {src: Data}" alt="Thumbnail" data-target="#lightbox" style="max-height:200px">
+                                    </div>
+                                </div>
+
+                                <!-- Controls -->
+                                <a class="left carousel-control" href="#carousel-property" role="button" data-slide="prev">
+                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-property" role="button" data-slide="next">
+                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="thumbnail" data-bind="visible : ImgFiles().length<=0">
+                                        <img src="/images/no-prop-img.png" alt="noPropImg" />
+                                    </div>
+                                </div><!--Without Images -->
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="row" style="line-height : 25px">
+
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Tenant Name: </strong></div>
+                                    <div class="col-md-7"><span data-bind="text : TenantName"></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Tenant Phone: </strong></div>
+                                    <div class="col-md-7">
+                                        <span data-bind="if: TenantPhoneNumber">
+                                            <span data-bind="text : TenantPhoneNumber"></span>
+                                        </span>
+                                        <span data-bind="ifnot: TenantPhoneNumber">
+                                            Not Available
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Replied On: </strong></div>
+                                    <div class="col-md-7"><span data-bind="text : moment(RepliedOn).format('ll') "></span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><strong>Reply:</strong></div>
+                                    <div class="col-md-7"><span data-bind="text : RequestMessage" style="word-break: break-all;"></span></div>
+                                </div>
+                            </div><!--row-->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-bind="visible:Replies().length==0">
+        <p style="text-align:center"> No replies to this requests</p>
+    </div>
+    @{
+        Html.RenderPartial("_PagedMyRequestReplies");
+    }
+</div>
+
+<script>
+    function RequestReplies(item) {
+        var self = this;
+        self.Id = item.RequestId;
+        self.RequestMessage = item.RequestReply;
+        self.TenantName = item.TenantName;
+        self.TenantPhoneNumber = item.TenantPhoneNumber; 
+        self.MediaFiles = item.MediaFiles;
+        self.RepliedOn = item.CreatedOn; 
+
+        self.ImgFiles = ko.computed(function () {
+            return self.MediaFiles.filter(function (element) {
+                return element.MediaType == 1;
+            });
+        });
+        self.DocFiles = ko.computed(function () {
+            return self.MediaFiles.filter(function (element) {
+                return element.MediaType == 2;
+            });
+        });
+    }
+
+    function ViewModel(data) {
+        var self = this;
+        self.Replies = ko.observableArray();  
+        data.forEach(function (element) {
+            self.Replies.push(new RequestReplies(element));
+        });
+        console.log(self.Replies());
+    }
+
+      $(document).ready(function () {
+        ko.applyBindings(new ViewModel(@Html.Raw(Json.Encode(Model))))
+    });
+</script>

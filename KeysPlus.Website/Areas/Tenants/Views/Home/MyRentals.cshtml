@@ -1,0 +1,294 @@
+﻿@model KeysPlus.Service.Models.MyRentalsSearchModel
+@{
+    ViewBag.Title = "My Rentals";
+}
+<div id="mainPage" data-bind="visible : MainView">
+
+    <div class="ui grid">
+        <div class="six wide column">
+            <h2 class="ui header">Your Rental Properties</h2>
+            <span class="text-muted">You can manage your rental properties here</span>
+        </div>
+        <div class="middle aligned ten wide column">
+            @{
+                Html.RenderPartial("_SearchBox");
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="highlighted">
+        <div class="ui grid">
+            <div class="eight wide column">
+                @{
+                    Html.RenderPartial("_SortInput");
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="ui divider"></div>
+    <div data-bind="if:Items().length <= 0">
+        <p>You do not have any rental properties</p>
+    </div>
+    <table class="ui single line table" style="border : none">
+        <thead>
+            <tr>
+                <th style="background : none"><h5 class="ui teal header">Property</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Landlord</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Rent</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Start Date</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Next Payment On</h5></th>
+                <th style="background : none"></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach : Items">
+            <tr>
+                <td>
+                    <h5 class="ui grey header" data-bind="text : StreetAddress" style="margin : 1px"></h5>
+                    <h5 class="ui grey header" data-bind="text : CitySub" style="margin-top : 0px"></h5>
+                </td>
+                <td data-bind="text : Landlordname"></td>
+                <td>
+                    <span data-bind="if:Model.PaymentAmount">
+                        $<span data-bind="numeric : Model.PaymentAmount"></span>
+                        <span data-bind="text : RentalPaymentType"></span>
+                    </span>
+                    <span data-bind="ifnot:Model.PaymentAmount">
+                        Not Available
+                    </span>
+                </td>
+                <td data-bind="text : moment(Model.StartDate()).format('ll')"></td>
+                <td>
+                    <div data-bind="ifnot: NextPaymenDate">
+                        <div id="calendar">
+                            <p id="calendar-day">Due Date</p>
+                            <p id="calendar-month-year" style="word-break : break-word; white-space: initial">  Not available</p>
+                        </div>
+                    </div>
+
+                    <div data-bind="if: NextPaymenDate">
+                        <div id="calendar">
+                            <p id="calendar-day" data-bind="text:moment(NextPaymenDate()).format('dddd')"></p>
+                            <p id="calendar-date" data-bind="text:moment(NextPaymenDate()).format('D')"></p>
+                            <p id="calendar-month-year" data-bind="text:CalendarMonthYear"></p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="ui dropdown item">
+                        <i class="ui more grey list icon"></i>
+                        <div class="menu" style="background : #fff !important">
+                            <div class="item" data-bind="click:$root.ShowRequestForm">Send Request</div>
+                            <div class="item">
+                                <a href="#" data-bind="attr: { 'href': '@Url.Action("MyRequests", "Home", new { area = "Tenants", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.PropertyId() }">My Requests</a>
+                            </div>
+                            <div class="item">
+                                <a href="#" data-bind="attr: { 'href': '@Url.Action("LandLordRequests", "Home", new { area = "Tenants", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.PropertyId() }">Landlord's Requests</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    @*<div data-bind="foreach: Items">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3"><!--photo column-->
+
+                                    @Html.Partial("_PanelImgs")
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row" style="line-height : 25px">
+                                        <div>
+                                            <strong>Address :</strong>
+                                            <span data-bind="text : StreetAddress"></span>
+                                            <span data-bind="text : CitySub"></span>
+                                        </div>
+                                        <div><strong>Landlord Name: </strong><span data-bind="text : Landlordname"></span></div>
+                                        <div><strong>Landlord Phone Number: </strong><span data-bind="text : LandlordPhone"></span></div>
+                                        <div><strong>Rent:</strong>
+                                            <span data-bind="if:Model.PaymentAmount">
+                                                $<span data-bind="numeric : Model.PaymentAmount"></span>
+                                                <span data-bind="text : RentalPaymentType"></span>
+                                            </span>
+                                            <span data-bind="ifnot:Model.PaymentAmount">
+                                                Not Available
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div> Next payment on:</div>
+                                    <div data-bind="ifnot: NextPaymenDate">
+                                        <div id="calendar" padding="top:10px;">
+                                            <p id="calendar-day">Due Date</p>
+                                            <p id="calendar-month-year">  Information not provided</p>
+                                            <p id="calendar-month-year">  </p>
+                                        </div>
+                                    </div>
+
+                                    <div data-bind="if: NextPaymenDate">
+                                        <div id="calendar" padding="top:10px;">
+                                            <p id="calendar-day" data-bind="text:moment(NextPaymenDate()).format('dddd')"></p>
+                                            <p id="calendar-date" data-bind="text:moment(NextPaymenDate()).format('D')"></p>
+                                            <p id="calendar-month-year" data-bind="text:CalendarMonthYear"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-acts">
+                            <div class="col-md-4 text-center card-act-btn" data-bind="click:$root.ShowRequestForm"><i class="zmdi zmdi-file-plus"></i> Send Request</div>
+                            <div class="col-md-4 text-center card-act-btn">
+                                <a href="#" data-bind="attr: { 'href': '@Url.Action("MyRequests", "Home", new { area = "Tenants", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.PropertyId() }"><i class="fa fa-files-o"></i> My Requests</a>
+                            </div>
+                            <div class="col-md-4 text-center card-act-btn">
+                                <a href="#" data-bind="attr: { 'href': '@Url.Action("LandLordRequests", "Home", new { area = "Tenants", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.PropertyId() }">Landlord's Requests</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    @{
+        Html.RenderPartial("_PagedItems");
+    }
+</div>
+
+<div id="RequestPage" style="display:none" data-bind="visible : SendRequestView">
+    <div class="row">
+        <div style="width : 80%; margin : auto">
+            <h3>Rental Request Form</h3>
+            <hr />
+            <button class="btn btn-info btn-sx" data-bind="click:$root.ShowMain"><span class="fa fa-arrow-left"></span> Back</button>
+            <br /><br />
+        </div>
+    </div>
+    <div class="row" style="padding-bottom: 100px" data-bind="with: Request()">
+        <form class="step-form" style="margin-bottom:20px">
+            <fieldset>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Property Details
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Property Address :</label> <span data-bind="text :AddressString"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div style="margin-top:5px;">
+                                    <label class="control-label">Landlord Name </label> <span class="detailspan" data-bind="text : Landlordname"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Landlord Phone Number &nbsp;</label><span class="detailspan" data-bind="text : LandlordPhone"></span>
+                            </div>
+                        </div>
+                    </div><!--panel body-->
+                </div><!--panel-->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Type <span style="color:red;">*</span></label>
+                            <select class="form-control" id="jobRequestType" data-bind="value : Model.RequestTypeId">
+                                @foreach (var type in ViewBag.RequestTypes)
+                                {
+                                    <option value="@type.Id">@type.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Message <span style="color:red;">*</span></label>
+
+                            <textarea class="form-control" rows="5" style="height:123px;" data-bind="value: Model.RequestMessage, valueUpdate:'afterkeydown'"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Please upload your documents here<span style="color:red;"></span></label>
+                            <div class="panel panel-default">
+                                <div class="panel-body" style="min-height : 120px">
+                                    <div data-bind="foreach: Model.MediaFiles">
+                                        <div class="col-md-3 col-sm-3 col-sx-4" data-bind="visible : MediaType() == 1">
+                                            <div class="thumbnail">
+                                                <a data-bind="click : $parent.RemoveFile">
+                                                    <i class="zmdi zmdi-close-circle" style="float:right"></i>
+                                                </a>
+                                                <a target="_blank" data-bind="attr: { href: Data()}">
+                                                    <img class="img-responsive" data-bind="attr: {src: Data()}" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="list-group" data-bind="foreach: Model.MediaFiles">
+                                <li class="list-group-item" data-bind="visible : MediaType() == 2">
+                                    <span data-bind="text : Name"></span>
+                                    <span class="zmdi zmdi-close-circle pull-right" data-bind="click : $parent.RemoveFile"></span>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="btn btn-success">
+                                <span class="fa fa-cloud-upload"></span>
+                                Choose Files
+                                <input type="file" id="file-upload" class="key-upload" data-bind="uploadFiles : Model.MediaFiles" accept=".doc,.docx,.pdf,image/*" multiple />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-success" data-bind="click: $root.SendRequest, enable : IsValid">Submit</button>
+                        <button class="btn btn-group btn-danger" data-bind="click:$root.ShowMain">Cancel</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div><!--RequestPage-->
+@*@Html.Partial("_RequestForm")*@
+@Html.AntiForgeryToken()
+@section scripts{
+    <script src="~/Scripts/Tenants/MyRentals.js"></script>
+    <script>
+            $(document).ready(function () {
+                var model = @Html.Raw(Json.Encode(Model));
+                var dataVm = ko.mapping.fromJS(model);
+                var vm = new PageViewModel(dataVm);
+                ko.applyBindings(vm);
+            });
+    </script>
+}

@@ -1,0 +1,10 @@
+C:\Users\Lane\Desktop\Keys Core\KeysPlus.Data\bin\Release\KeysPlus.Data.dll.config
+C:\Users\Lane\Desktop\Keys Core\KeysPlus.Data\bin\Release\KeysPlus.Data.dll
+C:\Users\Lane\Desktop\Keys Core\KeysPlus.Data\bin\Release\KeysPlus.Data.pdb
+C:\Users\Lane\Desktop\Keys Core\KeysPlus.Data\bin\Release\EntityFramework.dll
+C:\Users\Lane\Desktop\Keys Core\KeysPlus.Data\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\Lane\Desktop\Keys Core\KeysPlus.Data\bin\Release\EntityFramework.xml
+C:\Users\Lane\Desktop\Keys Core\KeysPlus.Data\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\Lane\Desktop\Keys Core\KeysPlus.Data\obj\Release\KeysPlus.Data.csprojResolveAssemblyReference.cache
+C:\Users\Lane\Desktop\Keys Core\KeysPlus.Data\obj\Release\KeysPlus.Data.dll
+C:\Users\Lane\Desktop\Keys Core\KeysPlus.Data\obj\Release\KeysPlus.Data.pdb

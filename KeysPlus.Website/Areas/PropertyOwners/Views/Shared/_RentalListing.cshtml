@@ -1,0 +1,185 @@
+﻿<script type="text/html" id="RentalListing">
+    <style>
+
+        .panel-title {
+            padding-bottom: 2px;
+            padding-left: 4px;
+            padding-top: 2px;
+        }
+
+        input[type=text]:focus {
+            border: 2px solid #ADD8E6;
+            /*width: 51%;*/
+        }
+        select {
+            border: 1px solid #d0d0d0;
+        }
+        textarea {
+            border: 1px solid #d0d0d0;
+        }
+        input {
+            border: 1px solid #d0d0d0;
+        }
+        textarea[name=jobDescription] {
+            resize: none;
+        }
+    </style>
+    <div>
+        <form id="NewRentalListing">
+
+            <div class="input-group" style="width: 100%">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <!--Property Details-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+
+                            <h4 class="panel-title" id="propertyTitle" style="padding: 10px 15px;" data-toggle="collapse" data-parent="#accordion" href="#propertyDetails" aria-expanded="true" aria-controls="propertyDetails">
+                                List a Rental
+                            </h4>
+
+                        </div>
+
+                        <div id="propertyDetails" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+
+                                <div class="col-sm-12">
+
+
+                                    <div>
+                                        <div>
+                                            <label class="keys control-label col-sm-3">Select property <span style="color:red;">*</span></label>
+                                            <div class="col-sm-9" >
+                                                <select name="PropertyId" class="form-control" style="margin-bottom:15px;"
+                                                        data-bind="options: AvailableProperties, optionsText: 'AddressString',optionsValue : 'Id', value : PropertyId"
+                                                        onmousedown="if(this.options.length>10){this.size=10;}" onchange='this.size=0;' onblur="this.size=0;"></select>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="keys control-label col-sm-3">Title <span style="color:red;">*</span></label>
+                                            <div class="col-sm-9" style="margin-bottom:15px;">
+                                                <input name="Title" class="form-control" type="text" data-bind="textInput : Title" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div >
+                                            <label class="keys control-label col-sm-3">Description <span style="color:red;">*</span></label>
+                                            <div class="col-sm-9" style="margin-bottom:15px;">
+                                                <textarea name="RentalDescription" class="form-control" rows="5" data-bind="textInput : RentalDescription"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="keys control-label col-sm-3">Moving Cost <span style="color:red;">*</span></label>
+                                            <div class="col-sm-9" style="margin-bottom:15px;">
+                                                <input name="MovingCost" class="form-control" type="text" data-bind="textInput : MovingCost" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="keys control-label col-sm-3">Target Rent <span style="color:red;">*</span></label>
+                                            <div class="col-sm-9" style="margin-bottom:15px;">
+                                                <input name="TargetRent" class="form-control" type="text" data-bind="textInput : TargetRent" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div>
+                                            <label class="keys control-label col-sm-3">Available Date <span style="color:red;">*</span></label>
+                                            <div class="col-sm-9" style="margin-bottom:15px;">
+                                                <input type="text" id="ADT" name="AvailableDate" placeholder="dd/mm/yyyy" data-bind="value: AvailableDate" /> 
+                                                @*<input name="AvailableDate" id="ADT" class="form-control"  type="date" data-bind="textInput : AvailableDate" />*@
+                                             
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="keys control-label col-sm-3">Furnishing </label>
+                                            <div class="col-sm-9" style="margin-bottom:15px;">
+                                                <input name="Furnishing" class="form-control" type="text" data-bind="textInput : Furnishing" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="keys control-label col-sm-3">Occupants Count <span style="color:red;">*</span></label>
+                                            <div class="col-sm-9" style="margin-bottom:15px;">
+                                                <input name="OccupantCount" class="form-control" type="text" data-bind="textInput : OccupantCount" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group ">
+                                        <label class="keys control-label col-sm-3">Ideal Tenant </label>
+                                        <div class="col-sm-9" style="margin-bottom:15px;">
+                                            <input name="IdealTenant" class="form-control" type="text" data-bind="textInput : IdealTenant" />
+                                        </div>
+                                    </div>
+
+
+                                    <div>
+                                        <div >
+                                            <label class="keys control-label col-sm-3">Pets Allowed </label>
+                                            <div class="col-sm-9" style="margin-bottom:15px;">
+                                                <select name="PetsAllowed" class="form-control"
+                                                        data-bind="options: PetsAllowedOption, optionsText: 'Choice',optionsValue : 'Choice', value : PetsAllowed"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-group">
+                                            <label class="keys control-label col-sm-3">Upload Photo </label>
+                                            <div class="col-sm-9">
+                                                <ul data-bind="foreach: MediaFiles()">
+                                                    <li>
+                                                        <a data-bind="click: $parent.RemovePhoto">
+                                                            <i class="glyphicon glyphicon-remove"></i>
+                                                        </a>
+
+                                                        <span data-bind="text: Name"></span><br />
+                                                    </li>
+                                                </ul>
+                                               
+                                                <span class="btn btn-success">
+                                                    <i class="fa fa-cloud-upload"></i>
+                                                    Choose Files
+                                                    <input class="key-upload" type="file" data-bind="filesUpload : MediaFiles, fileWarning : FileWarning, validFileTypes : ValidFileTypes" accept="image/*" multiple />
+
+                                                </span>
+                                                <p id="file-warning" data-bind="text:FileWarning"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                    <div class="col-sm-16 text-center">
+                                        <br />
+                                        <button class="btn btn-success" data-bind="click : SubmitRentalListing,enable:validInput">Save</button>
+
+                                        <button class="btn btn-danger" data-bind="visible:page()==2,click:cancelButton">Cancel</button>
+                                        <button class="btn btn-danger" data-bind="visible:page()==1,click:cancelButton">Cancel</button>
+                                        <button class="btn btn-danger" data-bind="visible:page()==3,click:cancelButton">Cancel</button>
+
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>

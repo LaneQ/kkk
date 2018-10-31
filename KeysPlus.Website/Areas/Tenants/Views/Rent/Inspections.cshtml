@@ -1,0 +1,259 @@
+﻿@model TenantInspectionSearchModel
+
+@{
+    ViewBag.Title = "Tenant | Inspections";
+}
+<div id="mainPage" data-bind="visible : MainView">
+    <div class="ui grid">
+        <div class="eight wide column">
+            <h2 class="ui header">Property Inspections</h2>
+            <span class="text-muted">Property Inspections requested by owners</span>
+        </div>
+        <div class="middle aligned eight wide column">
+            @{
+                Html.RenderPartial("_SearchBox");
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="highlighted">
+        <div class="ui grid">
+            <div class="eight wide column">
+                @{
+                    Html.RenderPartial("_SortInput");
+                }
+            </div>
+        </div>
+    </div>
+    <br />
+    <table class="ui single line table" style="border : none">
+        <thead>
+            <tr>
+                <th class="three wide" style="background : none"><h5 class="ui teal header">Property</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Status</h5></th>
+                <th class="five wide" style="background : none"><h5 class="ui teal header">Progress</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Due Date</h5></th>
+                <th style="background : none"><h5 class="ui teal header">Actions</h5></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach : Items">
+            <tr>
+                <td>
+                    <h5 class="ui grey header" data-bind="text : StreetAddress" style="margin : 1px"></h5>
+                    <h5 class="ui grey header" data-bind="text : CitySub" style="margin-top : 0px"></h5>
+                </td>
+                <td data-bind="text : Status"></td>
+                <td style="vertical-align : middle">
+                    <div class="progress" style="margin : auto">
+                        <div class="progress-bar small-text" role="progressbar" data-bind="text : Model.PercentDone() + '%', style: { width: Model.PercentDone() + '%', color : Model.PercentDone()== 0 ? '#337ab7' : '' }, attr: { 'aria-valuenow': Model.PercentDone }"></div>
+                    </div>
+                </td>
+                <td data-bind="text: moment(DueDate()).format('ll')"></td>
+                <td>
+                    <button class="ui teal mini basic button" data-bind="click: $root.ViewDetail">Details</button>
+                    <button class="ui teal mini basic button" data-bind="click :  $root.ShowEdit, visible : Model.StatusId() != 2 &&  Model.StatusId() != 3">Edit</button>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <div class="ui divider"></div>
+    @{
+        Html.RenderPartial("_PagedItems");
+    }
+</div>
+
+<div data-bind="visible : DetailView" style="display : none">
+    <h5 class="ui header pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+    <h3 class="header" style="margin-top : 0px">Inspection Details</h3>
+    <div class="ui divider"></div>
+    <div data-bind="with : SelectedItem">
+        <div class="ui grid">
+            <div class="eight wide column">
+                <div class="ui relaxed divided list">
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Property :</h4>
+                            </div>
+                            <div class="eight wide column">
+                                <div data-bind="text : StreetAddress"></div>
+                                <div data-bind="text : CitySub"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Status:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text: Status"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Progress:</h4>
+                            </div>
+                            <div class="eight wide column">
+                                <div class="progress" style="margin : auto">
+                                    <div class="progress-bar small-text" role="progressbar" data-bind="text : Model.PercentDone() + '%', style: { width: Model.PercentDone() + '%', color : Model.PercentDone()== 0 ? '#337ab7' : '' }, attr: { 'aria-valuenow': Model.PercentDone }"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Landlord Name:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text : LandlordName"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Landlord Phone:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text : (LandlordPhone() === null || LandlordPhone() === '') ? 'Not Avalaible' : LandlordPhone"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Due Date:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text: moment(DueDate()).format('ll')"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Listed on:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text:moment(CreatedOn()).format('LL')"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Message:</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text: Model.Message() === 'undefined' ? 'No message' : Model.Message"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="eight wide column">
+                <div class="ui segment">
+                    @Html.Partial("_DetailViewImg")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-bind="visible : EditView" style="display : none">
+    <div style="width : 80%; margin : auto" data-bind="validationOptions: { insertMessages: false}">
+        <h3>Edit Inpection Details</h3>
+        <div class="ui divider">
+        </div>
+        <h5 class="ui header pointer-cursor" data-bind="click: $root.ShowMain" style="margin-top: 0px;"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Previous</a></h5>
+
+        <div class="ui segment">
+            <form class="ui form" data-bind="with : SelectedItemCopy">
+                <div class="field">
+                    <label>Property:&nbsp;</label>
+                    <span data-bind="text : StreetAddress"></span>
+                    <span data-bind="text : CitySub"></span>
+                </div>
+                <div class="field">
+                    <div class="ui grid">
+                        <div class="sixteen wide column">
+                            <label>Message <span style="color:red;">*</span></label>
+                            <div class="ui input">
+                                <textarea class="form-control" id="jobDescription" rows="6" style="height:144px;" data-bind="value: Model.Message, valueUpdate:'afterkeydown'"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui grid">
+                        <div class="sixteen wide column">
+                            <label>Percentage Done</label>
+                            <select class="ui dropdown" data-bind="value: Model.PercentDone">
+                                <option value="0">0%</option>
+                                <option value="10">10%</option>
+                                <option value="20">20%</option>
+                                <option value="30">30%</option>
+                                <option value="40">40%</option>
+                                <option value="50">50%</option>
+                                <option value="60">60%</option>
+                                <option value="70">70%</option>
+                                <option value="80">80%</option>
+                                <option value="90">90%</option>
+                                <option value="100">100%</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    @Html.Partial("_MediaInput")
+                    <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Total size is 5 MB and supported file types are *.jpg, *.jpeg, *.png, *.gif, .pdf, .doc*</p>
+                </div>
+                <div class="field text-center" style="padding-bottom: 30px">
+                    <button class="ui tiny teal button" data-bind="click : $root.Edit, enable : IsValid">Submit</button>
+                    <button class="ui tiny orange button" data-bind="click : $root.ShowMain">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+<script>
+    function PageViewModel(dataVm, extendDic) {
+        var self = this;
+        self.ExtendDic = extendDic
+        for (var key in dataVm) {
+            self[key] = dataVm[key]
+        }
+        self.Items().forEach(function (item) {
+            KeysUtils.injectExtends(item.Model, extendDic);
+            KeysUtils.injectViewProps(item);
+        });
+        KeysUtils.injectOpProps(self);
+        self.SelectedRequest = ko.observable();
+
+        self.ViewDetail = function (data) {
+            self.ShowDetail(data);
+            if (data.Model.RequestId()) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Tenants/Home/GetRequest',
+                    data: { id: data.Model.RequestId() },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.Success) {
+                            var request = ko.mapping.fromJS(response.data);
+                            KeysUtils.injectViewProps(request);
+                            self.SelectedRequest(request)
+
+                        }
+                    }
+                })
+            }
+
+        }
+
+
+    }
+    $(document).ready(function () {
+        $("#NoRecord").modal("show");
+        var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        var vm = new PageViewModel(dataVm, KeysExtendsDic.Inspection);
+        ko.applyBindings(vm);
+    });
+</script>

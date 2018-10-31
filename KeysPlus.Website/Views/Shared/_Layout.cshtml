@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link href="~/Content/stylesheets/_font-awesome.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/content/pagedList")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("ModuleStyle", false)
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/notification")
+    @Styles.Render("~/notification/css")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/globals")
+    @Scripts.Render("~/bundles/bootstrap")
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
+    <link href="~/Content/semantic.min.css" rel="stylesheet" />
+    <script src="~/Scripts/semantic.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLigDcIQjg6_qYfjLXcQEjT4uqjWW71PU&libraries=places&callback=initMap"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+</head>
+    <body>
+        @if (Request.IsAuthenticated)
+        {
+            Html.RenderAction("TopNavBar", "Home", new { Area = "" });
+            <div id="main-content">
+                <section class="container">
+                    @RenderBody()
+                </section>
+            </div>
+        }
+        else
+        {
+            @RenderBody()
+        }
+
+        @RenderSection("scripts", required: false)
+        @RenderSection("Modal", required: false)
+        <script>
+            $(document).ready(function () {
+                $('.ui.dropdown').dropdown();
+                $('#search-wrap:first').children().first().attr('method', 'get');
+                $('#icon-submitt').click(function (e) {
+                    e.preventDefault();
+                    $('#search-wrap:first').children().first().submit();
+                });
+                jQuery.fn.putCursorAtEnd = function () {
+
+                    return this.each(function () {
+
+                        // Cache references
+                        var $el = $(this),
+                            el = this;
+
+                        // Only focus if input isn't already
+                        if (!$el.is(":focus")) {
+                            $el.focus();
+                        }
+
+                        // If this function exists... (IE 9+)
+                        if (el.setSelectionRange) {
+
+                            // Double the length because Opera is inconsistent about whether a carriage return is one character or two.
+                            var len = $el.val().length * 2;
+
+                            // Timeout seems to be required for Blink
+                            setTimeout(function () {
+                                el.setSelectionRange(len, len);
+                            }, 1);
+
+                        } else {
+
+                            // As a fallback, replace the contents with itself
+                            // Doesn't work in Chrome, but Chrome supports setSelectionRange
+                            $el.val($el.val());
+                        }
+
+                    });
+
+                };
+                (function () {
+                    var searchInput = $("#searchId");
+                    searchInput
+                        .putCursorAtEnd() // should be chainable
+                        .on("focus", function () { // could be on any event
+                            searchInput.putCursorAtEnd()
+                        });
+                })();
+            });
+        </script>
+    </body>
+    
+</html>
+
+<style>
+    body {
+        position: relative;
+        padding-top: 65px;
+        padding-right: 0 !important;
+        /*background : #edf1f7;*/
+        /*background: #f9fafc;*/
+        /*background : #f7f9fc;*/
+        /*background : #efefef;*/
+        /*background : #f4f5f7;*/
+        /*background : #f7f7f7;*/
+        /*background : #f2f2f2;*/
+        //background : #fcfcfc;
+        overflow: inherit;
+    }
+</style>

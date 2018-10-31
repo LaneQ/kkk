@@ -1,0 +1,33 @@
+﻿<div class="row">
+    <div class="col-md-10">
+        <div data-bind="visible : ImgFiles().length > 0">
+            <div id="QuoteImages" class="carousel" data-ride="carousel" data-bind="attr:{href:'#'+'QuoteImages'}">
+                <div class="carousel-inner" style="margin:auto" data-bind="foreach: ImgFiles">
+                    <div class="item" data-bind="css:{active: $index() == 0}">
+                        <img class="img-responsive img-thumbnail" data-bind="attr: {src:  Data}"
+                                onerror="this.src = '/images/no-prop-img.png'" alt="firstImg">
+                    </div>
+                </div>
+                <a class="left carousel-control" href="#QuoteImages" data-slide="prev" data-bind="if:ImgFiles().length > 1">
+                    <span class="fa fa-2x fa-angle-left"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#QuoteImages" data-slide="next" data-bind="if:ImgFiles().length > 1">
+                    <span class="fa fa-2x fa-angle-right"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <!--Without Images -->
+    <div class="col-md-10">
+        <div class="thumbnail" data-bind="visible : ImgFiles().length==0">
+            <img src="/images/no-prop-img.png" alt="noPropImg" />
+        </div>
+    </div>
+</div><!--Without Images -->
+        
+
+

@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+<head>
+    <title>Company Onboarding</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF1Nus-BmJkWyNInNx1Re0sqBa_CKuL_o&libraries=places"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/onboarding.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/globals")
+    @Scripts.Render("~/bundles/moment")
+
+
+</head>
+<body>
+    <form id="msform">
+        @Html.AntiForgeryToken()
+        <!-- progressbar -->
+        <ul id="progressbar">
+            <li class="active">Service Supplier-details</li>
+            <li>Service Supplier-Address</li>
+        </ul>
+        <!-- fieldsets -->
+        <fieldset id="ServiceSupplier-details">
+            <h2 class="fs-title">Service Supplier Details </h2>
+            <h3 class="fs-subtitle">Enter the Service Supplier Details here</h3>
+            @Html.Partial("_ServiceSupplierDetails")
+            <input type="button" id="nextServiceSupplier" name="save" class="action-button" value="Next" data-bind="click: ValidateServiceSupplier, attr : {'class' : detailValid() ? 'action-button' : 'action-button noGoNext'}" />
+            <input type="button" id="skipServiceSupplier" name="next2" class="next action-button" value="Skip" onclick="location.href='@Url.Action("../../Home/Dashboard")'" />@*Bug Fix #2031*@
+        </fieldset>
+        <fieldset id="ServiceSupplier-Address">
+            <h2 class="fs-title">Service Supplier Address Details</h2>
+            <h3 class="fs-subtitle">Enter the Service Supplier Address here</h3>
+            @Html.Partial("_ServiceSupplierAddress")
+            <input type="button" name="previous" class="previous action-button" value="Previous" />
+            <input type="button" id="addServiceSupplier" name="save" class="action-button" value="Save" data-bind="click: ValidateSaveServiceSupplier, attr : {'class' : isValid() ? 'action-button' : 'action-button noGoNext'}" />
+            <input type="button" id="skipServiceSupplier" name="next2" class="next action-button" value="Skip" onclick="location.href='@Url.Action("../../Home/Dashboard")'" /> @*Bug Fix #2031*@
+        </fieldset>
+    </form>
+
+</body>
+<!-- multistep form -->
+
+<!-- jQuery easing plugin -->
+<script src="~/Scripts/jquery.easing.min.js"></script>
+<script src="~/Scripts/Globals/Onboarding.js"></script>
+<script src="~/Scripts/Companies/CompanyOnboard.js"></script>

@@ -1,0 +1,80 @@
+﻿@*this form is used to add new job request*@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<div id="TenantJobRequestForm" tabindex="-1" class="modal fade" role="dialog">
+    <div class="input-group">
+        <div class="modal-dialog">
+            <div class="modal-content" data-bind="with:jobRequest">
+                <div class="modal-header" style="color:	#ff8000;text-align:center">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 data-bind="text:$parent.boxTitile"></h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                         <div class="input-group">
+                            <label class="col-sm-3">Job Description</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" data-bind="value: JobDescription,valueUpdate:'afterkeydown'" maxlength="500" rows="6" cols="70" required></textarea>
+                                <p>Maximum of 500 characters</p>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="col-sm-3">Maximum Budget</label>
+                            <div class="col-sm-9">
+                            <!--div class="col-sm-9" data-bind="visible : JobStatusName()!='Pending' && JobStatusName()!='In process' "-->
+                                <input type="text" id="maximumBudget" class="form-control" data-bind="value: MaxBudget, valueUpdate:'afterkeydown'">
+                                <span id="validationBudget">Please enter a number</span>
+                            </div>
+                        </div>
+                        <div class="input-group col-sm-12">
+                            <label class="col-sm-3">Property Name</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" data-bind=" options: $root.properties,
+                                    optionsText: 'Name',
+                                    optionsValue: 'Id',
+                                    optionsCaption: 'Please select your property...',
+                                    value: PropertyId">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group" role="tab" id="headingOne">
+                            <label class="col-sm-2" style="text-align:left">Upload Photos </label>
+                            <div id="photoUpload"  class="col-sm-9">
+                                <div class="row">
+                                    <div data-bind="foreach: MediaFiles">
+                                        <div class="col-xs-3">
+                                            <div class="thumbnail">
+                                                <a data-bind="click: $parent.RemoveFile">
+                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                </a>
+                                                <img class="img-responsive" data-bind="attr: {src: Data}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div>
+                                    <span class="btn btn-success" id="file-upload" name="fileName">
+                                        <i class="fa fa-cloud-upload"></i>
+                                        Choose Files
+                                        <input style="position: absolute;top:0;left:0;height: 100%; width: 100% ;margin: 0; padding: 0; cursor:pointer ; opacity: 0; filter: alpha(opacity=0);"
+                                               id="uploadBtn" type="file" data-bind="event: {change: fileUpload}" accept="image/*" multiple />
+                                    </span>
+                                    <p  id="photo_validation">You can upload up to 5 photos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" data-bind="enable:isValid, click:$parent.addTenantJobRequest">Save</button>
+                    <button  class="btn btn-success" data-dismiss ="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

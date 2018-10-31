@@ -1,0 +1,163 @@
+﻿@model KeysPlus.Service.Models.RegisterToBeTenantModel
+
+@{
+    ViewBag.Title = "RegisterToBeTenant";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+}
+<script src="~/Scripts/knockout-3.4.0.js"></script>
+@section ModuleStyle{
+    @Styles.Render("~/content/loginModuleStyle")
+}
+
+
+@*<div class="login-page authentication">
+    <div class="container form-container">
+        <div class="card-top">
+    <div class="row card">
+        <div class="card">*@
+        <div class="login-page authentication">
+            <div class="container form-container">
+                <div class="row card">
+                    <h1 class="title"><span>Keys</span>Sign up <span class="msg">Tenant Registration  </span></h1>
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("RegisterToBeTenant", "Account", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"> <i class="zmdi zmdi-account"></i> </span>
+                                    <div class="form-line">
+                                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @placeholder = "First Name" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"> <i class="zmdi zmdi-account"></i> </span>
+                                        <div class="form-line">
+                                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @placeholder = "Last Name" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"> <i class="zmdi zmdi-email"></i> </span>
+                                            <div class="form-line">
+                                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Email Address", @readonly = true })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                        </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"> <i class="zmdi zmdi-lock"></i> </span>
+                                                <div class="form-line">
+                                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Choose your password (min 6 characters)" })
+                                                </div>
+                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                            </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"> <i class="zmdi zmdi-lock"></i> </span>
+                                                    <div class="form-line">
+                                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Re-Enter the same password" })
+                                                    </div>
+                                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                                </div>
+                                                </div>
+                                                @Html.HiddenFor(model => model.PropertyId)
+                                                @Html.HiddenFor(model => model.StartDate)
+                                                @Html.HiddenFor(model => model.EndDate)
+                                                @Html.HiddenFor(model => model.PaymentFrequencyId)
+                                                @Html.HiddenFor(model => model.PaymentAmount)
+
+                                                <input type="checkbox" id="checkAgreement" onclick="document.getElementById('SignupButton').disabled = !this.checked;" />
+                                                <label for="checkAgreement">I read and agree to the <a href="http://localhost:61309/Account/Register/#TermsAndConditionsModal" @*data-bind="click:showTermsAndConditionsModal"*@ data-target="#TermsAndConditionsModal" data-toggle="modal">terms of usage</a></label>
+                                                @*<label> I read and agree to the <a data-bind="click:showTermsAndConditionsModal">terms of usage</a></label>*@
+                                                <div class="text-center">
+                                                    <button data-bind="disable:IsTermsAndConditionsChecked" id="SignupButton" type="submit" class="btn btn-raised btn-success waves-effect btn-success" disabled>SIGN UP</button>
+                                                    <button class="btn btn-raised waves-effect btn-success">
+                                                        @Html.ActionLink("Cancel", "Login", "Account", new { @class = "" })
+                                                    </button>
+                                                </div>
+                                                }
+                                            </div>
+                </div>
+            </div>
+            </div>
+            @*</div>*@
+
+            @********************** Terms and Conditions Modal **************************@
+
+
+            <div class="modal fade" id="TermsAndConditionsModal" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h1 class="title"><span>Keys</span>Terms <span class="msg"></span></h1>
+                        </div>
+                        <div class="modal-body">
+                            Terms and condition
+                            <div class="modal-footer">
+                                <button type="submit" id="btnOk" data-bind="click: acceptTermsAndConditions" class="btn btn-primary btn btn-raised waves-effect g-bg-blush2" data-dismiss="modal" autofocus>Accept</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @********************** Terms and Conditions Modal CSS styling**************************@
+
+            <style>
+                .modal .title span {
+                    font-size: 13px;
+                    display: block;
+                    margin: 0;
+                    line-height: 18px;
+                    font-weight: 400;
+                    color: #444;
+                }
+
+                .modal .title {
+                    position: relative;
+                    z-index: 1;
+                    border-left: 5px solid #dd5e89;
+                    margin: 0 0 25px;
+                    padding: 10px 0 10px 42px;
+                    color: #dd5e89;
+                    font-size: 22px;
+                    font-weight: 600;
+                }
+            </style>
+
+            @**********************  Knockout - Scripting **************************@
+
+            <script type="text/javascript">
+                function RegistrationTenant() {
+                    self = this;
+                    this.IsTermsAndConditionsChecked = ko.observable(true);
+                    this.showTermsAndConditionsModal = function () {
+                        $('#TermsAndConditionsModal').appendTo("body").modal('show');
+                        $('#TermsAndConditionsModal').appendTo("body").on("shown.bs.modal", function () {
+                            $(this).find("[autofocus]:first").focus();
+                        });
+                    }
+                    this.acceptTermsAndConditions = function () {
+                        this.IsTermsAndConditionsChecked(false);
+                        $('#TermsAndConditionsModal').modal('hide');
+                        $('.modal-backdrop').remove();
+                    }
+                }
+                ko.applyBindings(new RegistrationTenant());
+
+            </script>

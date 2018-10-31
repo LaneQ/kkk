@@ -1,0 +1,1207 @@
+﻿@model POPropSearchModel
+@{
+                /**/
+
+                ViewBag.Title = "Properties | Property Community";
+}
+
+<div data-bind="visible : ShowProps">
+    <div data-bind="visible : MainView">
+        <div class="ui grid">
+            <div class="six wide column">
+                <h2 class="ui header" data-bind="visible: IsPropertyIndexPage">My Properties</h2>
+                <span class="text-muted" data-bind="visible: IsPropertyIndexPage">You can manage your properties and tenants here</span>
+                <h2 class="ui header" data-bind="visible: IsFinanceDetailPage">My Property Finance Details</h2>
+                <span class="text-muted" data-bind="visible: IsFinanceDetailPage">Please select a property to view its finance details</span>
+            </div>
+            <div class="middle aligned ten wide column">
+                @{
+                    Html.RenderPartial("_SearchBox");
+                }
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="highlighted">
+            <div class="ui grid">
+                <div class="eight wide column">
+                    @{
+                        Html.RenderPartial("_SortInput");
+                    }
+                </div>
+                <div class="middle aligned eight wide column" data-bind="visible: IsPropertyIndexPage">
+                    @if (Model.CanListRental)
+                    {
+                        <a class="ui teal button" style="float : right; margin-right : 10px" href="@Url.Action("ListRental", new { controller = "Property", area = "PropertyOwners", propId = -1 })">
+                            <i class="plus circle icon"></i> List A Rental
+                        </a>
+                    }
+                    <a class="ui teal button" style="float : right; padding-right: 15px;" href="@Url.Action("AddNewProperty", new { controller = "Property", area = "PropertyOwners" })">
+                        <i class="plus circle icon"></i> Add New Property
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="ui grid">
+            <div class="ui divided items sixteen wide column" data-bind="foreach : Items">
+                <div class="item">
+                    <div class="image">
+                        <img data-bind="attr: {src: FirstPhoto().Data}" alt="firstImg" onerror="this.src = '/images/no-prop-img.png'" />
+                    </div>
+                    <div class="ui bottom aligned content">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <a><h3 class="ui header" data-bind="text : Model.Name, click : $root.ShowDetail" style="padding-bottom : 5px"></h3></a>
+                                <div><h4 class="ui grey header" data-bind="text : StreetAddress"></h4></div>
+                                <div><h4 class="ui grey header" data-bind="text : CitySub"></h4></div>
+                            </div>
+                            <div class="nine wide column" style="position : relative">
+                                <div class="ui compact menu" data-bind="visible: $root.IsPropertyIndexPage">
+                                    <a class="item">
+                                        <i class="icon users"></i> Tenants
+                                        <div id="all-tenants" class="floating ui teal label" data-bind="text: TenantCount"></div>
+                                    </a>
+                                    <a class="item">
+                                        <i class="icon mail"></i> New Requests
+                                        <div id="new-requests" class="floating ui red label" data-bind="text: NewRequestsCount"></div>
+                                    </a>
+                                    <a class="item">
+                                        <i class="icon wrench"></i> Maintenance
+                                        <div id="maintenance" class="floating ui green label" data-bind="text: NewQuotesCount"></div>
+                                    </a>
+                                </div>
+                                <div class="ui compact menu" data-bind="visible: $root.IsFinanceDetailPage">
+                                    <a class="item" data-bind="click : $root.ShowDetail">
+                                        <i class="icon users"></i> Property Details
+                                    </a>
+                                    <a class="item" data-bind="click : $root.ShowFinanceDetail">
+                                        <i class="icon mail"></i> Finance Details
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ui one wide column" data-bind="visible: $root.IsPropertyIndexPage">
+                                <div class="ui dropdown ui top-right-corner" style="right:12px;">
+                                    <i class="ui more grey list icon"></i>
+                                    <div class="menu" style="background : #fff !important">
+                                        <div class="item" data-bind="click : $root.ShowFinanceDetail">Finance</div>
+                                        <div class="item" data-bind="click : $root.ShowDetail, clickShowMap : Model.Address">Property Details</div>
+                                        <div class="item"><a class="default-item-color" data-bind="attr: { 'href': '@Url.Action("PropertyTenants", "Property", new { Area = "PropertyOwners", returnUrl = HttpContext.Current.Request.RawUrl})' + '&PropId=' + Model.Id() + '&templateId=' + 1}">Manage Tenant</a></div>
+                                        <div class="item" data-bind="click: $root.ShowEdit">Edit Property</div>
+                                        <div class="item" data-bind="click:$root.ShowDelete">Delete</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="extra">
+                            <div data-bind="visible: $root.IsPropertyIndexPage">
+                                <a class="ui basic mini teal button" href="#" data-bind="attr: { href: '@Url.Action("AddTenantDashboard", "Home", new { area = "PropertyOwners", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.Id() }">Add Tenant</a>
+                                <a class="ui basic mini teal button" href="#" data-bind="attr: { 'href': '@Url.Action("ListRental", "Property", new { area = "PropertyOwners", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.Id() }">List As Rental</a>
+                                <a class="ui basic mini teal button" href="#" data-bind="visible : TenantCount() > 0, attr: { 'href': '@Url.Action("SendRequest", "Home", new { area = "Rental", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.Id() }">Send Request</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body property-list-wrapper">
+                        <div title="Delete" class="delete-top-right-corner" data-bind="click: $root.ShowDelete">
+                            <i class="fa fa-trash-o"></i>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img class="img-responsive img-thumbnail" data-bind="attr: {src: FirstPhoto().Data}" alt="firstImg" onerror="this.src = '/images/no-prop-img.png'" height="150" />
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <!--details row-->
+                                    <div class="col-md-4 property-info-detail" style="padding-bottom : 0px">
+                                        <div class="prop-name" data-bind="text:Model.Name"></div>
+                                        <div class="prop-detail">
+                                            <span data-bind="text : StreetAddress"></span><br />
+                                            <span data-bind="text : CitySub"></span><br />
+                                        </div>
+                                        <div class="prop-amenities">
+                                            <span class="amenity-detail" data-bind="text:Model.Bedroom"></span> <i class="fa fa-bed"></i>
+                                            &nbsp;<span class="amenity-detail" data-bind="text:Model.Bathroom"></span> <i class="fa fa-shower"></i>
+                                            &nbsp;<span class="amenity-detail" data-bind="text:Model.ParkingSpace"></span> <i class="fa fa-car"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 property-info-detail">
+                                        <div><strong>Purchased Price: </strong>$<span class="finance-details-value" data-bind="numeric:PurchasePrice"></span></div>
+                                        <div><strong>Home value: </strong>$<span class="finance-details-value" data-bind="numeric:CurrentHomeValue"></span></div>
+                                        <div><strong>Rent: </strong> $<span class="finance-details-value" data-bind="numeric:Model.TargetRent"></span></div>
+                                    </div>
+                                </div><!--details row-->
+                                <div class="row">
+                                    <!--link row-->
+                                    <div class="col-md-12">
+                                        <a href="#" style="margin-right:20px;" data-bind="attr: { href: '@Url.Action("AddTenantDashboard", "Home", new { area = "PropertyOwners", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.Id() }">Add Tenant</a>
+                                        <a style="margin-right:20px;" href="#" data-bind="attr: { 'href': '@Url.Action("ListRental", "Property", new { area = "PropertyOwners", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.Id() }">List As Rental</a>
+                                        <a href="#" data-bind="visible : TenantCount() > 0, attr: { 'href': '@Url.Action("SendRequest", "Home", new { area = "Rental", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.Id() }">Send Request</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="action-area">
+                            <div class="card-acts">
+                                <a class="col-md-3 text-center card-act-btn" data-bind="attr: { 'href': '@Url.Action("PropertyTenants", "Property", new { Area = "PropertyOwners", returnUrl = HttpContext.Current.Request.RawUrl})' + '&PropId=' + Model.Id() + '&templateId=' + 1}">
+                                    <i class="zmdi zmdi-accounts"></i> Manage Tenant
+                                </a>
+                                <div class="col-md-3 text-center card-act-btn" data-bind="click: $root.ShowFinanceDetail"><span><i class="fa fa-usd"></i> Finance</span></div>
+                                <div class="col-md-3 text-center card-act-btn" data-bind="click: $root.ShowEdit">
+                                    <i class="zmdi zmdi-edit"></i> Edit
+                                </div>
+                                <div class="col-md-3 text-center card-act-btn no-border-right" data-bind="click: $root.ShowDetail, clickShowMap : Model.Address">
+                                    <i class="zmdi zmdi-info-outline"></i> Detail
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--panel body-->
+                </div><!--panel-->
+            </div>*@
+        @{
+            Html.RenderPartial("_PagedItems");
+        }
+    </div>
+
+</div>
+<div data-bind="visible : DetailView" style="display : none">
+    <div data-bind="with: SelectedItem">
+        <h2 class="ui header">Property Details</h2>
+        <div class="ui divider"></div>
+        <h4 class="pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Properties</a></h4>
+        <br />
+        <div class="highlighted-1">
+            <div class="ui grid no-margin">
+                <div class="sixteen wide column">
+                    <div class="ui grid">
+                        <div class="ui six wide column">
+                            <h3 class="ui header">
+                                <img class="non-middle-aligned marker-icon" src="/images/map-marker.png">
+                                <div class="content">
+                                    <div><h3 class="ui header" data-bind="text: Model.Name" style="margin-bottom:5px"></h3></div>
+                                    <div><h4 class="ui grey header" data-bind="text : StreetAddress"></h4></div>
+                                    <div><h4 class="ui grey header" data-bind="text : CitySub"></h4></div>
+                                </div>
+                            </h3>
+
+                        </div>
+                        <div class="middle aligned ten wide column">
+                            <div class="ui teal button" style="float:right">
+                                <i class="envelope outline icon"></i>
+                                Send Request
+                            </div>
+                            <a class="ui teal button" style="float : right" data-bind="attr: { href: '@Url.Action("AddTenantDashboard", "Home", new { area = "PropertyOwners", returnUrl = HttpContext.Current.Request.RawUrl})' + '&propId=' + Model.Id() }">
+                                <i class="plus circle icon"></i>
+                                Add Tenant
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui secondary pointing menu">
+            <a class="active item">
+                Summary
+            </a>
+        </div>
+        <div class="ui mini statistics">
+            <div class="green statistic">
+                <div class="value">
+                    2
+                </div>
+                <div class="label">
+                    Tenants
+                </div>
+            </div>
+
+            <div class="blue statistic">
+                <div class="value">
+                    3
+                </div>
+                <div class="label">
+                    New Requests
+                </div>
+            </div>
+            <div class="yellow statistic">
+                <div class="value">
+                    3
+                </div>
+                <div class="label">
+                    Mantenance
+                </div>
+            </div>
+            <div class="orange statistic">
+                <div class="value">
+                    3
+                </div>
+                <div class="label">
+                    Payments This Week
+                </div>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <h3 class="ui header">Details</h3>
+        @*<div class="ui grid">
+                <div class="seven wide column">
+                    <h3 class="header">Details</h3>
+                </div>
+                <div class="nine wide column">
+                    <h3 class="header">Photos </h3>
+                </div>
+            </div>*@
+
+
+        <div class="ui grid">
+            <div class="seven wide column">
+
+                <div class="ui relaxed divided list">
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Property Type :</h4>
+                            </div>
+                            <div class="eight wide column" data-bind="text : PropertyTypeName">
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Rooms :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <span data-bind="text: Model.Bedroom"></span>&nbsp;<i class="bed icon"></i>
+                                &nbsp;&nbsp;<span data-bind="text: Model.Bathroom"></span>&nbsp;<i class="shower icon"></i>
+                                &nbsp;&nbsp;<span data-bind="text: Model.ParkingSpace"></span>&nbsp;<i class="car icon"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Land Area :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <span data-bind="if:Model.LandSqm">
+                                    <span data-bind="text: Model.LandSqm"></span>m<sup>2</sup>
+                                </span>
+                                <span data-bind="ifnot:Model.LandSqm"> Not Available </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Floor Area :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <span data-bind="if:Model.FloorArea">
+                                    <span data-bind="text: Model.FloorArea"></span>m<sup>2</sup>
+                                </span>
+                                <span data-bind="ifnot:Model.FloorArea"> Not Available </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Target Rent :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <span data-bind="if:Model.TargetRent">
+                                    $<span data-bind="numeric: Model.TargetRent"></span>
+                                </span>
+                                <span data-bind="ifnot:Model.TargetRent"> Not Available </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Year Built :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <span data-bind="text: Model.YearBuilt"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item">
+                        <div class="ui grid">
+                            <div class="six wide column">
+                                <h4 class="ui grey header">Description :</h4>
+                            </div>
+                            <div class="seven wide column">
+                                <span data-bind="text: Model.Description"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="nine wide column">
+
+                <div class="ui segment">
+                    <div data-bind="visible:ImgFiles().length>0">
+                        <div id="carousel-property" class="carousel slide" data-ride="carousel" data-bind="visible:ImgFiles().length>0">
+                            <a href="#" class="thumbnail" data-toggle="modal" data-target="#CarouselModal" data-backdrop="static">
+                                <div class="carousel-inner" role="listbox" data-bind="foreach: ImgFiles()">
+                                    <div class="item" data-bind="css: {active: $index() == 0}">
+                                        <img data-bind="attr: {src: Data}" alt="Thumbnail" data-target="#lightbox">
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="left carousel-control" href="#carousel-property" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-property" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <img class="ui centered image" src="/images/no-prop-img.png" alt="noPropImg" data-bind="visible:ImgFiles().length<=0" style="width : 270px; height : 230px" />
+                </div>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+
+        @*<div>
+                <div class="col-md-12" style="padding-bottom: 100px">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" data-bind="text: Model.Name"></div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6" style="margin-top:10px;">
+
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Location:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="text: StreetAddress"></span>
+                                            <span data-bind="text: CitySub"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Property Type:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="text: PropertyTypeName"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Rooms:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="text: Model.Bedroom"></span>&nbsp;<i class="fa fa-bed"></i>
+                                            &nbsp;&nbsp;<span data-bind="text: Model.Bathroom"></span>&nbsp;<i class="fa fa-shower"></i>
+                                            &nbsp;&nbsp;<span data-bind="text: Model.ParkingSpace"></span>&nbsp;<i class="fa fa-car"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Land Area:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="if:Model.LandSqm">
+                                                <span data-bind="text: Model.LandSqm"></span>m<sup>2</sup>
+                                            </span>
+                                            <span data-bind="ifnot:Model.LandSqm"> Not Available </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Floor Area:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="if:Model.FloorArea">
+                                                <span data-bind="text: Model.FloorArea"></span>m<sup>2</sup>
+                                            </span>
+                                            <span data-bind="ifnot:Model.FloorArea"> Not Available </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Target Rent:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="if:Model.TargetRent">
+                                                $<span data-bind="numeric: Model.TargetRent"></span>
+                                            </span>
+                                            <span data-bind="ifnot:Model.TargetRent"> Not Available </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Year Built:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="text: Model.YearBuilt"></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Owner Occupied:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="text: IsOwnerOccupiedDisplay"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="line-height : 25px">
+                                        <div class="col-md-4" style="padding-right : 0px;">
+                                            <strong>Description:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <span data-bind="text: Model.Description"></span>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                                <div class="col-md-6" style="margin-top:10px;">
+                                    <div data-bind="visible:ImgFiles().length>0">
+
+                                        <div id="carousel-property" class="carousel slide" data-ride="carousel" data-bind="visible:ImgFiles().length>0">
+
+                                            <a href="#" class="thumbnail" data-toggle="modal" data-target="#CarouselModal" data-backdrop="static">
+                                                <div class="carousel-inner" role="listbox" data-bind="foreach: ImgFiles()">
+                                                    <div class="item" data-bind="css: {active: $index() == 0}">
+                                                        <img data-bind="attr: {src: Data}" alt="Thumbnail" data-target="#lightbox">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="left carousel-control" href="#carousel-property" role="button" data-slide="prev">
+                                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="right carousel-control" href="#carousel-property" role="button" data-slide="next">
+                                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div data-bind="visible:ImgFiles().length<=0" class="thumbnail">
+                                                <img src="/images/no-prop-img.png" alt="noPropImg" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="panel panel-default">
+                                <div id="map"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</div>
+<div data-bind="visible : EditView" style="display : none">
+    <h3 class="header">Edit Property</h3>
+    <div class="ui divider"></div>
+    <h4 class="pointer-cursor" data-bind="click: $root.ShowMain"><a class="pointer-cursor"><i class="angle left icon"></i>Back To Properties</a></h4>
+    <div class="ui segment" data-bind="validationOptions: { insertMessages: false}">
+        <form class="ui form" data-bind="with:SelectedItemCopy">
+            <div class="two fields">
+                <div class="field">
+                    <label>Property Name <span style="color:red;">*</span></label>
+                    <div class="ui input">
+                        <input type="text" name="propertyName" data-bind="textInput: Model.Name">
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.Name"></p>
+                </div>
+                <div class="field">
+                    <label>Property Type</label>
+                    <div class="ui input">
+                        <select class="ui fluid search dropdown" data-bind="value : Model.PropertyTypeId">
+                            @foreach (var type in ViewBag.PropertyTypes)
+                            {
+                                <option value="@type.PropertyTypeId">@type.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.PropertyTypeId"></p>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Search Address <span style="color:red;">*</span></label>
+                    <div class="ui input">
+                        <input type="text" name="searchAddress" id="autocomplete" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: Model.Address, valueUpdate:'afterkeydown'">
+                    </div>
+                    <br />
+                    <br />
+                    <div class="two fields">
+                        <div class="field">
+                            <label for="street_number">Number <span style="color:red;">*</span></label>
+                            <div class="ui input">
+                                <input type="text" id="street_number" placeholder="&nbsp Number" data-bind="textInput: Model.Address.Number" />
+                            </div>
+                            <p class="validationMessage" data-bind="validationMessage: Model.Address.Number"></p>
+                        </div>
+                        <div class="field">
+                            <label for="route">Street <span style="color:red;">*</span></label>
+                            <div class="ui input">
+                                <input type="text" id="route" placeholder="&nbsp Street" data-bind="textInput: Model.Address.Street" />
+                            </div>
+                            <p class="validationMessage" data-bind="validationMessage: Model.Address.Street"></p>
+                        </div>
+
+                    </div>
+                    <div class="three fields">
+                        <div class="field">
+                            <label for="route">Suburb <span style="color:red;">*</span></label>
+                            <div class="ui input">
+                                <input type="text" id="route" placeholder="&nbsp Suburb" data-bind="textInput: Model.Address.Suburb" />
+                            </div>
+                            <p class="validationMessage" data-bind="validationMessage: Model.Address.Suburb"></p>
+                        </div>
+                        <div class="field">
+                            <label for="street_number">City <span style="color:red;">*</span></label>
+                            <div class="ui input">
+                                <input type="text" id="street_number" placeholder="&nbsp City" data-bind="textInput: Model.Address.City" />
+                            </div>
+                            <p class="validationMessage" data-bind="validationMessage: Model.Address.City"></p>
+                        </div>
+                        <div class="field">
+                            <label for="street_number">Postcode <span style="color:red;">*</span></label>
+                            <div class="ui input">
+                                <input type="text" id="street_number" placeholder="&nbsp Postcode" data-bind="textInput: Model.Address.PostCode" />
+                            </div>
+                            <p class="validationMessage" data-bind="validationMessage: Model.Address.PostCode"></p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Region <span style="color:red;">*</span></label>
+                        <div class="ui input">
+                            <input type="text" id="region" placeholder="&nbsp Region" data-bind="value: Model.Address.Region, valueUpdate:'afterkeydown'" />
+                        </div>
+                        <p class="validationMessage" data-bind="validationMessage: Model.Address.Region"></p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Description <span style="color:red;">*</span></label>
+                    <div class="ui input">
+                        <textarea data-bind="value:Model.Description,valueUpdate:'afterkeydown'" style="resize: vertical;" rows="10" cols="70" required></textarea>
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.Description"></p>
+                </div>
+            </div>
+            <div class="three fields">
+                <div class="field">
+                    <label>Year Built <span style="color:red;">*</span></label>
+                    <div class="ui input">
+                        <select class="ui fluid search dropdown" data-bind="value: Model.YearBuilt">
+                            @for (int i = DateTime.Now.Year; i >= 1900; i--)
+                            {
+                                <option value=@i>@i</option>
+                            }
+                        </select>
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.YearBuilt"></p>
+                </div>
+                <div class="field">
+                    <label>Target Rent</label>
+                    <div class="ui input">
+                        <input type="text" data-bind="value: Model.TargetRent,valueUpdate:'afterkeydown'" placeholder="Rent Amount" />
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.TargetRent"></p>
+                </div>
+                <div class="field">
+                    <label>Rent Type</label>
+                    <div class="ui input">
+                        <select class="ui fluid search dropdown" data-bind="value: Model.TargetRentType">
+                            @foreach (var freq in ViewBag.Frequencies)
+                            {
+                                <option value="@freq.Id">@freq.Code</option>
+                            }
+                        </select>
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.TargetRentType"></p>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Land Area</label>
+                    <div class="ui input">
+                        <input type="text" data-bind="value: Model.LandSqm,valueUpdate:'afterkeydown'" placeholder="Land Area" />
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.LandSqm"></p>
+                </div>
+                <div class="field">
+                    <label>Floor Area</label>
+                    <div class="ui input">
+                        <input type="text" data-bind="value: Model.FloorArea,valueUpdate:'afterkeydown'" placeholder="Floor Area" />
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.FloorArea"></p>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Bedrooms <span style="color:red;">*</span></label>
+                    <div class="ui input">
+                        <input type="text" data-bind="value: Model.Bedroom,valueUpdate:'afterkeydown'" placeholder="Number of Bedrooms" />
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.Bedroom"></p>
+                </div>
+                <div class="field">
+                    <label>Bathrooms <span style="color:red; ">*</span></label>
+                    <div class="ui input">
+                        <input type="text" data-bind="value: Model.Bathroom,valueUpdate:'afterkeydown'" placeholder="Number of Bathrooms" />
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.Bathroom"></p>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Carparks <span style="color:red;">*</span></label>
+                    <div class="ui input">
+                        <input type="text" data-bind="value: Model.ParkingSpace, valueUpdate : 'afterkeydown'" placeholder="Number of car parks" />
+                    </div>
+                    <p class="validationMessage" data-bind="validationMessage: Model.ParkingSpace"></p>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="test" data-bind="checked : Model.IsOwnerOccupied" />&nbsp;
+                        <label>Owner Occupied</label>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label>Please upload your document here:</label>
+                <div class="ui divider"></div>
+                @Html.Partial("_MediaInput")
+                <div class="ui input">
+                    <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 5 MB each and supported file types are *.jpg, *.jpeg, *.png, & *.gif</p>
+                </div>
+            </div>
+            <div class="field text-center">
+                <button class="ui positive button" data-bind="click:$root.Edit"> Save</button>
+                <button class="ui red button" data-bind="click : $root.ShowMain">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <br />
+</div>
+<div data-bind="visible : DeleteView" style="display : none">
+    <h3>Remove Property</h3>
+    <hr />
+    <a class="btn btn-info btn-sx" data-bind="click:$root.ShowMain"><span class="fa fa-arrow-left"></span> Back</a>
+    <br /><br />
+    <div class="panel panel-default" data-bind="with : SelectedItem">
+        <div class="panel-heading">
+            Are you sure you want to delete this property?
+        </div>
+        <div class="panel-body">
+            <div class="row" style="line-height : 25px">
+                <div class="col-md-2" style="padding-right : 0px;">
+                    <strong>Name:</strong>
+                </div>
+                <div class="col-md-8" style="padding-right : 0px;">
+                    <div data-bind="text : Model.Name"></div>
+                </div>
+            </div>
+            <div class="row" style="line-height : 25px">
+                <div class="col-md-2" style="padding-right : 0px;">
+                    <strong>Location:</strong>
+                </div>
+                <div class="col-md-8" style="padding-right : 0px;">
+                    <span data-bind="text : StreetAddress"></span>
+                    <span data-bind="text : CitySub"></span>
+                </div>
+            </div>
+            <div class="row" style="line-height : 25px">
+                <div class="col-md-2" style="padding-right : 0px;">
+                    <strong>Purchased Price:</strong>
+                </div>
+                <div class="col-md-8" style="padding-right : 0px;">
+                    $<span class="finance-details-value" data-bind="text:PurchasePrice"></span>
+                </div>
+            </div>
+            <div class="row" style="line-height : 25px">
+                <div class="col-md-2" style="padding-right : 0px;">
+                    <strong>Home value:</strong>
+                </div>
+                <div class="col-md-8" style="padding-right : 0px;">
+                    $<span class="finance-details-value" data-bind="text:CurrentHomeValue"></span>
+                </div>
+            </div>
+            <div class="row" style="line-height : 25px">
+                <div class="col-md-2" style="padding-right : 0px;">
+                    <strong>Rent:</strong>
+                </div>
+                <div class="col-md-8" style="padding-right : 0px;">
+                    $<span class="finance-details-value" data-bind="text:Model.TargetRent"></span>
+                </div>
+            </div>
+            <div class="row" style="line-height : 25px">
+                <div class="col-md-2" style="padding-right : 0px;">
+                    <strong>Amenities:</strong>
+                </div>
+                <div class="col-md-8" style="padding-right : 0px;">
+                    <span class="amenity-detail" data-bind="text:Model.Bedroom"></span> <i class="fa fa-bed"></i>
+                    &nbsp;<span class="amenity-detail" data-bind="text:Model.Bathroom"></span> <i class="fa fa-shower"></i>
+                    &nbsp;<span class="amenity-detail" data-bind="text:Model.ParkingSpace"></span> <i class="fa fa-car"></i>
+                </div>
+            </div>
+            <div class="prop-actions">
+                <button type="button" class="btn btn-success" data-bind="click: $root.Delete">Confirm</button>
+                <button type="button" class="btn btn-danger" data-bind="click: $root.ShowMain">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Finance Information-->
+<div data-bind="visible : ShowFinance" style="display : none">
+    <div class="" data-bind="with:SelectedItem">
+        <div data-bind="with : Finance">
+            <div>
+                <div class="row no-margin">
+                    <a class="teal-add-text pointer" data-bind="click:$root.ShowPropertites">Back to properties</a>
+                    <br /><br />
+                </div>
+                <div class="sixteen wide column">
+                    <div class="ui top attached tabular menu">
+                        <a class="item active finance-heading" data-tab="propertyAnalysis">Property Analysis</a>
+                        <a class="item finance-heading" data-tab="financeDetails">Finance details</a>
+                        <a class="item finance-heading" data-tab="cashFlow">Cash flow</a>
+                    </div>
+                    <!--Property analysis tab-->
+                    <div class="ui bottom attached tab segment active" data-tab="propertyAnalysis">
+                        <div class="row no-margin">
+                            <div class="ui grid">
+                                <div class="four wide center aligned column">
+                                    <div class="ui segment">
+                                        <div class="indicated">Indicated</div>
+                                        <div class="finance-heading">Purchase price</div>
+                                        <div class="ui divider"></div>
+                                        <span class="finance-number">$<span class="finance-number" data-bind="numeric: PurchasePrice"></span></span>
+                                        <div class="ui divider"></div>
+                                    </div>
+                                </div>
+                                <div class="four wide center aligned column">
+                                    <div class="ui segment">
+                                        <div class="indicated">Indicated</div>
+                                        <div class="finance-heading">Home value</div>
+                                        <div class="ui divider"></div>
+                                        <span class="finance-number">$<span class="finance-number" data-bind="numeric : CurrentHomeValue"></span></span>
+                                        <div class="ui divider"></div>
+                                    </div>
+                                </div>
+                                <div class="four wide center aligned column">
+                                    <div class="ui segment">
+                                        <div class="indicated">Indicated</div>
+                                        <div class="finance-heading">Mortgage</div>
+                                        <div class="ui divider"></div>
+                                        <span class="finance-number">$<span class="finance-number" data-bind="numeric : Mortgage"></span></span>
+                                        <div class="ui divider"></div>
+                                    </div>
+                                </div>
+                                <div class="four wide center aligned column">
+                                    <div class="ui segment">
+                                        <div class="indicated">Indicated</div>
+                                        <div class="finance-heading">Net yield</div>
+                                        <div class="ui divider"></div>
+                                        <span class="finance-number">7.4<span class="finance-number">%</span></span>
+                                        <div class="ui divider"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <!-- Property detail row 1 -->
+                        <div class="row no-margin">
+                            <div class="ui segment">
+                                <div class="ui three column grid">
+                                    <div class="center aligned column">
+                                        <div class="finance-caps-heading">Annual Rent</div>
+                                        <div class="teal-finance-number" data-bind="if : Report()">
+                                            <span>$<span data-bind="numeric : Report().AnnualRentAtCurrentYear,">$9,100</span></span>
+                                        </div>
+                                        <div class="description" data-bind="if : Report">
+                                            $<span data-bind="text : Report().RentAmountPerWeek">$175</span> Weekly Rent X 52 Weeks
+                                        </div>
+                                    </div>
+                                    <div class="center aligned column">
+                                        <div class="finance-caps-heading">Purchase Price</div>
+                                        <div class="teal-finance-number">
+                                            $<span data-bind="numeric : PurchasePrice"></span>
+                                        </div>
+                                        <div class="description">Based on indicated sale price</div>
+                                    </div>
+                                    <div class="center aligned column">
+                                        <div class="finance-caps-heading">Gross Yield</div>
+                                        <div class="orange-finance-number" data-bind="if : Report()">
+                                            <span data-bind="numeric : Report().GrossYieldPercent">9.8%</span>%
+                                        </div>
+                                        <div class="description">Excludes expenses</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <!--Property detail row 2-->
+                        <div class="row no-margin">
+                            <div class="ui segment">
+                                <div class="ui three column grid">
+                                    <div class="center aligned column">
+                                        <div class="finance-caps-heading">Avg Suburb Annual Growth</div>
+                                        <div class="teal-finance-number" data-bind="if:Report()">
+                                            <span data-bind="numeric: Report().AverageSuburbAnnualGrowth">8%</span>%
+                                        </div>
+                                        <div class="description with-icon">
+                                            <span>
+                                                <span>
+                                                    <span style="display: inline;"><span>0.9%</span><!-- react-text: 5414 --> higher than <!-- /react-text --><!-- react-text: 5415 -->national average<!-- /react-text --></span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="center aligned column">
+                                        <div class="finance-caps-heading">Purchase Price</div>
+                                        <div class="teal-finance-number">
+                                            $<span data-bind="numeric : PurchasePrice">
+                                            </span>
+                                        </div>
+                                        <div class="description">
+                                            <span>Based on indicated sale price</span>
+                                        </div>
+                                    </div>
+                                    <div class="center aligned column">
+                                        <div class="finance-caps-heading">5 Year Capital Gain</div>
+                                        <div class="orange-finance-number" data-bind="if : Report()">
+                                            $<span data-bind="numeric : Report().CapitalGainAtCurrentYear">$30,979</span>
+                                        </div>
+                                        <div class="description" data-bind="if : Report()">
+                                            Estimated Sale Price in 5 years
+                                            $<strong data-bind="numeric : Report().EstimatedSalesPriceAtYear5">$123,679</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Finance details tab-->
+                    <div class="ui bottom attached tab segment" data-tab="financeDetails">
+                        <div class="row no-margin">
+                            <div class="ui grid">
+                                <!--Home value-->
+                                <div class="sixteen wide column">
+                                    <div class="finance-heading no-margin">Home value</div>
+                                    <table class="ui celled table">
+                                        <thead>
+                                            <tr>
+                                                <th>Amount</th>
+                                                <th>Value Type</th>
+                                                <th>Date Added</th>
+                                                <th>Is Active</th>
+                                                <th class="three wide">Edit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="foreach: HomeValues">
+                                            <tr data-bind="template:{name : $parent.HomeValueDisplay($data)}"></tr>
+                                        </tbody>
+                                    </table>
+                                    <a class="teal-add-text pointer" data-bind="click : AddHomeValue"><i class="teal plus circle icon"></i>Add home value</a>
+                                </div>
+                            </div>
+                            <br />
+                            <!--Repayments-->
+                            <div class="sixteen wide column">
+                                <div class="finance-heading no-margin">Repayments</div>
+                                <!--Table disapears if there are no repayments-->
+                                <table class="ui celled table" data-bind="visible: IsRepayment()">
+                                    <thead>
+                                        <tr>
+                                            <th>Amount</th>
+                                            <th>Frequency</th>
+                                            <th>Start date</th>
+                                            <th>End date</th>
+                                            <th class="three wide">Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach : Repayments">
+                                        <tr data-bind="template :{name : $parent.RepaymentDisplay($data)}"></tr>
+                                    </tbody>
+                                </table>
+                                <br data-bind="visible: !IsRepayment()" />
+                                <a class="teal-add-text pointer" data-bind="click : AddRepayment"><i class="teal plus circle icon"></i> Add repayment</a>
+                            </div>
+                            <br />
+                            <!--Expenses-->
+                            <div class="sixteen wide column">
+                                <div class="finance-heading no-margin">Expenses</div>
+                                <!--Table dissapears if there are no expenses-->
+                                <table class="ui celled table" data-bind="visible: IsExpense()">
+                                    <thead>
+                                        <tr>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                            <th>Date Added</th>
+                                            <th class="three wide">Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach : Expenses">
+                                        <tr data-bind="template : {name : $parent.ExpenseDisplay($data)}"></tr>
+                                    </tbody>
+                                </table>
+                                <br data-bind="visible: !IsExpense()" />
+                                <a class="teal-add-text pointer" data-bind="click : AddExpense"><i class="teal plus circle icon"></i> Add expense</a>
+                            </div>
+                            <br />
+                            <!--Rental Payments-->
+                            <div class="sixteen wide column">
+                                <div class="finance-heading no-margin">Rental Payments</div>
+                                <!--Table dissapears if there are no rental payments-->
+                                <table class="ui celled table" data-bind="visible: IsRentalPayment()">
+                                    <thead>
+                                        <tr>
+                                            <th>Amount</th>
+                                            <th>Frequency</th>
+                                            <th>Date Added</th>
+                                            <th class="three wide">Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach : RentalPayments">
+                                        <tr data-bind="template : {name : $parent.RentalPaymentDisplay($data)}"></tr>
+                                    </tbody>
+                                </table>
+                                <br data-bind="visible: !IsRentalPayment()" />
+                                <a class="teal-add-text pointer" data-bind="click : AddRentalPayment"><i class="teal plus circle icon"></i> Add rental payment</a>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <!--Cash flow tab-->
+                    <div class="ui bottom attached tab segment" data-tab="cashFlow">
+                        <div class="row no-margin">
+                            <div class="ui three column grid">
+                                <div class="column">
+                                    <div class="center aligned ui segment">
+                                        <div class="finance-heading">Monthly Income</div>
+                                        <div class="ui divider"></div>
+                                        <span class="finance-number" data-bind="if : Report()">$<span data-bind="numeric : Report().MonthlyRentalIncome">$758</span></span>
+                                        <div class="ui divider"></div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="center aligned ui segment">
+                                        <span class="finance-heading">Monthly Expenses</span>
+                                        <div class="ui divider"></div>
+                                        <span class="finance-number" data-bind="if : Report()">$<span data-bind="numeric : Report().MonthlyExpense">$468</span></span>
+                                        <div class="ui divider"></div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="center aligned ui segment">
+                                        <span class="finance-heading">In your pocket per month</span>
+                                        <div class="ui divider"></div>
+                                        <span class="finance-number" data-bind="if : Report()">$<span data-bind="numeric : Report().MonthlyMoneyInPocket">$291</span></span>
+                                        <div class="ui divider"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div />
+                            <br />
+                            <!--Cash flow table-->
+                            <table class="ui celled table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th class="finance-heading">Current Year</th>
+                                        <th class="finance-heading">Year 5</th>
+                                        <th class="finance-heading">Year 10</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="finance-heading">Property Value</td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().IndicatedHomeValue">$92,700</span>
+                                            </span>
+
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().EstimatedSalesPriceAtYear5">$123,679</span>
+                                            </span>
+
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().EstimatedSalesPriceAtYear10">$165,012</span>
+                                            </span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="finance-heading">Rental Income</td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().AnnualRentAtCurrentYear">$9,100</span>
+                                            </span>
+
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().AnnualRentAtYear5">$10,397</span>
+                                            </span>
+
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().AnnualRentAtYear10">$11,878</span>
+                                            </span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="finance-heading">Estimated Expenses</div>
+                                            <span class="text-muted">Based on 25% of rent p/a<br>and 4.5% interest</span>
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().TotalExpenseAtCurrentYear">$5,612</span>
+                                            </span>
+
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().TotalExpenseAtYear5">$5,936</span>
+                                            </span>
+
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().TotalExpenseAtYear10">$6,307</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="finance-heading">Cash flow (pre-tax)</div>
+                                            <span class="text-muted">Income - expenses</span>
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().CashflowPreTaxAtCurrentYear">$3,488</span>
+                                            </span>
+
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().CashflowPreTaxAtYear5">$4,309</span>
+                                            </span>
+
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().CashflowPreTaxAtYear10">$5,247</span>
+                                            </span>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="finance-heading">Capital Gain</div>
+                                            <span class="text-muted">(accumulated)</span>
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().CapitalGainAtCurrentYear">$5,503</span>
+                                            </span>
+
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().CapitalGainAtYear5">$30,979</span>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="finance-number" data-bind="if : Report()">
+                                                $<span data-bind="numeric : Report().CapitalGainAtYear10">$72,312</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.AntiForgeryToken()
+@section Modal{
+    @{
+                        /**/
+
+                        Html.RenderPartial("_SearchResultModal");
+                        Html.RenderPartial("_PropertyFinancial");
+    }
+}
+@section scripts{
+    @Scripts.Render("~/Scripts/PropertyOwners/Home/FinancialModel.js")
+    @Scripts.Render("~/Scripts/propertyOwners/Home/Index.js")
+    <script>
+        $(document).ready(function () {
+            var searchCount = @Model.SearchCount;
+            if(searchCount == 0){
+                $('#NoRecord').appendTo('body').modal('show');
+            }
+
+            var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+            var vm = new PageViewModel(dataVm, KeysExtendsDic.Property);
+            ko.applyBindings(vm);
+            if (dataVm.NoResultFound()) {
+                KeysUtils.notification.show('<p>No result found! </p>', 'notice', '');
+            }
+//            console.log(ko.toJSON(dataVm));
+        });
+    </script>
+}
+<style>
+    .highlighted-1 {
+        background: #efefef;
+    }
+</style>

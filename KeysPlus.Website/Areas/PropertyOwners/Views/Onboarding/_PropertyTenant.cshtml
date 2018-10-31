@@ -1,0 +1,85 @@
+﻿<div class="ui grid">
+    <div class="eight wide column">
+        <div class="form-group">
+            <label class="onboard-label">Tenant Email <span style="color:red;">*</span></label>
+            <input class="ui input" name="Email" type="text" data-bind="value:TenantToPropertyModel.TenantEmail,valueUpdate:'afterkeydown', event : {change : TenantToPropertyModel.CheckTenant}" />
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="form-group">
+            <label class="onboard-label">Is Main Tenant <span style="color:red;">*</span></label>
+            <select class="ui dropdown" data-bind="value : TenantToPropertyModel.IsMainTenant">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="form-group">
+            <label class="onboard-label">First Name <span style="color:red;">*</span></label>
+            <input type="text" data-bind="value : TenantToPropertyModel.FirstName, disable : TenantToPropertyModel.TenantExist" />
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="form-group">
+            <label class="onboard-label">Last Name <span style="color:red;">*</span></label>
+            <input name="EndDate" type="text" data-bind="value : TenantToPropertyModel.LastName, disable : TenantToPropertyModel.TenantExist" />
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="form-group">
+            <label class="onboard-label">Start Date <span style="color:red;">*</span></label>
+            <input name="StartDate" type="text" data-bind="datePicker : TenantToPropertyModel.StartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="form-group">
+            <label class="onboard-label">End Date </label>
+            <input name="EndDate" type="text" data-bind="datePicker : TenantToPropertyModel.EndDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="form-group">
+            <label class="onboard-label">Rent Amount <span style="color:red;">*</span></label>
+            <input name="RentAmount" type="text" data-bind="value: TenantToPropertyModel.PaymentAmount,trimTo2dp, valueUpdate:'afterkeydown'" />
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="form-group">
+            <label class="onboard-label">Payment Frequency <span style="color:red;">*</span></label>
+            <select class="onboard-dropdown" name="paymentfrequency" data-bind="value: TenantToPropertyModel.PaymentFrequencyId">
+                @foreach (var freq in ViewBag.Frequencies)
+                {
+                    <option value="@freq.Id">@freq.Code</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="form-group">
+            <label class="onboard-label">Payment Start Date <span style="color:red;">*</span></label>
+            <input type="text" data-bind="datePicker : TenantToPropertyModel.PaymentStartDate, dateTimePickerOptions : {format: 'DD/MM/YYYY'}" />
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="form-group">
+            <label class="onboard-label">Payment Due Date <span style="color:red;">*</span></label>
+            <select class="onboard-dropdown" data-bind="options : TenantToPropertyModel.DueDateOptions, value : TenantToPropertyModel.PaymentDueDate"></select>
+        </div>
+    </div>
+</div>
+
+@*<div class="form-group">
+        <input type="checkbox" data-bind="checked : IsMainTenant" style="margin : 0px; width : 15px; height : 15px; position : relative; bottom : -2px" />
+        <label class="control-label">&nbsp;Is Main Tenant ?</label>
+    </div>*@
+@*<br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-sm-12 text-center" style="padding-bottom: 30px">
+                <input type="button" class="btn btn-success" value="Next" data-bind="click:gotoLiability,enable:basicValid" />
+                <input type="button" class="btn btn-group btn-danger" value="Cancel" onclick="location.href='@Url.Action("DashBoard", "Home")'" />
+            </div>
+        </div><!--column-->
+    </div><!--row-->*@
+@*</fieldset>*@

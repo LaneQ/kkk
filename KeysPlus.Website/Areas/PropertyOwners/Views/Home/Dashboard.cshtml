@@ -1,0 +1,314 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+<div class="block-header">
+    <h3>Dashboard</h3>
+    @*<small class="text-muted">This is area allow property owner to manage their properties</small>*@
+</div>
+<hr />
+
+
+<div class="row dashboard" >
+    <div class="col-md-4">
+        <div class="panel panel-default dashboard-panel" style="height : 230px"  >
+            <div class="panel-heading">Quick Buttons</div>
+            <div class="panel-body" style="height : 190px"  >
+                <div class="row" style="height : 50%" >
+                    <div id="add-finance-button" class="col-md-4 text-center no-padding-side btn-dash-quick" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("EditPropFinance", "Manage", new { aria = "PropertyOwners"})'">
+                        <div class="zmdi zmdi-money"></div>
+                        <div>Add Finance  Details</div>
+                    </div>
+                    <div  id="add-tenant-button" class="col-md-4 text-center btn-dash-quick" style="border-right : 1px solid #dedee0"  onclick="location.href='@Url.Action("AddTenantDashBoard", "Home")'">
+                        <div class="zmdi zmdi-account-add"></div>
+                        <div>Add New Tenant</div>
+                    </div>
+                    <div class="col-md-4 text-center btn-dash-quick" onclick="location.href='@Url.Action("AddNewProperty", new { controller = "Property", area = "PropertyOwners" })'">
+                        <div class="zmdi zmdi-home">
+                            <span style="position : absolute; top:-2px; left:-4px; font-weight : bolder; font-size : 12px">+</span>
+                        </div>
+                        <div>Add New Property</div>
+                    </div>
+                </div>
+
+                <div class="row" style="height :50%">
+                    <div class="col-md-12" style="border-top : 1px solid #dedee0">
+                        <div class="row" style="height : 100%;">
+                            <div  id="add-listing-button"class="col-md-4 text-center btn-dash-quick pad-top-10" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("ListRental", new { controller = "Property", area = "PropertyOwners", propId = -1 })'">
+                                <div class="fa fa-key">
+                                    <span class="zmdi zmdi-home" style="position : absolute; top:0; right:0; font-size : 9px"></span>
+                                </div>
+                                <div>Add New Listing</div>
+                            </div>
+                            <div id="add-request-button" class="col-md-4 text-center btn-dash-quick pad-top-10" style="border-right : 1px solid #dedee0">
+                                <a href="@Url.Action("SendRequest", "Home", new { area = "Rental", returnUrl = HttpContext.Current.Request.RawUrl})">
+                                    <div class="fa fa-envelope-square" style="position : relative">
+                                        <span style="position : absolute; top:-5px; left:-6px; font-weight : 900; font-size : 12px">+</span>
+                                    </div>
+                                    <div>Add New Request</div>
+                                </a>
+                                
+                            </div>
+                            <div id="add-job-button" class="col-md-4 text-center btn-dash-quick pad-top-10 no-padding-side">
+                                <a href="@Url.Action("AddNewJob", new { controller = "Home", area = "Jobs", returnUrl = HttpContext.Current.Request.RawUrl })">
+                                    <div class="fa fa-wrench">
+                                        <span style="position : absolute; top:-3px; left:-3px; font-weight : 900; font-size : 12px">+</span>
+                                    </div>
+                                    <div>Add New Market Job</div>
+                                </a>
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default dashboard-panel" style="height : 230px">
+            <div class="panel-heading">Properties</div>
+            <div class="panel-body" style="height : 190px">
+                <div class="row" style="height : 100%; display: flex;align-items: center;">
+                    <div class="col-md-7 no-padding-side">
+                        <canvas id="property-chart" height="200"></canvas>
+                    </div>
+                    <div class="col-md-5 no-padding-side">
+                        <div class="chart-legends" id="prop-chart-legends"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default dashboard-panel" style="height : 230px">
+            <div class="panel-heading">Rental Applications</div>
+            <div class="panel-body" style="height : 190px">
+                <div class="row" style="height : 100%; display: flex;align-items: center;">
+                    <div class="col-md-7 no-padding-side">
+                        <canvas id="rent-app-chart" height="200"></canvas>
+                    </div>
+                    <div class="col-md-5 no-padding-side">
+                        <div class="chart-legends" id="rent-apps-chart-legend"></div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default dashboard-panel" style="height : 230px">
+            <div class="panel-heading">Maintenance</div>
+            <div class="panel-body" style="height : 190px">
+                <div class="row" style="height : 100%; display: flex;align-items: center;">
+                    <div class="col-md-7 no-padding-side">
+                        <canvas id="maintenance-chart" height="200"></canvas>
+                    </div>
+                    <div class="col-md-5 no-padding-side">
+                        <div class="chart-legends" id="maintenance-chart-legend"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default dashboard-panel" style="height : 230px">
+            <div class="panel-heading">Tenants' Request</div>
+            <div class="panel-body" style="height : 190px">
+                <div class="row" style="height : 100%; display: flex;align-items: center;">
+                    <div class="col-md-7 no-padding-side">
+                        <canvas id="tent-request-chart" height="200"></canvas>
+                    </div>
+                    <div class="col-md-5 no-padding-side">
+                        <div class="chart-legends" id="tent-request-chart-legend"></div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default dashboard-panel" style="height : 230px">
+            <div class="panel-heading">Job Quotes</div>
+            <div class="panel-body" style="height : 190px">
+                <div class="row" style="height : 100%; display: flex;align-items: center;">
+                    <div class="col-md-7 no-padding-side">
+                        <canvas id="job-quotes-chart" height="200"></canvas>
+                    </div>
+                    <div class="col-md-5 no-padding-side">
+                        <div class="chart-legends" id="job-quotes-chart-legend"></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="row clearfix top-report">
+    <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12">
+        <div class="card">
+            <div class="panel-body">
+                <h3>$ 1,100,000</h3>
+                <p class="text-muted">Total Assets</p>
+                <div class="progressbar-xs progress-rounded progress-striped progress ng-isolate-scope" value="68" type="info">
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" style="width: 68%;"></div>
+                </div>
+                <span class="text-small">10% property value increase than last month</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12">
+        <div class="card">
+            <div class="panel-body">
+                <h3>$ 400,000</h3>
+                <p class="text-muted">Total Equity</p>
+                <div class="progressbar-xs progress-rounded progress-striped progress ng-isolate-scope" value="68" type="success">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" style="width: 68%;"></div>
+                </div>
+                <span class="text-small">4% higher than last month</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12">
+        <div class="card">
+            <div class="panel-body">
+                <h3>$ 70,000</h3>
+                <p class="text-muted">Annual Yield</p>
+                <div class="progressbar-xs progress-rounded progress-striped progress ng-isolate-scope" value="68" type="danger">
+                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" style="width: 68%;"></div>
+                </div>
+                <span class="text-small">4% higher than last year</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-md-6 col-xs-12">
+        <div class="card">
+            <div class="panel-body">
+                <h3>$ 20,500</h3>
+                <p class="text-muted">Total Expense(Current)</p>
+                <div class="progressbar-xs progress-rounded progress-striped progress ng-isolate-scope" value="68" type="warning">
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" style="width: 68%;"></div>
+                </div>
+                <span class="text-small">15% higher than last month</span>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@*<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>Rental Payment Tracking</h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more-vert"></i></a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);">Action</a></li>
+                            <li><a href="javascript:void(0);">Another action</a></li>
+                            <li><a href="javascript:void(0);">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="">
+                <canvas id="line_chart" height="150"></canvas>
+            </div>
+        </div>
+    </div>
+</div>*@
+<script src="~/Scripts/chartjs/chartjs.js"></script>
+@section scripts{
+    @Scripts.Render("~/bundles/chartLibrary")
+}
+
+<script>
+    $(document).ready(function () {
+        Chart.pluginService.register({
+            beforeDraw: function (chart) {
+                if (chart.config.options.elements.center) {
+                    //Get ctx from string
+                    var ctx = chart.chart.ctx;
+
+                    //Get options from the center object in options
+                    var centerConfig = chart.config.options.elements.center;
+                    var fontStyle = centerConfig.fontStyle || 'Arial';
+                    var txt = centerConfig.text;
+                    var color = centerConfig.color || '#000';
+                    var sidePadding = centerConfig.sidePadding || 20;
+                    var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+                    //Start with a base font of 30px
+                    ctx.font = "40px " + fontStyle;
+                    //Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                    var stringWidth = ctx.measureText(txt).width;
+                    var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+                    // Find out how much the font can grow in width.
+                    var widthRatio = elementWidth / stringWidth;
+                    var newFontSize = Math.floor(30 * widthRatio);
+                    var elementHeight = (chart.innerRadius * 2);
+
+                    // Pick a new font size so it will not be larger than the height of label.
+                    var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+                    //Set font settings to draw it correctly.
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                    var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                    ctx.font = fontSizeToUse + "px " + fontStyle;
+                    ctx.fillStyle = color;
+
+                    //Draw text in center
+                    ctx.fillText(txt, centerX, centerY);
+                }
+            }
+        });
+        var dashBoardData = @Html.Raw(Json.Encode(Model));
+        var dashBoard = new DrawDashBoard(dashBoardData);
+        var propCount = dashBoardData.PropDashboardData.Occupied + dashBoardData.PropDashboardData.Vacant;       
+        if (propCount < 1) {
+            $("#quick-buttons").addClass("disabledbutton");
+            $("#add-finance-button").addClass("disabledbutton");
+            $("#add-tenant-button").addClass("disabledbutton");
+            $("#add-listing-button").addClass("disabledbutton");
+            $("#add-request-button").addClass("disabledbutton");
+            $("#add-job-button").addClass("disabledbutton");
+         
+        }
+        
+    });
+    
+</script>
+<style>
+    .chart-legends ul {
+        list-style : none;
+        padding-left : 10px;
+    }
+    .doughnut-label{
+        width : 10px;
+        height : 10px;
+        border-radius : 50%;
+        display : inline-block;
+    }
+    .chart-legends ul li{
+        text-transform : none;
+        font-size : 14px;
+    }
+    .disabledbutton {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+</style>

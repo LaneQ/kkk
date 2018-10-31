@@ -1,0 +1,861 @@
+﻿@model KeysPlus.Service.Models.AdvancedMarketJobSearchModel
+@{
+    ViewBag.Title = ViewBag.IsOwnerView ? "My Advertised Jobs" : "Available Jobs";
+}
+<div id="mainPage" data-bind="visible : MainView">
+    <div>
+        <div class="block-header"><h3>Available Jobs</h3></div>
+        <span class="text-muted" style="font-size:12px;">You can search and apply for available jobs here</span>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            @{
+                Html.RenderPartial("_SearchBoxHalf");
+            }
+        </div>
+
+        <div class="col-md-4 pull-right" style="height:38px; line-height:38px">
+            <div class="row">
+                @*<a href="@Url.Action("AdvanceSearch","Home")">Advanced Search</a>*@
+                <div class="col-md-8 pull-right" data-bind="template :{name: 'fiter-select'}">
+                </div>
+                <span style="float:right">Sort By:</span>
+            </div>
+        </div>
+    </div>
+
+    @{
+        string currentSort = Model.SortOrder;
+        switch (currentSort)
+        {
+            case "Title":
+                currentSort = "Title (Asc)";
+                break;
+            case "Title_Desc":
+                currentSort = "Title (Desc)";
+                break;
+            case "MaxBudget":
+                currentSort = "Lowest Budget";
+                break;
+            case "maxBudget_desc":
+                currentSort = "Highest Budget";
+                break;
+            case "date_desc":
+                currentSort = " Latest Date";
+                break;
+            case "Date":
+                currentSort = "Earliest Date";
+                break;
+
+
+            default:
+                Model.SortOrder = "date_desc";
+                currentSort = "Latest Date";
+                break;
+
+
+        }
+    }
+
+    <div>
+        @if (ViewBag.ReturnUrl != null)
+        {
+            <br />
+            <a class="btn btn-info btn-sx" data-bind="attr: { href: '@Html.Raw(ViewBag.ReturnUrl)' }"><span class="fa fa-arrow-left"></span> Back</a>
+            <br />
+        }
+    </div>
+    
+    <div style="padding-top : 20px">
+        <div class="row" data-bind="foreach : Items">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                @*<img class="img-responsive img-thumbnail" data-bind="attr: {src: FirstPhoto().Data}" alt="firstImg" onerror="this.src='/images/no-prop-img.png'" />*@
+                                <div data-bind="visible:ImgFiles().length>0">
+                                    <div class="carousel " data-ride="carousel" data-bind="attr :{id : 'carousel'+ Id()}">
+                                        <div class="carousel-inner" style="margin:auto" data-bind="foreach: ImgFiles">
+                                            <div class="item" data-bind="css:{active: $index() == 0}">
+                                                <img class="img-responsive img-thumbnail" data-bind="attr: {src: Data}"
+                                                     onerror="this.src = '/images/no-prop-img.png'" alt="firstImg">
+                                            </div>
+                                        </div>
+
+                                        <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'carousel'+ Id()}, if : ImgFiles().length > 1">
+                                            <span class="fa fa-2x fa-angle-left"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'carousel'+ Id()}, if : ImgFiles().length > 1">
+                                            <span class="fa fa-2x fa-angle-right"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div data-bind="visible:ImgFiles().length<=0">
+                                    <img class="img-thumbnail" src="/images/no-prop-img.png" alt="noPropImg" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 data-bind="text:Title"></h4>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-3" style="padding-right : 0px;"><strong>Budget:</strong></div>
+                                    <div class="col-md-8">$<span data-bind="numeric: MaxBudget"></span></div>
+                                </div>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-3" style="padding-right : 0px;">
+                                        <strong>Location :</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text : PropertyAddress"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3" style="padding-right : 0px;"><strong>Description :</strong></div>
+                                    <div class="col-md-8 description" data-bind="text : JobDescription"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="pull-right">Listed on : <span data-bind="text :  moment(PostedDate()).format('ll')"></span></div>
+                            </div>
+                            <div class="prop-actions">
+                                <button class="btn btn-default" data-bind="click: $root.ShowDetail"><span class="zmdi zmdi-info-outline"></span> Details</button>
+
+                                <div data-bind="attr : {class : !$root.IsUserServiceSupply() ? 'disable-tooltip inline' : 'inline'}">
+                                    <button class="btn btn-success" data-bind="click:$root.ShowApply, enable: $root.IsUserServiceSupply"><i class="zmdi zmdi-file-add"></i> Apply</button>
+                                    <span data-bind="ifnot:  $root.IsUserServiceSupply">
+                                        <span class="tooltiptext" style="background-color:wheat; color:black" @*data-bind="text: DisableMessage"*@> You are not a service supplier please click this <a href='@Url.Action("AddRoleToLogin", "Account", new {Area = "", roleId =6 })'>link</a> to become a service supplier</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{
+        Html.RenderPartial("_PagedItems");
+    }
+</div>
+
+<div id="ApplyView" style="display:block" data-bind="visible:ApplyView">
+    <div class="row">
+        <div style="width : 80%; margin : auto">
+            <h3>Job Quotes</h3>
+            <hr />
+            <button class="btn btn-info btn-sx" data-bind="click : $root.ShowMain" @*data-bind="click:$root.toMain"*@><span class="fa fa-arrow-left"></span> Back</button>
+            <br /><br />
+        </div>
+    </div>
+    <div class="row" style="padding-bottom: 100px">
+        <form class="step-form" style="margin-bottom:20px" data-bind="with: JobQuote">
+            <fieldset>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Job Information
+                    </div>
+                    <div class="panel-body">
+                        <div style="margin-top:5px">
+                            <label class="control-label">Title</label> <span data-bind="text : marketJob().Title"></span>
+                        </div>
+                        <div style="margin-top:5px">
+                            <label class="control-label">Job Description </label> <span class="detailspan" data-bind="text : marketJob().JobDescription()" style="word-break: break-all;"></span>
+                        </div>
+                        <div style="margin-top:5px">
+                            <label class="control-label">Location</label> <span class="detailspan" data-bind="text : marketJob().PropertyAddress()"></span>
+                        </div>
+                        <div style="margin-top:5px">
+                            <label class="control-label">Budget</label> $<span class="detailspan" data-bind="numeric : marketJob().MaxBudget()"></span>
+                        </div>
+                    </div><!--panel body-->
+                </div><!--panel-->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Enter Amount <span style="color:red;">*</span></label>
+                            <input class="form-control" type="text" data-bind="trimTo2dp, value: Amount, valueUpdate:'afterkeydown'" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class=" control-label">Note <span style="color:red;">*</span></label>
+                            <textarea class="form-control" rows="5" style="height:123px;" maxlength="500" data-bind="value: Note, valueUpdate:'afterkeydown'"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Please upload your documents here<span style="color:red;"></span></label>
+                            <div class="panel panel-default">
+                                <div class="panel-body" style="height:200px">
+                                    <div class="row" data-bind="foreach: MediaFiles()">
+                                        <div class="col-md-2 col-sm-4 col-xs-4 no-padding-right">
+                                            <div class="thumbnail">
+                                                <a data-bind="click: $parent.RemoveFile">
+                                                    <i class="zmdi zmdi-close-circle" style="float:right"></i>
+                                                </a>
+                                                <img class="img-responsive" data-bind="attr: {src: Data}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="btn btn-success">
+                                <span class="fa fa-cloud-upload"></span>
+                                Choose Files
+                                <input type="file" id="file-upload" class="key-upload" data-bind="filesUpload : MediaFiles" accept="application/pdf,image/*" multiple />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*</p>@*<p id="photo_validation">You can upload up to 5 photos</p>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-center" style="padding-bottom: 30px">
+                        <button class="btn btn-success" data-bind="enable: IsValid, click: $parent.submitQuote">Submit</button>
+
+                        <button class="btn btn-group btn-danger" data-bind="click:$root.goBackToJobDetails">Close</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        @*</div>*@
+    </div>
+</div>
+
+<div id="SupplierInfoView" style="display:none" data-bind="visible:SupplierInfoView">
+    <div class="row">
+        <div style="width : 80%; margin : auto">
+            <div class="block-header page-title">
+                <h3>Please add your details to continue</h3>
+            </div>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <button class="btn btn-info btn-sx" style="margin-left:70px;" data-bind="click: $root.ShowMain">@*<span class="fa fa-arrow-left"></span>*@ Back to previous page</button>
+    </div>
+    <form class="step-form" style="margin-bottom:20px">
+        <ul id="progressbar" style="left:80px;">
+            <li id="cd" class="active">Service Provider Details</li>
+            <li id="ca">Service Provider Address</li>
+        </ul>
+        <fieldset style="width:90%">
+            <div data-bind="stopBinding : true">
+                <div id="CompanyDetailForm">
+                    <div id="firstPage">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Business Name <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" data-bind="value : Name, valueUpdate:'afterkeydown'" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Phone Number <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" data-bind="value : PhoneNumber, valueUpdate:'afterkeydown'" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Website </label>
+                                    <input type="text" class="form-control" data-bind="value : Website, valueUpdate:'afterkeydown'" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Please upload your Company Logo here<span style="color:red;"></span></label>
+                            </div>
+                            <br />
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div style="height:150px">
+                                        <div data-bind="if:fileSrc">
+                                            <div class="thumbnail" style="position: relative">
+                                                <a class="zmdi zmdi-close-circle" data-bind="click: removePhoto" style="position:absolute; top : 0; right : 1px">
+                                                </a>
+                                                <img class="img-responsive" data-bind="attr: {src: fileSrc}" style="max-height : 140px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn btn-success">
+                                    <span class="fa fa-cloud-upload"></span>
+                                    Choose Files
+                                    <input type="file" id="service-upload" class="key-upload" data-bind="event:{change:fileSelect}" accept="image/*" />
+                                </div>
+
+                                <div class="form-group">
+                                    <p class="text-muted" style="font-size:11px; text-align : left">Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, & *.gif</p>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-primary" data-bind="click:toNext">Next</button>
+                                <button class="btn btn-danger" data-bind="click : $root.goToIndex">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="secondPage" style="display:none">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <h3>Physical Address</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Search Address <span style="color:red;">*</span></label>
+                                    <input class="form-control" type="text" name="searchAddress" id="autocomplete" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: PhysicalAddress, valueUpdate:'afterkeydown'">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="street_number">Number <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="street_number" placeholder="&nbsp Number" data-bind="textInput: PhysicalAddress.Number" />
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label" for="route">Street <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="route" placeholder="&nbsp Street" data-bind="textInput: PhysicalAddress.Street" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="route">Suburb <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="route" placeholder="&nbsp Suburb" data-bind="textInput: PhysicalAddress.Suburb" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="street_number">City <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="street_number" placeholder="&nbsp City" data-bind="textInput: PhysicalAddress.City" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="street_number">Postcode <span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="street_number" placeholder="&nbsp Postcode" data-bind="textInput: PhysicalAddress.PostCode" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input id="shipsame" type="checkbox" name="test" style="float:left ;width: 20px; margin-top:15px" data-bind="checked : IsShipSame" />
+                                <label class="control-label" style="padding-left:10px;margin-top:11px;">Same Billing Address</label>
+                            </div>
+                        </div>
+                        <div id="shipinfo" data-bind="visible : !IsShipSame()">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h3>Billing Address</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Search Address <span style="color:red;">*</span></label>
+                                        <input class="form-control" type="text" name="searchAddress" id="autocomplete" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: BillingAddress, valueUpdate:'afterkeydown'">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="street_number">Number <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="street_number" placeholder="&nbsp Number" data-bind="textInput: BillingAddress.Number" />
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="control-label" for="route">Street <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="route" placeholder="&nbsp Street" data-bind="textInput: BillingAddress.Street" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="route">Suburb <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="route" placeholder="&nbsp Suburb" data-bind="textInput: BillingAddress.Suburb" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="street_number">City <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="street_number" placeholder="&nbsp City" data-bind="textInput: BillingAddress.City" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="street_number">Postcode <span style="color:red;">*</span></label>
+                                        <input type="text" class="form-control" id="street_number" placeholder="&nbsp Postcode" data-bind="textInput: BillingAddress.PostCode" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"></div>
+
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-primary" data-bind="click:toPrev">Previous</button>
+                                <button class="btn btn-primary" data-bind="click:ValidateSaveBeforeApply">Submit</button>
+                                <button class="btn btn-danger" data-bind="click : $root.goToIndex">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+
+</div>
+
+<div id="DetailView" data-bind="visible:DetailView">
+    @*<div id="marketJobDetails" data-bind="with:SelectedItem">*@
+        <h3>Job Details</h3>
+        <hr />
+        <button class="btn btn-info btn-sx" data-bind="click: $root.ShowMain"><span class="fa fa-arrow-left"></span> Back</button>
+        <br /><br />
+        <div class="row" data-bind="with:SelectedItem">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="h4"><span data-bind="text: Title"></span></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--details coloumn-->
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Location:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text: StreetAddress"></span>
+                                        <span data-bind="text: CitySub"></span>
+                                    </div>
+                                </div>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Maximum Quote:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        $<span data-bind="numeric:MaxBudget"></span>
+                                    </div>
+                                </div>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Description:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text:JobDescription" style="word-break: break-all;"></span>
+                                    </div>
+                                </div>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Listed on:</strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text:moment(PostedDate()).format('ll')"></span>
+                                    </div>
+                                </div>
+                                <br />
+                            </div> <!--details coloumn-->
+
+                            <div class="col-md-4" style="margin-left:150px; height:250px;">
+                                <!--photo coloumn-->
+                                <div id="carousel-property" class="carousel slide" data-ride="carousel" data-bind="visible:MediaFiles().length>0">
+                                    <!-- Wrapper for slides -->
+                                    <a href="#" class="thumbnail" style="height:200px;">
+                                        <div class="carousel-inner" role="listbox" data-bind="foreach: MediaFiles()">
+                                            <div class="item" data-bind="css: {active: $index() > 0}">
+                                                <img data-bind="attr: {src: Data}" alt="Thumbnail" data-target="#lightbox">
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!-- Controls -->
+                                    <a class="left carousel-control" href="#carousel-property" role="button" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" href="#carousel-property" role="button" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+
+                                <div class="row">
+                                    <!--Without Images -->
+                                    <div class="col-md-10">
+                                        <div class="thumbnail" data-bind="visible:MediaFiles().length==0">
+                                            <img src="/images/no-prop-img.png" alt="noPropImg" />
+                                        </div>
+                                    </div>
+                                </div><!--Without Images -->
+
+                            </div><!--photo coloum-->
+                        </div><!-- row-->
+                        <!--apply button section-->
+                        <div data-bind="attr : {class : !$root.IsUserServiceSupply() ? 'disable-tooltip inline' : 'inline'}">
+                            <button class="btn btn-success" data-bind="click:$root.ShowApply, enable: $root.IsUserServiceSupply"><i class="zmdi zmdi-file-add"></i> Apply</button>
+                            <span data-bind="ifnot:  $root.IsUserServiceSupply">
+                                <span class="tooltiptext" style="background-color:wheat; color:black" @*data-bind="text: DisableMessage"*@> You are not a service supplier please click this <a href='@Url.Action("AddRoleToLogin", "Account", new {Area = "", roleId =6 })'>link</a> to become a service supplier</span>
+                            </span>
+                        </div>
+                        @*<div class="prop-actions">
+            @if (ViewBag.IsUserServiceSupply && !ViewBag.IsOwnerView)
+            {
+                <button class="btn btn-success" data-bind="click:$parent.applybutton" style="margin-right:10px;"><span class="zmdi zmdi-edit"></span> Apply</button>
+            }
+        </div>*@
+                    </div> <!--panel body-->
+                </div><!--panel-->
+            </div><!--coloumn-->
+        </div><!--coloumn-->
+    </div><!--marketJobDetails-->
+@*</div>*@ <!--marketJob-->
+
+@Html.AntiForgeryToken()
+@*<script src="~/Scripts/Jobs/MarketJobs.js"></script>*@
+<script src="~/Scripts/Companies/CompanyOnboard.js"></script>
+@section Modal{
+    @{
+        Html.RenderPartial("_SearchResultModal");
+    }
+}
+@section scripts{
+<script>
+    function PageViewModel(dataVm) {
+        console.log(dataVm);
+        debugger;
+        var token = $("input[name = '__RequestVerificationToken']").val();
+        var self = this;
+        self.valueArray = [];
+        self.firstValues = ko.observableArray([]);
+        self.secondValues = ko.observableArray([]);
+        self.thirdValues = ko.observableArray([]);
+        self.selectedFirstOption = ko.observable();
+        self.selectedSecondOption = ko.observable();
+        self.selectedThirdOption = ko.observable();
+        for (var key in dataVm) {
+            self[key] = dataVm[key]
+        }
+            //self.Items().forEach(function (item) {
+            //    KeysUtils.injectViewProps(item);
+            //});
+
+        
+            
+        self.Items().forEach(function (item) {
+            item.ImgFiles = ko.computed(function () {
+                var files = item.MediaFiles;
+                return files().filter(function (element) {
+                    var type = ko.utils.unwrapObservable(element.MediaType);
+                    return type == 1;
+                });
+            });
+            item.DocFiles = ko.computed(function () {
+                var files = item.MediaFiles;
+                return files().filter(function (element) {
+                    var type = ko.utils.unwrapObservable(element.MediaType);
+                    return type == 2;
+                });
+            });
+            var addr = item.Address;
+            if (addr) {
+                item.StreetAddress = KeysUtils.toAddressStreet(addr);
+                item.CitySub = KeysUtils.toCitySub(addr);
+            }
+
+        });
+
+        self.SelectedItem = ko.observable();
+        self.MainView = ko.observable(true);
+        self.DetailView = ko.observable(false);
+        self.ApplyView = ko.observable(false);
+        self.SupplierInfoView = ko.observable(false);
+        self.JobQuote = ko.observable();
+        self.SupplierInfo = new SupplierInfo(KeysExtendsDic.SupplierInfo);
+        self.ShowMain = function () {
+            self.DetailView(false);
+            self.MainView(true);
+            self.ApplyView(false);
+            self.SupplierInfoView(false);
+
+        }
+
+        self.ShowDetail = function (data) {
+            self.SelectedItem(data);
+            self.DetailView(true);
+            self.MainView(false);
+            self.ApplyView(false);
+            self.SupplierInfoView(false);
+
+        }
+
+        self.ShowApply = function (data) {
+            if (self.IsProfileComplete()) {
+                self.DetailView(false);
+                self.MainView(false);
+                self.SupplierInfoView(false);
+                self.ApplyView(true);
+            }
+            else {
+                self.MainView(false);
+                self.DetailView(false);
+                self.ApplyView(false);
+                self.SupplierInfoView(true);
+            }
+            self.SelectedItem(data);
+            
+            var quote = new EntityViewModel(KeysExtendsDic.JobQuote(data.Model.MaxBudget()));
+            quote.JobRequestId = data.Model.Id();
+            self.JobQuote(quote)
+
+        }
+        self.RemoveFile = function (data) {
+            self.JobQuote().RemoveFile(data);
+        }
+        self.SubmitSupplierInfo = function (data) {
+            var formData = KeysUtils.toData(data.Model);
+            formData.append("__RequestVerificationToken", token);
+            $.ajax({
+                type: 'POST',
+                url: '/Companies/Onboarding/AddNewServiceProvider',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.success) {
+                        self.IsProfileComplete(true);
+                        self.MainView(false);
+                        self.DetailView(false);
+                        self.SupplierInfoView(false);
+                        self.ApplyView(true);
+                    }
+                    else {
+                        KeysUtils.notification.show('<p>Something went wrong please try again later!</p>', 'error');
+                    }
+                }
+            });
+        }
+        self.SubmitQuote = function (data) {
+            var formData = KeyUtils.toData(data.Model);
+            formData.append("__RequestVerificationToken", token);
+            $.ajax({
+                url: "/Jobs/Home/SaveJobQuote",
+                data: formData,
+                method: "POST",
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.Success) {
+                        KeysUtils.notification.show('<p>Quote submitted successfully!</p>', 'error', KeysUtils.reload);
+                    }
+                    else {
+                        KeysUtils.notification.show('<p>Something went wrong please try again later!</p>', 'error');
+                    }
+                }
+            });
+        }
+        console.log(self);
+    }
+
+        function SupplierInfo(dic) {
+            var self = this;
+            var interact = false;
+            self.validFileTypes = ["image/jpeg", "image/png", "image/gif"];
+            self.Model = new Entity(dic);
+            self.Model.PhysicalAddress = new AddressViewModel();
+            self.Model.BillingAddress = new AddressViewModel();
+            self.Model.PhotoFile = ko.observable();
+            self.ImgData = ko.observable();
+            self.ShowFirst = ko.observable(true);
+            self.ShowSecond = ko.observable(false);
+            self.ToNext = function () {
+                self.ShowFirst(false);
+                self.ShowSecond(true);
+                $('#cd').removeClass("active");
+                $("#ca").addClass("active");
+            }
+            self.ToPrevious = function () {
+                self.ShowFirst(true);
+                self.ShowSecond(false);
+                $('#ca').removeClass("active");
+                $("#cd").addClass("active");
+            }
+            self.IsShipSame = ko.observable(false);
+            self.CheckShip = ko.computed(function () {
+                if (self.IsShipSame()) {
+                    interact = true;
+                    UpdateAddress(self.Model.PhysicalAddress, self.Model.BillingAddress);
+                }
+                else {
+                    if (interact) {
+                        clearAddress(self.Model.BillingAddress);
+                    }
+
+                }
+            });
+            self.FirstPageErrors = ko.validation.group([self.Model.Name, self.Model.PhoneNumber, self.Model.Website]);
+            self.FirstPageValid = ko.computed(function () {
+                return self.FirstPageErrors().length == 0;
+            });
+            self.SecondPageErrors = ko.validation.group([self.Model.PhysicalAddress, self.Model.BillingAddress, self.PhysicalAddressField, self.BillingAddressField], { deep: true });
+            self.SecondPageValid = ko.computed(function () {
+                return self.SecondPageErrors().length == 0;
+            });
+            function clearAddress(address) {
+                address.Number(null);
+                address.Street(null);
+                address.Suburb(null);
+                address.City(null);
+                address.PostCode(null);
+                address.Latitude(null);
+                address.Longitude(null);
+            }
+            function UpdateAddress(data, address) {
+                data.Number ? address.Number(data.Number()) : 1;
+                data.Street ? address.Street(data.Street()) : 1;
+                data.Suburb ? address.Suburb(data.Suburb()) : 1;
+                data.City ? address.City(data.City()) : 1;
+                data.PostCode ? address.PostCode(data.PostCode()) : 1;
+                data.Latitude ? address.Latitude(data.Latitude()) : 1;
+                data.Longitude ? address.Longitude(data.Longitude()) : 1;
+            }
+        }
+        
+        
+        $(document).ready(function () {
+            $("#NoRecord").modal("show");
+            var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+            @*JobModel = ko.mapping.fromJS( @Html.Raw(Json.Encode(Model.Items)),@(ViewBag.IsProfileComplete.ToString().ToLower()));*@
+            var vm = new PageViewModel(dataVm)
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                contentType: "text/json",
+                url: "https://api.trademe.co.nz/v1/Localities.json",
+                data:
+                {
+                    region_id: 1,
+                    with_counts: true,
+                    listing_type: "houses_to_buy"
+                },
+                success: function (response) {
+                    vm.valueArray = response;
+
+                    for (let i in vm.valueArray) {
+                        vm.firstValues.push(vm.valueArray[i].Name)
+                    };
+                    //alert(self.valueArray());
+                },
+                error: function () {
+                    console.log("There has been an error retrieving the values from the database.");
+                }
+            });
+            vm.selectedFirstOption.subscribe(function (value) {
+                vm.secondValues([]);
+                var obj = vm.valueArray.find(o => o.Name === value);
+                for (let i in obj.Districts) {
+                    //alert(obj.Districts[i].Name);
+                    vm.secondValues.push(obj.Districts[i].Name);
+                };
+            });
+
+            vm.selectedSecondOption.subscribe(function (value) {
+                if (value != null) {
+                    vm.thirdValues([]);
+                    var region = vm.valueArray.find(o => o.Name === ko.utils.unwrapObservable(vm.selectedFirstOption));
+                    var obj = region.Districts.find(o => o.Name === value);
+                    for (let i in obj.Suburbs) {
+                        //alert(obj.Suburbs[i].Name);
+                        vm.thirdValues.push(obj.Suburbs[i].Name);
+                    };
+                }
+            });
+            //ko.applyBindings(JobModel);
+            ko.applyBindings(vm);
+        });
+
+
+</script>
+}
+
+<script type="text/template" id="fiter-select">
+    <select class="form-control" onChange='location.href = this.value'>
+        <option selected disabled hidden>@currentSort</option>
+        <option value="@Url.Action("AdvancedSearchResult",new { sortOrder = "Title", currentFilter = ViewBag.currentFilter, page = Model.Page, isOwner = ViewBag.IsOwnerView })">
+            Title (Asc)
+        </option>
+        <option value="@Url.Action("AdvancedSearchResult",new { sortOrder = "Title_Desc", currentFilter = ViewBag.currentFilter, page = Model.Page, isOwner = ViewBag.IsOwnerView  })">
+            Title (Desc)
+        </option>
+        <option value="@Url.Action("AdvancedSearchResult",new { sortOrder = "MaxBudget", currentFilter = ViewBag.currentFilter , page = Model.Page, isOwner = ViewBag.IsOwnerView })">
+            Lowest Budget
+        </option>
+        <option value="@Url.Action("AdvancedSearchResult", new { sortOrder = "maxBudget_desc", currentFilter = ViewBag.CurrentFilter , page = Model.Page, isOwner = ViewBag.IsOwnerView  })">
+            Highest Budget
+        </option>
+        <option value="@Url.Action("AdvancedSearchResult", new { sortOrder = "Date", currentFilter = ViewBag.CurrentFilter , page = Model.Page, isOwner = ViewBag.IsOwnerView  })">
+            Earliest Date
+        </option>
+        <option value="@Url.Action("AdvancedSearchResult", new { sortOrder = "Date_desc", currentFilter = ViewBag.CurrentFilter , page = Model.Page, isOwner = ViewBag.IsOwnerView  })">
+            Latest Date
+        </option>
+
+    </select>
+
+</script>

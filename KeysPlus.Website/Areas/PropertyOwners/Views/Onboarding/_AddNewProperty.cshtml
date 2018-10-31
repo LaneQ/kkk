@@ -1,0 +1,78 @@
+﻿
+<div class="ui grid">
+    <div class="ui eight wide column">
+        <label class="onboard-label" style="float:left;">Property Name <span style="color:red;">*</span></label>
+        <input type="text" class="ui input" name="propertyName" placeholder="&nbsp Enter property name" data-bind="value : PropertyName,valueUpdate:'afterkeydown'">
+    </div>
+    <div class="ui eight wide column">
+        <label class="onboard-label clear">Property Type </label>
+        <select class="ui dropdown" data-bind="value : PropertyTypeId">
+            @foreach (var type in ViewBag.PropertyTypes)
+            {
+                <option value="@type.PropertyTypeId">@type.Name</option>
+            }
+        </select>
+    </div>
+</div>
+<div class="ui grid">
+    <div class="ui sixteen wide column">
+        <label class="onboard-label clear" style="float:left;">Search Address <span style="color:red;">*</span></label>
+        <input type="text" name="searchAddress" id="autocomplete" placeholder="&nbsp Enter your address" size="54" maxlength="120" data-bind="addressAutocomplete: Address, value: AddressName, valueUpdate:'afterkeydown'">
+    </div>
+</div>
+<div class="ui grid">
+    <div class="ui sixteen wide column">    
+        <label class="onboard-label clear">Description <span style="color:red;">*</span></label>
+        <textarea data-bind="value:Description,valueUpdate:'afterkeydown'" style="resize: vertical;" rows="4" cols="70" required></textarea>
+    </div>
+</div>
+<div class="ui grid">
+    <div class="ui eight wide column">
+        <label class="onboard-label" style="float:left;">Target Rent <span style="color:red;">*</span></label>
+        <input type="text" placeholder="&nbsp Enter estimated target rent" data-bind="value : TargetRent">
+    </div>
+    <div class="ui eight wide column">
+        <label class="onboard-label">Rent Type </label>
+        <select class="onboard-dropdown" data-bind="value: TargetRentType">
+            @foreach (var freq in ViewBag.Frequencies)
+            {
+                <option value="@freq.Id">@freq.Code</option>
+            }
+        </select>
+    </div>
+</div>
+<div class="ui grid">
+    <div class="ui eight wide column">
+        <label class="onboard-label clear">Bedrooms <span style="color:red;">*</span></label>
+        <input type="text" data-bind="value: Bedroom,valueUpdate:'afterkeydown'" placeholder="Number of Bedrooms" />
+    </div>
+    <div class="ui eight wide column">
+        <label class="onboard-label clear">Bathrooms <span style="color:red; ">*</span></label>
+        <input type="text" data-bind="value: Bathroom,valueUpdate:'afterkeydown'" placeholder="Number of Bathrooms" />
+    </div>
+</div>
+<div class="ui grid">
+    <div class="ui eight wide column">
+        <label class="onboard-label clear">Carparks <span style="color:red;">*</span></label>
+        <input type="text" data-bind="value: ParkingSpace, valueUpdate : 'afterkeydown'" placeholder="Number of car parks" />
+    </div>
+    <div class="ui eight wide column">
+        <label class="onboard-label clear">Year Built <span style="color:red;">*</span></label>
+        <input type="text" data-bind="value: YearBuilt,valueUpdate:'afterkeydown'" placeholder="Year Built" />
+    </div>
+</div>
+<div class="ui grid">
+    <div class="ui sixteen wide column">
+        <input class="clear" type="checkbox" name="test" style="float:left ;width: 20px; margin-top:15px" data-bind="checked : IsOwnerOccupied" />
+        <label class="onboard-label" style="padding-left:10px">Owner Occupied&nbsp;<a href="#" data-toggle="tooltip" data-placement="right" title="Tick if owner is occupying the property or if there are no current tenants."><span class="fa fa-question-circle-o tooltip-icon"></span></a></label>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/css/bootstrap-formhelpers.min.css">
+@Scripts.Render("~/bundles/bootstrap")
+<link href="~/Content/stylesheets/_font-awesome.css" rel="stylesheet" />
+<script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+</script>

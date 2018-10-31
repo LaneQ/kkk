@@ -1,0 +1,56 @@
+﻿
+<div class="ui  divided items" data-bind="foreach: Model.MediaFiles">
+    <div class="item" data-bind="visible: MediaType() == 1">
+        <div class="image">
+            <div class="ui minix images">
+                <a target="_blank" data-bind="attr: { href: Data()}">
+                    <img class="ui image" data-bind="attr: {src: Data()}" style="height: 80px" />
+                </a>
+            </div>
+        </div>
+        <div class="middle aligned content">
+            <div class="header" data-bind="text : OldFileName()"></div>
+        </div>
+
+        <i class="remove sign icon" style="float:right" data-bind="click: $root.RemoveFile"></i>
+
+    </div>
+</div>
+<ul class="ui list" data-bind="foreach: Model.MediaFiles">
+    <li class="item" data-bind="visible: MediaType() == 2">
+        <i class="remove sign icon" style="float:right" data-bind="click : $root.RemoveFile"></i>
+        <span data-bind="text : OldFileName()"></span>
+    </li>
+</ul>
+@*<div class="form-group">
+        <label class="control-label">Uploaded documents</label>
+        <div class="panel panel-default">
+            <div class="panel-body" style="min-height:150px">
+                <div data-bind="foreach: Model.MediaFiles">
+                    <div class="col-md-3 col-sm-4 col-xs-4 no-padding-left" data-bind="visible : MediaType() == 1">
+                        <div class="thumbnail">
+                            <a data-bind="click: $root.RemoveFile">
+                                <i class="zmdi zmdi-close-circle" style="float:right" data-bind="click: $root.RemoveFile"></i>
+                            </a>
+                            <a target="_blank" data-bind="attr: { href: Data()}">
+                                <img class="img-responsive" data-bind="attr: {src: Data()}" style="height: 80px" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="list-group" data-bind="foreach: Model.MediaFiles">
+            <li class="list-group-item" data-bind="visible : MediaType() == 2">
+                <span class="zmdi zmdi-close-circle pull-right" data-bind="click : $root.RemoveFile"></span>
+                <span data-bind="text : OldFileName()"></span>
+            </li>
+        </ul>
+    </div>*@
+<div class="field">
+    <div class=" ui teal button" style="position : relative">
+        <span class="cloud upload icon"></span>
+        Choose Files
+        <input type="file" id="fileUpload" class="key-upload" data-bind="uploadFiles : Model.MediaFiles, validFileTypes : $root.ValidFileTypes" multiple />
+    </div>
+</div>

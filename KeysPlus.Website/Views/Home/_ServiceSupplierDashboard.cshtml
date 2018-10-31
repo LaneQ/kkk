@@ -1,0 +1,191 @@
+﻿@model KeysPlus.Service.Models.ServiceSupplierDashboardModel
+<br />
+<h3 class="ui header">Service Supplier Dashboard</h3>
+<div class="ui divider"></div>
+<div class="ui grid">
+    <div class="three column row" style="margin : 0px !important">
+        <div class="column">
+            <div class="ui segments" data-step="@(++Model.IntroSteps)" data-intro="These handy buttons are for quick access to majors functionalities.">
+                <div class="ui green segment"><h4 class="ui header">Quick Buttons</h4></div>
+                <div class="ui segment" style="height : 190px">
+                    <div class="ui secondary vertical menu" style="margin-top: 0px;width: 100%;">
+                        <a class="item" style="height : 33%" href='@Url.Action("Index", "Watchlist", new { area = "Personal" })'>
+                            <i class="ui grey bookmark icon" style="float : left !important"></i>
+                            <h5 class="ui header" style="display : inline"> &nbsp; &nbsp;My Watchlist</h5>
+                        </a>
+                        <a class="item" style="height : 33%" href='@Url.Action("MyJobs", "Home", new { area = "Companies" })'>
+                            <i class="ui grey briefcase icon" style="float : left !important"></i>
+                            <h5 class="ui header" style="display : inline"> &nbsp; &nbsp;My Jobs</h5>
+                        </a>
+                        <a class="item" style="height : 33%" href='@Url.Action("MyQuotes", "Manage", new { area = "Companies" })'>
+                            <i class="ui grey file alternate icon" style="float : left !important"></i>
+                            <h5 class="ui header" style="display : inline"> &nbsp; &nbsp;My Quotes</h5>
+                        </a>
+                    </div>
+                    
+                    @*<div class="row" style="height : 50%">
+                        <div id="market-place-button" class="col-md-4 text-center no-padding-side btn-dash-quick" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("GetMarketJobs", "Home", new { Area = "Jobs"})'">
+                            <i class="zmdi zmdi-city"></i>
+                            <div>Market </div>
+                            <div>Places</div>
+                        </div>
+                        <div id="my-quotes-button" class="col-md-4 text-center btn-dash-quick" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("MyQuotes", "Manage", new { area = "Companies"})'">
+                            <i class="zmdi zmdi-assignment"></i>
+                            <div>My </div>
+                            <div>Quotes</div>
+                        </div>
+                        <div id="my-jobs-button" class="col-md-4 text-center btn-dash-quick" onclick="location.href='@Url.Action("MyJobs", new { controller = "Home", area = "Companies" })'">
+                            <i class="zmdi zmdi-case"></i>
+                            <div>My </div>
+                            <div>Jobs</div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="height :50%">
+                        <div class="col-md-12" style="border-top : 1px solid #dedee0">
+                            <div class="row" style="height : 100%;">
+                                <div id="add-listing-button" class="col-md-4 text-center btn-dash-quick pad-top-10" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("AccountOverview", "Account")'">
+                                    <i class="zmdi zmdi-account-box"></i>
+                                    <div>Edit </div>
+                                    <div>Account Info</div>
+                                </div>
+                                <div id="add-listing-button" class="col-md-4 text-center btn-dash-quick pad-top-10" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("AccountOverview", "Account")'">
+                                    <i class="zmdi zmdi-account-box"></i>
+                                    <div>Edit </div>
+                                    <div>Company Info</div>
+                                </div>
+                                <div class="col-md-4 text-center btn-dash-quick pad-top-10 no-padding-side" onclick="location.href='/Personal/Watchlist'">
+                                    <i class="zmdi zmdi-bookmark"></i>
+                                    <div>My</div>
+                                    <div>Watchlist</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="ui segments" data-step="@(++Model.IntroSteps)" data-intro="Summary of your quotes submitted">
+                <div class="ui green segment"><h4 class="ui header">My Quotes</h4></div>
+                <div class="ui segment" style="height : 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="my-quotes-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="my-quotes-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="ui segments" data-step="@(++Model.IntroSteps)" data-intro="Summary of your jobs.">
+                <div class="ui green segment"><h4 class="ui header">My Jobs</h4></div>
+                <div class="ui segment" style="height : 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="my-jobs-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="my-jobs-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="row dashboard">
+    <div class="col-md-4">
+        <div class="panel panel-default dashboard-panel" data-step="@(++Model.IntroSteps)" data-intro="These handy buttons are for quick access to majors functionalities." style="height : 230px">
+            <div class="panel-heading">Quick Buttons</div>
+            <div class="panel-body" style="height : 190px">
+                <div class="row" style="height : 50%">
+                    <div id="market-place-button" class="col-md-4 text-center no-padding-side btn-dash-quick" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("GetMarketJobs", "Home", new { Area = "Jobs"})'">
+                        <i class="zmdi zmdi-city"></i>
+                        <div>Market </div>
+                        <div>Places</div>
+                    </div>
+                    <div id="my-quotes-button" class="col-md-4 text-center btn-dash-quick" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("MyQuotes", "Manage", new { area = "Companies"})'">
+                        <i class="zmdi zmdi-assignment"></i>
+                        <div>My </div>
+                        <div>Quotes</div>
+                    </div>
+                    <div id="my-jobs-button" class="col-md-4 text-center btn-dash-quick" onclick="location.href='@Url.Action("MyJobs", new { controller = "Home", area = "Companies" })'">
+                        <i class="zmdi zmdi-case"></i>
+                        <div>My </div>
+                        <div>Jobs</div>
+                    </div>
+                </div>
+
+                <div class="row" style="height :50%">
+                    <div class="col-md-12" style="border-top : 1px solid #dedee0">
+                        <div class="row" style="height : 100%;">
+                            <div id="add-listing-button" class="col-md-4 text-center btn-dash-quick pad-top-10" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("AccountOverview", "Account")'">
+                                <i class="zmdi zmdi-account-box"></i>
+                                <div>Edit </div>
+                                <div>Account Info</div>
+                            </div>
+                            <div id="add-listing-button" class="col-md-4 text-center btn-dash-quick pad-top-10" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("AccountOverview", "Account")'">
+                                <i class="zmdi zmdi-account-box"></i>
+                                <div>Edit </div>
+                                <div>Company Info</div>
+                            </div>
+                            <div class="col-md-4 text-center btn-dash-quick pad-top-10 no-padding-side" onclick="location.href='/Personal/Watchlist'">
+                                <i class="zmdi zmdi-bookmark"></i>
+                                <div>My</div>
+                                <div>Watchlist</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="col-md-4">
+        <div class="panel panel-default dashboard-panel" data-step="@(++Model.IntroSteps)" data-intro="Summary of your rental application that you have submitted." style="height : 230px">
+            <div class="panel-heading">My Quotes</div>
+            <div class="panel-body" style="height : 190px">
+                <div class="row" style="height : 100%; display: flex;align-items: center;">
+                    <div class="col-md-7 no-padding-side">
+                        <canvas id="my-quotes-chart" height="200"></canvas>
+                    </div>
+                    <div class="col-md-5 no-padding-side">
+                        <div class="chart-legends" id="my-quotes-legend"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="col-md-4">
+        <div class="panel panel-default dashboard-panel" data-step="@(++Model.IntroSteps)" data-intro="Summary of your rental application that you have submitted." style="height : 230px">
+            <div class="panel-heading">My Jobs</div>
+            <div class="panel-body" style="height : 190px">
+                <div class="row" style="height : 100%; display: flex;align-items: center;">
+                    <div class="col-md-7 no-padding-side">
+                        <canvas id="my-jobs-chart" height="200"></canvas>
+                    </div>
+                    <div class="col-md-5 no-padding-side">
+                        <div class="chart-legends" id="my-jobs-legend"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>*@
+
+<script src="~/Scripts/chartjs/ServiceSupplierDashboardChart.js"></script>
+<script>
+    
+    $(document).ready(function () {
+        var serviceSupplierData = @Html.Raw(Json.Encode(Model));
+        var ServiceSupplierDashboard = new DrawSerivceSupplierDashboardChart(serviceSupplierData);
+    });
+</script>

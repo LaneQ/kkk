@@ -1,0 +1,605 @@
+﻿
+@model WatchlistDisplayModel
+@{
+    ViewBag.Title = "Property Community | Watchlist";
+}
+<script language="javascript" type="text/javascript" src="~/Scripts/moment.min.js"></script>
+            <div id="mainPage" data-bind="visible:MainView">
+                <div class="block-header">
+                    <h3>Watchlist</h3>
+                </div>
+                <br />
+                @{
+                    Html.RenderPartial("_SearchInput");
+                }
+            <div>
+                <br />
+                <ul class="nav nav-tabs" role="tablist">
+
+                    <li class=""><a href="/Personal/Watchlist?ItemType=RentalListing">Rental Listings</a></li>
+                    <li class="active"><a href="/Personal/Watchlist/MarketJobs">Market Jobs</a></li>
+                </ul>
+
+                <br />
+                <div class="ui three special cards" data-bind="foreach : Items">
+                    <div class="ui card">
+                        <div class="blurring dimmable image">
+                            <div data-bind="visible:ImgFiles().length>0">
+                                <div class="carousel " data-ride="carousel" data-bind="attr :{id : 'carousel'+ Model.Id()}">
+                                    <div class="carousel-inner" style="margin:auto" data-bind="foreach: ImgFiles">
+                                        <div class="item thumbnail" data-bind="css:{active: $index() == 0}">
+                                            <img class="img-responsive" data-bind="attr: {src: Data}"
+                                                 onerror="this.src = '/images/no-prop-img.png'" alt="firstImg">
+                                        </div>
+                                    </div>
+                                    <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}">
+                                        <span class="fa fa-2x fa-angle-left"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}">
+                                        <span class="fa fa-2x fa-angle-right"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div data-bind="visible:ImgFiles().length<=0" class="thumbnail">
+                                <img src="/images/no-prop-img.png" alt="noPropImg" />
+                            </div>
+                        </div><!-- div image -->
+                        <div class="content">
+                            <div class="ui header" data-bind="text : Model.Title"></div>
+                            <div class="description">
+                                <div>
+                                    <strong>ID: </strong>
+                                    #<span data-bind="text :  Model.WatchListId"></span>
+                                </div>
+                            </div>
+                            <div class="description">
+                                <div>
+                                    <strong>Listed on: </strong>
+                                    <span data-bind="text :  moment(Model.PostedDate()).format('ll')"></span>
+                                </div>
+                            </div>
+                            <div class="description">
+                                <div>
+                                    <strong>Budget: </strong>
+                                    $<span data-bind="numeric :  Model.MaxBudget"></span>
+                                </div>
+                            </div>
+                            <div class="description">
+                                <div>
+                                    <strong>Address: </strong>
+                                    <div data-bind="text : StreetAddress"></div>
+                                    <div data-bind="text : CitySub"></div>
+                                </div>
+                            </div>
+                            <div class="description">
+                                <div>
+                                    <strong>Description: </strong>
+                                    <div data-bind="text : Model.JobDescription"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row extra content">
+                            <div class="text-center">
+                                <button class="tiny tiny ui button" data-bind="click:$root.ShowDetails, clickShowPropertyMap : Address" data-step="7" data-intro="See more detail"><i class="info circle icon"></i> Details</button>
+                                <button class="tiny ui teal button" data-bind="click : $root.ShowApply, enable: $root.IsUserTenant()"><i class="pencil alternate icon"></i> Apply</button>
+                                <button class="tiny ui button" data-bind="click: $root.DeleteWatchlist"><i class="trash icon"></i>Delete</button>
+
+                                </div>
+                            </div>
+                        </div><!-- /div button group -->
+                    </div> <!-- /class = "ui card" -->
+                </div>
+                <div class="pagedList text-center">
+                    <div class="pagination-container">
+                        <ul class="pagination">
+                            <li class="disabled PagedList-pageCountAndLocation">
+                                <a>Page 1 of 1.</a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+
+            </div> <!-- /div MainView -->
+            <!-- Start: delete confirmation for job watchlist -->
+            <div id="deleteJob" data-bind="visible : $root.ShowDelete" style="display:none">
+                <h3>Remove from Watchlist</h3>
+                <hr />
+                <button class="btn btn-info btn-sx" data-bind="click:$root.ShowMain"><span class="fa fa-arrow-left"></span> Back</button>
+                <br /><br />
+                <div class="row">
+                    <div class="col-md-12" style="padding-bottom: 100px;">
+                        <div class="panel panel-default" data-bind="with : SelectedItem">
+                            <div class="panel-heading">
+                                Are you sure you want to remove this job from watchlist?
+                            </div>
+                            <div class="panel-body">
+                                <h4 data-bind="text : Model.Title"></h4>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <strong>Listed on: </strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span data-bind="text :  moment(Model.PostedDate()).format('ll')"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <strong>Budget: </strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        $<span data-bind="numeric :  Model.MaxBudget"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <strong>Address: </strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div>
+                                            <span data-bind="text : StreetAddress"></span>
+                                            <span data-bind="text : CitySub"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="height:50px;">
+                                    <div class="col-md-4">
+                                        <strong>Description: </strong>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div data-bind="text : Model.JobDescription"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prop-actions">
+                            <button type="button" class="btn btn-success" data-bind="click:$root.confirmDelete" autofocus>Confirm</button>
+                            <button type="button" class="btn btn-danger" data-bind="click:$root.ShowMain">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /div delete-job -->
+            <!-- End: delete confirmation for job watchlist -->
+            <!-- Start: detail view for job watchlist -->
+            <div data-bind="visible: DetailView" style="display : none">
+                <div id="marketJobDetails" data-bind="with : SelectedItem">
+                    <h3>Job Details</h3>
+                    <hr />
+                    <button class="btn btn-info btn-sx" data-bind="click: $root.ShowMain"><span class="fa fa-arrow-left"></span> Back</button>
+                    <br /><br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <span class="h4"><span data-bind="text: Model.Title"></span></span>
+                                    <div class="col-md-1 no-padding-side" style="margin-top : 7px; right : 0px; transform: translateY(-50%); float : right">
+                                    </div>
+
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <!--details coloumn-->
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Location:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text: StreetAddress"></span>
+                                                    <span data-bind="text: CitySub"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Maximum Budget:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    $<span data-bind="numeric:Model.MaxBudget"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Description:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text:Model.JobDescription" style="word-break: break-all;"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="line-height : 25px">
+                                                <div class="col-md-4" style="padding-right : 0px;">
+                                                    <strong>Listed on:</strong>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span data-bind="text :moment(Model.PostedDate()).format('ll')"></span>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div> <!--details coloumn-->
+
+                                        <div class="col-md-4" style="margin-left:150px; height:250px;">
+                                            <div class="carousel" data-ride="carousel" data-bind="attr :{id : 'detail-carousel'+ Model.Id() + ''}, visible:ImgFiles().length > 0">
+                                                <div class="carousel-inner" style="margin:auto" data-bind="foreach: ImgFiles">
+                                                    <div class="item" data-bind="css:{active: $index() == 0}">
+                                                        <a data-bind="attr: {href: Data}" download>
+                                                            <img class="ui centered image" data-bind="attr: {src: Data}" onerror="this.src = '/images/house.jpeg'" style="width : 270px; height : 230px" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'detail-carousel'+ Model.Id() + ''}, if : ImgFiles().length > 1">
+                                                    <span class="fa fa-2x fa-angle-left"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'detail-carousel'+ Model.Id() + ''}, if : ImgFiles().length > 1">
+                                                    <span class="fa fa-2x fa-angle-right"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+                                            <img class="ui centered image" data-bind="visible:ImgFiles().length<=0" src="/images/house.jpeg" alt="noPropImg" style="width : 270px; height : 230px" />
+
+                                        </div><!--photo coloum-->
+                                    </div><!-- row-->
+                                </div> <!--panel body-->
+                                <div class="panel-body" data-bind="visible : $root.HasMapData()">
+                                    <ul class="nav nav-tabs" role="tablist" style="margin-bottom : 10px">
+                                        <li role="presentation" class="active" data-bind="clickShowJobMap : Address"><a href="#map-location" aria-controls="home" role="tab" data-toggle="tab">Location</a></li>
+                                        <!--<li role="presentation" data-bind="clickShowSchoolsNearBy : Address"><a aria-controls="profile" role="tab" data-toggle="tab">Schools near by</a></li>
+                                        <li role="presentation" data-bind="clickShowTransport : Address"><a aria-controls="profile" role="tab" data-toggle="tab">Transports near by</a></li>-->
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="map-location">
+                                            <div id="map"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!--panel-->
+                        </div><!--coloumn-->
+                    </div><!--coloumn-->
+                </div><!--marketJobDetails-->
+            </div> <!--marketJob-->
+            <!-- End: detail view for job watchlist -->
+<!-- Start: apply view for job watchlist -->
+
+            <div id="applyDetail" style="display:none" data-bind="visible : ApplyView">
+                <div class="row">
+                    <div style="width : 80%; margin : auto">
+                        <h3>Job Quotes</h3>
+                        <hr />
+                        <button class="ui button" data-bind="click:$root.ShowMain"><i class="arrow alternate circle left icon"></i>Back</button>
+                        <br /><br />
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom: 100px">
+                    <form class="step-form" style="margin-bottom:20px" data-bind="with : JobQuote">
+                        <fieldset>
+                            <div class="panel panel-default" data-bind="with : $root.SelectedItem">
+                                <div class="panel-heading">
+                                    Job Information
+                                </div>
+                                <div class="panel-body">
+                                    <div style="margin-top:5px">
+                                        <label class="control-label">Title : </label> <span data-bind="text : Model.Title"></span>
+                                    </div>
+                                    <div style="margin-top:5px">
+                                        <label class="control-label">Job Description : </label> <span class="detailspan" data-bind="text : Model.JobDescription" style="word-break: break-all;"></span>
+                                    </div>
+                                    <div style="margin-top:5px">
+                                        <label class="control-label">Location :</label>
+                                        <span data-bind="text: StreetAddress"></span>
+                                        <span data-bind="text: CitySub"></span>
+                                    </div>
+                                    <div style="margin-top:5px">
+                                        <label class="control-label">Budget : </label> $<span data-bind="numeric:Model.MaxBudget"></span>
+                                    </div>
+                                </div><!--panel body-->
+                            </div><!--panel-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Enter Amount <span style="color:red;">*</span></label>
+                                        <input class="form-control" type="text" data-bind="trimTo2dp, value: Model.Amount, valueUpdate:'afterkeydown'" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Note <span style="color:red;">*</span></label>
+                                        <textarea class="form-control" rows="5" style="height:123px;" maxlength="500" data-bind="value: Model.Note, valueUpdate:'afterkeydown'"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="field">
+                                        <label>Please upload your photos here</label>
+                                        <div class="ui fluid segment upload-box te-logo">
+                                            <div class="center aligned four column row">
+                                                <div class="column">
+                                                    <div data-bind="foreach: Model.MediaFiles">
+                                                        <div class="ui fluid segment image-box">
+                                                            <div class="column">
+                                                                <div class="image">
+                                                                    <div class="ui minix images" data-bind="if: ko.utils.unwrapObservable(MediaType) === 2">
+                                                                        <img class="ui image" src="/images/pdficon.png" />
+                                                                    </div>
+                                                                    <div class="ui minix images" data-bind="ifnot: ko.utils.unwrapObservable(MediaType) === 2">
+                                                                        <img class="ui image" data-bind="attr: {src: Data}" />
+                                                                    </div>
+                                                                </div>
+                                                                <i class="remove sign icon" data-bind="click: $root.RemoveFile"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <p class="text-muted hint-style" data-bind="text: Model.fileInstructions"></p>
+                                        <div class="ui teal button upload-button">
+                                            <i class="cloud upload icon"></i>
+                                            Choose Files
+                                            <input type="file"
+                                                   id="file-upload"
+                                                   class="key-upload"
+                                                    multiple />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center" style="padding-bottom: 30px">
+                                    <button class="btn btn-success" data-bind="enable: IsValid, click: $root.SubmitQuote">Submit</button>
+                                    <button class="btn btn-group btn-danger" data-bind="click:$root.ShowMain">Close</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <!-- End: apply view for job watchlist -->
+            <!-- Start: supplier info view -->
+            <div data-bind="visible : SupplierInfoView" style="display:none">
+                <div class="row">
+                    <div style="width : 90%; margin : auto">
+                        <div class="block-header page-title">
+                            <h3>Please add your details to continue</h3>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <button class="btn btn-info btn-sx" style="margin-left:70px;" data-bind="click: $root.ShowMain">Back to previous page</button>
+                </div>
+                <form class="step-form" style="margin-bottom:20px" data-bind="with : SupplierInfo">
+                    <ul id="progressbar" style="left:80px;">
+                        <li id="cd" class="active">Service Provider Details</li>
+                        <li id="ca">Service Provider Address</li>
+                    </ul>
+                    <fieldset style="width:90%">
+                        <div data-bind="">
+                            <div id="CompanyDetailForm">
+                                <div id="firstPage" data-bind="visible:ShowFirst">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Business Name <span style="color:red;">*</span></label>
+                                                <input type="text" class="form-control" data-bind="value : Model.Name, valueUpdate:'afterkeydown'" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Phone Number <span style="color:red;">*</span></label>
+                                                <input type="text" class="form-control" data-bind="value : Model.PhoneNumber, valueUpdate:'afterkeydown'" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Website </label>
+                                                <input type="text" class="form-control" data-bind="value : Model.Website, valueUpdate:'afterkeydown'" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label">Please upload your company logo here<span style="color:red;"></span></label>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-4">
+                                            <div class="panel panel-default">
+                                                <div style="height:150px">
+                                                    <div data-bind="if:ImgData">
+                                                        <div class="thumbnail" style="position: relative">
+                                                            <a class="zmdi zmdi-close-circle" data-bind="removeFile : Model.PhotoFile, display : ImgData, element : 'file-upload'" style="position:absolute; top : 0; right : 1px">
+                                                            </a>
+                                                            <img class="img-responsive" data-bind="attr: {src: ImgData}" style="max-height : 140px" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="btn btn-success">
+                                                <span class="fa fa-cloud-upload"></span>
+                                                Choose Files
+                                                <input type="file" id="file-upload" class="key-upload" data-bind="uploadFile : Model.PhotoFile, display : ImgData, validFileTypes : validFileTypes" accept="image/*" />
+                                            </div>
+                                            <div class="form-group">
+                                                <p class="text-muted" style="font-size:11px; text-align : left">Max size is 2 MB and supported file types are *.jpg, *.jpeg, *.png, & *.gif</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12 text-center">
+                                            <button class="btn btn-primary" data-bind="click:ToNext, enable : FirstPageValid">Next</button>
+                                            <button class="btn btn-danger" data-bind="click : $root.ShowMain">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="secondPage" data-bind="visible : ShowSecond" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h3>Physical Address</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Search Address <span style="color:red;">*</span></label>
+                                                <input class="form-control" type="text" name="searchAddress" id="autocomplete" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: Model.PhysicalAddress, valueUpdate:'afterkeydown'">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label" for="street_number">Number <span style="color:red;">*</span></label>
+                                                <input type="text" class="form-control" id="street_number" placeholder="&nbsp Number" data-bind="textInput: Model.PhysicalAddress.Number" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label class="control-label" for="route">Street <span style="color:red;">*</span></label>
+                                                <input type="text" class="form-control" id="route" placeholder="&nbsp Street" data-bind="textInput: Model.PhysicalAddress.Street" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label" for="route">Suburb <span style="color:red;">*</span></label>
+                                                <input type="text" class="form-control" id="route" placeholder="&nbsp Suburb" data-bind="textInput: Model.PhysicalAddress.Suburb" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label" for="street_number">City <span style="color:red;">*</span></label>
+                                                <input type="text" class="form-control" id="street_number" placeholder="&nbsp City" data-bind="textInput: Model.PhysicalAddress.City" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="control-label" for="street_number">Postcode <span style="color:red;">*</span></label>
+                                                <input type="text" class="form-control" id="street_number" placeholder="&nbsp Postcode" data-bind="textInput: Model.PhysicalAddress.PostCode" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input id="shipsame" type="checkbox" name="test" style="float:left ;width: 20px; margin-top:15px" data-bind="checked : IsShipSame" />
+                                            <label class="control-label" style="padding-left:10px;margin-top:11px;">Same Billing Address</label>
+                                        </div>
+                                    </div>
+                                    <div id="shipinfo" data-bind="visible : !IsShipSame()">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <h3>Billing Address</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Search Address <span style="color:red;">*</span></label>
+                                                    <input class="form-control" type="text" name="searchAddress" id="autocomplete" placeholder="&nbsp Enter your address" data-bind="addressAutocomplete: Model.BillingAddress, valueUpdate:'afterkeydown'">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="street_number">Number <span style="color:red;">*</span></label>
+                                                    <input type="text" class="form-control" id="street_number" placeholder="&nbsp Number" data-bind="textInput: Model.BillingAddress.Number" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="route">Street <span style="color:red;">*</span></label>
+                                                    <input type="text" class="form-control" id="route" placeholder="&nbsp Street" data-bind="textInput: Model.BillingAddress.Street" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="route">Suburb <span style="color:red;">*</span></label>
+                                                    <input type="text" class="form-control" id="route" placeholder="&nbsp Suburb" data-bind="textInput: Model.BillingAddress.Suburb" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="street_number">City <span style="color:red;">*</span></label>
+                                                    <input type="text" class="form-control" id="street_number" placeholder="&nbsp City" data-bind="textInput: Model.BillingAddress.City" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label" for="street_number">Postcode <span style="color:red;">*</span></label>
+                                                    <input type="text" class="form-control" id="street_number" placeholder="&nbsp Postcode" data-bind="textInput: Model.BillingAddress.PostCode" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row"></div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12 text-center">
+                                            <button class="btn btn-primary" data-bind="click:ToPrevious">Previous</button>
+                                            <button class="btn btn-primary" data-bind="click: $root.SubmitSupplierInfo, enable : SecondPageValid">Submit</button>
+                                            <button class="btn btn-danger" data-bind="click : $root.ShowMain">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        @section Modal{
+            @{
+                Html.RenderPartial("_SearchResultModal");
+            }
+        }
+
+        @Html.AntiForgeryToken()
+        <script src="~/Scripts/Personal/Watchlist2.js"></script>
+        <link href="/Content/semantic.min.css" rel="stylesheet" />
+        <script>
+
+            $(document).ready(function () {
+                var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+                // var vm = new PageViewModel(dataVm);
+
+                // console.log("first message");
+
+                var vm = new MarketJobWatchlistViewModel(dataVm);
+                ko.applyBindings(vm);
+
+            });
+        </script>

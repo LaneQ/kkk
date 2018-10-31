@@ -1,0 +1,18 @@
+﻿.wrap {
+    position: relative;
+}
+
+.notice {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 10px;
+    color: #fff;
+    text-align: center;
+    background-color: #ff0000;
+    border-radius: 50%;
+    position: absolute;
+    right: -8px;
+    top: -8px;
+}
+

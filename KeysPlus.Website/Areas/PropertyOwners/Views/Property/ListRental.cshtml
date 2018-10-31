@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "ListRental";
+}
+
+<h4 class="pointer-cursor" onclick="location.href='@Url.Action("Index", "Home")'"><a class="pointer-cursor ui top-left-corner">Back To Properties</a></h4>
+
+<div class="ui segment">
+    <div class="ui grid">
+        <div class="sixteen wide center aligned column">
+            <h2>List Rental Property</h2>
+            <p></p>
+        </div>
+    </div>
+
+    <form class="ui form">
+        <div class="field">
+            <label>Select property <span class="red-asterisk">*</span></label>
+            <select data-bind="value : PropertyId">
+                @if (ViewBag.Properties.Count > 1)
+                {
+                    <option disabled selected value="0">--Please select a property--</option>
+                }
+
+                @foreach (var type in ViewBag.Properties)
+                {
+                    <option value="@type.Id">@type.AddressString</option>
+                }
+            </select>
+        </div>
+        <div class="two fields">
+            <div class="field">
+                <label>Title <span class="red-asterisk">*</span></label>
+                <input type="text" data-bind="textInput : Title" />
+                <p></p>
+                <label>Moving Cost <span class="red-asterisk">*</span></label>
+                <input type="text" data-bind="textInput : MovingCost" />
+            </div>
+            <div class="field">
+                <label>Description <span class="red-asterisk">*</span></label>
+                <textarea rows="5" data-bind="textInput : RentalDescription"></textarea>
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="field">
+                <label>Target Rent <span class="red-asterisk">*</span></label>
+                <input type="text" data-bind="textInput : TargetRent" />
+            </div>
+            <div class="field">
+                <label class="control-label">Furnishing </label>
+                <input type="text" data-bind="textInput : Furnishing" />
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="field">
+                <label>Available Date <span class="red-asterisk">*</span></label>
+                <input name="AvailableDate" type="text" data-bind="datePicker : AvailableDate, dateTimePickerOptions : {format: 'DD/MM/YYYY', minDate: new Date()}" />
+            </div>
+            <div class="field">
+                <label>Ideal Tenant </label>
+                <input type="text" data-bind="textInput : IdealTenant" />
+            </div>
+        </div>
+        <div class="ui two fields">
+            <div class="field">
+                <label>Occupants Count <span class="red-asterisk">*</span></label>
+                <input type="text" data-bind="textInput : OccupantCount" />
+            </div>
+            <div class="field">
+                <label>Pets Allowed </label>
+                <select data-bind="options: PetsAllowedOption, optionsText: 'Choice',optionsValue : 'Choice', value : PetsAllowed"></select>
+            </div>
+        </div>
+        <div class="field">
+            <label>Please upload your photos here<span class="red-asterisk"></span></label>
+            <div class="panel panel-default">
+                <div class="panel-body" style="min-height:120px">
+                    <div data-bind="foreach: MediaFiles">
+                        <div class="col-xs-2">
+                            <div class="thumbnail">
+                                <a data-bind="click: $root.RemovePhoto">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </a>
+                                <img class="img-responsive" data-bind="attr: {src: Data}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="teal ui button file-wrapper-input">
+                <i class="cloud upload icon"></i>
+                Choose Files<input type="file" id="file-upload" class="key-upload" data-bind="filesUpload : MediaFiles, fileWarning : FileWarning, validFileTypes : ValidFileTypes" accept="image/*" multiple />
+            </div>
+        </div>
+        <div class="field">
+            <div>
+                <p id="file-warning" class="text-muted" style="font-size:11px; text-align : left" data-bind="text:FileWarning"></p>
+            </div>
+        </div>
+        <br />
+        <div class="ui grid">
+            <div class="sixtween wide center aligned column">
+                <button class="teal ui button" data-bind="click : SubmitRentalListing,enable:validInput">Save</button>
+
+                @if (ViewBag.PropId == null)
+                {
+                    <button class="btnSeccion ui button" data-toggle="modal" data-target="#myModal">Cancel</button>
+                }
+                else
+                {
+                    <button class="btnSeccion ui button" data-toggle="modal" data-target="#myModal">Cancel</button>
+                }
+            </div>
+        </div>
+        <p></p>
+    </form>
+</div>
+<script src="~/Scripts/PropertyOwners/Property/RentalListingViewModel.js"></script>
+<script>
+    $(".btnSeccion").click(function (event) {
+        event.preventDefault();
+    });
+
+    var PropId = '@ViewBag.PropId';
+    $(document).ready(function () {
+        ko.applyBindings(new RentalListingViewModel());
+    });
+</script>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to leave this page without saving?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Home")'">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

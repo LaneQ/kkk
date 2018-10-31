@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dbd0e4c65f3c4e51b80d3a799eeea015" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="KeysModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KeysModel.Company" Width="1.5" PointX="6.75" PointY="21.125" />
+        <EntityTypeShape EntityType="KeysModel.Country" Width="1.5" PointX="1.5" PointY="41.875" />
+        <EntityTypeShape EntityType="KeysModel.Job" Width="1.5" PointX="14.25" PointY="31" />
+        <EntityTypeShape EntityType="KeysModel.JobQuote" Width="1.5" PointX="13.5" PointY="37.5" />
+        <EntityTypeShape EntityType="KeysModel.JobQuoteMedia" Width="1.5" PointX="15.75" PointY="38.375" />
+        <EntityTypeShape EntityType="KeysModel.Login" Width="1.5" PointX="3" PointY="5.875" />
+        <EntityTypeShape EntityType="KeysModel.LoginClaim" Width="1.5" PointX="3" PointY="12.25" />
+        <EntityTypeShape EntityType="KeysModel.LoginRole" Width="1.5" PointX="9" PointY="19" />
+        <EntityTypeShape EntityType="KeysModel.LoginSocialMedia" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KeysModel.Manager" Width="1.5" PointX="9" PointY="22.375" />
+        <EntityTypeShape EntityType="KeysModel.ManagerProperty" Width="1.5" PointX="11.25" PointY="27.875" />
+        <EntityTypeShape EntityType="KeysModel.Media" Width="1.5" PointX="9" PointY="11.75" />
+        <EntityTypeShape EntityType="KeysModel.MediaType" Width="1.5" PointX="6.75" PointY="12.375" />
+        <EntityTypeShape EntityType="KeysModel.OwnerProperty" Width="1.5" PointX="11.25" PointY="35.5" />
+        <EntityTypeShape EntityType="KeysModel.Owners" Width="1.5" PointX="3" PointY="19.25" />
+        <EntityTypeShape EntityType="KeysModel.OwnershipStatus" Width="1.5" PointX="9" PointY="47.5" />
+        <EntityTypeShape EntityType="KeysModel.Person" Width="1.5" PointX="0.75" PointY="20.125" />
+        <EntityTypeShape EntityType="KeysModel.Property" Width="1.5" PointX="3" PointY="29.375" />
+        <EntityTypeShape EntityType="KeysModel.PropertyExpense" Width="1.5" PointX="5.25" PointY="80.5" />
+        <EntityTypeShape EntityType="KeysModel.PropertyFinance" Width="1.5" PointX="5.25" PointY="76.625" />
+        <EntityTypeShape EntityType="KeysModel.PropertyHomeValue" Width="1.5" PointX="8.25" PointY="37" />
+        <EntityTypeShape EntityType="KeysModel.PropertyHomeValueType" Width="1.5" PointX="6" PointY="47.625" />
+        <EntityTypeShape EntityType="KeysModel.PropertyMedia" Width="1.5" PointX="5.25" PointY="56.25" />
+        <EntityTypeShape EntityType="KeysModel.PropertyRentalPayment" Width="1.5" PointX="11.25" PointY="32" />
+        <EntityTypeShape EntityType="KeysModel.PropertyRepayment" Width="1.5" PointX="8.25" PointY="26.875" />
+        <EntityTypeShape EntityType="KeysModel.PropertyRequest" Width="1.5" PointX="5.25" PointY="37.125" />
+        <EntityTypeShape EntityType="KeysModel.PropertyRequestMedia" Width="1.5" PointX="7.5" PointY="44.375" />
+        <EntityTypeShape EntityType="KeysModel.PropertyType" Width="1.5" PointX="10.375" PointY="0.875" />
+        <EntityTypeShape EntityType="KeysModel.RentalApplication" Width="1.5" PointX="13.5" PointY="25.125" />
+        <EntityTypeShape EntityType="KeysModel.RentalApplicationMedia" Width="1.5" PointX="15.75" PointY="26.375" />
+        <EntityTypeShape EntityType="KeysModel.RentalApplicationStatus" Width="1.5" PointX="11.25" PointY="19.625" />
+        <EntityTypeShape EntityType="KeysModel.RentalListing" Width="1.5" PointX="8.25" PointY="30.875" />
+        <EntityTypeShape EntityType="KeysModel.RentalListingMedia" Width="1.5" PointX="10.5" PointY="40.5" />
+        <EntityTypeShape EntityType="KeysModel.RentalListingStatus" Width="1.5" PointX="6" PointY="18.625" />
+        <EntityTypeShape EntityType="KeysModel.RequestStatus" Width="1.5" PointX="3" PointY="47.375" />
+        <EntityTypeShape EntityType="KeysModel.RequestType" Width="1.5" PointX="3" PointY="49.75" />
+        <EntityTypeShape EntityType="KeysModel.Role" Width="1.5" PointX="6.75" PointY="15.375" />
+        <EntityTypeShape EntityType="KeysModel.ServiceProvider" Width="1.5" PointX="12" PointY="22" />
+        <EntityTypeShape EntityType="KeysModel.ServiceProviderJobStatus" Width="1.5" PointX="12" PointY="44.125" />
+        <EntityTypeShape EntityType="KeysModel.Status" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KeysModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KeysModel.TargetRentType" Width="1.5" PointX="0.75" PointY="32.375" />
+        <EntityTypeShape EntityType="KeysModel.Tenant" Width="1.5" PointX="3" PointY="22.125" />
+        <EntityTypeShape EntityType="KeysModel.TenantJobRequest" Width="1.5" PointX="5.25" PointY="31.375" />
+        <EntityTypeShape EntityType="KeysModel.TenantJobRequestMedia" Width="1.5" PointX="7.5" PointY="41.375" />
+        <EntityTypeShape EntityType="KeysModel.TenantJobStatus" Width="1.5" PointX="3" PointY="44.75" />
+        <EntityTypeShape EntityType="KeysModel.TenantMedia" Width="1.5" PointX="11.25" PointY="15.875" />
+        <EntityTypeShape EntityType="KeysModel.TenantPaymentFrequencies" Width="1.5" PointX="3" PointY="39" />
+        <EntityTypeShape EntityType="KeysModel.TenantProperty" Width="1.5" PointX="5.25" PointY="26.5" />
+        <EntityTypeShape EntityType="KeysModel.XeroTokenStore" Width="1.5" PointX="3" PointY="14.875" />
+        <EntityTypeShape EntityType="KeysModel.Login_Deleted" Width="1.5" PointX="7.75" PointY="0.75" />
+        <AssociationConnector Association="KeysModel.FK_Company_Company" />
+        <AssociationConnector Association="KeysModel.FK_Manager_Company" />
+        <AssociationConnector Association="KeysModel.FK_Provider_Company" />
+        <AssociationConnector Association="KeysModel.FK_Provider_Property_ProviderJobStatus" />
+        <AssociationConnector Association="KeysModel.FK_ServiceProviderProperty_Property" />
+        <AssociationConnector Association="KeysModel.FK_ServiceProviderProperty_ServiceProvider" />
+        <AssociationConnector Association="KeysModel.FK_JobQuote_JobRequest" />
+        <AssociationConnector Association="KeysModel.FK_JobQuote_ServiceProvider" />
+        <AssociationConnector Association="KeysModel.FK_JobQuoteMedia_JobQuote" />
+        <AssociationConnector Association="KeysModel.FK_Login_Person" />
+        <AssociationConnector Association="KeysModel.FK_Person_LoginClaim" />
+        <AssociationConnector Association="KeysModel.FK_dbo_LoginRole_dbo_Role_RoleId" />
+        <AssociationConnector Association="KeysModel.FK_Person_LoginRole" />
+        <AssociationConnector Association="KeysModel.FK_Manager_Person" />
+        <AssociationConnector Association="KeysModel.FK_Manager_Property_Manager" />
+        <AssociationConnector Association="KeysModel.FK_Manager_Property_Property" />
+        <AssociationConnector Association="KeysModel.FK_Media_MediaType" />
+        <AssociationConnector Association="KeysModel.FK_Tenant_Media" />
+        <AssociationConnector Association="KeysModel.FK_Owner_Property_Owner" />
+        <AssociationConnector Association="KeysModel.FK_Owner_Property_OwnershipStatus" />
+        <AssociationConnector Association="KeysModel.FK_Owner_Property_Person" />
+        <AssociationConnector Association="KeysModel.FK_Owner_Property_Property" />
+        <AssociationConnector Association="KeysModel.FK_Owner_Person" />
+        <AssociationConnector Association="KeysModel.FK_TenantJobRequest_Owners" />
+        <AssociationConnector Association="KeysModel.FK_Provider_Person" />
+        <AssociationConnector Association="KeysModel.FK_RentalApplication_Person" />
+        <AssociationConnector Association="KeysModel.FK_Tenant_Person" />
+        <AssociationConnector Association="KeysModel.FK_XeroTokenStore_Person" />
+        <AssociationConnector Association="KeysModel.FK_Expense_PropertyId" />
+        <AssociationConnector Association="KeysModel.FK_Finance_PropertyId" />
+        <AssociationConnector Association="KeysModel.FK_Property_PropertyType" />
+        <AssociationConnector Association="KeysModel.FK_Property_TargetRentType" />
+        <AssociationConnector Association="KeysModel.FK_PropertyId" />
+        <AssociationConnector Association="KeysModel.FK_PropertyMedia_Property" />
+        <AssociationConnector Association="KeysModel.FK_PropertyRequest_Property" />
+        <AssociationConnector Association="KeysModel.FK_RentalListing_Property" />
+        <AssociationConnector Association="KeysModel.FK_RentalPayment_PropertyId" />
+        <AssociationConnector Association="KeysModel.FK_Repayment_PropertyId" />
+        <AssociationConnector Association="KeysModel.FK_Tenant_Property_Property" />
+        <AssociationConnector Association="KeysModel.FK_TenantJobRequest_Property" />
+        <AssociationConnector Association="KeysModel.FK_HomeValue_HomeValueType" />
+        <AssociationConnector Association="KeysModel.FK_RentalPayment_FrequencyType" />
+        <AssociationConnector Association="KeysModel.FK_Repayment_FrequencyType" />
+        <AssociationConnector Association="KeysModel.FK_PropertyRequest_RequestStatus" />
+        <AssociationConnector Association="KeysModel.FK_PropertyRequest_RequestType" />
+        <AssociationConnector Association="KeysModel.FK_PropertyRequestMedia_PropertyRequest" />
+        <AssociationConnector Association="KeysModel.FK_PropertyType_PropertyType" />
+        <AssociationConnector Association="KeysModel.FK_RentalApplication_RentalApplicationStatus" />
+        <AssociationConnector Association="KeysModel.FK_RentalApplication_RentalListing" />
+        <AssociationConnector Association="KeysModel.FK_RentalApplicationMedia_RentalApplication" />
+        <AssociationConnector Association="KeysModel.FK_RentalListing_RentalListingStatus" />
+        <AssociationConnector Association="KeysModel.FK_RentalListingMedia_RentalListing" />
+        <AssociationConnector Association="KeysModel.FK_Tenant_Property_Tenant" />
+        <AssociationConnector Association="KeysModel.FK_Tenant_TenantMedia" />
+        <AssociationConnector Association="KeysModel.FK_TenantJobRequest_TenantJobStatus" />
+        <AssociationConnector Association="KeysModel.FK_TenantJobRequestMedia_TenantJobrequest" />
+        <AssociationConnector Association="KeysModel.FK_Tenant_Property_TenantPaymentFrequency" />
+        <EntityTypeShape EntityType="KeysModel.JobMedia" Width="1.5" PointX="16.5" PointY="32.125" />
+        <AssociationConnector Association="KeysModel.FK_JobMedia_Job" />
+        <AssociationConnector Association="KeysModel.FK_JobMedia_Property" />
+        <EntityTypeShape EntityType="KeysModel.RequestReply" Width="1.5" PointX="7.5" PointY="50.75" />
+        <EntityTypeShape EntityType="KeysModel.RequestReplyMedia" Width="1.5" PointX="9.75" PointY="51.375" />
+        <AssociationConnector Association="KeysModel.FK_RequestReply_PropertyRequest" />
+        <AssociationConnector Association="KeysModel.FK_RequestReplyMedia_RequestReply" />
+        <EntityTypeShape EntityType="KeysModel.TenantPropertyLiability" Width="1.5" PointX="7.5" PointY="8.875" />
+        <AssociationConnector Association="KeysModel.FK_TenantPropertyLiability_TenantProperty" />
+        <EntityTypeShape EntityType="KeysModel.InspectionStatus" Width="3" PointX="3.375" PointY="52.75" />
+        <EntityTypeShape EntityType="KeysModel.InspectionMedia" Width="1.5" PointX="9.375" PointY="55.5" />
+        <EntityTypeShape EntityType="KeysModel.PersonMedia" Width="1.5" PointX="3" PointY="55.25" />
+        <AssociationConnector Association="KeysModel.FK_PersonMedia_Person" />
+        <EntityTypeShape EntityType="KeysModel.Inspection" Width="1.5" PointX="14.5" PointY="42.625" />
+        <AssociationConnector Association="KeysModel.FK_Inspection_InspectionStatus" />
+        <AssociationConnector Association="KeysModel.FK_Inspection_Property" />
+        <AssociationConnector Association="KeysModel.FK_Inspection_PropertyRequest" />
+        <AssociationConnector Association="KeysModel.FK_InspectionMedia_InspectionMedia" />
+        <EntityTypeShape EntityType="KeysModel.JobWatchList" Width="1.5" PointX="17.875" PointY="22.5" />
+        <EntityTypeShape EntityType="KeysModel.RentalWatchList" Width="1.5" PointX="14.875" PointY="20.75" />
+        <AssociationConnector Association="KeysModel.FK_ServiceProviderWatchList_Person" />
+        <AssociationConnector Association="KeysModel.FK_ServiceProviderWatchList_TenantJobRequest" />
+        <AssociationConnector Association="KeysModel.FK_TenantWatchList_Person" />
+        <AssociationConnector Association="KeysModel.FK_TenantWatchList_RentalListing" />
+        <EntityTypeShape EntityType="KeysModel.Address" Width="1.5" PointX="3.75" PointY="60.125" />
+        <AssociationConnector Association="KeysModel.FK_Address_Country" />
+        <AssociationConnector Association="KeysModel.FK_Company_BillingAddress" />
+        <AssociationConnector Association="KeysModel.FK_Company_PhysicalAddress" />
+        <AssociationConnector Association="KeysModel.FK_Person_Address" />
+        <AssociationConnector Association="KeysModel.FK_Person_Address1" />
+        <AssociationConnector Association="KeysModel.FK_Property_Address" />
+        <AssociationConnector Association="KeysModel.FK_TenantAddress" />
+        <EntityTypeShape EntityType="KeysModel.UserRating" Width="1.5" PointX="3" PointY="66.25" />
+        <AssociationConnector Association="KeysModel.FK_UserRating_Person" />
+        <AssociationConnector Association="KeysModel.FK_UserRating_Person1" />
+        <EntityTypeShape EntityType="KeysModel.MessageDeliveryType" Width="1.5" PointX="11.75" PointY="10.125" />
+        <EntityTypeShape EntityType="KeysModel.MessageType" Width="1.5" PointX="11.75" PointY="12.75" />
+        <EntityTypeShape EntityType="KeysModel.OutGoingMessage" Width="1.5" PointX="14" PointY="15.875" />
+        <AssociationConnector Association="KeysModel.FK_OutGoingMessage_MessageDeliveryType" />
+        <AssociationConnector Association="KeysModel.FK_OutGoingMessage_MessageType" />
+        <AssociationConnector Association="KeysModel.FK_OutGoingMessage_Person" />
+        <EntityTypeShape EntityType="KeysModel.RentalPaymentTracking" Width="1.5" PointX="7.5" PointY="59" />
+        <AssociationConnector Association="KeysModel.FK_RentalPaymentTracking_TenantProperty" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

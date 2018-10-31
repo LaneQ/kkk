@@ -1,0 +1,58 @@
+﻿<div id="search-wrap">
+    @using (Html.BeginForm())
+    {
+
+        <div class="input-group">
+            @if (ViewBag.CurrentFilter != null)
+                {
+                <input type="text" name="SearchString" id="searchId" class="form-control" style="padding-left:4px"
+                       value="@ViewBag.CurrentFilter" placeholder="What are you searching for?" autofocus />
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-primary" style="height:34px;">
+                            <span class="">
+                                <span class="fa fa-search"></span>
+                                Search
+                            </span>
+                        </button>
+                    </div>
+            }
+            else
+            {
+                <input type="text" name="SearchString" id="searchId" class="form-control" style="padding-left:4px"
+                       placeholder="What are you searching for?" autofocus />
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-primary" style="height: 34px;">
+                            <span class="">
+                                <span class="fa fa-search"></span>
+                                Search
+                            </span>
+                        </button>
+                    </div>
+            }
+        </div>
+
+        if(ViewBag.IsOwnerView != null)
+        {
+            <input type="hidden" name="isOwner" value="@ViewBag.IsOwnerView.ToString()" />
+        }
+        if (ViewBag.InputPropId != null)
+        {
+            <input type="hidden" name="rentalListingId" value="@ViewBag.InputRentalListingId.ToString()" />// Owners > Rental Applications > Applications > propId
+        }
+
+        if (ViewBag.InputRentalListingId != null)
+        {
+            <input type="hidden" name="rentalListingId" value="@ViewBag.InputRentalListingId.ToString()" />// Owners > Rental Applications > Applications > propId
+        }
+        if (ViewBag.InputReturnUrl != null)
+        {
+            <input type="hidden" name="returnUrl" value="@ViewBag.InputReturnUrl.ToString()" /> // Owners > Rental Applications > Applications > returnUrl
+        }
+        if (ViewBag.Action != null)
+        {
+            <input type="hidden" name="userAction" value="@ViewBag.Action.ToString()" />
+        }
+    }
+</div>
+
+

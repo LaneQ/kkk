@@ -1,0 +1,79 @@
+﻿<script type="text/html" id="requestForm">
+    <div class="input-group">
+        <label class="col-sm-2" style="text-align:left">Type </label>
+        <div class="col-sm-9">
+            <div class="form-line">
+                <select class="form-control" id="jobRequestType" data-bind="value : selectedRequestType">
+                    @foreach (var type in ViewBag.RequestTypes)
+                    {
+                        <option value="@type.Id">@type.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="input-group">
+        <label class="col-sm-2" style="text-align:left">Message </label>
+        <div class="col-sm-9">
+            <textarea class="form-control"   style="resize:none" data-bind="value: RequestMessage, valueUpdate:'afterkeydown'" maxlength="500" rows="6" cols="70" required></textarea>
+        </div>
+        <div class="col-sm-offset-2 col-sm-9">
+            <p> Maximum of 500 characters </p>
+        </div>
+       
+    </div>
+    <div class="input-group" role="tab" id="headingOne">
+        <label class="col-sm-2" style="text-align:left">Upload Photos </label>
+
+        <div id="photoUpload"  class="col-sm-9">
+            <div class="row">
+                <ul data-bind="foreach: DocFiles()">
+                    <li>
+                        <a data-bind="click: $parent.removePhoto">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                        <a target="_blank" data-bind="attr: { href: Data }">
+                            <span data-bind="text: OldFileName"></span><br />
+                        </a>
+                        
+                    </li>
+                </ul>
+                <div class="col-md-12"  >
+                    <div id="carousel-property2" class="carousel slide" data-ride="carousel">
+                        <!-- Wrapper for slides -->
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-property2" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a href="#" class="thumbnail">
+
+                            <div class="carousel-inner" role="listbox" data-bind="foreach: PhotoFiles()">
+                                <div class="item" data-bind="css: {active: $index() == 0}">
+                                    <img data-bind="attr: {src: Data}" alt="Thumbnail" data-target="#lightbox" style="height:280px">
+                                </div>
+                            </div>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-property2" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                
+
+                </div>
+            </div>
+        
+            <div>
+                <span class="btn btn-success" id="file-upload" name="fileName">
+                    <i class="fa fa-cloud-upload"></i>
+                    Choose Files
+                    <input class="key-upload" type="file" data-bind="event: {change: fileUpload}" accept=" .doc, .docx,.pdf,image/*" multiple />
+                </span>
+                <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *.gif, *.pdf & *.doc*.</p>
+            </div>
+        </div>
+    </div>
+</script>
+ 
+

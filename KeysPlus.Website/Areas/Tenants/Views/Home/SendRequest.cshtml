@@ -1,0 +1,296 @@
+﻿@model TenantSendRequestModel
+@{
+    ViewBag.Title = "SendRequest";
+}
+<div id="RequestPage">
+
+
+    <h3>Rental Request Form</h3>
+    <h4>
+        <a class="pointer-cursor" data-bind="attr: { href: '@Html.Raw(ViewBag.ReturnUrl)' }"><i class="angle left icon"></i> Back</a>
+    </h4>
+    <br /><br />
+    @*<div data-bind="ifnot:SelectedTenantProperty()">
+           <p> You do not have any rental properties</p>
+        </div>*@
+
+
+    <div class="ui raised segment" data-bind="with: Request">
+        <div class="ui one column centered grid">
+
+            <div class="column">
+                <div class="form-group">
+                    <label class="control-label">Select property <span style="color:red;">*</span></label>
+                    <select class="form-control" data-bind="options: $parent.RentalProperties,
+                                    optionsText: 'Address',
+                                    value: $parent.SelectedProperty,
+                                    optionsCaption: 'Select a property'"></select>
+                </div>
+            </div>
+
+            <div class="ui one column grid" data-bind="with : $parent.SelectedProperty">
+                
+
+                    <div class="sixteen wide column">
+                        <div class="ui top attached tertiary segment">
+                            Property Details
+                        </div>
+                        <div class="ui attached segment">
+                            <label class="control-label">Property Address </label> <span data-bind="text :Address"></span>
+                        </div>
+                        <div class="ui attached segment">
+                            <label class="control-label">Landlord Name </label> <span class="detailspan" data-bind="text : Landlordname"></span>
+                        </div>
+                        <div class="ui bottom attached segment">
+                            <label class="control-label">Landlord Phone Number &nbsp;</label><span class="detailspan" data-bind="text :LandlordPhone"></span>
+                        </div>
+                    </div>
+
+            </div><!--panel-->
+
+
+            <div class="column">
+
+                <label>Type<span style="color:red;"> *</span> </label>
+                <select class="ui fluid selection dropdown" data-bind="options: $parent.RequestTypes,
+                                    optionsText: 'Name',
+                                    optionsValue: 'Id',
+                                    value: RequestTypeId,
+                                    optionsCaption: 'Select a request type'"></select>
+
+            </div>
+
+            <div class="column">
+                <form class="ui form" style="margin-top:5px;">
+                    <label class="control-label">Message <span style="color:red;">*</span></label>
+                    <textarea class="form-control" rows="5" style="height:123px;" data-bind="textinput : RequestMessage"></textarea>
+                </form>
+
+            </div>
+
+            <div class="column">
+                <form class="ui form">
+                    <label class="control-label">Please upload your photos here<span style="color:red;"></span></label>
+
+                    <div class="ui divided items" data-bind="foreach: MediaFiles">
+                        <div class="item" data-bind="visible: MediaType() == 1">
+                            <div class="image">
+                                <div class="ui minix images">
+                                    <a target="_blank" data-bind="attr: { href: Data()}">
+                                        <img class="ui image" data-bind="attr: {src: Data()}" style="height: 80px" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="middle aligned content">
+                                <div class="header" data-bind="text : OldFileName()"></div>
+                            </div>
+
+                            <i class="remove sign icon" style="float:right" data-bind="click: $root.RemovePhoto"></i>
+
+                        </div>
+                    </div>
+                    <ul class="ui list" data-bind="foreach: MediaFiles">
+                        <li class="item" data-bind="visible: MediaType() == 2">
+
+                            <span class="right aligned data-content" data-bind="text : OldFileName()"></span>
+
+                            <i class="remove sign icon" style="float:right" data-bind="click : $root.RemovePhoto"></i>
+                        </li>
+                    </ul>
+
+                    <div class="ui teal button" style="position : relative">
+                        <span class="cloud upload icon"></span>
+                        Choose Files
+                        <input type="file" id="fileUpload" class="key-upload" data-bind="uploadFiles : MediaFiles, validFileTypes : $root.ValidFileTypes" multiple />
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="column">
+                <div class="form-group">
+                    <p class="text-muted" style="font-size:11px; text-align : left">You may upload up to 5 files. Max size is 2 MB each and supported file types are *.jpg, *.jpeg, *.png, *pdf, *doc & *.gif</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="column text-center">
+            <button class="ui teal button" data-bind="click: $root.SubmitRequest, enable : $root.IsValid()">Save</button>
+            <a class="ui button" data-bind="attr: { href: '@Html.Raw(ViewBag.ReturnUrl)' }">Close</a>
+        </div>
+
+
+    </div>
+</div><!--RequestPage-->
+@Html.AntiForgeryToken()
+<script>
+
+    var token = $('input[name="__RequestVerificationToken"]').val();
+    var returnUrl = '@ViewBag.ReturnUrl';
+    var requestTypes = @Html.Raw(Json.Encode(ViewBag.requestTypes));
+    var dataVm = @Html.Raw(Json.Encode(Model));
+    var req = new RequestViewModel();
+    function RequestViewModel() {
+        var self = this;
+        self.RecipientId = ko.observable();
+        self.RequestTypeId = ko.observable().extend({
+            required: {
+                params: true,
+                message: "Please select a request."
+            }
+        });
+        self.RequestMessage = ko.observable().extend(Extender.descriptionRentalListing);
+        self.ToOwner = 'true';
+        self.ToTenant = 'false';
+        self.MediaFiles = ko.observableArray([]);
+    }
+    function PageViewModel(dataVm) {
+        debugger;
+        var self = this;
+        for (var key in dataVm) {
+            self[key] = dataVm[key];
+        }
+
+        self.Request = new RequestViewModel();
+        self.SelectedProperty = ko.observable().extend({
+            required: {
+                params: true,
+                message: "Please select a property."
+            }
+        });
+        self.RemovePhoto = function (photo) {
+            self.Request.MediaFiles.remove(photo)
+        }
+
+        self.SelectedRequestType = ko.observable().extend({
+            required: {
+                params: true,
+                message: "Please select a request type."
+            }
+        })
+
+        self.Errors = ko.validation.group(self.Request);
+        self.IsValid = ko.computed(function () {
+            return self.Errors().length == 0;
+        });
+
+        self.SubmitRequest = function (data) {
+            debugger;
+            data.PropertyId = self.SelectedProperty().PropertyId;
+            data.RecipientId = self.SelectedProperty().LandlordId;
+            var token = $("input[name = '__RequestVerificationToken']").val();
+            var formData = KeysUtils.toFormData(data, token);
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/Rental/Home/SubmitPropertyRequest',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.Success) {
+                        KeysUtils.notification.show('<p>Request Submitted Successfully!</p>', 'notice');
+                        window.location = returnUrl;
+                    }
+                    else {
+                        KeysUtils.notification.show(KeysUtils.notification.errorMsg, 'error');
+                    }
+                },
+                error: function (result) {
+                    // console.log(result.responseText);
+                }
+            });
+        }
+
+        //self.SubmitRequest = function (data) {
+        //    debugger;
+        //    function successCallback(result) {
+        //        if (result.Success) {
+        //            KeysUtils.notification.show('<p>Request sent successfully!</p>', 'success', reload);
+        //        }
+        //        else {
+        //            KeysUtils.notification.showErrorMsg();
+        //        }
+        //    }
+        //    var formData = KeysUtils.toFormData(data, token);
+        //    KeysUtils.post('/Rental/Home/SubmitPropertyRequest', formData, successCallback);
+
+        //}
+        function reload() {
+            window.location.href = dataModel.ReturnUrl;
+        }
+        debugger;
+
+    }
+
+    //var Rental = function (rentalData) {
+    //    var self = this;
+    //    self.rentals = ko.observableArray();
+    //    rentalData.forEach(function (item) {
+    //        self.rentals.push(new RentalViewModel(item));
+    //    });
+    //    self.SelectedTenantProperty = ko.observable(self.rentals()[0]);
+    //};
+
+    //function TenantRequestViewModel(data) {
+    //    var self = this;
+    //    self.TenantId = data.TenantId;
+    //    self.PropertyId = ko.observable().extend({
+    //        params: true,
+    //        message: "Please select a property."
+    //    });
+    //    self.RequestTypeId = ko.observable().extend({
+    //        required: {
+    //            params: true,
+    //            message: "Please select a request."
+    //        }
+    //    });
+    //self.RecipientId = ko.observable(data.OwnerId);
+    //self.RequestTypeId = ko.observable().extend(Extender.selectRequest);
+    //self.RequestMessage = ko.observable().extend(Extender.descriptionRentalListing);
+    //self.ToOwner = 'true';
+    //self.ToTenant = 'false';
+    //self.MediaFiles = ko.observableArray();
+
+
+    //function RentalViewModel(data) {
+    //    var self = this;
+    //    //For Display
+    //    self.AddressString = ko.observable(data.AddressString);
+    //    self.Address = ko.observable(data.Address);
+    //    self.SelectAddressId = ko.observable().extend({
+    //        params: true,
+    //        message:"Please select an address."
+    //    })
+    //    self.Landlordname = ko.observable(data.Landlordname);
+    //    self.LandlordPhone = ko.observable(data.LandlordPhone);
+    //    self.OwnerId = ko.observable(data.OwnerId);
+    //    //self.Request = new TenantRequestViewModel(data);
+    //    self.IsValid = ko.computed(function(){
+    //        errors = ko.validation.group(self.Request);
+    //        return errors().length == 0;
+    //    });
+    //    self.requestTypes = requestTypes;
+    //    //remove photos from the selected files list
+    //    self.removePhoto = function (photo) {
+    //        self.Request.MediaFiles.remove(photo);
+    //        $('#uploadImage').prop("disabled", false);
+    //    };
+
+    //    //submitting Tenant request
+
+
+    //};//RentalViewModel END
+
+    $(document).ready(function () {
+        @*var listRentals = @Html.Raw(Json.Encode(Model));
+        var rentModel = new Rental(listRentals);*@
+        var vm = new PageViewModel(dataVm);
+        ko.applyBindings(vm);
+    });
+</script>
+

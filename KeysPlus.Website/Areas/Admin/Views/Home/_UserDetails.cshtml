@@ -1,0 +1,111 @@
+﻿@************************************* User Details ************************************@
+<div class="container">
+    <div id="UserDetail" data-bind="visible:showCurrentUser" ">
+
+        <h3>User Detail</h3>
+        <hr />
+        <button class="btn btn-info btn-sx" data-bind="click:$root.goToMainPage"><span class="fa fa-arrow-left"></span> Back</button>
+        <br /><br />
+        <div id="CurrentUserDetails" data-bind="with:currentUser">
+            <div class="row">
+                <div class="col-md-12" style="padding-bottom: 100px;">
+                    @*<i class="fa fa-lg fa-arrow-left" aria-hidden="true" data-bind="click:$root.goToMainPage"></i>
+                        <br /><br />*@
+
+                    
+
+                        <div data-bind="template: {name: 'readForm'}"></div>
+                        @*<p class="lead text-center">Physical Address</p>*@
+                        @*<div data-bind="with: PhysicalAddress">
+                            <div data-bind="template:{name:'readAddress'}"></div>
+                        </div>*@
+
+                        @*<div data-bind="ifnot: IsShipSame,AddCss: $data">
+                            @*<p class="lead text-center">Billing Address</p>*@
+                            @*<div data-bind="with: BillingAddress">
+                                <div data-bind="template:{name:'readAddress'}"></div>
+                            </div>*@
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<head>
+    <style>
+        button.btn.btn-danger:focus{
+            border: 1px solid;
+            border-color: #b21313;
+        }
+
+
+    </style>
+    </head>
+    <div class="modal" tabindex="-1" role="dialog" data-bind="with: currentUser" id="userDetailsModal">
+        <div id="userDetails" class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="lead modal-title text-center">User Details</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="input-group">
+                            <div data-bind="template: {name: 'readForm'}"></div>
+                            <p class="lead text-center">Physical Address</p>
+                            <div data-bind="with: PhysicalAddress">
+                                <div data-bind="template:{name:'readAddress'}"></div>
+                            </div>
+
+                            <div data-bind="ifnot: IsShipSame,AddCss: $data">
+                                <p class="lead text-center">Billing Address</p>
+                                <div data-bind="with: BillingAddress">
+                                    <div data-bind="template:{name:'readAddress'}"></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" data-bind="click: ResetAll"> Close</button>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>*@

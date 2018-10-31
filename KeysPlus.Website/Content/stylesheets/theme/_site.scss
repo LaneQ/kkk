@@ -1,0 +1,161 @@
+﻿html, body, .container-fluid
+{
+    /*padding-top: 50px;
+    padding-bottom: 20px;*/
+    height: 100%;
+}
+
+.body-content{
+    padding:30px 10px;
+}
+
+.container-fluid
+{
+    display: table;
+    width: 100%;
+    margin-top: -50px;
+    padding: 50px 0 0 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.row
+{
+    height: 100%;
+    display: table-row;
+
+    .no-float
+    {
+        display: table-cell;
+        float: none;
+    }
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt
+{
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea
+{
+    max-width: 280px;
+}
+
+/*Google autocomplete hack to show on bootstrap modal*/
+.pac-container
+{
+    z-index: 1051 !important;
+}
+
+/*Media Queries*/
+
+
+
+/*Helper Classes*/
+.display-block
+{
+    display: block;
+}
+
+.display-inline
+{
+    display: inline;
+}
+
+.display-inline-block
+{
+    display: inline-block;
+}
+
+.offset-top
+{
+    margin-top: 5px;
+}
+
+.offset-top2
+{
+    margin-top: 10px;
+}
+
+.offset-top3
+{
+    margin-top: 20px;
+}
+
+.offset-top4
+{
+    margin-top: 40px;
+}
+
+.offset-bottom
+{
+    margin-bottom: 5px;
+}
+
+.offset-bottom2
+{
+    margin-bottom: 10px;
+}
+
+.offset-bottom3
+{
+    margin-bottom: 20px;
+}
+
+.offset-bottom4
+{
+    margin-bottom: 40px;
+}
+
+.offset-left
+{
+    margin-left: 5px;
+}
+
+.offset-left2
+{
+    margin-left: 10px;
+}
+
+.offset-left3
+{
+    margin-left: 20px;
+}
+
+.offset-left4
+{
+    margin-left: 40px;
+}
+
+.offset-right
+{
+    margin-right: 5px;
+}
+
+.offset-right2
+{
+    margin-right: 10px;
+}
+
+.offset-right3
+{
+    margin-right: 20px;
+}
+
+.offset-right4
+{
+    margin-right: 40px;
+}
+
+.curtain
+{
+    visibility: hidden;
+}
+

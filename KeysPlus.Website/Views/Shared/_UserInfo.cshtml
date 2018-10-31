@@ -1,0 +1,33 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <div class="pull-right" style="padding-right : 15px ; margin-top: 15px;">
+        @*<span style="display:inline-block">Welcome</span>*@
+        <span class="break" style="color:#047BB0">
+            @User.Identity.Name
+        </span>
+        <div>
+            <a style="margin-right : 10px" title="Go to Profile" href="#"><i class="zmdi zmdi-account"></i></a>
+            <a style="margin-right : 10px" title="Change password" href="@Url.Action("ChangePassword", "Account", new { area = "" , htmlAttributes= new { id = "ChangePasswordLink" }})"><i class="zmdi zmdi-lock-open"></i></a>
+            <a title="Log Out" href="@Url.Action("LogOff","Account",new {Area = String.Empty})"><i class="zmdi zmdi-sign-in"></i></a>
+        </div>
+        @*<div class="admin-image"> <img src="/images/random-avatar7.jpg" alt="" width="75" height="75"> </div>
+        <div class="admin-action-info">
+            <span>Welcome</span>
+            <h3>
+                <!-- Bug #1141 -->
+                <!-- Changed the style so the username can be seen. If username too long, it hides the overflow.
+                     Might need to put this into a stylesheet. Dmitry. -->
+                <div title="@User.Identity.Name" style="width: 190px; overflow: hidden; text-overflow: ellipsis;">
+                    @User.Identity.Name
+                </div>
+
+            </h3>
+            <ul>
+                <li><a data-placement="bottom" title="Go to Inbox" href="#"><i class="zmdi zmdi-email"></i></a></li>
+                <li><a data-placement="bottom" title="Go to Profile" href="#"><i class="zmdi zmdi-account"></i></a></li>
+                <li><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="zmdi zmdi-settings"></i></a></li>
+                <li><a data-placement="bottom" title="Log Out" href="@Url.Action("LogOff","Account",new {Area = String.Empty})"><i class="zmdi zmdi-sign-in"></i></a></li>
+            </ul>
+        </div>*@
+    </div>
+}

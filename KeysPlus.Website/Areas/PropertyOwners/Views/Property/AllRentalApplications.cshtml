@@ -1,0 +1,235 @@
+﻿@model PORentAppsSearchModelModel
+@{
+    ViewBag.Title = "RentalApplications";
+}
+<div id="mainPage" data-bind="visible : MainView">
+    <div class="block-header" >
+        <h3>Rental Applications</h3>
+        <span class="text-muted">Rental applications for property at <span data-bind="text : Address"></span></span>
+    </div>
+
+    
+    <br/>
+    @Html.Partial("_SearchInput")
+    <hr />
+    <div>
+        @if (Model.ReturnUrl != null)
+        {
+            <a class="btn btn-info btn-sx" data-bind="attr: { href: '@Html.Raw(Model.ReturnUrl)' }"><span class="fa fa-arrow-left"></span> Back</a>
+        }
+    </div>
+    <br />
+    <div class="row" data-bind="visible:Items().length>0, foreach: Items">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <img class="banner-top-left-corner" src='/images/new-banner-red.png' height="70" data-bind="visible : Model.IsViewedByOwner() == false" style="display : none"/>
+                <div class="panel-body">
+                    <div class="row" style="line-height : 25px">
+                        <div class="col-md-3">
+                            <!--photo column-->
+                            @*<img class="img-responsive img-thumbnail" data-bind="attr: {src: FirstPhoto.Data}" style="height:150px;" alt="firstImg" onerror="this.src='/images/no-prop-img.png'" height="150" />*@
+                            <div data-bind="visible:ImgFiles().length>0">
+                                <div class="carousel " data-ride="carousel" data-bind="attr :{id : 'carousel'+ Model.Id()}">
+                                    <div class="carousel-inner" style="margin:auto" data-bind="foreach: ImgFiles">
+                                        <div class="item" data-bind="css:{active: $index() == 0}">
+                                            <img class="img-responsive img-thumbnail" data-bind="attr: {src: Data}"
+                                                 onerror="this.src = '/images/no-prop-img.png'" alt="firstImg">
+                                        </div>
+                                    </div>
+
+                                    <a class="left carousel-control" data-slide="prev" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}, if : ImgFiles().length > 1">
+                                        <span class="fa fa-2x fa-angle-left"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" data-slide="next" data-bind="attr : {href : '#' + 'carousel'+ Model.Id()}, if : ImgFiles().length > 1">
+                                        <span class="fa fa-2x fa-angle-right"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div data-bind="visible:ImgFiles().length<=0">
+                                <img class="img-thumbnail" src="/images/no-prop-img.png" alt="noPropImg" />
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <!--details column-->
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Applicant Name:</strong>
+                                </div>
+                                <div class="col-md-8" style="padding-right : 0px;">
+                                    <a data-bind="attr: { 'href': '@Url.Action("UserProfile", "Manage", new { Area = "", returnUrl = HttpContext.Current.Request.RawUrl})' + '&userId=' + Model.PersonId()}">
+                                        <span data-bind="text : TenantName"></span>
+                                    </a>
+                                    @*@Html.ActionLink("l","UserProfile", new { area = "", contoller = "Manage", }, new { data_bind = "text : TenantName" })*@
+                                    
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Contact Number:</strong>
+                                </div>
+                                <div class="col-md-8" style="padding-right : 0px;">
+                                    <span data-bind="text : TenantContactNumber"></span>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Occupants:</strong>
+                                </div>
+                                <div class="col-md-8" style="padding-right : 0px;">
+                                    <span data-bind="text : Model.TenantsCount"></span>
+                                </div>
+                            </div>
+                            <div class="row" style="line-height : 25px">
+                                <div class="col-md-4" style="padding-right : 0px;">
+                                    <strong>Date Submitted:</strong>
+                                </div>
+                                <div class="col-md-8" style="padding-right : 0px;">
+                                    <span data-bind="text : moment(Model.CreatedOn).format('ll')"></span>
+                                </div>
+                            </div>
+
+                            @*<div><strong>Applicant Name : </strong><span data-bind="text : TenantName"></span></div>
+                                
+                                <div><strong>Documents : </strong>
+                                    <span data-bind="if:DocFiles().length>0">
+                                        <span data-bind="foreach : DocFiles" style="display : inline-block">
+                                            <ul>
+                                                <li>
+                                                    <a target="_blank" data-bind="attr:{href: Data}"><span data-bind="text:OldFileName"></span></a>
+                                                </li>
+                                            </ul>
+                                        </span>
+                                    </span>
+                                    <span data-bind="ifnot:DocFiles().length>0">
+                                        Not Available
+                                    </span>
+                                </div>*@
+
+                        </div><!--details column-->
+                    </div>
+                </div>
+                <div class="card-acts">
+                    <div class="col-md-4 text-center card-act-btn" data-bind="click: $root.ShowDetail"><i class="small-icon zmdi zmdi-info-outline"></i> Details</div>
+                    <div class="col-md-4 text-center card-act-btn" data-bind="click: $root.AcceptApplication"><i class="small-icon zmdi zmdi-check"></i> Accept</div>
+                    <div class="col-md-4 text-center card-act-btn" data-bind="click: $root.DeclineApplication"><i class="small-icon zmdi zmdi-close"></i> Decline</div>
+                </div>
+            </div><!--panel-->
+        </div>
+    </div><!--row-->
+    <div data-bind="visible:Items().length==0">
+        <br />
+        <p style="text-align:center"> No applications for this Property</p>
+    </div>
+    @{
+        Html.RenderPartial("_PagedItems");
+    }
+</div>
+@section Modal{
+    @{
+        Html.RenderPartial("_SearchResultModal");
+    }
+}
+
+<div class="row" data-bind="visible:DetailView" style="display:none">
+    <div class="container" data-bind="with : SelectedItem">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Rental Application Details</h3>
+                <hr />
+                <a class="btn btn-info btn-sx" data-bind="click : $root.ShowMain"><span class="fa fa-arrow-left"></span> Back</a>
+                <br /><br />
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div div class="col-md-7"><!--details column-->
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Applicant Name:</strong>
+                                    </div>
+                                    <div class="col-md-8" style="padding-right : 0px;">
+                                        <span data-bind="text : TenantName"></span>
+                                    </div>
+                                </div>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Contact Number:</strong>
+                                    </div>
+                                    <div class="col-md-8" style="padding-right : 0px;">
+                                        <span data-bind="text : TenantContactNumber"></span>
+                                    </div>
+                                </div>
+                              
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Occupants:</strong>
+                                    </div>
+                                    <div class="col-md-8" style="padding-right : 0px;">
+                                        <span data-bind="text : Model.TenantsCount"></span>
+                                    </div>
+                                </div>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Date Submitted:</strong>
+                                    </div>
+                                    <div class="col-md-8" style="padding-right : 0px;">
+                                        <span data-bind="text : moment(Model.CreatedOn).format('ll')"></span>
+                                    </div>
+                                </div>
+                                <div div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Applicant's Note:</strong>
+                                    </div>
+                                    <div class="col-md-8" style="padding-right : 0px; display : inline-block">
+                                        <span data-bind="text : Model.Note"></span>
+                                    </div>
+                                </div>
+                                <div class="row" style="line-height : 25px">
+                                    <div class="col-md-4" style="padding-right : 0px;">
+                                        <strong>Documents:</strong>
+                                    </div>
+                                    <div class="col-md-8" style="padding-right : 0px;">
+                                        <span data-bind="if:DocFiles().length>0">
+                                            <span data-bind="foreach : DocFiles" style="display : inline-block">
+                                                <ul>
+                                                    <li>
+                                                        <a target="_blank" data-bind="attr:{href: Data}"><span data-bind="text:OldFileName"></span></a>
+                                                    </li>
+                                                </ul>
+                                            </span>
+                                        </span>
+                                        <span data-bind="ifnot:DocFiles().length>0">
+                                            Not Available
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div><!--details column-->
+                            <div class="col-md-4"><!--photo-->
+                                @Html.Partial("_DetailViewImg")
+                            </div><!--photo-->
+                        </div><!--row-->
+                        <div class="row" style="padding-top:15px;">
+                            <div class="prop-actions">
+                                <button class="btn btn-success" data-dismiss="modal" data-bind="click: $root.AcceptApplication"> Accept</button>
+                                <button class="btn btn-danger" data-dismiss="modal" data-bind="click: $root.DeclineApplication"> Decline</button>
+                            </div>
+                        </div>
+                    </div><!--panel body-->
+                </div><!--panel-->
+            </div>
+        </div><!--row-->
+    </div>
+</div>
+@Html.AntiForgeryToken()
+<script src="~/Scripts/PropertyOwners/Property/RentalApplications.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#NoRecord").modal("show");
+        var dataVm = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        var vm = new PageViewModel(dataVm);
+        ko.applyBindings(vm);
+    });
+</script>

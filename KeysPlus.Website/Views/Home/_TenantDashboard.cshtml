@@ -1,0 +1,326 @@
+﻿@model KeysPlus.Service.Models.TenantDashBoardModel
+<br />
+<h3 class="ui header">Tenant Dashboard</h3>
+<div class="ui divider"></div>
+<div class="ui grid">
+    <div class="three column row" style="margin : 0px !important">
+        <div class="column">
+            <div class="ui segments" data-step="@(++Model.IntroSteps)" data-intro="These handy buttons are for quick access to majors functionalities.">
+                <div class="ui green segment"><h4 class="ui header">Quick Buttons</h4></div>
+                <div class="ui segment" style="height : 190px">
+                    <div class="ui secondary vertical menu" style="margin-top: 0px;width: 100%;">
+                        <a class="item" style="height : 33%" href='@Url.Action("MyRentals", "Home", new { area = "Tenants" })'>
+                            <i class="ui grey key icon" style="float : left !important"></i>
+                            <h5 class="ui header" style="display : inline"> &nbsp; &nbsp;My Rentals</h5>
+                        </a>
+                        <a class="item" style="height : 33%" href='@Url.Action("Index", "Watchlist", new { area = "Personal" })'>
+                            <i class="ui grey bookmark icon" style="float : left !important"></i>
+                            <h5 class="ui header" style="display : inline"> &nbsp; &nbsp;My Watchlist</h5>
+                        </a>
+                        <a class="item" style="height : 33%" href='@Url.Action("MyRentalApplications", "Home", new { area = "Tenants" })'>
+                            <i class="ui grey file alternate icon" style="float : left !important"></i>
+                            <h5 class="ui header" style="display : inline"> &nbsp; &nbsp;My Applications</h5>
+                        </a>
+                    </div>
+                    @*<div class="row" style="height : 50%">
+                            <div class="col-md-4 text-center no-padding-side btn-dash-quick" style="border-right : 1px solid #dedee0">
+                                <a href="#" data-bind="attr: { 'href': '@Url.Action("SendRequest", "Home", new { area = "Tenants", returnUrl = HttpContext.Current.Request.RawUrl})' }">
+                                    <div class="fa fa-envelope-square" style="position : relative">
+                                        <span style="position : absolute; top:-5px; left:-6px; font-weight : 900; font-size : 12px">+</span>
+                                    </div>
+                                    <br />
+                                    <p>Send Requests</p>
+                                </a>
+                            </div>
+                            <div class="col-md-4 text-center btn-dash-quick" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("MyRequests", "Home", new { area = "Tenants" })'">
+                                <div class="fa fa-envelope-square">
+                                </div>
+                                <div>My Requests</div>
+                            </div>
+                            <div class="col-md-4 text-center btn-dash-quick" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("LandlordRequests", "Home", new { area = "Tenants"})'">
+                                <div class="zmdi zmdi-account"></div>
+                                <div>LandLord Requests</div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="height :50%">
+                            <div class="col-md-12" style="border-top : 1px solid #dedee0; height : 100%">
+                                <div class="row" style="height : 100%;">
+                                    <div class="col-md-4 text-center btn-dash-quick pad-top-10" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("MyRentals", "Home", new { area = "Tenants" })'">
+                                        <div class="fa fa-key">
+                                            <span class="zmdi zmdi-home" style="position : absolute; top:0; right:0; font-size : 9px"></span>
+                                        </div>
+                                        <div>My Rentals</div>
+                                    </div>
+                                    <div class="col-md-4 text-center btn-dash-quick pad-top-10 no-padding-side" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("MyRentalApplications", "Home", new { area = "Tenants" })'">
+                                        <div class="fa fa-clone"></div>
+                                        <div>My</div>
+                                        <div>Applications</div>
+                                    </div>
+                                    <div class="col-md-4 text-center btn-dash-quick pad-top-10 no-padding-side" onclick="location.href='/Personal/Watchlist'">
+                                        <div class="fa fa-bookmark"></div>
+                                        <div>My</div>
+                                        <div>Watchlist</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+
+        <div class="column" style="width : 66.6% !important">
+            <div class="ui segments" data-step="@(++Model.IntroSteps)" data-intro="This is an overview of your retal and expected payment due.">
+                <div class="ui green segment"><h4 class="ui header">Rental Payments Due</h4></div>
+                <div class="ui segment" style="height : 190px">
+                    <div data-bind="foreach : TenantRentals" style="overflow-y: scroll;overflow-x:hidden; height: 160px;">
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div data-bind="ifnot: NextPaymenDate">
+                                    <div id="calendar" padding="top:10px;">
+                                        <p id="calendar-day">Due Date</p>
+                                        <p id="calendar-month-year">  Information not provided</p>
+                                        <p id="calendar-month-year">  </p>
+                                    </div>
+                                </div>
+                                <div data-bind="if: NextPaymenDate">
+                                    <div id="calendar" padding="top:10px;">
+                                        <p id="calendar-day" data-bind="text:moment(NextPaymenDate()).format('dddd')"></p>
+                                        <p id="calendar-date" data-bind="text:moment(NextPaymenDate()).format('D')"></p>
+                                        <p id="calendar-month-year" data-bind="text:CalendarMonthYear"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row" style="line-height : 25px">
+                                    <div><strong>Property: </strong><span data-bind="text : Address"></span></div>
+                                    <div><strong>Landlord Name: </strong><span data-bind="text : Landlordname"></span></div>
+                                    <div>
+                                        <strong>Rent:</strong>
+                                        <span data-bind="if:TargetRent">
+                                            $<span data-bind="text : TargetRent"></span>
+                                            <span data-bind="text : RentalPaymentType"></span>
+                                        </span>
+                                        <span data-bind="ifnot:TargetRent">
+                                            Not Available
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="three column row" style="margin : 0px !important">
+        <div class="column">
+            <div class="ui segments" data-step="@(++Model.IntroSteps)" data-intro="Summary of your rental application that you have submitted.">
+                <div class="ui green segment"><h4 class="ui header">Rental Applications</h4></div>
+                <div class="panel-body" style="height : 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="rent-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="rent-chart-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="ui segments" data-step="@(++Model.IntroSteps)" data-intro="Summary of your requests to landlord.">
+                <div class="ui green segment">My Requests</div>
+                <div class="ui segment" style="height : 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="tenant-request-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="tenant-request-chart-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="ui segments" data-step="@(++Model.IntroSteps)" data-intro="Summary of requests from your landlord.">
+                <div class="ui green segment"><h4 class="ui header">Landlord Requests</h4></div>
+                <div class="ui segment" style="height : 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="landlord-request-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="landlord-request-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row dashboard">
+    @*<div class="col-md-4">
+            <div class="panel panel-default dashboard-panel" data-step="@(++Model.IntroSteps)" data-intro="These handy buttons are for quick access to majors functionalities." style="height : 230px">
+                <div class="panel-heading">Quick Buttons</div>
+                <div class="panel-body" style="height : 190px">
+                    <div class="row" style="height : 50%">
+                        <div class="col-md-4 text-center no-padding-side btn-dash-quick" style="border-right : 1px solid #dedee0">
+                            <a href="#" data-bind="attr: { 'href': '@Url.Action("SendRequest", "Home", new { area = "Tenants", returnUrl = HttpContext.Current.Request.RawUrl})' }">
+                                <div class="fa fa-envelope-square" style="position : relative">
+                                    <span style="position : absolute; top:-5px; left:-6px; font-weight : 900; font-size : 12px">+</span>
+                                </div>
+                                <br />
+                                <p>Send Requests</p>
+                            </a>
+                        </div>
+                        <div class="col-md-4 text-center btn-dash-quick" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("MyRequests", "Home", new { area = "Tenants" })'">
+                            <div class="fa fa-envelope-square">
+                            </div>
+                            <div>My Requests</div>
+                        </div>
+                        <div class="col-md-4 text-center btn-dash-quick" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("LandlordRequests", "Home", new { area = "Tenants"})'">
+                            <div class="zmdi zmdi-account"></div>
+                            <div>LandLord Requests</div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="height :50%">
+                        <div class="col-md-12" style="border-top : 1px solid #dedee0; height : 100%">
+                            <div class="row" style="height : 100%;">
+                                <div class="col-md-4 text-center btn-dash-quick pad-top-10" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("MyRentals", "Home", new { area = "Tenants" })'">
+                                    <div class="fa fa-key">
+                                        <span class="zmdi zmdi-home" style="position : absolute; top:0; right:0; font-size : 9px"></span>
+                                    </div>
+                                    <div>My Rentals</div>
+                                </div>
+                                <div class="col-md-4 text-center btn-dash-quick pad-top-10 no-padding-side" style="border-right : 1px solid #dedee0" onclick="location.href='@Url.Action("MyRentalApplications", "Home", new { area = "Tenants" })'">
+                                    <div class="fa fa-clone"></div>
+                                    <div>My</div>
+                                    <div>Applications</div>
+                                </div>
+                                <div class="col-md-4 text-center btn-dash-quick pad-top-10 no-padding-side" onclick="location.href='/Personal/Watchlist'">
+                                    <div class="fa fa-bookmark"></div>
+                                    <div>My</div>
+                                    <div>Watchlist</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="panel panel-default dashboard-panel" data-step="@(++Model.IntroSteps)" data-intro="This is an overview of your retal and expected payment due." style="height : 230px">
+                <div class="panel-heading">Payment Due</div>
+                <div class="panel-body" style="height : 190px">
+
+                    <div data-bind="foreach : TenantRentals" style="overflow-y: scroll;overflow-x:hidden; height: 160px;">
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div data-bind="ifnot: NextPaymenDate">
+                                    <div id="calendar" padding="top:10px;">
+                                        <p id="calendar-day">Due Date</p>
+                                        <p id="calendar-month-year">  Information not provided</p>
+                                        <p id="calendar-month-year">  </p>
+                                    </div>
+                                </div>
+                                <div data-bind="if: NextPaymenDate">
+                                    <div id="calendar" padding="top:10px;">
+                                        <p id="calendar-day" data-bind="text:moment(NextPaymenDate()).format('dddd')"></p>
+                                        <p id="calendar-date" data-bind="text:moment(NextPaymenDate()).format('D')"></p>
+                                        <p id="calendar-month-year" data-bind="text:CalendarMonthYear"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row" style="line-height : 25px">
+                                    <div><strong>Property: </strong><span data-bind="text : Address"></span></div>
+                                    <div><strong>Landlord Name: </strong><span data-bind="text : Landlordname"></span></div>
+                                    <div>
+                                        <strong>Rent:</strong>
+                                        <span data-bind="if:TargetRent">
+                                            $<span data-bind="text : TargetRent"></span>
+                                            <span data-bind="text : RentalPaymentType"></span>
+                                        </span>
+                                        <span data-bind="ifnot:TargetRent">
+                                            Not Available
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="col-md-4">
+            <div class="panel panel-default dashboard-panel" data-step="@(++Model.IntroSteps)" data-intro="Summary of your rental application that you have submitted."style="height : 230px">
+                <div class="panel-heading">Rental Applications</div>
+                <div class="panel-body" style="height : 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="rent-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="rent-chart-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-default dashboard-panel" data-step="@(++Model.IntroSteps)" data-intro="Summary of your requests to landlord."style="height : 230px">
+                <div class="panel-heading">My Requests</div>
+                <div class="panel-body" style="height : 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="tenant-request-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="tenant-request-chart-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-default dashboard-panel" data-step="@(++Model.IntroSteps)" data-intro="Summary of requests from your landlord." style="height : 230px">
+                <div class="panel-heading">Landlord Requests</div>
+                <div class="panel-body" style="height : 190px">
+                    <div class="row" style="height : 100%; display: flex;align-items: center;">
+                        <div class="col-md-7 no-padding-side">
+                            <canvas id="landlord-request-chart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-5 no-padding-side">
+                            <div class="chart-legends" id="landlord-request-legend"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+</div>
+<script src="~/Scripts/chartjs/TenantDashboardChart.js"></script>
+<script>
+    $(document).ready(function () {
+        var tenantDashBoardData = @Html.Raw(Json.Encode(Model));
+        var dashBoard = new TenantDashBoard(tenantDashBoardData);
+        var rental = new Rentals(tenantDashBoardData);
+        ko.applyBindings(rental);
+
+    });
+</script>

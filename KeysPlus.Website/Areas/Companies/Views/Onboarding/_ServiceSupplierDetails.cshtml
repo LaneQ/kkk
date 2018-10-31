@@ -1,0 +1,39 @@
+﻿<label class="onboard-label clear">Business Name <span style="color:red;">*</span></label>
+<input type="text" id="name" name="Name" placeholder="Name" data-bind="value: Name , valueUpdate:'afterkeydown'" />
+
+<label class="onboard-label clear">Phone Number <span style="color:red;">*</span></label>
+<input type="text" id="phonenumber" name="PhoneNumber" placeholder="eg:097001234" data-bind="value: PhoneNumber, valueUpdate :'afterkeydown'" />
+<label class="onboard-label clear">Website </label>
+<input type="text" id="website" name="Website" placeholder="Website" data-bind="value: Website, valueUpdate :'afterkeydown'" />
+<label class="onboard-label clear">Please upload the Company Logo here</label>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div style="width:400px; height:150px">
+                    <div data-bind="if :fileSrc">
+
+                        <img style="float:left; margin-bottom : 10px" id="blah" src="" height="150" data-bind="attr: {'src': fileSrc, 'title': fileName}" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="inputWrapper action-button">
+                    <i class="fa fa-cloud-upload"></i>
+                    Choose image
+                    <input class="fileInput" type="file" id="ImageFile" name="ImageFile" data-bind="event:{change: fileSelect}" accept="image/*" />
+                </div>
+                <p class="text-muted" style="font-size:11px; text-align : left" data-bind="text:fileIstruction"> </p>
+                <p class="text-danger" style="font-size:11px; text-align : left" data-bind="text:fileWarning"> </p>
+            </div>
+
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
+

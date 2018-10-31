@@ -1,0 +1,2239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Alias="Self" Namespace="KeysModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Nullable="false" MaxLength="150" Type="nvarchar" />
+    <Property Name="ContextKey" Nullable="false" MaxLength="300" Type="nvarchar" />
+    <Property Name="Model" Nullable="false" Type="varbinary(max)" />
+    <Property Name="ProductVersion" Nullable="false" MaxLength="32" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressId" />
+    </Key>
+    <Property Name="AddressId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="CountryId" Nullable="false" Type="int" />
+    <Property Name="Number" MaxLength="500" Type="nvarchar" />
+    <Property Name="Street" MaxLength="500" Type="nvarchar" />
+    <Property Name="Suburb" MaxLength="500" Type="nvarchar" />
+    <Property Name="City" MaxLength="500" Type="nvarchar" />
+    <Property Name="Region" MaxLength="500" Type="nvarchar" />
+    <Property Name="PostCode" MaxLength="50" Type="varchar" />
+    <Property Name="Lat" MaxLength="20" Type="varchar" />
+    <Property Name="Lng" MaxLength="20" Type="varchar" />
+    <Property Name="UpdatedBy" MaxLength="500" Type="nvarchar" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" MaxLength="500" Type="nvarchar" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PhysicalAddressId" Nullable="false" Type="int" />
+    <Property Name="BillingAddressId" Nullable="false" Type="int" />
+    <Property Name="Name" MaxLength="500" Type="nvarchar" />
+    <Property Name="Website" MaxLength="2000" Type="nvarchar" />
+    <Property Name="UpdatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="ProfilePhoto" MaxLength="500" Type="nvarchar" />
+    <Property Name="PhoneNumber" MaxLength="250" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="Name" MaxLength="50" Type="nvarchar" />
+    <Property Name="Code" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="Inspection">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="StatusId" Nullable="false" Type="int" />
+    <Property Name="Message" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="CreatedBy" Nullable="false" Type="int" />
+    <Property Name="UpdatedBy" Nullable="false" Type="int" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="IsUpdated" Nullable="false" Type="bit" />
+    <Property Name="IsViewed" Type="bit" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="RequestId" Nullable="false" Type="int" />
+    <Property Name="Reason" Type="nvarchar(max)" />
+    <Property Name="PercentDone" Nullable="false" Type="int" />
+    <Property Name="OwnerUpdate" Type="bit" />
+    <Property Name="DueDate" Type="datetime" />
+    <Property Name="IsAccepted" Type="int" />
+    <Property Name="RecipientId" Type="int" />
+    <Property Name="RescheduleDate" Type="datetime" />
+    <Property Name="ReasonForReschedule" MaxLength="500" Type="nvarchar" />
+    <Property Name="PhoneNumber" MaxLength="15" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="InspectionMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="InspectionId" Nullable="false" Type="int" />
+    <Property Name="OldFileName" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="NewFileName" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="InspectionStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="Job">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="ProviderId" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="OwnerId" Type="int" />
+    <Property Name="PaymentAmount" Nullable="false" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="JobStartDate" Type="datetime" />
+    <Property Name="JobEndDate" Type="datetime" />
+    <Property Name="JobDescription" Type="nvarchar(max)" />
+    <Property Name="JobStatusId" Nullable="false" Type="int" />
+    <Property Name="UpdatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="MaxBudget" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="PercentDone" Type="int" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="AcceptedQuote" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="OwnerUpdate" Type="bit" />
+    <Property Name="ServiceUpdate" Type="bit" />
+    <Property Name="JobRequestId" Type="int" />
+  </EntityType>
+  <EntityType Name="JobMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="JobId" Nullable="false" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="OldFileName" Nullable="false" MaxLength="550" Type="nvarchar" />
+    <Property Name="NewFileName" Nullable="false" MaxLength="550" Type="nvarchar" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="JobQuote">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="JobRequestId" Nullable="false" Type="int" />
+    <Property Name="ProviderId" Nullable="false" Type="int" />
+    <Property Name="Amount" Nullable="false" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="Status" Nullable="false" MaxLength="15" Type="nvarchar" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="UpdatedBy" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="IsViewed" Type="bit" />
+  </EntityType>
+  <EntityType Name="JobQuoteMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="JobQuoteId" Nullable="false" Type="int" />
+    <Property Name="FileName" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="JobWatchList">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="MarketJobId" Nullable="false" Type="int" />
+    <Property Name="PersonId" Nullable="false" Type="int" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="50" Type="nvarchar" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="Login">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="EmailConfirmationToken" Type="nvarchar(max)" />
+    <Property Name="EmailConfirmationTokenExpiryDate" Type="datetime" />
+    <Property Name="ResetPasswordToken" Type="nvarchar(max)" />
+    <Property Name="ResetPasswordTokenExpiryDate" Type="datetime" />
+    <Property Name="Email" MaxLength="256" Type="nvarchar" />
+    <Property Name="EmailConfirmed" Nullable="false" Type="bit" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Nullable="false" Type="bit" />
+    <Property Name="TwoFactorEnabled" Nullable="false" Type="bit" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Nullable="false" Type="bit" />
+    <Property Name="AccessFailedCount" Nullable="false" Type="int" />
+    <Property Name="UserName" Nullable="false" MaxLength="256" Type="nvarchar" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" MaxLength="128" Type="nvarchar" />
+    <Property Name="FirstTimeLogin" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Keys.dbo.Login_Deleted' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Login_Deleted">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="IsActive" />
+      <PropertyRef Name="EmailConfirmed" />
+      <PropertyRef Name="PhoneNumberConfirmed" />
+      <PropertyRef Name="TwoFactorEnabled" />
+      <PropertyRef Name="LockoutEnabled" />
+      <PropertyRef Name="AccessFailedCount" />
+      <PropertyRef Name="UserName" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="EmailConfirmationToken" Type="nvarchar(max)" />
+    <Property Name="EmailConfirmationTokenExpiryDate" Type="datetime" />
+    <Property Name="ResetPasswordToken" Type="nvarchar(max)" />
+    <Property Name="ResetPasswordTokenExpiryDate" Type="datetime" />
+    <Property Name="Email" MaxLength="256" Type="nvarchar" />
+    <Property Name="EmailConfirmed" Nullable="false" Type="bit" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Nullable="false" Type="bit" />
+    <Property Name="TwoFactorEnabled" Nullable="false" Type="bit" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Nullable="false" Type="bit" />
+    <Property Name="AccessFailedCount" Nullable="false" Type="int" />
+    <Property Name="UserName" Nullable="false" MaxLength="256" Type="nvarchar" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" MaxLength="128" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="LoginClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PersonId" Nullable="false" Type="int" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="LoginRole">
+    <Key>
+      <PropertyRef Name="PersonId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="PersonId" Nullable="false" Type="int" />
+    <Property Name="RoleId" Nullable="false" Type="int" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="PendingApproval" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="LoginSocialMedia">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="LoginId" />
+    </Key>
+    <Property Name="LoginProvider" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="ProviderKey" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="LoginId" Nullable="false" Type="int" />
+  </EntityType>
+  <EntityType Name="Manager">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="CompanyId" Type="int" />
+  </EntityType>
+  <EntityType Name="ManagerProperty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="ManagerId" Nullable="false" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="StartDate" Nullable="false" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="UpdatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Media">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="OldFileName" Nullable="false" MaxLength="1500" Type="nvarchar" />
+    <Property Name="NewFileName" Nullable="false" MaxLength="1500" Type="nvarchar" />
+    <Property Name="MediaTypeId" Nullable="false" Type="int" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" Type="int" />
+  </EntityType>
+  <EntityType Name="MediaType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="Name" Nullable="false" MaxLength="150" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="MessageDeliveryType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="MessageType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="OutGoingMessage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PersonId" Nullable="false" Type="int" />
+    <Property Name="MessageTypeId" Nullable="false" Type="int" />
+    <Property Name="DeliveryTypeId" Nullable="false" Type="int" />
+    <Property Name="TargetAddress" Type="nvarchar(max)" />
+    <Property Name="Subject" Type="nvarchar(max)" />
+    <Property Name="Message" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="DateCreated" Nullable="false" Type="datetime" />
+    <Property Name="IsProcessed" Nullable="false" Type="bit" />
+    <Property Name="ProcessedOn" Type="datetime" />
+    <Property Name="Error" Type="nvarchar(max)" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="OwnerProperty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="OwnerId" Nullable="false" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="OwnershipStatusId" Nullable="false" Type="int" />
+    <Property Name="PurchaseDate" Nullable="false" Type="datetime" />
+    <Property Name="SoldDate" Type="datetime" />
+    <Property Name="UpdatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Owners">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+  </EntityType>
+  <EntityType Name="OwnershipStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="Code" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="FirstName" MaxLength="50" Type="nvarchar" />
+    <Property Name="MiddleName" MaxLength="50" Type="nvarchar" />
+    <Property Name="LastName" MaxLength="50" Type="nvarchar" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
+    <Property Name="Salutation" MaxLength="10" Type="nvarchar" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="UID" Nullable="false" Type="uniqueidentifier" />
+    <Property Name="EthnicityId" Type="int" />
+    <Property Name="TimeZoneIdentifier" MaxLength="100" Type="nvarchar" />
+    <Property Name="Culture" MaxLength="10" Type="nvarchar" />
+    <Property Name="GenderId" Type="int" />
+    <Property Name="Language" MaxLength="20" Type="nvarchar" />
+    <Property Name="PlaceOfBirth" MaxLength="50" Type="nvarchar" />
+    <Property Name="Occupation" MaxLength="50" Type="nvarchar" />
+    <Property Name="PreferenceSetting" Type="varchar(max)" />
+    <Property Name="BillingAddressId" Nullable="false" Type="int" />
+    <Property Name="PhysicalAddressId" Nullable="false" Type="int" />
+    <Property Name="CVFile" MaxLength="500" Type="nvarchar" />
+    <Property Name="LinkedinUrl" MaxLength="500" Type="nvarchar" />
+    <Property Name="ProfilePhoto" Type="nvarchar(max)" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" MaxLength="128" Type="nvarchar" />
+    <Property Name="HomePhone" Type="nvarchar(max)" />
+    <Property Name="WorkPhone" Type="nvarchar(max)" />
+    <Property Name="MobilePhone" Type="nvarchar(max)" />
+    <Property Name="DateOfBirth" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PersonMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PersonId" Nullable="false" Type="int" />
+    <Property Name="NewFilename" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="OldFilename" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="Property">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PropertyTypeId" Nullable="false" Type="int" />
+    <Property Name="AddressId" Nullable="false" Type="int" />
+    <Property Name="Name" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="Description" MaxLength="2000" Type="nvarchar" />
+    <Property Name="Bedroom" Type="int" />
+    <Property Name="Bathroom" Type="int" />
+    <Property Name="LandSqm" Type="float" />
+    <Property Name="ParkingSpace" Type="int" />
+    <Property Name="FloorArea" Type="float" />
+    <Property Name="TargetRent" Precision="18" Scale="0" Type="decimal" />
+    <Property Name="TargetRentTypeId" Nullable="false" Type="int" />
+    <Property Name="YearBuilt" Type="int" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="UpdatedBy" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="HasCompany" Type="bit" />
+    <Property Name="IsOwnerOccupied" Type="bit" />
+  </EntityType>
+  <EntityType Name="PropertyExpense">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="Amount" Nullable="false" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="Date" Nullable="false" Type="datetime" />
+    <Property Name="Description" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="CreatedBy" MaxLength="120" Type="nvarchar" />
+    <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PropertyFinance">
+    <Key>
+      <PropertyRef Name="PropertyId" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="PurchasePrice" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="Mortgage" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="TotalRepayment" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="TotalExpense" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="Yield" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="CurrentHomeValue" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="CapitalGain" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="ActualRentalPayments" Precision="18" Scale="2" Type="decimal" />
+  </EntityType>
+  <EntityType Name="PropertyHomeValue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="Value" Nullable="false" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="Date" Nullable="false" Type="datetime" />
+    <Property Name="HomeValueTypeId" Nullable="false" Type="int" />
+    <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="PropertyHomeValueType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="HomeValueType" Nullable="false" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="PropertyMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="NewFileName" MaxLength="1500" Type="nvarchar" />
+    <Property Name="OldFileName" MaxLength="1500" Type="nvarchar" />
+    <Property Name="EntityGuid" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="PropertyRentalPayment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="Amount" Nullable="false" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="Date" Nullable="false" Type="datetime" />
+    <Property Name="FrequencyType" Nullable="false" Type="int" />
+    <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
+    <Property Name="CreatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PropertyRepayment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="Amount" Nullable="false" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="StartDate" Nullable="false" Type="datetime" />
+    <Property Name="FrequencyType" Nullable="false" Type="int" />
+    <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PropertyRequest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="RequestTypeId" Nullable="false" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="ToOwner" Nullable="false" Type="bit" />
+    <Property Name="ToTenant" Nullable="false" Type="bit" />
+    <Property Name="RequestMessage" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="RequestStatusId" Nullable="false" Type="int" />
+    <Property Name="IsViewed" Nullable="false" Type="bit" />
+    <Property Name="CreatedBy" Nullable="false" Type="int" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="UpdatedBy" Nullable="false" Type="int" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="IsUpdated" Type="bit" />
+    <Property Name="DueDate" Type="datetime" />
+    <Property Name="Reason" Type="nvarchar(max)" />
+    <Property Name="RecipientId" Type="int" />
+  </EntityType>
+  <EntityType Name="PropertyRequestMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PropertyRequestId" Nullable="false" Type="int" />
+    <Property Name="OldFileName" Nullable="false" MaxLength="550" Type="nvarchar" />
+    <Property Name="NewFileName" Nullable="false" MaxLength="550" Type="nvarchar" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="PropertyType">
+    <Key>
+      <PropertyRef Name="PropertyTypeId" />
+    </Key>
+    <Property Name="PropertyTypeId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Name" Nullable="false" MaxLength="25" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="RentalApplication">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="RentalListingId" Nullable="false" Type="int" />
+    <Property Name="PersonId" Nullable="false" Type="int" />
+    <Property Name="Note" MaxLength="2000" Type="nvarchar" />
+    <Property Name="TenantsCount" Type="int" />
+    <Property Name="ApplicationStatusId" Nullable="false" Type="int" />
+    <Property Name="TenantIdType" MaxLength="128" Type="nvarchar" />
+    <Property Name="TenantIdNo" MaxLength="50" Type="nvarchar" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="UpdatedBy" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="IsViewedByOwner" Type="bit" />
+    <Property Name="EmploymentInYears" Type="int" />
+    <Property Name="EmploymentInMonths" Type="int" />
+    <Property Name="IncomePerWeek" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="OtherIncome" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="WorkManagerName" MaxLength="50" Type="nvarchar" />
+    <Property Name="WorkManagerPhone" MaxLength="15" Type="nvarchar" />
+    <Property Name="PreviousEmployment" MaxLength="50" Type="nvarchar" />
+    <Property Name="PreferredMoveInDate" Type="datetime" />
+    <Property Name="IntendedLength" Type="int" />
+    <Property Name="Smokers" Type="bit" />
+    <Property Name="Commitment" MaxLength="500" Type="nvarchar" />
+    <Property Name="Winz" Type="bit" />
+    <Property Name="WinzNumber" MaxLength="30" Type="nvarchar" />
+    <Property Name="Pets" Type="bit" />
+    <Property Name="PetsDescription" MaxLength="200" Type="nvarchar" />
+    <Property Name="BeenEvicted" Type="bit" />
+    <Property Name="BennEvictedDetail" MaxLength="500" Type="nvarchar" />
+    <Property Name="CriminalOffence" Type="bit" />
+    <Property Name="CriminalOffenceDetail" MaxLength="500" Type="nvarchar" />
+    <Property Name="AcceptePropertyConditionOption" Type="bit" />
+    <Property Name="AcceptePropertyConditionOptionDetail" MaxLength="500" Type="nvarchar" />
+    <Property Name="DriverLicenseNO" MaxLength="20" Type="nvarchar" />
+    <Property Name="DriverLicenseVersion" MaxLength="10" Type="nvarchar" />
+    <Property Name="CarRegisteration" MaxLength="20" Type="nvarchar" />
+    <Property Name="CarMake" MaxLength="20" Type="nvarchar" />
+    <Property Name="CarModel" MaxLength="20" Type="nvarchar" />
+    <Property Name="CurrentLandlordFirstName" MaxLength="50" Type="nvarchar" />
+    <Property Name="CurrentLandlordLastName" MaxLength="50" Type="nvarchar" />
+    <Property Name="CurrentLandlordPhoneNumber" MaxLength="15" Type="nvarchar" />
+    <Property Name="CurrentLandlordEmail" MaxLength="50" Type="nvarchar" />
+    <Property Name="CanBeRef" Type="bit" />
+    <Property Name="EmergencyContactFirstName" MaxLength="50" Type="nvarchar" />
+    <Property Name="EmergencyContactLastName" MaxLength="50" Type="nvarchar" />
+    <Property Name="EmergencyContactEmail" MaxLength="50" Type="nvarchar" />
+    <Property Name="EmergencyContactPhone" MaxLength="15" Type="nvarchar" />
+    <Property Name="FirstName" MaxLength="50" Type="nvarchar" />
+    <Property Name="LastName" MaxLength="50" Type="nvarchar" />
+    <Property Name="MiddleName" MaxLength="50" Type="nvarchar" />
+    <Property Name="HomePhone" MaxLength="50" Type="nvarchar" />
+    <Property Name="WorkPhone" MaxLength="50" Type="nvarchar" />
+    <Property Name="MobilePhone" MaxLength="50" Type="nvarchar" />
+    <Property Name="Email" MaxLength="50" Type="nvarchar" />
+    <Property Name="DateOfBirth" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RentalApplicationMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="RentalApplicationId" Nullable="false" Type="int" />
+    <Property Name="NewFileName" MaxLength="1500" Type="nvarchar" />
+    <Property Name="OldFileName" MaxLength="1500" Type="nvarchar" />
+    <Property Name="EntityGuid" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="RentalApplicationStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Status" Nullable="false" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="RentalListing">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="Description" MaxLength="2000" Type="nvarchar" />
+    <Property Name="MovingCost" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="TargetRent" Nullable="false" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="AvailableDate" Type="date" />
+    <Property Name="Furnishing" MaxLength="2000" Type="nvarchar" />
+    <Property Name="IdealTenant" MaxLength="50" Type="nvarchar" />
+    <Property Name="OccupantCount" Type="int" />
+    <Property Name="PetsAllowed" MaxLength="50" Type="nvarchar" />
+    <Property Name="CreatedBy" MaxLength="128" Type="nvarchar" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" MaxLength="128" Type="nvarchar" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="RentalStatusId" Nullable="false" Type="int" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="EndDate" Type="date" />
+  </EntityType>
+  <EntityType Name="RentalListingMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="RentalListingId" Nullable="false" Type="int" />
+    <Property Name="NewFileName" MaxLength="1500" Type="nvarchar" />
+    <Property Name="OldFileName" MaxLength="1500" Type="nvarchar" />
+    <Property Name="EntityGuid" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="RentalListingStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Status" Nullable="false" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="RentalPaymentTracking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="TenantPropertyId" Nullable="false" Type="int" />
+    <Property Name="DueDate" Nullable="false" Type="datetime" />
+    <Property Name="PaymentComplete" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="RentalWatchList">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="RentalListingId" Nullable="false" Type="int" />
+    <Property Name="PersonId" Nullable="false" Type="int" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="50" Type="nvarchar" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="RequestReply">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="RequestId" Nullable="false" Type="int" />
+    <Property Name="Message" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="CreatedBy" Nullable="false" Type="int" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="UpdatedBy" Nullable="false" Type="int" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+    <Property Name="ToOwner" Nullable="false" Type="bit" />
+    <Property Name="ToTenant" Nullable="false" Type="bit" />
+    <Property Name="IsViewed" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="RequestReplyMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="RequestReplyId" Nullable="false" Type="int" />
+    <Property Name="NewFileName" Type="nvarchar(max)" />
+    <Property Name="OldFileName" Type="nvarchar(max)" />
+    <Property Name="EntityGuid" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="RequestStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Name" Nullable="false" MaxLength="150" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="RequestType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Name" Nullable="false" MaxLength="150" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Name" Nullable="false" MaxLength="256" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="ServiceProvider">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="IsProfileComplete" Type="bit" />
+  </EntityType>
+  <EntityType Name="ServiceProviderJobStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="Code" MaxLength="50" Type="varchar" />
+    <Property Name="Name" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="StatusName" Nullable="false" MaxLength="10" Type="nchar" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Nullable="false" MaxLength="128" Type="nvarchar" />
+    <Property Name="principal_id" Nullable="false" Type="int" />
+    <Property Name="diagram_id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TargetRentType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="Name" Nullable="false" MaxLength="550" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="Tenant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="HomePhoneNumber" MaxLength="150" Type="nvarchar" />
+    <Property Name="MobilePhoneNumber" MaxLength="150" Type="nvarchar" />
+    <Property Name="IsCompletedPersonalProfile" Nullable="false" Type="bit" />
+    <Property Name="ResidentialAddress" Nullable="false" Type="int" />
+    <Property Name="HasProofOfIdentity" Nullable="false" Type="bit" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" Type="int" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="TenantJobRequest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="OwnerId" Nullable="false" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="JobDescription" Type="nvarchar(max)" />
+    <Property Name="JobStatusId" Nullable="false" Type="int" />
+    <Property Name="UpdatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="MaxBudget" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="Title" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="TenantJobRequestMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="TenantJobRequestId" Nullable="false" Type="int" />
+    <Property Name="NewFileName" MaxLength="1500" Type="nvarchar" />
+    <Property Name="OldFileName" MaxLength="1500" Type="nvarchar" />
+    <Property Name="EntityGuid" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="TenantJobStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="Code" MaxLength="50" Type="varchar" />
+    <Property Name="Name" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="TenantMedia">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="TenantId" Nullable="false" Type="int" />
+    <Property Name="MediaId" Nullable="false" Type="int" />
+    <Property Name="OldFileName" MaxLength="1500" Type="nvarchar" />
+    <Property Name="NewFileName" MaxLength="1500" Type="nvarchar" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <EntityType Name="TenantPaymentFrequencies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" Type="int" />
+    <Property Name="Code" Nullable="false" MaxLength="50" Type="varchar" />
+    <Property Name="Name" Nullable="false" MaxLength="50" Type="nvarchar" />
+  </EntityType>
+  <EntityType Name="TenantProperty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="TenantId" Nullable="false" Type="int" />
+    <Property Name="PropertyId" Nullable="false" Type="int" />
+    <Property Name="StartDate" Nullable="false" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="UpdatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" MaxLength="500" Type="nvarchar" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+    <Property Name="PaymentFrequencyId" Type="int" />
+    <Property Name="PaymentAmount" Precision="18" Scale="2" Type="decimal" />
+    <Property Name="PaymentDueDate" Type="int" />
+    <Property Name="PaymentStartDate" Type="datetime" />
+    <Property Name="IsMainTenant" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LastQueuedPaymentRemind" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TenantPropertyLiability">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="TenantPropertyId" Nullable="false" Type="int" />
+    <Property Name="LiabilityName" Nullable="false" MaxLength="200" Type="nvarchar" />
+    <Property Name="Amount" Nullable="false" Precision="18" Scale="2" Type="decimal" />
+  </EntityType>
+  <EntityType Name="UserRating">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PersonId" Nullable="false" Type="int" />
+    <Property Name="Rating" Nullable="false" Precision="18" Scale="1" Type="decimal" />
+    <Property Name="Review" Type="nvarchar(max)" />
+    <Property Name="CreatedBy" Nullable="false" Type="int" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="UpdatedBy" Nullable="false" Type="int" />
+    <Property Name="UpdatedOn" Nullable="false" Type="datetime" />
+  </EntityType>
+  <EntityType Name="XeroTokenStore">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+    <Property Name="PersonId" Nullable="false" Type="int" />
+    <Property Name="OrganisationId" Type="nvarchar(max)" />
+    <Property Name="TokenType" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="TokenKey" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="TokenSecret" Type="nvarchar(max)" />
+    <Property Name="ExpiresAt" Type="datetime" />
+    <Property Name="Session" Type="nvarchar(max)" />
+    <Property Name="SessionExpiresAt" Type="datetime" />
+    <Property Name="CreatedOn" Nullable="false" Type="datetime" />
+    <Property Name="CreatedBy" Nullable="false" Type="nvarchar(max)" />
+    <Property Name="IsActive" Nullable="false" Type="bit" />
+  </EntityType>
+  <Association Name="FK_Address_Country">
+    <End Type="Self.Country" Multiplicity="1" Role="Country" />
+    <End Type="Self.Address" Multiplicity="*" Role="Address" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="CountryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Company_BillingAddress">
+    <End Type="Self.Address" Multiplicity="1" Role="Address" />
+    <End Type="Self.Company" Multiplicity="*" Role="Company" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="BillingAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Company_Company">
+    <End Type="Self.Company" Multiplicity="1" Role="Company" />
+    <End Type="Self.Company" Multiplicity="0..1" Role="Company1" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Company1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Company_PhysicalAddress">
+    <End Type="Self.Address" Multiplicity="1" Role="Address" />
+    <End Type="Self.Company" Multiplicity="*" Role="Company" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="PhysicalAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_LoginRole_dbo_Role_RoleId">
+    <End Type="Self.Role" Multiplicity="1" Role="Role">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="Self.LoginRole" Multiplicity="*" Role="LoginRole" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LoginRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Expense_PropertyId">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.PropertyExpense" Multiplicity="*" Role="PropertyExpense" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyExpense">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Finance_PropertyId">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.PropertyFinance" Multiplicity="0..1" Role="PropertyFinance" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyFinance">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HomeValue_HomeValueType">
+    <End Type="Self.PropertyHomeValueType" Multiplicity="1" Role="PropertyHomeValueType" />
+    <End Type="Self.PropertyHomeValue" Multiplicity="*" Role="PropertyHomeValue" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyHomeValueType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyHomeValue">
+        <PropertyRef Name="HomeValueTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inspection_InspectionStatus">
+    <End Type="Self.InspectionStatus" Multiplicity="1" Role="InspectionStatus" />
+    <End Type="Self.Inspection" Multiplicity="*" Role="Inspection" />
+    <ReferentialConstraint>
+      <Principal Role="InspectionStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Inspection">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inspection_Property">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.Inspection" Multiplicity="*" Role="Inspection" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Inspection">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InspectionMedia_InspectionMedia">
+    <End Type="Self.Inspection" Multiplicity="1" Role="Inspection" />
+    <End Type="Self.InspectionMedia" Multiplicity="*" Role="InspectionMedia" />
+    <ReferentialConstraint>
+      <Principal Role="Inspection">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InspectionMedia">
+        <PropertyRef Name="InspectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Job_Property">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.Job" Multiplicity="*" Role="Job" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Job">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Job_ServiceProviderJobStatus">
+    <End Type="Self.ServiceProviderJobStatus" Multiplicity="1" Role="ServiceProviderJobStatus" />
+    <End Type="Self.Job" Multiplicity="*" Role="Job" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceProviderJobStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Job">
+        <PropertyRef Name="JobStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobMedia_Job">
+    <End Type="Self.Job" Multiplicity="1" Role="Job" />
+    <End Type="Self.JobMedia" Multiplicity="*" Role="JobMedia" />
+    <ReferentialConstraint>
+      <Principal Role="Job">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobMedia">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobMedia_Property">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.JobMedia" Multiplicity="*" Role="JobMedia" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobMedia">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobQuote_JobRequest">
+    <End Type="Self.TenantJobRequest" Multiplicity="1" Role="TenantJobRequest" />
+    <End Type="Self.JobQuote" Multiplicity="*" Role="JobQuote" />
+    <ReferentialConstraint>
+      <Principal Role="TenantJobRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobQuote">
+        <PropertyRef Name="JobRequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobQuote_ServiceProvider">
+    <End Type="Self.ServiceProvider" Multiplicity="1" Role="ServiceProvider" />
+    <End Type="Self.JobQuote" Multiplicity="*" Role="JobQuote" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceProvider">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobQuote">
+        <PropertyRef Name="ProviderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobQuoteMedia_JobQuote">
+    <End Type="Self.JobQuote" Multiplicity="1" Role="JobQuote" />
+    <End Type="Self.JobQuoteMedia" Multiplicity="*" Role="JobQuoteMedia" />
+    <ReferentialConstraint>
+      <Principal Role="JobQuote">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobQuoteMedia">
+        <PropertyRef Name="JobQuoteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Login_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.Login" Multiplicity="0..1" Role="Login" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Login">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manager_Company">
+    <End Type="Self.Company" Multiplicity="0..1" Role="Company" />
+    <End Type="Self.Manager" Multiplicity="*" Role="Manager" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Manager">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manager_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.Manager" Multiplicity="0..1" Role="Manager" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Manager">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manager_Property_Manager">
+    <End Type="Self.Manager" Multiplicity="1" Role="Manager" />
+    <End Type="Self.ManagerProperty" Multiplicity="*" Role="ManagerProperty" />
+    <ReferentialConstraint>
+      <Principal Role="Manager">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ManagerProperty">
+        <PropertyRef Name="ManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Manager_Property_Property">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.ManagerProperty" Multiplicity="*" Role="ManagerProperty" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ManagerProperty">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Media_MediaType">
+    <End Type="Self.MediaType" Multiplicity="1" Role="MediaType" />
+    <End Type="Self.Media" Multiplicity="*" Role="Media" />
+    <ReferentialConstraint>
+      <Principal Role="MediaType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Media">
+        <PropertyRef Name="MediaTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OutGoingMessage_MessageDeliveryType">
+    <End Type="Self.MessageDeliveryType" Multiplicity="1" Role="MessageDeliveryType" />
+    <End Type="Self.OutGoingMessage" Multiplicity="*" Role="OutGoingMessage" />
+    <ReferentialConstraint>
+      <Principal Role="MessageDeliveryType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OutGoingMessage">
+        <PropertyRef Name="DeliveryTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OutGoingMessage_MessageType">
+    <End Type="Self.MessageType" Multiplicity="1" Role="MessageType" />
+    <End Type="Self.OutGoingMessage" Multiplicity="*" Role="OutGoingMessage" />
+    <ReferentialConstraint>
+      <Principal Role="MessageType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OutGoingMessage">
+        <PropertyRef Name="MessageTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OutGoingMessage_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.OutGoingMessage" Multiplicity="*" Role="OutGoingMessage" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OutGoingMessage">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.Owners" Multiplicity="0..1" Role="Owners" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Owners">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Property_Owner">
+    <End Type="Self.Owners" Multiplicity="1" Role="Owners" />
+    <End Type="Self.OwnerProperty" Multiplicity="*" Role="OwnerProperty" />
+    <ReferentialConstraint>
+      <Principal Role="Owners">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OwnerProperty">
+        <PropertyRef Name="OwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Property_OwnershipStatus">
+    <End Type="Self.OwnershipStatus" Multiplicity="1" Role="OwnershipStatus" />
+    <End Type="Self.OwnerProperty" Multiplicity="*" Role="OwnerProperty" />
+    <ReferentialConstraint>
+      <Principal Role="OwnershipStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OwnerProperty">
+        <PropertyRef Name="OwnershipStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Property_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.OwnerProperty" Multiplicity="*" Role="OwnerProperty" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OwnerProperty">
+        <PropertyRef Name="OwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Owner_Property_Property">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.OwnerProperty" Multiplicity="*" Role="OwnerProperty" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OwnerProperty">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Address">
+    <End Type="Self.Address" Multiplicity="1" Role="Address" />
+    <End Type="Self.Person" Multiplicity="*" Role="Person" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="BillingAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Address1">
+    <End Type="Self.Address" Multiplicity="1" Role="Address" />
+    <End Type="Self.Person" Multiplicity="*" Role="Person" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="PhysicalAddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_LoginClaim">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.LoginClaim" Multiplicity="*" Role="LoginClaim" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LoginClaim">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_LoginRole">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.LoginRole" Multiplicity="*" Role="LoginRole" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LoginRole">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonMedia_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.PersonMedia" Multiplicity="*" Role="PersonMedia" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PersonMedia">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_Address">
+    <End Type="Self.Address" Multiplicity="1" Role="Address" />
+    <End Type="Self.Property" Multiplicity="*" Role="Property" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Property">
+        <PropertyRef Name="AddressId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_PropertyType">
+    <End Type="Self.PropertyType" Multiplicity="1" Role="PropertyType" />
+    <End Type="Self.Property" Multiplicity="*" Role="Property" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyType">
+        <PropertyRef Name="PropertyTypeId" />
+      </Principal>
+      <Dependent Role="Property">
+        <PropertyRef Name="PropertyTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Property_TargetRentType">
+    <End Type="Self.TargetRentType" Multiplicity="1" Role="TargetRentType" />
+    <End Type="Self.Property" Multiplicity="*" Role="Property" />
+    <ReferentialConstraint>
+      <Principal Role="TargetRentType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Property">
+        <PropertyRef Name="TargetRentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyId">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.PropertyHomeValue" Multiplicity="*" Role="PropertyHomeValue" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyHomeValue">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyMedia_Property">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.PropertyMedia" Multiplicity="*" Role="PropertyMedia" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyMedia">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyRequest_Property">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.PropertyRequest" Multiplicity="*" Role="PropertyRequest" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRequest">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyRequest_RequestStatus">
+    <End Type="Self.RequestStatus" Multiplicity="1" Role="RequestStatus" />
+    <End Type="Self.PropertyRequest" Multiplicity="*" Role="PropertyRequest" />
+    <ReferentialConstraint>
+      <Principal Role="RequestStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRequest">
+        <PropertyRef Name="RequestStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyRequest_RequestType">
+    <End Type="Self.RequestType" Multiplicity="1" Role="RequestType" />
+    <End Type="Self.PropertyRequest" Multiplicity="*" Role="PropertyRequest" />
+    <ReferentialConstraint>
+      <Principal Role="RequestType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRequest">
+        <PropertyRef Name="RequestTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyRequestMedia_PropertyRequest">
+    <End Type="Self.PropertyRequest" Multiplicity="1" Role="PropertyRequest" />
+    <End Type="Self.PropertyRequestMedia" Multiplicity="*" Role="PropertyRequestMedia" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRequestMedia">
+        <PropertyRef Name="PropertyRequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyType_PropertyType">
+    <End Type="Self.PropertyType" Multiplicity="1" Role="PropertyType" />
+    <End Type="Self.PropertyType" Multiplicity="0..1" Role="PropertyType1" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyType">
+        <PropertyRef Name="PropertyTypeId" />
+      </Principal>
+      <Dependent Role="PropertyType1">
+        <PropertyRef Name="PropertyTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Provider_Company">
+    <End Type="Self.Company" Multiplicity="0..1" Role="Company" />
+    <End Type="Self.ServiceProvider" Multiplicity="*" Role="ServiceProvider" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceProvider">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Provider_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.ServiceProvider" Multiplicity="0..1" Role="ServiceProvider" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ServiceProvider">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalApplication_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.RentalApplication" Multiplicity="*" Role="RentalApplication" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalApplication">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalApplication_RentalApplicationStatus">
+    <End Type="Self.RentalApplicationStatus" Multiplicity="1" Role="RentalApplicationStatus" />
+    <End Type="Self.RentalApplication" Multiplicity="*" Role="RentalApplication" />
+    <ReferentialConstraint>
+      <Principal Role="RentalApplicationStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalApplication">
+        <PropertyRef Name="ApplicationStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalApplication_RentalListing">
+    <End Type="Self.RentalListing" Multiplicity="1" Role="RentalListing" />
+    <End Type="Self.RentalApplication" Multiplicity="*" Role="RentalApplication" />
+    <ReferentialConstraint>
+      <Principal Role="RentalListing">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalApplication">
+        <PropertyRef Name="RentalListingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalApplicationMedia_RentalApplication">
+    <End Type="Self.RentalApplication" Multiplicity="1" Role="RentalApplication" />
+    <End Type="Self.RentalApplicationMedia" Multiplicity="*" Role="RentalApplicationMedia" />
+    <ReferentialConstraint>
+      <Principal Role="RentalApplication">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalApplicationMedia">
+        <PropertyRef Name="RentalApplicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalListing_Property">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.RentalListing" Multiplicity="*" Role="RentalListing" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalListing">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalListing_RentalListingStatus">
+    <End Type="Self.RentalListingStatus" Multiplicity="1" Role="RentalListingStatus" />
+    <End Type="Self.RentalListing" Multiplicity="*" Role="RentalListing" />
+    <ReferentialConstraint>
+      <Principal Role="RentalListingStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalListing">
+        <PropertyRef Name="RentalStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalListingMedia_RentalListing">
+    <End Type="Self.RentalListing" Multiplicity="1" Role="RentalListing" />
+    <End Type="Self.RentalListingMedia" Multiplicity="*" Role="RentalListingMedia" />
+    <ReferentialConstraint>
+      <Principal Role="RentalListing">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalListingMedia">
+        <PropertyRef Name="RentalListingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalPayment_FrequencyType">
+    <End Type="Self.TargetRentType" Multiplicity="1" Role="TargetRentType" />
+    <End Type="Self.PropertyRentalPayment" Multiplicity="*" Role="PropertyRentalPayment" />
+    <ReferentialConstraint>
+      <Principal Role="TargetRentType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRentalPayment">
+        <PropertyRef Name="FrequencyType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentalPayment_PropertyId">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.PropertyRentalPayment" Multiplicity="*" Role="PropertyRentalPayment" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRentalPayment">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Repayment_FrequencyType">
+    <End Type="Self.TargetRentType" Multiplicity="1" Role="TargetRentType" />
+    <End Type="Self.PropertyRepayment" Multiplicity="*" Role="PropertyRepayment" />
+    <ReferentialConstraint>
+      <Principal Role="TargetRentType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRepayment">
+        <PropertyRef Name="FrequencyType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Repayment_PropertyId">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.PropertyRepayment" Multiplicity="*" Role="PropertyRepayment" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PropertyRepayment">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestReply_PropertyRequest">
+    <End Type="Self.PropertyRequest" Multiplicity="1" Role="PropertyRequest" />
+    <End Type="Self.RequestReply" Multiplicity="*" Role="RequestReply" />
+    <ReferentialConstraint>
+      <Principal Role="PropertyRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RequestReply">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestReplyMedia_RequestReply">
+    <End Type="Self.RequestReply" Multiplicity="1" Role="RequestReply" />
+    <End Type="Self.RequestReplyMedia" Multiplicity="*" Role="RequestReplyMedia" />
+    <ReferentialConstraint>
+      <Principal Role="RequestReply">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RequestReplyMedia">
+        <PropertyRef Name="RequestReplyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceProviderWatchList_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.JobWatchList" Multiplicity="*" Role="JobWatchList" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobWatchList">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceProviderWatchList_TenantJobRequest">
+    <End Type="Self.TenantJobRequest" Multiplicity="1" Role="TenantJobRequest" />
+    <End Type="Self.JobWatchList" Multiplicity="*" Role="JobWatchList" />
+    <ReferentialConstraint>
+      <Principal Role="TenantJobRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="JobWatchList">
+        <PropertyRef Name="MarketJobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tenant_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.Tenant" Multiplicity="0..1" Role="Tenant" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tenant">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tenant_TenantMedia">
+    <End Type="Self.Tenant" Multiplicity="1" Role="Tenant" />
+    <End Type="Self.TenantMedia" Multiplicity="*" Role="TenantMedia" />
+    <ReferentialConstraint>
+      <Principal Role="Tenant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantMedia">
+        <PropertyRef Name="TenantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantAddress">
+    <End Type="Self.Address" Multiplicity="1" Role="Address" />
+    <End Type="Self.Tenant" Multiplicity="*" Role="Tenant" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressId" />
+      </Principal>
+      <Dependent Role="Tenant">
+        <PropertyRef Name="ResidentialAddress" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantJobRequest_Owners">
+    <End Type="Self.Owners" Multiplicity="1" Role="Owners" />
+    <End Type="Self.TenantJobRequest" Multiplicity="*" Role="TenantJobRequest" />
+    <ReferentialConstraint>
+      <Principal Role="Owners">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantJobRequest">
+        <PropertyRef Name="OwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantJobRequest_Property">
+    <End Type="Self.Property" Multiplicity="1" Role="Property" />
+    <End Type="Self.TenantJobRequest" Multiplicity="*" Role="TenantJobRequest" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantJobRequest">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantJobRequest_TenantJobStatus">
+    <End Type="Self.TenantJobStatus" Multiplicity="1" Role="TenantJobStatus" />
+    <End Type="Self.TenantJobRequest" Multiplicity="*" Role="TenantJobRequest" />
+    <ReferentialConstraint>
+      <Principal Role="TenantJobStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantJobRequest">
+        <PropertyRef Name="JobStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantJobRequestMedia_TenantJobrequest">
+    <End Type="Self.TenantJobRequest" Multiplicity="1" Role="TenantJobRequest" />
+    <End Type="Self.TenantJobRequestMedia" Multiplicity="*" Role="TenantJobRequestMedia" />
+    <ReferentialConstraint>
+      <Principal Role="TenantJobRequest">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantJobRequestMedia">
+        <PropertyRef Name="TenantJobRequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantMedia_Media">
+    <End Type="Self.Media" Multiplicity="1" Role="Media" />
+    <End Type="Self.TenantMedia" Multiplicity="*" Role="TenantMedia" />
+    <ReferentialConstraint>
+      <Principal Role="Media">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantMedia">
+        <PropertyRef Name="MediaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantWatchList_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.RentalWatchList" Multiplicity="*" Role="RentalWatchList" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalWatchList">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantWatchList_RentalListing">
+    <End Type="Self.RentalListing" Multiplicity="1" Role="RentalListing" />
+    <End Type="Self.RentalWatchList" Multiplicity="*" Role="RentalWatchList" />
+    <ReferentialConstraint>
+      <Principal Role="RentalListing">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalWatchList">
+        <PropertyRef Name="RentalListingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRating_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.UserRating" Multiplicity="*" Role="UserRating" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRating">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRating_Person1">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.UserRating" Multiplicity="*" Role="UserRating" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRating">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_XeroTokenStore_Person">
+    <End Type="Self.Person" Multiplicity="1" Role="Person" />
+    <End Type="Self.XeroTokenStore" Multiplicity="*" Role="XeroTokenStore" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="XeroTokenStore">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KeysModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Inspection" EntityType="Self.Inspection" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InspectionMedia" EntityType="Self.InspectionMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InspectionStatus" EntityType="Self.InspectionStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Job" EntityType="Self.Job" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobMedia" EntityType="Self.JobMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobQuote" EntityType="Self.JobQuote" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobQuoteMedia" EntityType="Self.JobQuoteMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobWatchList" EntityType="Self.JobWatchList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoginClaim" EntityType="Self.LoginClaim" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoginRole" EntityType="Self.LoginRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoginSocialMedia" EntityType="Self.LoginSocialMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Manager" EntityType="Self.Manager" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ManagerProperty" EntityType="Self.ManagerProperty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Media" EntityType="Self.Media" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MediaType" EntityType="Self.MediaType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MessageDeliveryType" EntityType="Self.MessageDeliveryType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MessageType" EntityType="Self.MessageType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OutGoingMessage" EntityType="Self.OutGoingMessage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OwnerProperty" EntityType="Self.OwnerProperty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OwnershipStatus" EntityType="Self.OwnershipStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PersonMedia" EntityType="Self.PersonMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyExpense" EntityType="Self.PropertyExpense" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyFinance" EntityType="Self.PropertyFinance" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyHomeValue" EntityType="Self.PropertyHomeValue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyHomeValueType" EntityType="Self.PropertyHomeValueType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyMedia" EntityType="Self.PropertyMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyRentalPayment" EntityType="Self.PropertyRentalPayment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyRepayment" EntityType="Self.PropertyRepayment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyRequest" EntityType="Self.PropertyRequest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyRequestMedia" EntityType="Self.PropertyRequestMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyType" EntityType="Self.PropertyType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentalApplication" EntityType="Self.RentalApplication" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentalApplicationMedia" EntityType="Self.RentalApplicationMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentalApplicationStatus" EntityType="Self.RentalApplicationStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentalListing" EntityType="Self.RentalListing" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentalListingMedia" EntityType="Self.RentalListingMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentalListingStatus" EntityType="Self.RentalListingStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentalPaymentTracking" EntityType="Self.RentalPaymentTracking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentalWatchList" EntityType="Self.RentalWatchList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequestReply" EntityType="Self.RequestReply" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequestReplyMedia" EntityType="Self.RequestReplyMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequestStatus" EntityType="Self.RequestStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequestType" EntityType="Self.RequestType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServiceProvider" EntityType="Self.ServiceProvider" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ServiceProviderJobStatus" EntityType="Self.ServiceProviderJobStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TargetRentType" EntityType="Self.TargetRentType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tenant" EntityType="Self.Tenant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TenantJobRequest" EntityType="Self.TenantJobRequest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TenantJobRequestMedia" EntityType="Self.TenantJobRequestMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TenantJobStatus" EntityType="Self.TenantJobStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TenantMedia" EntityType="Self.TenantMedia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TenantPaymentFrequencies" EntityType="Self.TenantPaymentFrequencies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TenantProperty" EntityType="Self.TenantProperty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TenantPropertyLiability" EntityType="Self.TenantPropertyLiability" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRating" EntityType="Self.UserRating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="XeroTokenStore" EntityType="Self.XeroTokenStore" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Login_Deleted" EntityType="Self.Login_Deleted" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Login_Deleted].[Id] AS [Id], 
+    [Login_Deleted].[IsActive] AS [IsActive], 
+    [Login_Deleted].[EmailConfirmationToken] AS [EmailConfirmationToken], 
+    [Login_Deleted].[EmailConfirmationTokenExpiryDate] AS [EmailConfirmationTokenExpiryDate], 
+    [Login_Deleted].[ResetPasswordToken] AS [ResetPasswordToken], 
+    [Login_Deleted].[ResetPasswordTokenExpiryDate] AS [ResetPasswordTokenExpiryDate], 
+    [Login_Deleted].[Email] AS [Email], 
+    [Login_Deleted].[EmailConfirmed] AS [EmailConfirmed], 
+    [Login_Deleted].[PasswordHash] AS [PasswordHash], 
+    [Login_Deleted].[SecurityStamp] AS [SecurityStamp], 
+    [Login_Deleted].[PhoneNumber] AS [PhoneNumber], 
+    [Login_Deleted].[PhoneNumberConfirmed] AS [PhoneNumberConfirmed], 
+    [Login_Deleted].[TwoFactorEnabled] AS [TwoFactorEnabled], 
+    [Login_Deleted].[LockoutEndDateUtc] AS [LockoutEndDateUtc], 
+    [Login_Deleted].[LockoutEnabled] AS [LockoutEnabled], 
+    [Login_Deleted].[AccessFailedCount] AS [AccessFailedCount], 
+    [Login_Deleted].[UserName] AS [UserName], 
+    [Login_Deleted].[CreatedOn] AS [CreatedOn], 
+    [Login_Deleted].[CreatedBy] AS [CreatedBy], 
+    [Login_Deleted].[UpdatedOn] AS [UpdatedOn], 
+    [Login_Deleted].[UpdatedBy] AS [UpdatedBy]
+    FROM [dbo].[Login_Deleted] AS [Login_Deleted]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Address_Country" Association="Self.FK_Address_Country">
+      <End EntitySet="Country" Role="Country" />
+      <End EntitySet="Address" Role="Address" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Company_BillingAddress" Association="Self.FK_Company_BillingAddress">
+      <End EntitySet="Address" Role="Address" />
+      <End EntitySet="Company" Role="Company" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Company_Company" Association="Self.FK_Company_Company">
+      <End EntitySet="Company" Role="Company" />
+      <End EntitySet="Company" Role="Company1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Company_PhysicalAddress" Association="Self.FK_Company_PhysicalAddress">
+      <End EntitySet="Address" Role="Address" />
+      <End EntitySet="Company" Role="Company" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_LoginRole_dbo_Role_RoleId" Association="Self.FK_dbo_LoginRole_dbo_Role_RoleId">
+      <End EntitySet="Role" Role="Role" />
+      <End EntitySet="LoginRole" Role="LoginRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Expense_PropertyId" Association="Self.FK_Expense_PropertyId">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="PropertyExpense" Role="PropertyExpense" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Finance_PropertyId" Association="Self.FK_Finance_PropertyId">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="PropertyFinance" Role="PropertyFinance" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HomeValue_HomeValueType" Association="Self.FK_HomeValue_HomeValueType">
+      <End EntitySet="PropertyHomeValueType" Role="PropertyHomeValueType" />
+      <End EntitySet="PropertyHomeValue" Role="PropertyHomeValue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inspection_InspectionStatus" Association="Self.FK_Inspection_InspectionStatus">
+      <End EntitySet="InspectionStatus" Role="InspectionStatus" />
+      <End EntitySet="Inspection" Role="Inspection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inspection_Property" Association="Self.FK_Inspection_Property">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="Inspection" Role="Inspection" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InspectionMedia_InspectionMedia" Association="Self.FK_InspectionMedia_InspectionMedia">
+      <End EntitySet="Inspection" Role="Inspection" />
+      <End EntitySet="InspectionMedia" Role="InspectionMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Job_Property" Association="Self.FK_Job_Property">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="Job" Role="Job" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Job_ServiceProviderJobStatus" Association="Self.FK_Job_ServiceProviderJobStatus">
+      <End EntitySet="ServiceProviderJobStatus" Role="ServiceProviderJobStatus" />
+      <End EntitySet="Job" Role="Job" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobMedia_Job" Association="Self.FK_JobMedia_Job">
+      <End EntitySet="Job" Role="Job" />
+      <End EntitySet="JobMedia" Role="JobMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobMedia_Property" Association="Self.FK_JobMedia_Property">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="JobMedia" Role="JobMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobQuote_JobRequest" Association="Self.FK_JobQuote_JobRequest">
+      <End EntitySet="TenantJobRequest" Role="TenantJobRequest" />
+      <End EntitySet="JobQuote" Role="JobQuote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobQuote_ServiceProvider" Association="Self.FK_JobQuote_ServiceProvider">
+      <End EntitySet="ServiceProvider" Role="ServiceProvider" />
+      <End EntitySet="JobQuote" Role="JobQuote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobQuoteMedia_JobQuote" Association="Self.FK_JobQuoteMedia_JobQuote">
+      <End EntitySet="JobQuote" Role="JobQuote" />
+      <End EntitySet="JobQuoteMedia" Role="JobQuoteMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Login_Person" Association="Self.FK_Login_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="Login" Role="Login" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manager_Company" Association="Self.FK_Manager_Company">
+      <End EntitySet="Company" Role="Company" />
+      <End EntitySet="Manager" Role="Manager" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manager_Person" Association="Self.FK_Manager_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="Manager" Role="Manager" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manager_Property_Manager" Association="Self.FK_Manager_Property_Manager">
+      <End EntitySet="Manager" Role="Manager" />
+      <End EntitySet="ManagerProperty" Role="ManagerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Manager_Property_Property" Association="Self.FK_Manager_Property_Property">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="ManagerProperty" Role="ManagerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Media_MediaType" Association="Self.FK_Media_MediaType">
+      <End EntitySet="MediaType" Role="MediaType" />
+      <End EntitySet="Media" Role="Media" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OutGoingMessage_MessageDeliveryType" Association="Self.FK_OutGoingMessage_MessageDeliveryType">
+      <End EntitySet="MessageDeliveryType" Role="MessageDeliveryType" />
+      <End EntitySet="OutGoingMessage" Role="OutGoingMessage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OutGoingMessage_MessageType" Association="Self.FK_OutGoingMessage_MessageType">
+      <End EntitySet="MessageType" Role="MessageType" />
+      <End EntitySet="OutGoingMessage" Role="OutGoingMessage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OutGoingMessage_Person" Association="Self.FK_OutGoingMessage_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="OutGoingMessage" Role="OutGoingMessage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Person" Association="Self.FK_Owner_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="Owners" Role="Owners" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Property_Owner" Association="Self.FK_Owner_Property_Owner">
+      <End EntitySet="Owners" Role="Owners" />
+      <End EntitySet="OwnerProperty" Role="OwnerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Property_OwnershipStatus" Association="Self.FK_Owner_Property_OwnershipStatus">
+      <End EntitySet="OwnershipStatus" Role="OwnershipStatus" />
+      <End EntitySet="OwnerProperty" Role="OwnerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Property_Person" Association="Self.FK_Owner_Property_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="OwnerProperty" Role="OwnerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Owner_Property_Property" Association="Self.FK_Owner_Property_Property">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="OwnerProperty" Role="OwnerProperty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_Address" Association="Self.FK_Person_Address">
+      <End EntitySet="Address" Role="Address" />
+      <End EntitySet="Person" Role="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_Address1" Association="Self.FK_Person_Address1">
+      <End EntitySet="Address" Role="Address" />
+      <End EntitySet="Person" Role="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_LoginClaim" Association="Self.FK_Person_LoginClaim">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="LoginClaim" Role="LoginClaim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_LoginRole" Association="Self.FK_Person_LoginRole">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="LoginRole" Role="LoginRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonMedia_Person" Association="Self.FK_PersonMedia_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="PersonMedia" Role="PersonMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_Address" Association="Self.FK_Property_Address">
+      <End EntitySet="Address" Role="Address" />
+      <End EntitySet="Property" Role="Property" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_PropertyType" Association="Self.FK_Property_PropertyType">
+      <End EntitySet="PropertyType" Role="PropertyType" />
+      <End EntitySet="Property" Role="Property" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Property_TargetRentType" Association="Self.FK_Property_TargetRentType">
+      <End EntitySet="TargetRentType" Role="TargetRentType" />
+      <End EntitySet="Property" Role="Property" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyId" Association="Self.FK_PropertyId">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="PropertyHomeValue" Role="PropertyHomeValue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyMedia_Property" Association="Self.FK_PropertyMedia_Property">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="PropertyMedia" Role="PropertyMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyRequest_Property" Association="Self.FK_PropertyRequest_Property">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="PropertyRequest" Role="PropertyRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyRequest_RequestStatus" Association="Self.FK_PropertyRequest_RequestStatus">
+      <End EntitySet="RequestStatus" Role="RequestStatus" />
+      <End EntitySet="PropertyRequest" Role="PropertyRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyRequest_RequestType" Association="Self.FK_PropertyRequest_RequestType">
+      <End EntitySet="RequestType" Role="RequestType" />
+      <End EntitySet="PropertyRequest" Role="PropertyRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyRequestMedia_PropertyRequest" Association="Self.FK_PropertyRequestMedia_PropertyRequest">
+      <End EntitySet="PropertyRequest" Role="PropertyRequest" />
+      <End EntitySet="PropertyRequestMedia" Role="PropertyRequestMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyType_PropertyType" Association="Self.FK_PropertyType_PropertyType">
+      <End EntitySet="PropertyType" Role="PropertyType" />
+      <End EntitySet="PropertyType" Role="PropertyType1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Provider_Company" Association="Self.FK_Provider_Company">
+      <End EntitySet="Company" Role="Company" />
+      <End EntitySet="ServiceProvider" Role="ServiceProvider" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Provider_Person" Association="Self.FK_Provider_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="ServiceProvider" Role="ServiceProvider" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalApplication_Person" Association="Self.FK_RentalApplication_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="RentalApplication" Role="RentalApplication" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalApplication_RentalApplicationStatus" Association="Self.FK_RentalApplication_RentalApplicationStatus">
+      <End EntitySet="RentalApplicationStatus" Role="RentalApplicationStatus" />
+      <End EntitySet="RentalApplication" Role="RentalApplication" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalApplication_RentalListing" Association="Self.FK_RentalApplication_RentalListing">
+      <End EntitySet="RentalListing" Role="RentalListing" />
+      <End EntitySet="RentalApplication" Role="RentalApplication" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalApplicationMedia_RentalApplication" Association="Self.FK_RentalApplicationMedia_RentalApplication">
+      <End EntitySet="RentalApplication" Role="RentalApplication" />
+      <End EntitySet="RentalApplicationMedia" Role="RentalApplicationMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalListing_Property" Association="Self.FK_RentalListing_Property">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="RentalListing" Role="RentalListing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalListing_RentalListingStatus" Association="Self.FK_RentalListing_RentalListingStatus">
+      <End EntitySet="RentalListingStatus" Role="RentalListingStatus" />
+      <End EntitySet="RentalListing" Role="RentalListing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalListingMedia_RentalListing" Association="Self.FK_RentalListingMedia_RentalListing">
+      <End EntitySet="RentalListing" Role="RentalListing" />
+      <End EntitySet="RentalListingMedia" Role="RentalListingMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalPayment_FrequencyType" Association="Self.FK_RentalPayment_FrequencyType">
+      <End EntitySet="TargetRentType" Role="TargetRentType" />
+      <End EntitySet="PropertyRentalPayment" Role="PropertyRentalPayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentalPayment_PropertyId" Association="Self.FK_RentalPayment_PropertyId">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="PropertyRentalPayment" Role="PropertyRentalPayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Repayment_FrequencyType" Association="Self.FK_Repayment_FrequencyType">
+      <End EntitySet="TargetRentType" Role="TargetRentType" />
+      <End EntitySet="PropertyRepayment" Role="PropertyRepayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Repayment_PropertyId" Association="Self.FK_Repayment_PropertyId">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="PropertyRepayment" Role="PropertyRepayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestReply_PropertyRequest" Association="Self.FK_RequestReply_PropertyRequest">
+      <End EntitySet="PropertyRequest" Role="PropertyRequest" />
+      <End EntitySet="RequestReply" Role="RequestReply" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestReplyMedia_RequestReply" Association="Self.FK_RequestReplyMedia_RequestReply">
+      <End EntitySet="RequestReply" Role="RequestReply" />
+      <End EntitySet="RequestReplyMedia" Role="RequestReplyMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceProviderWatchList_Person" Association="Self.FK_ServiceProviderWatchList_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="JobWatchList" Role="JobWatchList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceProviderWatchList_TenantJobRequest" Association="Self.FK_ServiceProviderWatchList_TenantJobRequest">
+      <End EntitySet="TenantJobRequest" Role="TenantJobRequest" />
+      <End EntitySet="JobWatchList" Role="JobWatchList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tenant_Person" Association="Self.FK_Tenant_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="Tenant" Role="Tenant" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tenant_TenantMedia" Association="Self.FK_Tenant_TenantMedia">
+      <End EntitySet="Tenant" Role="Tenant" />
+      <End EntitySet="TenantMedia" Role="TenantMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantAddress" Association="Self.FK_TenantAddress">
+      <End EntitySet="Address" Role="Address" />
+      <End EntitySet="Tenant" Role="Tenant" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantJobRequest_Owners" Association="Self.FK_TenantJobRequest_Owners">
+      <End EntitySet="Owners" Role="Owners" />
+      <End EntitySet="TenantJobRequest" Role="TenantJobRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantJobRequest_Property" Association="Self.FK_TenantJobRequest_Property">
+      <End EntitySet="Property" Role="Property" />
+      <End EntitySet="TenantJobRequest" Role="TenantJobRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantJobRequest_TenantJobStatus" Association="Self.FK_TenantJobRequest_TenantJobStatus">
+      <End EntitySet="TenantJobStatus" Role="TenantJobStatus" />
+      <End EntitySet="TenantJobRequest" Role="TenantJobRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantJobRequestMedia_TenantJobrequest" Association="Self.FK_TenantJobRequestMedia_TenantJobrequest">
+      <End EntitySet="TenantJobRequest" Role="TenantJobRequest" />
+      <End EntitySet="TenantJobRequestMedia" Role="TenantJobRequestMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantMedia_Media" Association="Self.FK_TenantMedia_Media">
+      <End EntitySet="Media" Role="Media" />
+      <End EntitySet="TenantMedia" Role="TenantMedia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantWatchList_Person" Association="Self.FK_TenantWatchList_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="RentalWatchList" Role="RentalWatchList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantWatchList_RentalListing" Association="Self.FK_TenantWatchList_RentalListing">
+      <End EntitySet="RentalListing" Role="RentalListing" />
+      <End EntitySet="RentalWatchList" Role="RentalWatchList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRating_Person" Association="Self.FK_UserRating_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="UserRating" Role="UserRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRating_Person1" Association="Self.FK_UserRating_Person1">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="UserRating" Role="UserRating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_XeroTokenStore_Person" Association="Self.FK_XeroTokenStore_Person">
+      <End EntitySet="Person" Role="Person" />
+      <End EntitySet="XeroTokenStore" Role="XeroTokenStore" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

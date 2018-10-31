@@ -1,0 +1,142 @@
+﻿.nav
+{
+    .panel-default
+    {
+        background-color: #000;
+        border-color: #000;
+        color: #eee;
+
+        > .panel-heading
+        {
+            background-color: #000;
+            border-color: #000;
+            color: #eee;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+
+            &:hover
+            {
+                background-color: #eee;
+                color: #c8c8c8;
+            }
+        }
+
+        &:hover
+        {
+            background-color: #eee;
+            color: #c8c8c8;
+        }
+    }
+}
+
+
+.my-carousel-wrapper
+{
+    position: relative;
+}
+
+.my-carousel-content-wrapper
+{
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.my-carousel-content
+{
+    width: 400px;
+    height: 400px;
+    color: #fff;
+}
+
+@media (min-width: 768px)
+{
+    .carousel-caption
+    {
+        text-align: left;
+        padding-right: 300px;
+    }
+
+    .my-carousel-content-wrapper
+    {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        padding-bottom: 50px;
+        margin-left: -375px;
+        width: 750px;
+    }
+
+    .my-carousel-content
+    {
+        width: 300px;
+        float: right;
+        height: 300px;
+        color: #fff;
+        margin-right: 15px;
+    }
+}
+
+@media (min-width: 992px)
+{
+    .my-carousel-content-wrapper
+    {
+        width: 970px;
+        margin-left: -485px;
+    }
+}
+
+@media (min-width: 1200px)
+{
+    .my-carousel-content-wrapper
+    {
+        width: 1170px;
+        margin-left: -585px;
+    }
+}
+
+/* MISC */
+#carousel-home
+{
+    .item
+    {
+        overflow: hidden;
+        height: 500px;
+        background-color: #000;
+        background-size: cover;
+    }
+
+    > .carousel-control
+    {
+        width: 30px;
+        font-size: 40px;
+        color: #fff;
+        text-shadow: none;
+        filter: none;
+        opacity: 1;
+    }
+
+    > .carousel-control span
+    {
+        position: absolute;
+        top: 50%;
+        margin-top: -30px;
+        width: 100%;
+        text-align: center;
+        display: block;
+    }
+}
+
+.jumbotron
+{
+    .carousel-caption
+    {
+        top: 20%;
+        text-align: center;
+        padding-right: 0px;
+    }
+}
