@@ -136,7 +136,7 @@ namespace KeysPlus.Website.Controllers
             var finishedJobs = jobs.Where(x => x.PercentDone == 100).Count();
 
             var tenRequests = db.PropertyRequest.Where(x => propIds.Contains(x.Property.Id) && x.IsActive && x.ToOwner && !x.ToTenant);
-            var newRequests = tenRequests.Where(x => x.IsViewed).Count();
+            var newRequests = tenRequests.Where(x => x.RequestStatusId == 1).Count();
             var acceptedRequests = tenRequests.Where(x => x.RequestStatusId == 2).Count();
             var rejRequests = tenRequests.Where(x => x.RequestStatusId == 5).Count();
 
